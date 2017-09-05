@@ -257,6 +257,7 @@ CustomerPage.prototype.ajaxRequestConditionBind = function (params) {
             if (data['succ']) {
                 var TEMP_HTML = null;
                 var JSON_DATA = data['data'];
+                console.log(JSON_DATA);
                 for (var i = 0; i < JSON_DATA.length; i++) {
                     TEMP_HTML = "";
                     for (var j = 0; j < JSON_DATA[i]['Value'].length; j++) {
@@ -329,12 +330,7 @@ CustomerPage.prototype.ajaxRequestCustomerBind = function (params) {
                     }
                 });
                 TEMP_HTML = JSON_DATA.length != 0 ? _this.getTemplate(JSON_DATA) : TEMP_HTML;
-                if (webApp.grantControl($(".pagination"), "billrecord_select")) {
-                    $(".table-body").html(TEMP_HTML);
-                } else {
-                    // 无权限查看
-                    webApp.noneGrant();
-                }
+                $(".table-body").html(TEMP_HTML);
 
             }
             else {

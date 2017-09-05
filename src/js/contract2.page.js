@@ -253,20 +253,6 @@ ContractPage.prototype.contractList = function () {
     return this;
 }
 
-/**
- * 合同编辑
- * Author:LiYong
- * Date:2017-07-20
- * @returns {ContractPage}
- */
-// ContractPage.prototype.contractEdit = function () {
-//     var _this = this;
-//     $(".btn-contractedit").on("click", function () {
-//         var params = _this.getParams(_this.CUB);
-//         _this.ajaxRequestContractBind(params);
-//     })
-//     return this;
-// }
 
 /**
  * 合同保存
@@ -1309,4 +1295,6 @@ ContractPage.prototype.ajaxRequestEmployeeBind = function (params) {
 
 
 var cp = new ContractPage();
+
+
 

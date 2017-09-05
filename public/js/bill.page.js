@@ -119,7 +119,7 @@ BillPage.prototype.ajaxRequestQueryCondition = function (params) {
         success: function (data) {
             if (data['succ']) {
                 var TEMP_HTML;
-                var JSON_DATA = data.data;
+                var JSON_DATA = data['data'];
                 var TEMP_DATA = Object.keys(JSON_DATA);
                 for (var i = 0; i < TEMP_DATA.length; i++) {
                     var OBJECT_DATA = JSON_DATA[TEMP_DATA[i]];
@@ -135,7 +135,6 @@ BillPage.prototype.ajaxRequestQueryCondition = function (params) {
                     $("#" + TEMP_DATA[i] + " li:first").after(TEMP_HTML);
                 }
 
-                DropdownInit();
             }
             else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);

@@ -1,4 +1,4 @@
-//移除本地缓存
+﻿//移除本地缓存
 localStorage.removeItem("isAlert");
 var pageSize = 10;
 
