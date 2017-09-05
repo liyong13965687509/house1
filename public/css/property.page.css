@@ -1,0 +1,117 @@
+@media screen and (max-width: 1367px) {
+  .container {
+    padding-left: 0px;
+  }
+}
+body .container {
+  padding-left: 0px;
+}
+body .container .fq-nav2 .property-nav2-top {
+  height: 100%;
+}
+body .container .fq-nav2 .property-nav2-top #Buildings {
+  overflow-y: auto;
+  height: 100%;
+  display: none;
+}
+body .container .fq-nav2 .property-nav2-top .property-list {
+  height: 36px;
+  line-height: 36px;
+  border-bottom: 1px solid #e6e6e6;
+}
+body .container .fq-nav2 .property-nav2-top .property-list span {
+  margin-left: 35px;
+  color: #333;
+  font-size: 16px;
+}
+body .container .fq-nav2 .property-nav2-top .lists {
+  height: 100%;
+  padding-bottom: 176px;
+}
+body .container .fq-nav2 .fq-nav2-bottom .btn-propertyadd {
+  display: none;
+}
+body .container .fq-contain-dv {
+  display: none;
+}
+body .container .fq-contain-dv #Rooms .property-room-status {
+  cursor: pointer;
+}
+body .container .fq-contain-dv #Rooms .property-room-status1 {
+  cursor: pointer;
+}
+body .container .fq-contain-dv .floorword {
+  color: #333 !important;
+  font-size: 12px !important;
+}
+body .alert-modal-wraper .hsitory-contractadd {
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: center;
+  width: 120px;
+  height: 36px;
+  line-height: 36px;
+  background-color: #417de6;
+  color: #ffffff;
+  margin: 20px 35px;
+}
+body .alert-modal-wraper #btn-order {
+  display: none;
+}
+body .alert-modal-wraper .right-modal .property-detail .property-modal-content {
+  height: 100%;
+}
+body .alert-modal-wraper .right-modal .property-detail .property-modal-content .property-contract-content {
+  height: 100% !important;
+}
+body .alert-modal-wraper .right-modal .property-detail .property-modal-content .property-contract-content .history-modaldv-tabelwrap {
+  margin-left: 25px;
+}
+body .alert-modal-wraper .right-modal .property-detail .property-modal-content .property-contract-content .history-modaldv-tabelwrap .table-history tr th:first-of-type {
+  text-align: center !important;
+}
+body .alert-modal-wraper .right-modal .property-detail .property-modal-content .property-contract-content .history-modaldv-tabelwrap .table-history tr td:first-of-type {
+  text-align: center !important;
+}
+body .alert-modal-wraper .right-modal .property-detail .property-modal-content .property-contract-content .history-modaldv-tabelwrap .table-history tr td:nth-of-type(2) {
+  text-align: center !important;
+  padding-left: 0px !important;
+}
+body .alert-modal-wraper .right-modal .property-detail .property-modal-content .property-contract-content .history-fy-wrap {
+  bottom: 90px !important;
+}
+body .alert-modal-wraper .right-modal .property-detail .property-modal-content .property-contract-content .history-button {
+  border-top: 1px solid #e6e6e6;
+  margin-top: 40px;
+}
+body .alert-modal-wraper .property-room-ul1 {
+  display: none;
+}
+body .alert-modal-wraper .but-roomEdit {
+  display: none;
+}
+body .alert-modal-wraper .btn-roomdel {
+  display: none;
+}
+body .alert-modal-wraper .serviceInit {
+  display: none;
+}
+body .alert-modal-wraper .readInit {
+  display: none;
+}
+body .alert-modal-wraper .btn-repairadd {
+  display: none;
+}
+body .alert-modal-wraper .btn-checktableadd {
+  display: none;
+}
+body .alert-modal-wraper .property-checktable-content table tr td:nth-of-type(2) {
+  text-align: center !important;
+}
+body .historyLook {
+  cursor: pointer;
+}
+.btn-propertydetail {
+  line-height: 36px;
+}
