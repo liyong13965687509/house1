@@ -261,15 +261,17 @@
   -moz-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15);
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15);
 }
-.panel.panel-lg .follow .block-body .follow-record {
-  text-align: center !important;
+.panel.panel-sm .group-title {
+  margin: 0px;
+  font-size: 16px;
+  line-height: 45px;
 }
-.panel.panel-lg .follow .block-body .follow-record .column {
-  font-size: 14px !important;
+.panel.panel-sm .group-row {
+  line-height: 40px;
 }
-.panel.panel-lg .follow .block-body .follow-record .column-del {
-  color: #417de6;
-  cursor: pointer;
+.panel.panel-sm .group-row .col-xs-3 {
+  text-align: right;
+  padding-right: 0px;
 }
 .panel .tab-block {
   height: 100%;
@@ -343,6 +345,26 @@
   border-top: 1px solid #e6e6e6;
   z-index: 10;
 }
+.panel .tab-block .bill-body {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.panel .tab-block .tab-bill .block-content {
+  padding-bottom: 0px;
+}
+.panel .tab-block .tab-bill .block-content .column {
+  font-size: 14px;
+}
+.panel .tab-block .tab-bill .block-content .row-header {
+  min-height: 0px;
+  background-color: #f5f5f5;
+}
+.panel .tab-block .tab-bill .block-content .table-item:nth-child(even) {
+  background-color: #fafcff;
+}
+.panel .tab-block #pagBill {
+  bottom: 0px;
+}
 .panel .panel-group {
   line-height: 40px;
   padding: 0px 15px;
@@ -399,70 +421,34 @@
   border-color: #417de6 !important;
   color: #417de6 !important;
 }
-.panel .follow .repeal {
-  color: #fff !important;
-}
-.panel .follow .repeal:hover {
-  background-color: #1c68ed;
-}
-.panel .follow .follow-remark {
-  width: 100%;
-  font-size: 14px;
-  line-height: 20px;
-  padding: 5px 15px;
-  border-top-left-radius: 0px !important;
-  border-bottom-left-radius: 0px !important;
-}
-.panel .follow .form-group {
-  position: relative;
-  z-index: 1;
-  margin: 4px -4px 0px 0px;
-  display: inline-block !important;
-}
-.panel .follow .submit-follow {
-  color: #fff !important;
-  margin-left: 0px !important;
-  margin-top: -10px;
-  border-top-left-radius: 0px !important;
-  border-bottom-left-radius: 0px !important;
-}
-.panel .follow .submit-follow:hover {
-  background-color: #1c68ed;
-}
-.panel .follow .drop-container {
-  width: 100px;
-  text-align: left;
-}
-.panel .follow .drop-container.hide .drop-body {
-  -webkit-transform: translateY(0px) !important;
-  -moz-transform: translateY(0px) !important;
-  -ms-transform: translateY(0px) !important;
-  -o-transform: translateY(0px) !important;
-  transform: translateY(0px) !important;
-}
-.panel .follow .drop-container .drop-body {
-  bottom: 30px;
-  -webkit-transform: translateY(-10px);
-  -moz-transform: translateY(-10px);
-  -ms-transform: translateY(-10px);
-  -o-transform: translateY(-10px);
-  transform: translateY(-10px);
-}
-.panel .follow .drop-container .drop-option {
-  text-align: left;
-}
-.panel .follow .drop-container.hide .drop-body {
-  -webkit-transform: translateY(-10px);
-  -moz-transform: translateY(-10px);
-  -ms-transform: translateY(-10px);
-  -o-transform: translateY(-10px);
-  transform: translateY(0px) !important;
-}
 .panel .btn-edit {
-  color: #fff !important;
+  color: #ffffff !important;
 }
 .panel .btn-edit:hover {
   background-color: #1c68ed;
+}
+.panel .btn-abandon {
+  background-color: #ffffff;
+  border: 1px solid #8795ad;
+  color: #000000;
+}
+.panel .btn-end {
+  background-color: #56cc8d;
+  border-color: #56cc8d;
+  color: #ffffff !important;
+}
+.panel .btn-renewal {
+  background-color: #f6ba2a;
+  border-color: #f6ba2a;
+  color: #ffffff !important;
+}
+.panel .bill-add {
+  padding: 0 15px 15px;
+  float: right;
+}
+.panel .bill-table {
+  text-align: center;
+  font-size: 14px;
 }
 .no-result {
   padding: 0px;

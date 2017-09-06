@@ -257,7 +257,6 @@ CustomerPage.prototype.ajaxRequestConditionBind = function (params) {
             if (data['succ']) {
                 var TEMP_HTML = null;
                 var JSON_DATA = data['data'];
-                console.log(JSON_DATA);
                 for (var i = 0; i < JSON_DATA.length; i++) {
                     TEMP_HTML = "";
                     for (var j = 0; j < JSON_DATA[i]['Value'].length; j++) {
@@ -494,6 +493,7 @@ CustomerPage.prototype.tabChange = function () {
                     _this.contractBind();
                     break;
                 case 2:
+                    console.log(11);
                     _this.followBind();
                     break;
             }
@@ -612,6 +612,7 @@ CustomerPage.prototype.ajaxRequestCustomerAddBind = function (params) {
         success: function (data) {
             if (data['succ']) {
                 var JSON_DATA = data['data'];
+                console.log(JSON_DATA);
                 var TEMP_JSON = {
                     CustomerSource: "CustomerSource",
                     CustomerLevel: "CustomerLevel",
@@ -1068,6 +1069,7 @@ CustomerPage.prototype.ajaxRequestCustomerDelete = function (params) {
 CustomerPage.prototype.followBind = function () {
     $(this.FOLLOW_REMARK).val("");
     var params = this.getParams(this.API_CONFIG['FOLLOW_BIND']);
+    console.log(params);
     this.ajaxRequestFollowBind(params);
     return this;
 }
