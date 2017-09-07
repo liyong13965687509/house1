@@ -11,14 +11,31 @@ function Management() {
     this.TAB_BTN = arguments['TAB_BTN'] ? arguments['TAB_BTN'] : '.tab-bar li';
     this.PAGINATION = arguments['PAGINATION'] ? arguments['PAGINATION'] : null;
     this.BTN_DETAIL = arguments['BTN_DETAIL'] ? arguments['BTN_DETAIL'] : '.btn-detail';
+    this.BTN_UPDATE = arguments['BTN_UPDATE'] ? arguments['BTN_UPDATE'] : '.btn-update';
+    this.BTN_CHARGE = arguments['BTN_CHARGE'] ? arguments['BTN_CHARGE'] : '.btn-charge';
     this.PASSWORD_ID = arguments['PASSWORD_ID'] ? arguments['PASSWORD_ID'] : 'PASSWORD_ID';
+    this.POWER_STATUS = arguments['POWER_STATUS'] ? arguments['POWER_STATUS'] : '#PowerStatus';
 
     this.ADD_PWD_END = arguments['ADD_PWD_END'] ? arguments['ADD_PWD_END'] : 'ADD_PWD_END';
     this.ADD_PWD_START = arguments['ADD_PWD_START'] ? arguments['ADD_PWD_START'] : 'ADD_PWD_START';
+    this.UPDATE_PWD_END = arguments['UPDATE_PWD_END'] ? arguments['UPDATE_PWD_END'] : 'UPDATE_PWD_END';
+    this.UPDATE_PWD_START = arguments['UPDATE_PWD_START'] ? arguments['UPDATE_PWD_START'] : 'UPDATE_PWD_START';
     this.LOCK_OPEN_END = arguments['LOCK_OPEN_END'] ? arguments['LOCK_OPEN_END'] : 'LOCK_OPEN_END';
     this.LOCK_OPER_END = arguments['LOCK_OPER_END'] ? arguments['LOCK_OPER_END'] : 'LOCK_OPER_END';
     this.LOCK_OPEN_START = arguments['LOCK_OPEN_START'] ? arguments['LOCK_OPEN_START'] : 'LOCK_OPEN_START';
     this.LOCK_OPER_START = arguments['LOCK_OPER_START'] ? arguments['LOCK_OPER_START'] : 'LOCK_OPER_START';
+
+    this.POWER_BUY_END = arguments['POWER_BUY_END'] ? arguments['POWER_BUY_END'] : 'POWER_BUY_END';
+    this.POWER_USE_END = arguments['POWER_USE_END'] ? arguments['POWER_USE_END'] : 'POWER_USE_END';
+    this.POWER_OPER_END = arguments['POWER_OPER_END'] ? arguments['POWER_OPER_END'] : 'POWER_OPER_END';
+
+    this.POWER_USE_START = arguments['POWER_USE_START'] ? arguments['POWER_USE_START'] : 'POWER_USE_START';
+    this.POWER_BUY_START = arguments['POWER_BUY_START'] ? arguments['POWER_BUY_START'] : 'POWER_BUY_START';
+    this.POWER_OPER_START = arguments['POWER_OPER_START'] ? arguments['POWER_OPER_START'] : 'POWER_OPER_START';
+
+    this.LOCK_OPER_REC = arguments['LOCK_OPER_REC'] ? arguments['LOCK_OPER_REC'] : 'LOCK_OPER_REC';
+    this.POWER_OPER_REC = arguments['POWER_OPER_REC'] ? arguments['POWER_OPER_REC'] : 'POWER_OPER_REC';
+    this.POWER_RECHARGE = arguments['POWER_RECHARGE'] ? arguments['POWER_RECHARGE'] : 'POWER_RECHARGE';
 
     this.GRANT_CONFIG = arguments['GRANT_CONFIG'] ? arguments['GRANT_CONFIG'] : {
         selectmanage: {
@@ -47,16 +64,18 @@ function Management() {
         BIND_LOAD: '/device/base',
         BIND_DEVICES: '/devices',
         ADD_DEVICES: '/device/add',
+        DELETE_DEVICES: '/device/delete',
+        UPDATE_DEVICES: '/device/update',
         BIND_FLOOR: '/building/floors',
         BIND_ROOMS: '/building/roomsbyfloor',
         LOCK_DETAIL: '/lock/get-lock-info',
         LOCK_PASSWORD: '/lock/fetch-passwords',
         LOCK_OPEN_REC: '/lock/get-lock-events',
         LOCK_OPER_REC: '/search-device-op-log',
-        KEY_DETAIL: '/elemeter/get-elemeter-info',
-        KEY_OPE_REC: '/search-device-op-log',
-        KEY_BUY_REC: '/elemeter/elemeter-fetch-charge-history',
-        KEY_SEA_REC: '/elemeter/elemeter-fetch-power-consumption',
+        POWER_DETAIL: '/elemeter/get-elemeter-info',
+        POWER_OPER_REC: '/search-device-op-log',
+        POWER_BUY_REC: '/elemeter/elemeter-charge-record',
+        POWER_USE_REC: '/elemeter/elemeter-fetch-power-history',
         ADD_PASSWORD: '/lock/add-password',
         DELETE_PASSWORD: '/lock/delete-password',
         UPDATE_PASSWORD: '/lock/update-password',
@@ -65,8 +84,13 @@ function Management() {
         UNFROZEN_PASSWORD: '/lock/unfrozen-password',
         DEVICE_BIND: '/device/bind',
         DEVICE_UNBIND: '/device/unbind',
-        DYNAMIC_PASSWORD: '/lock/get-dynamic-password-plaintext'
+        DYNAMIC_PASSWORD: '/lock/get-dynamic-password-plaintext',
+        POWER_RESET: '/elemeter/elemeter-charge-reset',
+        POWER_SWITCH_ON: '/elemeter/elemeter-switch-on',
+        POWER_SWITCH_OFF: '/elemeter/elemeter-switch-off',
+        POWER_RECHARGE: '/elemeter/elemeter-charge'
     }
+
     this.init();
 }
 /**
@@ -78,10 +102,12 @@ Management.prototype.init = function () {
 
     this.exeBindLoad();
     this.navChange();
-    this.btnSearch();
     this.dropChange();
     this.btnDetailClick();
     this.tabChange();
+    this.btnUpdateClick();
+    this.btnChargeClick();
+    this.powerInputKeyUp();
     this.exeDeletePassword();
     this.exeSelectPassword();
     this.exeFrozenPassword();
@@ -119,8 +145,6 @@ Management.prototype.addPasswordNotEmpty = function () {
         message = '请输入密码结束时间！';
     } else if (!$('#Pwd_Phone').val().trim()) {
         message = '请输入手机号码！';
-    } else if (!$('#Pwd_Uuid').val().trim()) {
-        message = '请输入门锁UUID！';
     } else {
         result = true;
     }
@@ -167,19 +191,19 @@ Management.prototype.tabChange = function () {
                 case 1:
                     switch (TAB_INDEX) {
                         case 0:
-                            _this.exeKeyDetail();
+                            _this.exePowerDetail();
                             break;
                         case 1:
 
                             break;
                         case 2:
-                            _this.exeKeyBuyRecord();
+                            _this.exePowerBuyRecord();
                             break;
                         case 3:
-                            _this.exeKeySearchRecord();
+                            _this.exePowerUseRecord();
                             break;
                         case 4:
-                            _this.exeKeyOperRecord();
+                            _this.exePowerOperRecord();
                             break;
                     }
                     break;
@@ -198,22 +222,19 @@ Management.prototype.dropChange = function () {
     var _this = this;
     webApp.selectDropOption(function (obj) {
         var _obj = $(obj);
-        var DROP_ID = _obj.parent().attr('id');
-        switch (DROP_ID) {
-            case 'EquBuilding':
-                _this.exeBindFloor();
-                break;
-            case 'KeyEquBuilding':
-                _this.exeBindFloor();
-                break;
-            case 'EquNumber':
-                _this.exeBindRooms();
-                break;
-            case 'KeyEquNumber':
-                _this.exeBindRooms();
-                break;
-            case 'EquRoom':
-                break;
+        var selector = _obj.parent().attr('data-target');
+        _this.DROP_SELECTOR = _obj.parent().attr('id');
+        if (selector) {
+            switch (selector) {
+                case 'EquNumber':
+                case 'KeyEquNumber':
+                    _this.exeBindFloor(selector);
+                    break;
+                case 'EquRoom':
+                case 'KeyEquRoom':
+                    _this.exeBindRooms(selector);
+                    break;
+            }
         }
     });
     return this;
@@ -243,6 +264,49 @@ Management.prototype.addDevicesNotEmpty = function () {
 }
 /**
  *
+ * @returns {boolean}
+ */
+Management.prototype.saveChargeNotEmpty = function () {
+    var message = '';
+    var result = false;
+    var TEMP_PRICE = $('#PowerPrice').val().trim();
+    var TEMP_METHOD = $('#ChargePayMethod .active').attr('data-value').trim();
+    if (!TEMP_PRICE) {
+        message = '请输入充值金额！';
+    } else if (regular.check(regular.MONEY_REG_EXP, TEMP_PRICE)) {
+        message = '充值金额输入有误！';
+    } else if (!TEMP_METHOD) {
+        message = '请选择支付方式！';
+    } else {
+        result = true;
+    }
+    if (!result) {
+        messageBox.show('提示', message, MessageBoxButtons.OK, MessageBoxIcons.infomation);
+    }
+    return result;
+}
+/**
+ *
+ * @returns {Management}
+ */
+Management.prototype.powerInputKeyUp = function () {
+    $(document).on('keyup', '#PowerPrice', function (ev) {
+        ev = ev || window.event;
+        var TEMP_FLAG1 = (ev.keyCode == 8);
+        var TEMP_FLAG2 = (ev.keyCode >= 48 && ev.keyCode <= 57);
+        var TEMP_FLAG3 = (ev.keyCode >= 96 && ev.keyCode <= 105);
+        if (TEMP_FLAG1 || TEMP_FLAG2 || TEMP_FLAG3) {
+            var TEMP_PRICE = parseFloat($('#PowerPrice').val().trim());
+            var TEMP_UNIT = parseFloat($('#Charge_EleUnitPrice').text().trim());
+            $('#PowerAmount').val(TEMP_PRICE / TEMP_UNIT);
+        } else {
+            this.value = this.value.replace(/[^0-9]/g, '')
+        }
+    });
+    return this;
+}
+/**
+ *
  * @returns {Management}
  */
 Management.prototype.btnDetailClick = function () {
@@ -267,6 +331,42 @@ Management.prototype.btnDetailClick = function () {
 }
 /**
  *
+ * @returns {Management}
+ */
+Management.prototype.btnUpdateClick = function () {
+    var _this = this;
+    $(document).on('click', this.BTN_UPDATE, function () {
+        _this.PASSWORD_ID = $(this).attr('data-value').trim();
+        mp.manualShowPanel({
+            index: 3,
+            element: '.panel-sm',
+            complete: function () {
+
+            }
+        });
+    });
+    return this;
+}
+/**
+ *
+ * @returns {Management}
+ */
+Management.prototype.btnChargeClick = function () {
+    var _this = this;
+    $(document).on('click', this.BTN_CHARGE, function () {
+        mp.manualShowPanel({
+            index: 4,
+            element: '.panel-sm',
+            complete: function () {
+                var params = _this.getParams(_this.API_CONFIG.POWER_RECHARGE);
+                _this.ajaxRequestPowerRecharge(params);
+            }
+        });
+    });
+    return this;
+}
+/**
+ *
  * @param params
  * @returns {Management}
  */
@@ -277,7 +377,7 @@ Management.prototype.switchShowDetail = function (params) {
             this.exeLockDetail();
             break;
         case 1:
-            this.exeKeyDetail();
+            this.exePowerDetail();
             break;
         case 2:
             break;
@@ -313,7 +413,7 @@ Management.prototype.getTemplate = function (params) {
  * @param params
  * @returns {Management}
  */
-Management.prototype.ajaxRequestBindFloor = function (params) {
+Management.prototype.ajaxRequestBindFloor = function (params, selector) {
     var _this = this;
     $.ajax({
         url: host + _this.API_CONFIG['BIND_FLOOR'],
@@ -332,7 +432,7 @@ Management.prototype.ajaxRequestBindFloor = function (params) {
                     TEMP_HTML += '<li class="drop-option' + TEMP_NAME + '" data-value="' + TEMP_DATA['CharId'] + '">' + TEMP_DATA['Name'] + '</li>';
                 }
                 TEMP_DATA = null;
-                $('#EquNumber').html(TEMP_HTML);
+                $('#' + selector).html(TEMP_HTML);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
@@ -352,7 +452,7 @@ Management.prototype.ajaxRequestBindFloor = function (params) {
  * @param params
  * @returns {Management}
  */
-Management.prototype.ajaxRequestBindRooms = function (params) {
+Management.prototype.ajaxRequestBindRooms = function (params, selector) {
     var _this = this;
     $.ajax({
         url: host + _this.API_CONFIG['BIND_ROOMS'],
@@ -371,7 +471,7 @@ Management.prototype.ajaxRequestBindRooms = function (params) {
                     TEMP_HTML += '<li class="drop-option' + TEMP_NAME + '" data-value="' + TEMP_DATA['Key'] + '">' + TEMP_DATA['Value'] + '</li>';
                 }
                 TEMP_DATA = null;
-                $('#EquRoom').html(TEMP_HTML);
+                $('#' + selector).html(TEMP_HTML);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
@@ -492,6 +592,67 @@ Management.prototype.ajaxRequestAddDevices = function (params) {
  * @param params
  * @returns {Management}
  */
+Management.prototype.ajaxRequestDeleteDevices = function (params) {
+    var _this = this;
+    $.ajax({
+        url: host + _this.API_CONFIG.DELETE_DEVICES,
+        type: "POST",
+        dataType: "JSON",
+        data: params,
+        success: function (data) {
+            console.log(data);
+            if (data['succ']) {
+                _this.exeBindDevices();
+                messageBox.show("提示", '设备删除成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {Management}
+ */
+Management.prototype.ajaxRequestUpdateDevices = function (params) {
+    var _this = this;
+    $.ajax({
+        url: host + _this.API_CONFIG.UPDATE_DEVICES,
+        type: "POST",
+        dataType: "JSON",
+        data: params,
+        success: function (data) {
+            if (data['succ']) {
+                _this.exeBindDevices();
+                messageBox.show("提示", '设备修改成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {Management}
+ */
 Management.prototype.ajaxRequestBindLoad = function (params) {
     var _this = this;
     $.ajax({
@@ -590,20 +751,26 @@ Management.prototype.ajaxRequestLockDetail = function (params) {
  * @param params
  * @returns {Management}
  */
-Management.prototype.ajaxRequestKeyDetail = function (params) {
+Management.prototype.ajaxRequestPowerDetail = function (params) {
     var _this = this;
     $.ajax({
-        url: host + _this.API_CONFIG['KEY_DETAIL'],
+        url: host + _this.API_CONFIG['POWER_DETAIL'],
         type: "GET",
         dataType: "JSON",
         data: params,
         success: function (data) {
             if (data['succ']) {
+                var TEMP_BUTTONS = '<button class="btn cancel">取消</button>';
+                var BIND_BUTTON = '<button class="btn confirm" data-panel="panel-sm" data-index="2">绑定</button>';
+                var UNBIND_BUTTON = '<button class="btn confirm" onclick="mg.exeDeviceUnbind();">解绑</button>';
                 var JSON_DATA = data['data'];
-                console.log(JSON_DATA);
+                TEMP_BUTTONS = 1 == JSON_DATA['IsBind'] ? TEMP_BUTTONS + UNBIND_BUTTON : TEMP_BUTTONS + BIND_BUTTON;
+                $('#Power_Bind_Btn').html(TEMP_BUTTONS);
+                JSON_DATA['IsBind'] = 1 == JSON_DATA['IsBind'] ? '是' : '否';
                 for (var KEY in JSON_DATA) {
-                    $('#Key_' + KEY).text(JSON_DATA[KEY]);
+                    $('#Power_' + KEY).text(JSON_DATA[KEY]);
                 }
+                $(_this.POWER_STATUS).html(JSON_DATA['EnableState']);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
@@ -669,16 +836,27 @@ Management.prototype.ajaxRequestLockPassword = function (params) {
  * @param params
  * @returns {Management}
  */
-Management.prototype.ajaxRequestKeyBuyRecord = function (params) {
+Management.prototype.ajaxRequestPowerBuyRecord = function (params) {
     var _this = this;
     $.ajax({
-        url: host + _this.API_CONFIG['KEY_BUY_REC'],
+        url: host + _this.API_CONFIG['POWER_BUY_REC'],
         type: "GET",
         dataType: "JSON",
         data: params,
         success: function (data) {
             if (data['succ']) {
-                console.log(data);
+                var JSON_DATA = data['data'];
+                _this.appendPowerBuyRecordTemplate(JSON_DATA);
+                new Pagination({
+                    PAGINATION: '#PagPowerBuy',
+                    PAGE_SIZE: _this.PAGE_SIZE,
+                    DATA_NUMS: data['exted']['totalNum'],
+                    CHANGE_PAGE: function (pageCode) {
+                        params = _this.getParams(_this.API_CONFIG.POWER_BUY_REC);
+                        params['pageIndex'] = pageCode;
+                        _this.ajaxRequestChangePagePowerBuyRecord(params);
+                    }
+                });
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
@@ -698,16 +876,52 @@ Management.prototype.ajaxRequestKeyBuyRecord = function (params) {
  * @param params
  * @returns {Management}
  */
-Management.prototype.ajaxRequestKeySearchRecord = function (params) {
+Management.prototype.appendPowerBuyRecordTemplate = function (params) {
+    var JSON_DATA = null;
+    var TEMP_HTML = '', TEMP_NAME = '';
+    for (var i = 0; i < params.length; i++) {
+        JSON_DATA = params[i];
+        TEMP_NAME = i > 0 ? ' visible-xs visible-sm' : '';
+        TEMP_HTML += '<div class="table-item col-xs-12 col-sm-6 col-md-12"><div class="row-content row">'
+            + '<div class="row-header col-xs-6 col-md-12"><div class="row-title' + TEMP_NAME + ' row">'
+            + '<div class="column col-xs-12 col-md-2">充值手机号</div>'
+            + '<div class="column col-xs-12 col-md-1">充值金额</div>'
+            + '<div class="column col-xs-12 col-md-1">购电量</div>'
+            + '<div class="column col-xs-12 col-md-1">充值单价</div>'
+            + '<div class="column col-xs-12 col-md-2">支付方式</div>'
+            + '<div class="column col-xs-12 col-md-2">支付凭证</div>'
+            + '<div class="column col-xs-12 col-md-3">购电时间</div>'
+            + '</div></div>'
+            + '<div class="row-body col-xs-6 col-md-12"><div class="row-item row">'
+            + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['Phone'] + '</div>'
+            + '<div class="column col-xs-12 col-md-1">' + JSON_DATA['Price'] + '</div>'
+            + '<div class="column col-xs-12 col-md-1">' + JSON_DATA['Amount'] + '</div>'
+            + '<div class="column col-xs-12 col-md-1">' + JSON_DATA['UnitPrice'] + '</div>'
+            + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['PayType'] + '</div>'
+            + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['SerialNumber'] + '</div>'
+            + '<div class="column col-xs-12 col-md-3">' + JSON_DATA['PayTime'] + '</div>'
+            + '</div></div></div></div>';
+    }
+    JSON_DATA = null;
+    $('#PowerBuyRecord').html(TEMP_HTML);
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {Management}
+ */
+Management.prototype.ajaxRequestChangePagePowerBuyRecord = function (params) {
     var _this = this;
     $.ajax({
-        url: host + _this.API_CONFIG['KEY_SEA_REC'],
+        url: host + _this.API_CONFIG['POWER_BUY_REC'],
         type: "GET",
         dataType: "JSON",
         data: params,
         success: function (data) {
             if (data['succ']) {
-                console.log(data);
+                var JSON_DATA = data['data'];
+                _this.appendPowerBuyRecordTemplate(JSON_DATA);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
@@ -727,16 +941,27 @@ Management.prototype.ajaxRequestKeySearchRecord = function (params) {
  * @param params
  * @returns {Management}
  */
-Management.prototype.ajaxRequestKeyOperRecord = function (params) {
+Management.prototype.ajaxRequestPowerUseRecord = function (params) {
     var _this = this;
     $.ajax({
-        url: host + _this.API_CONFIG['KEY_OPE_REC'],
+        url: host + _this.API_CONFIG['POWER_USE_REC'],
         type: "GET",
         dataType: "JSON",
         data: params,
         success: function (data) {
             if (data['succ']) {
-                console.log(data);
+                var JSON_DATA = data['data'];
+                _this.appendPowerUseRecordTemplate(JSON_DATA);
+                new Pagination({
+                    PAGINATION: '#PagPowerUse',
+                    PAGE_SIZE: _this.PAGE_SIZE,
+                    DATA_NUMS: data['exted']['totalNum'],
+                    CHANGE_PAGE: function (pageCode) {
+                        params = _this.getParams(_this.API_CONFIG.POWER_USE_REC);
+                        params['offset'] = _this.PAGE_SIZE * (pageCode - 1);
+                        _this.ajaxRequestChangePagePowerUseRecord(params);
+                    }
+                });
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
@@ -749,6 +974,167 @@ Management.prototype.ajaxRequestKeyOperRecord = function (params) {
             }
         }
     });
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {Management}
+ */
+Management.prototype.ajaxRequestChangePagePowerUseRecord = function (params) {
+    var _this = this;
+    $.ajax({
+        url: host + _this.API_CONFIG['POWER_USE_REC'],
+        type: "GET",
+        dataType: "JSON",
+        data: params,
+        success: function (data) {
+            if (data['succ']) {
+                var JSON_DATA = data['data'];
+                _this.appendPowerUseRecordTemplate(JSON_DATA);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {Management}
+ */
+Management.prototype.appendPowerUseRecordTemplate = function (params) {
+    var JSON_DATA = null;
+    var TEMP_HTML = '', TEMP_NAME = '';
+    for (var i = 0; i < params.length; i++) {
+        JSON_DATA = params[i];
+        JSON_DATA['Time'] = webApp.parseDate(JSON_DATA['Time']);
+        TEMP_NAME = i > 0 ? ' visible-xs visible-sm' : '';
+        JSON_DATA['TotalAmount'] = JSON_DATA['TotalAmount'] == -1 ? '未知' : JSON_DATA['TotalAmount'];
+        TEMP_HTML += '<div class="table-item col-xs-12 col-sm-6 col-md-12"><div class="row-content row">'
+            + '<div class="row-header col-xs-6 col-md-12"><div class="row-title' + TEMP_NAME + ' row">'
+            + '<div class="column col-xs-12 col-md-4">房间用电量</div>'
+            + '<div class="column col-xs-12 col-md-4">剩余总量</div>'
+            + '<div class="column col-xs-12 col-md-4">时间</div>'
+            + '</div></div>'
+            + '<div class="row-body col-xs-6 col-md-12"><div class="row-item row">'
+            + '<div class="column col-xs-12 col-md-4">' + JSON_DATA['ConsumeAmount'] + '</div>'
+            + '<div class="column col-xs-12 col-md-4">' + JSON_DATA['TotalAmount'] + '</div>'
+            + '<div class="column col-xs-12 col-md-4">' + JSON_DATA['Time'] + '</div>'
+            + '</div></div></div></div>';
+    }
+    JSON_DATA = null;
+    $('#PowerUseRecord').html(TEMP_HTML);
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {Management}
+ */
+Management.prototype.ajaxRequestPowerOperRecord = function (params) {
+    var _this = this;
+    $.ajax({
+        url: host + _this.API_CONFIG['POWER_OPER_REC'],
+        type: "GET",
+        dataType: "JSON",
+        data: params,
+        success: function (data) {
+            if (data['succ']) {
+                var JSON_DATA = data['data']['op_list'];
+                _this.appendPowerOperRecordTemplate(JSON_DATA);
+                new Pagination({
+                    PAGINATION: '#PagPowerOper',
+                    PAGE_SIZE: _this.PAGE_SIZE,
+                    DATA_NUMS: data['exted']['totalNum'],
+                    CHANGE_PAGE: function (pageCode) {
+                        params = _this.getParams(_this.POWER_OPER_REC);
+                        params['offset'] = _this.PAGE_SIZE * (pageCode - 1);
+                        _this.ajaxRequestChangePagePowerOperRecord(params);
+                    }
+                });
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {Management}
+ */
+Management.prototype.ajaxRequestChangePagePowerOperRecord = function (params) {
+    var _this = this;
+    $.ajax({
+        url: host + _this.API_CONFIG['POWER_OPER_REC'],
+        type: "GET",
+        dataType: "JSON",
+        data: params,
+        success: function (data) {
+            if (data['succ']) {
+                var JSON_DATA = data['data']['op_list'];
+                _this.appendPowerOperRecordTemplate(JSON_DATA);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {Management}
+ */
+Management.prototype.appendPowerOperRecordTemplate = function (params) {
+    var JSON_DATA = null;
+    var TEMP_HTML = '', TEMP_NAME = '';
+    for (var i = 0; i < params.length; i++) {
+        JSON_DATA = params[i];
+        JSON_DATA['timestamp'] = webApp.parseDate(JSON_DATA['timestamp']);
+        TEMP_NAME = i > 0 ? ' visible-xs visible-sm' : '';
+        TEMP_HTML += '<div class="table-item col-xs-12 col-sm-6 col-md-12"><div class="row-content row">'
+            + '<div class="row-header col-xs-6 col-md-12"><div class="row-title' + TEMP_NAME + ' row">'
+            + '<div class="column col-xs-12 col-md-3">操作时间</div>'
+            + '<div class="column col-xs-12 col-md-2">操作人</div>'
+            + '<div class="column col-xs-12 col-md-2">操作人账号</div>'
+            + '<div class="column col-xs-12 col-md-2">操作类型</div>'
+            + '<div class="column col-xs-12 col-md-3">操作事件</div>'
+            + '</div></div>'
+            + '<div class="row-body col-xs-6 col-md-12"><div class="row-item row">'
+            + '<div class="column col-xs-12 col-md-3">' + JSON_DATA['timestamp'] + '</div>'
+            + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['operator']['name'] + '</div>'
+            + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['operator']['id'] + '</div>'
+            + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['op_id'] + '</div>'
+            + '<div class="column col-xs-12 col-md-3">' + JSON_DATA['description'] + '</div>'
+            + '</div></div></div></div>';
+    }
+    JSON_DATA = null;
+    $('#PowerOperRecord').html(TEMP_HTML);
     return this;
 }
 /**
@@ -917,14 +1303,13 @@ Management.prototype.ajaxRequestLockOperRecord = function (params) {
         data: params,
         success: function (data) {
             if (data['succ']) {
-                console.log(data);
                 var JSON_DATA = data['data'];
                 new Pagination({
                     PAGINATION: '#PageOperLock',
                     PAGE_SIZE: _this.PAGE_SIZE,
                     DATA_NUMS: data['exted']['totalNum'],
                     CHANGE_PAGE: function (pageCode) {
-                        params = _this.getParams(_this.API_CONFIG.LOCK_OPER_REC);
+                        params = _this.getParams(_this.LOCK_OPER_REC);
                         params['offset'] = _this.PAGE_SIZE * (pageCode - 1);
                         _this.ajaxRequestChangePageLockOperRecord(params);
                     }
@@ -1018,7 +1403,9 @@ Management.prototype.ajaxRequestAddPassword = function (params) {
         data: params,
         success: function (data) {
             if (data['succ']) {
-                console.log(data);
+                mp.hideSmPanel();
+                _this.exeLockPassword();
+                messageBox.show("提示", '密码新增成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
@@ -1072,12 +1459,14 @@ Management.prototype.ajaxRequestUpdatePassword = function (params) {
     var _this = this;
     $.ajax({
         url: host + _this.API_CONFIG['UPDATE_PASSWORD'],
-        type: "GET",
+        type: "POST",
         dataType: "JSON",
         data: params,
         success: function (data) {
             if (data['succ']) {
-                console.log(data);
+                messageBox.show("提示", '密码修改成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
+                _this.exeLockPassword();
+                mp.hideSmPanel();
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
@@ -1196,7 +1585,168 @@ Management.prototype.ajaxRequestDeviceBind = function (params) {
         data: params,
         success: function (data) {
             if (data['succ']) {
-                console.log(data);
+                mp.hideSmPanel();
+                mp.hideLgPanel();
+                _this.exeBindLoad();
+                messageBox.show("提示", '绑定成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {Management}
+ */
+Management.prototype.ajaxRequestPowerReset = function (params) {
+    var _this = this;
+    $.ajax({
+        url: host + _this.API_CONFIG.POWER_RESET,
+        type: "POST",
+        dataType: "JSON",
+        data: params,
+        success: function (data) {
+            if (data['succ']) {
+                messageBox.show("提示", '剩余电量清空成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {Management}
+ */
+Management.prototype.ajaxRequestPowerSwitchOn = function (params) {
+    var _this = this;
+    $.ajax({
+        url: host + _this.API_CONFIG.POWER_SWITCH_ON,
+        type: "POST",
+        dataType: "JSON",
+        data: params,
+        success: function (data) {
+            if (data['succ']) {
+                $(_this.POWER_STATUS).html('合闸');
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {Management}
+ */
+Management.prototype.ajaxRequestPowerSwitchOff = function (params) {
+    var _this = this;
+    $.ajax({
+        url: host + _this.API_CONFIG.POWER_SWITCH_OFF,
+        type: "POST",
+        dataType: "JSON",
+        data: params,
+        success: function (data) {
+            if (data['succ']) {
+                $(_this.POWER_STATUS).html('断电');
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {Management}
+ */
+Management.prototype.ajaxRequestPowerRecharge = function (params) {
+    var _this = this;
+    $.ajax({
+        url: host + _this.API_CONFIG.POWER_RECHARGE,
+        type: "GET",
+        dataType: "JSON",
+        data: params,
+        success: function (data) {
+            if (data['succ']) {
+                var TEMP_HTML = '';
+                var JSON_DATA = data['data'];
+                for (var KEY in JSON_DATA) {
+                    $('#Charge_' + KEY).text(JSON_DATA[KEY]);
+                }
+                JSON_DATA = data['exted'];
+                for (var i = 0; i < JSON_DATA.length; i++) {
+                    var TEMP_ACTIVE = i == 0 ? ' active' : '';
+                    TEMP_HTML += '<li class="drop-option' + TEMP_ACTIVE + '" data-value="'
+                        + JSON_DATA[i]['Key'] + '">' + JSON_DATA[i]['Value'] + '</li>';
+                }
+                $('#ChargePayMethod').html(TEMP_HTML);
+                $('#ChargePayMethodResult').text($('#ChargePayMethod .active').text());
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {Management}
+ */
+Management.prototype.ajaxRequestSavePowerRecharge = function (params) {
+    var _this = this;
+    $.ajax({
+        url: host + _this.API_CONFIG.POWER_RECHARGE,
+        type: "POST",
+        dataType: "JSON",
+        data: params,
+        success: function (data) {
+            if (data['succ']) {
+                mp.hideSmPanel();
+                messageBox.show("提示", '电费充值成功!', MessageBoxButtons.OK, MessageBoxIcons.infomation);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
@@ -1225,7 +1775,9 @@ Management.prototype.ajaxRequestDeviceUnbind = function (params) {
         data: params,
         success: function (data) {
             if (data['succ']) {
-                console.log(data);
+                mp.hideLgPanel();
+                _this.exeBindLoad();
+                messageBox.show("提示", '门锁解绑成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
@@ -1276,15 +1828,23 @@ Management.prototype.ajaxRequestGetDynamicPassword = function (params) {
  *
  * @returns {Management}
  */
-Management.prototype.exeDeletePassword = function () {
+Management.prototype.exeSavePowerRecharge = function () {
+    if (this.saveChargeNotEmpty()) {
+        var params = this.getParams(this.POWER_RECHARGE);
+        this.ajaxRequestSavePowerRecharge(params);
+    }
+    return this;
+}
+/**
+ *
+ * @returns {Management}
+ */
+Management.prototype.exePowerReset = function () {
     var _this = this;
-    $(document).on('click', '.btn-delete', function () {
-        _this.PASSWORD_ID = $(this).attr('data-value').trim();
-        messageBox.show('确认', '确认删除该密码吗？', MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
-        messageBox.confirm(function () {
-            var params = _this.getParams(_this.API_CONFIG.DELETE_PASSWORD);
-            _this.ajaxRequestDeletePassword(params);
-        });
+    messageBox.show('确认', '确认将剩余电量清零吗？', MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
+    messageBox.confirm(function () {
+        var params = _this.getParams(_this.API_CONFIG.POWER_RESET);
+        _this.ajaxRequestPowerReset(params);
     });
     return this;
 }
@@ -1292,43 +1852,21 @@ Management.prototype.exeDeletePassword = function () {
  *
  * @returns {Management}
  */
-Management.prototype.exeSelectPassword = function () {
+Management.prototype.exePowerSwitch = function () {
     var _this = this;
-    $(document).on('click', '.btn-select', function () {
-        var params = _this.getParams(_this.API_CONFIG.SELECT_PASSWORD);
-        _this.ajaxRequestSelectPassword(params);
-    });
-    return this;
-}
-/**
- *
- * @returns {Management}btn-unfrozen
- */
-Management.prototype.exeFrozenPassword = function () {
-    var _this = this;
-    $(document).on('click', '.btn-frozen', function () {
-        _this.PASSWORD_ID = $(this).attr('data-value').trim();
-        messageBox.show('确认', '确认冻结该密码吗？', MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
-        messageBox.confirm(function () {
-            var params = _this.getParams(_this.API_CONFIG.FROZEN_PASSWORD);
-            _this.ajaxRequestFrozenPassword(params);
-        });
-    });
-    return this;
-}
-/**
- *
- * @returns {Management}
- */
-Management.prototype.exeUnfrozenPassword = function () {
-    var _this = this;
-    $(document).on('click', '.btn-unfrozen', function () {
-        _this.PASSWORD_ID = $(this).attr('data-value').trim();
-        messageBox.show('确认', '确认解冻该密码吗？', MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
-        messageBox.confirm(function () {
-            var params = _this.getParams(_this.API_CONFIG.UNFROZEN_PASSWORD);
-            _this.ajaxRequestUnfrozenPassword(params);
-        });
+    var TEMP_STATUS = $(_this.POWER_STATUS).text();
+    var TEMP_SWITCH = '合闸' == TEMP_STATUS ? '断电' : '合闸';
+    var TEMP_MESSAGE = '当前状态：' + TEMP_STATUS + '，确认' + TEMP_SWITCH + '吗？'
+    messageBox.show('确认', TEMP_MESSAGE, MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
+    messageBox.confirm(function () {
+        var params = null;
+        if ('合闸' != TEMP_STATUS) {
+            params = _this.getParams(_this.API_CONFIG.POWER_SWITCH_ON);
+            _this.ajaxRequestPowerSwitchOn(params);
+        } else {
+            params = _this.getParams(_this.API_CONFIG.POWER_SWITCH_OFF);
+            _this.ajaxRequestPowerSwitchOff(params);
+        }
     });
     return this;
 }
@@ -1345,9 +1883,9 @@ Management.prototype.exeGetDynamicPassword = function () {
  *
  * @returns {Management}
  */
-Management.prototype.exeKeyOperRecord = function () {
-    var params = this.getParams(this.API_CONFIG.KEY_OPE_REC);
-    this.ajaxRequestKeyOperRecord(params);
+Management.prototype.exePowerOperRecord = function () {
+    var params = this.getParams(this.POWER_OPER_REC);
+    this.ajaxRequestPowerOperRecord(params);
     return this;
 }
 /**
@@ -1364,7 +1902,7 @@ Management.prototype.exeLockOpenRecord = function () {
  * @returns {Management}
  */
 Management.prototype.exeLockOperRecord = function () {
-    var params = this.getParams(this.API_CONFIG.LOCK_OPER_REC);
+    var params = this.getParams(this.LOCK_OPER_REC);
     this.ajaxRequestLockOperRecord(params);
     return this;
 }
@@ -1390,27 +1928,27 @@ Management.prototype.exeLockDetail = function () {
  *
  * @returns {Management}
  */
-Management.prototype.exeKeyDetail = function () {
-    var params = this.getParams(this.API_CONFIG.KEY_DETAIL);
-    this.ajaxRequestKeyDetail(params);
+Management.prototype.exePowerDetail = function () {
+    var params = this.getParams(this.API_CONFIG.POWER_DETAIL);
+    this.ajaxRequestPowerDetail(params);
     return this;
 }
 /**
  *
  * @returns {Management}
  */
-Management.prototype.exeKeyBuyRecord = function () {
-    var params = this.getParams(this.API_CONFIG.KEY_BUY_REC);
-    this.ajaxRequestKeyBuyRecord(params);
+Management.prototype.exePowerBuyRecord = function () {
+    var params = this.getParams(this.API_CONFIG.POWER_BUY_REC);
+    this.ajaxRequestPowerBuyRecord(params);
     return this;
 }
 /**
  *
  * @returns {Management}
  */
-Management.prototype.exeKeySearchRecord = function () {
-    var params = this.getParams(this.API_CONFIG.KEY_SEA_REC);
-    this.ajaxRequestKeySearchRecord(params);
+Management.prototype.exePowerUseRecord = function () {
+    var params = this.getParams(this.API_CONFIG.POWER_USE_REC);
+    this.ajaxRequestPowerUseRecord(params);
     return this;
 }
 /**
@@ -1426,18 +1964,18 @@ Management.prototype.exeBindDevices = function () {
  *
  * @returns {Management}
  */
-Management.prototype.exeBindFloor = function () {
+Management.prototype.exeBindFloor = function (selector) {
     var params = this.getParams(this.API_CONFIG.BIND_FLOOR);
-    this.ajaxRequestBindFloor(params);
+    this.ajaxRequestBindFloor(params, selector);
     return this;
 }
 /**
  *
  * @returns {Management}
  */
-Management.prototype.exeBindRooms = function () {
+Management.prototype.exeBindRooms = function (selector) {
     var params = this.getParams(this.API_CONFIG.BIND_ROOMS);
-    this.ajaxRequestBindRooms(params);
+    this.ajaxRequestBindRooms(params, selector);
     return this;
 }
 /**
@@ -1476,9 +2014,69 @@ Management.prototype.exeAddPassword = function () {
  *
  * @returns {Management}
  */
+Management.prototype.exeDeletePassword = function () {
+    var _this = this;
+    $(document).on('click', '.btn-delete', function () {
+        _this.PASSWORD_ID = $(this).attr('data-value').trim();
+        messageBox.show('确认', '确认删除该密码吗？', MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
+        messageBox.confirm(function () {
+            var params = _this.getParams(_this.API_CONFIG.DELETE_PASSWORD);
+            _this.ajaxRequestDeletePassword(params);
+        });
+    });
+    return this;
+}
+/**
+ *
+ * @returns {Management}
+ */
 Management.prototype.exeUpdatePassword = function () {
     var params = this.getParams(this.API_CONFIG.UPDATE_PASSWORD);
     this.ajaxRequestUpdatePassword(params);
+    return this;
+}
+/**
+ *
+ * @returns {Management}
+ */
+Management.prototype.exeSelectPassword = function () {
+    var _this = this;
+    $(document).on('click', '.btn-select', function () {
+        var params = _this.getParams(_this.API_CONFIG.SELECT_PASSWORD);
+        _this.ajaxRequestSelectPassword(params);
+    });
+    return this;
+}
+/**
+ *
+ * @returns {Management}
+ */
+Management.prototype.exeFrozenPassword = function () {
+    var _this = this;
+    $(document).on('click', '.btn-frozen', function () {
+        _this.PASSWORD_ID = $(this).attr('data-value').trim();
+        messageBox.show('确认', '确认冻结该密码吗？', MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
+        messageBox.confirm(function () {
+            var params = _this.getParams(_this.API_CONFIG.FROZEN_PASSWORD);
+            _this.ajaxRequestFrozenPassword(params);
+        });
+    });
+    return this;
+}
+/**
+ *
+ * @returns {Management}
+ */
+Management.prototype.exeUnfrozenPassword = function () {
+    var _this = this;
+    $(document).on('click', '.btn-unfrozen', function () {
+        _this.PASSWORD_ID = $(this).attr('data-value').trim();
+        messageBox.show('确认', '确认解冻该密码吗？', MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
+        messageBox.confirm(function () {
+            var params = _this.getParams(_this.API_CONFIG.UNFROZEN_PASSWORD);
+            _this.ajaxRequestUnfrozenPassword(params);
+        });
+    });
     return this;
 }
 /**
@@ -1507,11 +2105,23 @@ Management.prototype.exeDeviceUnbind = function () {
  *
  * @returns {Management}
  */
-Management.prototype.btnSearch = function () {
+Management.prototype.exeDeleteDevices = function () {
     var _this = this;
-    $(document).on('click', '.btn.search', function () {
-        _this.exeBindDevices();
+    messageBox.show("确认", "确认删除设备吗？", MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
+    messageBox.confirm(function () {
+        mp.hideLgPanel();
+        var params = _this.getParams(_this.API_CONFIG.DELETE_DEVICES);
+        _this.ajaxRequestDeleteDevices(params);
     });
+    return this;
+}
+/**
+ *
+ * @returns {Management}
+ */
+Management.prototype.exeUpdateDevices = function () {
+    var params = this.getParams(this.API_CONFIG.UPDATE_DEVICES);
+    this.ajaxRequestUpdateDevices(params);
     return this;
 }
 /**
@@ -1523,27 +2133,59 @@ Management.prototype.getResult = function (name) {
     var TEMP_RESULT = 0;
     switch (name) {
         case this.ADD_PWD_START:
-            TEMP_RESULT = $('#Pwd_Begin').val();
+            TEMP_RESULT = $('#Pwd_Begin').val().trim();
             TEMP_RESULT = TEMP_RESULT ? webApp.parseTime(TEMP_RESULT) : 0;
             break;
         case this.ADD_PWD_END:
-            TEMP_RESULT = $('#Pwd_End').val();
+            TEMP_RESULT = $('#Pwd_End').val().trim();
+            TEMP_RESULT = TEMP_RESULT ? webApp.parseTime(TEMP_RESULT) : 0;
+            break;
+        case this.UPDATE_PWD_START:
+            TEMP_RESULT = $('#Update_Pwd_Begin').val().trim();
+            TEMP_RESULT = TEMP_RESULT ? webApp.parseTime(TEMP_RESULT) : 0;
+            break;
+        case this.UPDATE_PWD_END:
+            TEMP_RESULT = $('#Update_Pwd_End').val().trim();
             TEMP_RESULT = TEMP_RESULT ? webApp.parseTime(TEMP_RESULT) : 0;
             break;
         case this.LOCK_OPEN_START:
-            TEMP_RESULT = $('#Lock_Open_Start').val();
+            TEMP_RESULT = $('#Lock_Open_Start').val().trim();
             TEMP_RESULT = TEMP_RESULT ? webApp.parseTime(TEMP_RESULT) : 0;
             break;
         case this.LOCK_OPEN_END:
-            TEMP_RESULT = $('#Lock_Open_End').val();
+            TEMP_RESULT = $('#Lock_Open_End').val().trim();
             TEMP_RESULT = TEMP_RESULT ? webApp.parseTime(TEMP_RESULT) : 0;
             break;
         case this.LOCK_OPER_START:
-            TEMP_RESULT = $('#Lock_Oper_Start').val();
+            TEMP_RESULT = $('#Lock_Oper_Start').val().trim();
             TEMP_RESULT = TEMP_RESULT ? webApp.parseTime(TEMP_RESULT) : 0;
             break;
         case this.LOCK_OPER_END:
-            TEMP_RESULT = $('#Lock_Oper_End').val();
+            TEMP_RESULT = $('#Lock_Oper_End').val().trim();
+            TEMP_RESULT = TEMP_RESULT ? webApp.parseTime(TEMP_RESULT) : 0;
+            break;
+        case this.POWER_BUY_START:
+            TEMP_RESULT = $('#Power_Buy_Start').val().trim();
+            TEMP_RESULT = TEMP_RESULT ? webApp.parseTime(TEMP_RESULT) : 0;
+            break;
+        case this.POWER_BUY_END:
+            TEMP_RESULT = $('#Power_Buy_End').val().trim();
+            TEMP_RESULT = TEMP_RESULT ? webApp.parseTime(TEMP_RESULT) : 0;
+            break;
+        case this.POWER_OPER_START:
+            TEMP_RESULT = $('#Power_Oper_Start').val().trim();
+            TEMP_RESULT = TEMP_RESULT ? webApp.parseTime(TEMP_RESULT) : 0;
+            break;
+        case this.POWER_OPER_END:
+            TEMP_RESULT = $('#Power_Oper_End').val().trim();
+            TEMP_RESULT = TEMP_RESULT ? webApp.parseTime(TEMP_RESULT) : 0;
+            break;
+        case this.POWER_USE_START:
+            TEMP_RESULT = $('#Power_Use_Start').val().trim();
+            TEMP_RESULT = TEMP_RESULT ? webApp.parseTime(TEMP_RESULT) : 0;
+            break;
+        case this.POWER_USE_END:
+            TEMP_RESULT = $('#Power_Use_End').val().trim();
             TEMP_RESULT = TEMP_RESULT ? webApp.parseTime(TEMP_RESULT) : 0;
             break;
     }
@@ -1557,6 +2199,7 @@ Management.prototype.getResult = function (name) {
 Management.prototype.getParams = function (name) {
     var _this = this;
     var params = null;
+    var TEMP_SELECTOR = '#' + _this.DROP_SELECTOR + ' .active';
     switch (name) {
         case this.API_CONFIG.BIND_LOAD:
             params = {
@@ -1566,13 +2209,13 @@ Management.prototype.getParams = function (name) {
         case this.API_CONFIG.BIND_FLOOR:
             params = {
                 requestKey: localStorage.getItem("requestKey"),
-                buildingCharId: $('#EquBuilding .active').attr('data-value')
+                buildingCharId: $(TEMP_SELECTOR).attr('data-value').trim()
             }
             break;
         case this.API_CONFIG.BIND_ROOMS:
             params = {
                 requestKey: localStorage.getItem("requestKey"),
-                buildingFloorCharId: $('#EquNumber .active').attr('data-value')
+                buildingFloorCharId: $(TEMP_SELECTOR).attr('data-value').trim()
             }
             break;
         case this.API_CONFIG.ADD_DEVICES:
@@ -1618,7 +2261,7 @@ Management.prototype.getParams = function (name) {
                 start_time: _this.getResult(_this.LOCK_OPEN_START)
             }
             break;
-        case this.API_CONFIG.LOCK_OPER_REC:
+        case this.LOCK_OPER_REC:
             params = {
                 uuid: _this.DATA_UUID,
                 count: _this.PAGE_SIZE,
@@ -1628,44 +2271,46 @@ Management.prototype.getParams = function (name) {
                 start_time: _this.getResult(_this.LOCK_OPER_START)
             }
             break;
-        case this.API_CONFIG.KEY_DETAIL:
+        case this.API_CONFIG.POWER_DETAIL:
             params = {
                 uuid: _this.DATA_UUID,
                 requestKey: localStorage.getItem("requestKey")
             }
             break;
-        case this.API_CONFIG.KEY_BUY_REC:
+        case this.API_CONFIG.POWER_BUY_REC:
             params = {
-                offset: 0,
-                end_time: 1503305700,
                 uuid: _this.DATA_UUID,
-                start_time: 1502178900,
+                pageSize: _this.PAGE_SIZE,
+                pageIndex: _this.PAGE_INDEX,
+                requestKey: localStorage.getItem("requestKey"),
+                endTime: _this.getResult(_this.POWER_BUY_END),
+                startTime: _this.getResult(_this.POWER_BUY_START)
+            }
+            break;
+        case this.API_CONFIG.POWER_USE_REC:
+            params = {
                 count: _this.PAGE_SIZE,
+                uuid: _this.DATA_UUID,
+                start_time: _this.getResult(_this.POWER_USE_START),
+                end_time: _this.getResult(_this.POWER_USE_END),
+                offset: _this.PAGE_SIZE * (_this.PAGE_INDEX - 1),
                 requestKey: localStorage.getItem("requestKey")
             }
             break;
-        case this.API_CONFIG.KEY_SEA_REC:
+        case this.POWER_OPER_REC:
             params = {
-                end_time: 1502150400,
                 uuid: _this.DATA_UUID,
-                start_time: 1501977600,
-                requestKey: localStorage.getItem("requestKey")
-            }
-            break;
-        case this.API_CONFIG.KEY_OPE_REC:
-            params = {
-                offset: 0,
-                end_time: 1502150400,
-                uuid: _this.DATA_UUID,
-                start_time: 1501977600,
                 count: _this.PAGE_SIZE,
-                requestKey: localStorage.getItem("requestKey")
+                requestKey: localStorage.getItem("requestKey"),
+                offset: _this.PAGE_SIZE * (_this.PAGE_INDEX - 1),
+                end_time: _this.getResult(_this.POWER_OPER_END),
+                start_time: _this.getResult(_this.POWER_OPER_START)
             }
             break;
         case this.API_CONFIG.ADD_PASSWORD:
             params = {
+                uuid: _this.DATA_UUID,
                 name: $('#Pwd_Name').val().trim(),
-                uuid: $('#Pwd_Uuid').val().trim(),
                 password: $('#Pwd_Pwd').val().trim(),
                 phonenumber: $('#Pwd_Phone').val().trim(),
                 requestKey: localStorage.getItem("requestKey"),
@@ -1675,13 +2320,13 @@ Management.prototype.getParams = function (name) {
             break;
         case this.API_CONFIG.UPDATE_PASSWORD:
             params = {
-                name: 0,
-                uuid: '',
-                password: '',
-                password_id: '',
-                phonenumber: '',
-                permission_end: '',
-                permission_begin: '',
+                uuid: _this.DATA_UUID,
+                password_id: _this.PASSWORD_ID,
+                name: $('#Update_Pwd_Name').val().trim(),
+                password: $('#Update_Pwd_Pwd').val().trim(),
+                phonenumber: $('#Update_Pwd_Phone').val().trim(),
+                permission_end: _this.getResult(_this.UPDATE_PWD_END),
+                permission_begin: _this.getResult(_this.UPDATE_PWD_START),
                 requestKey: localStorage.getItem("requestKey")
             }
             break;
@@ -1714,9 +2359,9 @@ Management.prototype.getParams = function (name) {
             break;
         case this.API_CONFIG.DEVICE_BIND:
             params = {
-                buildingRoomCharId: '',
-                deviceCharId: '',
-                requestKey: localStorage.getItem("requestKey")
+                deviceCharId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey"),
+                buildingRoomCharId: $('#KeyEquRoom .active').attr('data-value').trim()
             }
             break;
         case this.API_CONFIG.DEVICE_UNBIND:
@@ -1731,11 +2376,62 @@ Management.prototype.getParams = function (name) {
                 requestKey: localStorage.getItem("requestKey")
             }
             break;
+        case this.API_CONFIG.POWER_RESET:
+            params = {
+                uuid: _this.DATA_UUID,
+                requestKey: localStorage.getItem("requestKey")
+            }
+            break;
+        case this.API_CONFIG.POWER_SWITCH_ON:
+            params = {
+                uuid: _this.DATA_UUID,
+                requestKey: localStorage.getItem("requestKey")
+            }
+            break;
+        case this.API_CONFIG.POWER_SWITCH_OFF:
+            params = {
+                uuid: _this.DATA_UUID,
+                requestKey: localStorage.getItem("requestKey")
+            }
+            break;
+        case this.API_CONFIG.POWER_RECHARGE:
+            params = {
+                deviceCharId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
+            break;
+        case this.POWER_RECHARGE:
+            params = {
+                contractCharId: '',
+                uuid: _this.DATA_UUID,
+                deviceCharId: _this.DATA_VALUE,
+                price: $('#PowerPrice').val().trim(),
+                amount: $('#PowerAmount').val().trim(),
+                phone: $('#Charge_Phone').text().trim(),
+                serialNumber: $('#PowerNumber').val().trim(),
+                requestKey: localStorage.getItem("requestKey"),
+                description: $('#PowerDescription').val().trim(),
+                unitPrice: $('#Charge_EleUnitPrice').text().trim(),
+                payParameterCharId: $('#ChargePayMethod .active').attr('data-value').trim(),
+            }
+            break;
+        case this.API_CONFIG.UPDATE_DEVICES:
+            params = {
+                uuid: _this.DATA_UUID,
+                serialNumber: '',
+                deviceCharId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
+            break;
+        case this.API_CONFIG.DELETE_DEVICES:
+            params = {
+                deviceCharId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
+            break;
     }
     return params;
 }
-
-
 /**
  *
  * @type {Management}

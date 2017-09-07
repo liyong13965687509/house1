@@ -40,7 +40,7 @@
 }
 .portlet.calendar .fc-button.fc-state-active,
 .portlet.calendar .fc-button.fc-state-hover {
-  color: #666;
+  color: #666666;
   background-color: #F9F9F9;
 }
 .portlet.calendar .fc-button.fc-state-disabled {
@@ -197,7 +197,7 @@
   color: #fff;
 }
 .form-wizard .active .step .desc {
-  color: #333;
+  color: #333333;
   font-weight: 400;
 }
 .form-wizard .step i {
@@ -213,7 +213,7 @@
 .form-wizard .done .step i {
   font-size: 12px;
   font-weight: normal;
-  color: #999;
+  color: #999999;
   display: inline-block;
 }
 @media (min-width: 768px) and (max-width: 1280px) {
@@ -275,12 +275,12 @@ jqvmap changes
 .jqvmap-zoomin {
   height: 16px;
   width: 16px;
-  background-color: #666;
+  background-color: #666666;
 }
 .jqvmap-zoomout {
   height: 16px;
   width: 16px;
-  background-color: #666;
+  background-color: #666666;
 }
 .vmaps {
   position: relative;
@@ -311,7 +311,7 @@ Select2 plugin css changes
   border-color: #e5e5e5;
 }
 .has-error .select2-container.select2-dropdown-open .select2-choice > span {
-  color: #999;
+  color: #999999;
 }
 .has-success .select2-container .select2-choice {
   border-color: #468847;
@@ -320,7 +320,7 @@ Select2 plugin css changes
   border-color: #e5e5e5;
 }
 .has-success .select2-container.select2-dropdown-open .select2-choice > span {
-  color: #999;
+  color: #999999;
 }
 /***
 Jansy File Input plugin css changes
@@ -518,7 +518,7 @@ Dashboard Charts(new in v1.2.1)
 .easy-pie-chart .title {
   display: block;
   text-align: center;
-  color: #333;
+  color: #333333;
   font-weight: 300;
   font-size: 16px;
   margin-top: 5px;
@@ -526,7 +526,7 @@ Dashboard Charts(new in v1.2.1)
 }
 .sparkline-chart .title:hover,
 .easy-pie-chart .title:hover {
-  color: #666;
+  color: #666666;
   text-decoration: none;
 }
 .sparkline-chart .title > i,
@@ -621,7 +621,7 @@ Datatables Plugin(in v1.3)
   margin-left: 0;
   padding: 7px;
   text-align: center;
-  color: #333;
+  color: #333333;
   font-size: 13px;
   border: 1px solid #ddd;
   background-color: #eee;
@@ -740,14 +740,14 @@ jQuery Multi Select
   font-size: 13px;
 }
 .ms-container .ms-list.ms-focus {
-  border-color: #999;
+  border-color: #999999;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
 }
 .ms-container .ms-selectable li.ms-hover,
 .ms-container .ms-selection li.ms-hover {
-  color: #333;
+  color: #333333;
   background-color: #eee;
 }
 .ms-container .form-control {
@@ -899,7 +899,7 @@ Bootstrap Daterangepicker
   padding: 5px;
 }
 .daterangepicker .ranges li {
-  color: #333;
+  color: #333333;
 }
 .daterangepicker .ranges li.active,
 .daterangepicker .ranges li:hover {
@@ -1016,7 +1016,7 @@ Bootstrap Markdown
   margin-left: 0px;
 }
 .md-editor.active {
-  border: 1px solid #999;
+  border: 1px solid #999999;
   -webkit-box-shadow: none !important;
   -moz-box-shadow: none !important;
   box-shadow: none !important;
@@ -1162,7 +1162,7 @@ Jstree
 .vakata-context .vakata-context-hover > a,
 .vakata-context li a:hover {
   background-color: #eee;
-  color: #333;
+  color: #333333;
   box-shadow: none;
 }
 .vakata-context li a span,
@@ -1187,10 +1187,10 @@ Bootstrap Select
   border-color: #e5e5e5;
 }
 .bootstrap-select.open .btn1 {
-  border-color: #999;
+  border-color: #999999;
 }
 .bootstrap-select.open.dropup .btn1 {
-  border-color: #999;
+  border-color: #999999;
 }
 .bootstrap-select .btn:focus {
   outline: none !important;
@@ -1205,7 +1205,7 @@ Bootstrap Select
   font-size: 14px;
 }
 .bootstrap-select.btn-group .dropdown-menu .text-muted {
-  color: #999 !important;
+  color: #999999 !important;
 }
 .bootstrap-select .caret {
   border: 0;

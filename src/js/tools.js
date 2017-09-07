@@ -484,6 +484,7 @@ function WebApp() {
     this.BIND_COMPANY = arguments['BIND_COMPANY'] ? arguments['BIND_COMPANY'] : "BIND_COMPANY";
     this.TEMPLATE = arguments['TEMPLATE'] ? arguments['TEMPLATE'] : "<div class='app-bg'></div>";
     this.DROP_CONTAINER = arguments['DROP_CONTAINER'] ? arguments['DROP_CONTAINER'] : ".drop-container";
+    this.DATE_TIME_PICKER = arguments['DATE_TIME_PICKER'] ? arguments['DATE_TIME_PICKER'] : ".dateTimePicker";
     this.NO_RESULT = arguments['NO_RESULT'] ? arguments['NO_RESULT'] :
         "<div class='no-result'><img src='images/no_result.png' /><p>抱歉~，暂无数据</p></div>";
 
@@ -499,6 +500,7 @@ function WebApp() {
  * @returns {WebApp}
  */
 WebApp.prototype.init = function () {
+    this.initDateTimePicker();
     this.showLgNavMenu();
     this.hideLgNavMenu();
     this.bindAccount()
@@ -511,6 +513,19 @@ WebApp.prototype.init = function () {
     this.propertyGrantControl();
     this.customerGrantControl();
     this.employeeGrantControl();
+    return this;
+}
+/**
+ *
+ * @returns {WebApp}
+ */
+WebApp.prototype.initDateTimePicker = function () {
+    if (undefined != $(this.DATE_TIME_PICKER)[0]) {
+        $(this.DATE_TIME_PICKER).datetimepicker({
+            lang: 'zh-CN',
+            format: 'yyyy-mm-dd hh:ii'
+        });
+    }
     return this;
 }
 /**
@@ -746,8 +761,6 @@ WebApp.prototype.getParams = function (name) {
     }
     return params;
 }
-
-
 /**
  *
  * @param e
@@ -1090,17 +1103,17 @@ function MessageBox() {
     this.iSwitch = arguments['iSwitch'] ? arguments['iSwitch'] : true;
     this.element = arguments['element'] ? arguments['element'] : '#msgModal';
     this.backDrop = arguments['backDrop'] ? arguments['backDrop'] : '.modal-backdrop';
-    this.btnConfirm = arguments['btnConfirm'] ? arguments['btnConfirm'] : '.btn-confirm';
+    this.btnConfirm = arguments['btnConfirm'] ? arguments['btnConfirm'] : this.element + ' .btn.confirm';
 }
 /**
  *
  * @type {{OK: string, CANCEL: string, OKCANCEL: string}}
  */
 var MessageBoxButtons = {
-    OK: '<button class="btn-confirm" data-dismiss="modal">确认</button>',
-    CANCEL: '<button class="btn-cancel" data-dismiss="modal">取消</button>',
-    OKCANCEL: '<button class="btn-confirm" data-dismiss="modal">确认</button>'
-    + '<button class="btn-cancel" data-dismiss="modal">取消</button>',
+    OK: '<button class="btn confirm" data-dismiss="modal">确认</button>',
+    CANCEL: '<button class="btn cancel" data-dismiss="modal">取消</button>',
+    OKCANCEL: '<button class="btn confirm" data-dismiss="modal">确认</button>'
+    + '<button class="btn cancel" data-dismiss="modal">取消</button>',
 }
 /**
  *
@@ -1735,7 +1748,7 @@ function Pagination() {
     this.ACTIVE = arguments['ACTIVE'] ? arguments['ACTIVE'] : ".active";
     this.PAGE_CODE = arguments['PAGE_CODE'] ? arguments['PAGE_CODE'] : 1;
     this.PAGE_SIZE = arguments['PAGE_SIZE'] ? arguments['PAGE_SIZE'] : 10;
-    this.DATA_NUMS = arguments['DATA_NUMS'] ? arguments['DATA_NUMS'] : 100;
+    this.DATA_NUMS = arguments['DATA_NUMS'] ? arguments['DATA_NUMS'] : 0;
     this.PAGINATION = arguments['PAGINATION'] ? arguments['PAGINATION'] : ".pagination";
     this.TOTAL_PAGES = parseInt((parseInt(this.DATA_NUMS) + this.PAGE_SIZE - 1) / this.PAGE_SIZE);
     this.PAGINATION_PREV = arguments['PAGINATION_PREV'] ? arguments['PAGINATION_PREV'] : this.PAGINATION + " .pagination-prev";

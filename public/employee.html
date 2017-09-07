@@ -8,11 +8,11 @@
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>员工</title>
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css?v=bed7cb23bb"/>
-    <link rel="stylesheet" type="text/css" href="css/font.css?v=53c5b08946"/>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css?v=3073c415f0"/>
-    <link rel="stylesheet" type="text/css" href="css/common.css?v=ddbe54a055"/>
-    <link rel="stylesheet" type="text/css" href="css/employee.page.css?v=e054ddbf62"/>
-    <link rel="stylesheet" type="text/css" href="css/datepicker.css?v=a0aca024e9"/>
+    <link rel="stylesheet" type="text/css" href="css/font.css?v=1128d866e1"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css?v=1e9bc98d71"/>
+    <link rel="stylesheet" type="text/css" href="css/common.css?v=a7a8f95611"/>
+    <link rel="stylesheet" type="text/css" href="css/employee.page.css?v=3ad47a515e"/>
+    <link rel="stylesheet" type="text/css" href="css/datepicker.css?v=1cbd87910b"/>
     <link rel="stylesheet" type="text/css" href="css/jquery.mCustomScrollbar.css?v=d3cc66edf4"/>
 
 </head>
@@ -57,7 +57,7 @@
             </li>
             <li class="right-message">
                 <a href="message.html?v=65cb791780">
-                    <img src="images/yg_icon_07.png?v=9957859eb8?v=9957859eb8"/>
+                    <img src="images/yg_icon_07.png?v=9957859eb8"/>
                     <span class="message-nums">8</span>
                 </a>
             </li>
@@ -97,8 +97,11 @@
                         </div>
                     </div>
                     <div class="left-footer">
-                        <button class="btn btn-add department_add btn-hide" data-panel="panel-sm" data-index="0">部门新增</button>
-                        <button class="btn btn-edit department_update btn-hide" onclick="emp.showDptEditModal();">部门编辑</button>
+                        <button class="btn delete clear department_add btn-hide" data-panel="panel-sm" data-index="0">
+                            部门新增
+                        </button>
+                        <button class="btn confirm department_update btn-hide" onclick="emp.showDptEditModal();">部门编辑
+                        </button>
                     </div>
                 </div>
             </div>
@@ -153,8 +156,10 @@
                             <input id="search-input" type="text" class="form-input" placeholder="工号、姓名、手机号码"/>
                         </div>
                         <div class="form-group">
-                            <button class="btn search">查询</button>
-                            <button class="btn add employee-add btn-hide" data-panel="panel-sm" data-index="2">员工新增</button>
+                            <button class="btn confirm left clear" onclick="emp.exeBindEmployee();">查询</button>
+                            <button class="btn confirm employee-add btn-hide" data-panel="panel-sm" data-index="2">
+                                员工新增
+                            </button>
                         </div>
                     </div>
                     <div class="right-body">
@@ -743,9 +748,9 @@
 <script type="text/javascript" src="libs/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/bootstrap-datepicker.js?v=eec6ad7105"></script>
 <script type="text/javascript" src="js/app.js?v=4e03e56a5f"></script>
-<script type="text/javascript" src="js/components-pickers.js?v=d951e65bf7"></script>
+<script type="text/javascript" src="js/components-pickers.js?v=00b12ed6a0"></script>
 <script type="text/javascript" src="js/host.js?v=2112a01532"></script>
-<script type="text/javascript" src="js/tools.js?v=f02bdd8457"></script>
+<script type="text/javascript" src="js/tools.js?v=ed4d381de6"></script>
 <script type="text/javascript" src="js/employee.page.js?v=2af5281353"></script>
 </body>
 </html>

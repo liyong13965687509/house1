@@ -1,6 +1,6 @@
 body {
   background-color: #f5f5f5;
-  color: #666;
+  color: #666666;
 }
 .hidden-xs {
   color: red;
@@ -70,24 +70,49 @@ input:focus {
 iframe {
   width: 100%;
 }
-button {
-  border: 0;
+.btn {
+  height: 30px;
+  border: none;
+  color: #666666;
   cursor: pointer;
-  background: transparent;
-}
-button.btn {
-  color: #ffffff;
+  min-width: 60px;
+  padding: 0px 15px;
   font-size: 14px;
+  line-height: 28px;
+  margin-left: 16px;
+  text-align: center;
+  background-color: transparent;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.btn.edit {
+  color: #ffffff !important;
+  background-color: #f6ba2a;
+}
+.btn.left {
+  float: left;
+}
+.btn.full {
+  width: 100%;
+  height: 36px;
+  margin: 0px !important;
+}
+.btn:focus {
+  outline: none !important;
+}
+.btn.confirm {
+  color: #ffffff !important;
   background-color: #417de6;
 }
-button.btn.plus,
-button.btn.cancel,
-button.btn.delete {
-  background-color: transparent;
+.btn.delete {
+  color: #ffffff !important;
+  background-color: #d9534f;
 }
-button.btn:hover,
-button.btn:focus {
-  color: #ffffff;
+.btn.plus,
+.btn.cancel {
+  border: 1px solid #8795ad;
+  background-color: transparent;
 }
 button[color="lan"] {
   color: #417de6;
@@ -488,7 +513,7 @@ select::-ms-expand {
   display: inline-block;
   width: 100%;
   height: 100%;
-  color: #666;
+  color: #666666;
   font-size: 12px;
 }
 .pagenumhide {
@@ -503,7 +528,7 @@ select::-ms-expand {
   right: 10px;
   top: 5px;
   font-size: 14px;
-  color: #999;
+  color: #999999;
   display: inline-block;
 }
 .fq-dot {
@@ -561,7 +586,7 @@ select::-ms-expand {
 }
 .fq-xiala i,
 .fq-shangla i {
-  color: #333;
+  color: #333333;
   position: absolute;
   right: 10px;
   font-size: 12px;
@@ -586,7 +611,7 @@ select::-ms-expand {
   padding-left: 15px;
   margin-top: 0 !important;
   background-color: #fff;
-  color: #999;
+  color: #999999;
 }
 .fq-xiala ul li input[type='checkbox'],
 .fq-shangla ul li input[type='checkbox'] {
@@ -603,7 +628,7 @@ select::-ms-expand {
   position: absolute;
   top: 0;
   left: 0;
-  color: #666;
+  color: #666666;
   border: 1px solid #e6e6e6;
   border-radius: 4px;
 }
@@ -613,7 +638,7 @@ select::-ms-expand {
 }
 .fq-xiala ul li.cur,
 .fq-shangla ul li.cur {
-  color: #666;
+  color: #666666;
   /*display: block;*/
 }
 /*弹出类样式*/
@@ -680,7 +705,7 @@ select::-ms-expand {
   float: left;
   width: 25%;
   height: 100%;
-  color: #666;
+  color: #666666;
   text-align: center;
   height: 58px;
   line-height: 72px;
@@ -737,7 +762,7 @@ ul.tag-ul li {
   border: 1px solid #e6e6e6;
   border-radius: 4px;
   box-shadow: 0 0 1px #e6e6e6;
-  color: #333;
+  color: #333333;
   cursor: pointer;
   float: left;
   height: 30px;
@@ -832,7 +857,7 @@ ul.tag-ul li:first-of-type {
 }
 .ownercenter-title p {
   font-size: 16px;
-  color: #333;
+  color: #333333;
 }
 .ownercenter-title p span {
   color: #ff5153;
@@ -859,7 +884,7 @@ ul.tag-ul li:first-of-type {
   float: left;
   width: 130px;
   height: 100%;
-  color: #666;
+  color: #666666;
   text-align: center;
   height: 58px;
   line-height: 72px;
@@ -911,7 +936,7 @@ ul.tag-ul li:first-of-type {
 .fq-modal-bottom ul li button {
   background-color: #417de6;
   border-radius: 4px;
-  color: #666;
+  color: #666666;
   cursor: pointer;
   font-size: 14px;
   height: 36px;
@@ -928,11 +953,11 @@ ul.tag-ul li:first-of-type {
 }
 .fq-modal-bottom ul li.btn-del button {
   background-color: inherit;
-  border: 1px solid #666;
+  border: 1px solid #666666;
 }
 .fq-modal-bottom ul li.btn-cancel button {
   background-color: inherit;
-  border: 1px solid #666;
+  border: 1px solid #666666;
 }
 .fq-modal-bottom ul li.btn-edit button {
   display: none;
@@ -975,7 +1000,7 @@ ul.tag-ul li:first-of-type {
   height: 36px;
 }
 .fq-contract-content table tr th {
-  color: #333;
+  color: #333333;
   height: 35px;
   text-align: center;
 }
@@ -1052,7 +1077,7 @@ ul.tag-ul li:first-of-type {
   height: 30px;
   line-height: 28px;
   border: 1px solid #e6e6e6;
-  color: #666;
+  color: #666666;
   display: none;
 }
 .btn-gjsubmit {
@@ -1119,7 +1144,7 @@ ul.tag-ul li:first-of-type {
   width: 100%;
 }
 .top-modal-ip-wraper span.inip {
-  color: #333;
+  color: #333333;
   display: inline-block;
   font-size: 12px;
   height: 30px;
@@ -1153,7 +1178,7 @@ ul.tag-ul li:first-of-type {
 .top-modal-bottom button {
   background-color: #417de6;
   border-radius: 4px;
-  color: #666;
+  color: #666666;
   cursor: pointer;
   font-size: 14px;
   height: 30px;
@@ -1235,7 +1260,7 @@ ul.tag-ul li:first-of-type {
 }
 .modal-bottom ul > li > button {
   border-radius: 4px;
-  color: #666;
+  color: #666666;
   cursor: pointer;
   font-size: 14px;
   text-align: center;
@@ -1275,7 +1300,7 @@ span[color="lan"] {
   text-align: right;
   width: 105px;
   font-size: 16px;
-  color: #333;
+  color: #333333;
   margin-bottom: 5px;
 }
 .modal-table {
@@ -1305,7 +1330,7 @@ span[color="lan"] {
 .modal-table2 tr th {
   vertical-align: middle;
   text-align: center;
-  color: #333;
+  color: #333333;
 }
 .modal-table2 tr td {
   vertical-align: middle;
@@ -1473,7 +1498,7 @@ span[color="lan"] {
   height: 34px;
 }
 .employee-middle-dv table tr th {
-  color: #333;
+  color: #333333;
   font-size: 14px;
   background-color: #f5f5f5;
 }
@@ -1564,7 +1589,7 @@ span.btn-employeedetail {
   line-height: 28px;
   font-size: 12px;
   padding-left: 14px;
-  color: #666;
+  color: #666666;
 }
 .contract-nav2-section ul li .select-wraper {
   font-size: 12px;
@@ -1587,11 +1612,11 @@ span.btn-employeedetail {
 }
 .contain-contract-wraper table tr th {
   background-color: #f5f5f5;
-  color: #333;
+  color: #333333;
   font-size: 14px;
 }
 .contain-contract-wraper table tr td {
-  color: #666;
+  color: #666666;
 }
 .contain-contract-wraper table tr td span.btn-contractcheck {
   color: #499df2;
@@ -1629,7 +1654,7 @@ span.btn-employeedetail {
 .modal-con .ulwrap > p {
   text-align: left;
   font-size: 16px;
-  color: #333;
+  color: #333333;
   margin-bottom: 5px;
 }
 .ip-wrap {
@@ -1638,7 +1663,7 @@ span.btn-employeedetail {
   width: 100%;
 }
 .ip-wrap span {
-  color: #333;
+  color: #333333;
   display: inline-block;
   font-size: 12px;
   height: 30px;
@@ -1650,7 +1675,7 @@ span.btn-employeedetail {
   width: 30px;
 }
 .ip-wrap i {
-  color: #999;
+  color: #999999;
   display: inline-block;
   font-size: 14px;
   position: absolute;
@@ -1759,7 +1784,7 @@ ul.ul-sp2 li span:first-of-type {
 }
 .dv-sec p span {
   font-size: 16px;
-  color: #333;
+  color: #333333;
 }
 .btn-more {
   margin-left: 55px;
@@ -1807,7 +1832,7 @@ ul.ul-sp2 li span:first-of-type {
 }
 .total-p {
   margin-top: 30px;
-  color: #333;
+  color: #333333;
   font-size: 16px;
 }
 /*物业css*/
@@ -1831,7 +1856,7 @@ ul.ul-sp2 li span:first-of-type {
 }
 .property-nav2-dl dt span {
   margin-left: 15px;
-  color: #333;
+  color: #333333;
   font-size: 16px;
 }
 .property-nav2-dl dt,
@@ -1840,7 +1865,7 @@ ul.ul-sp2 li span:first-of-type {
   line-height: 36px;
 }
 .property-nav2-dl dd {
-  color: #666;
+  color: #666666;
   font-size: 14px;
   padding-left: 50px;
   cursor: pointer;
@@ -1894,7 +1919,7 @@ ul.ul-sp2 li span:first-of-type {
 .property-search-section ul li {
   width: 100px;
   font-size: 14px;
-  color: #999;
+  color: #999999;
   text-align: center;
   border-left: 1px solid #e6e6e6;
   float: left;
@@ -1903,7 +1928,7 @@ ul.ul-sp2 li span:first-of-type {
   cursor: pointer;
 }
 .property-search-section ul li.cur {
-  color: #333;
+  color: #333333;
 }
 .property-search-section ul li span {
   position: relative;
@@ -1928,7 +1953,7 @@ ul.ul-sp2 li span:first-of-type {
 .property-contain-left ul li {
   height: 30px;
   line-height: 30px;
-  color: #666;
+  color: #666666;
   font-size: 12px;
   text-align: center;
   cursor: pointer;
@@ -1982,13 +2007,13 @@ ul.ul-sp2 li span:first-of-type {
   color: #1697fe;
 }
 .property-search-section ul li:nth-of-type(4) .property-search-dot {
-  border: 1px solid #999;
+  border: 1px solid #999999;
 }
 .property-search-section ul li:nth-of-type(4) .property-search-dot p {
-  background-color: #999;
+  background-color: #999999;
 }
 .property-search-section ul li:nth-of-type(4) span font {
-  color: #999;
+  color: #999999;
 }
 .property-search-ip {
   margin: 20px;
@@ -2043,7 +2068,7 @@ ul.ul-sp2 li span:first-of-type {
 .property-floor-title p {
   display: inline-block;
   font-size: 14px;
-  color: #333;
+  color: #333333;
   margin-bottom: 0;
 }
 .property-floor-title span {
@@ -2065,12 +2090,12 @@ ul.ul-sp2 li span:first-of-type {
   border: 1px solid #e6e6e6;
   margin-right: 16px;
   font-size: 12px;
-  color: #666;
+  color: #666666;
 }
 .property-floor-room ul li .room-advance,
 .property-floor-room ul li .room-let,
 .property-floor-room ul li .room-empty {
-  color: #333;
+  color: #333333;
 }
 .property-room-status i {
   position: absolute;
@@ -2082,7 +2107,7 @@ ul.ul-sp2 li span:first-of-type {
 }
 .property-floor-room ul li p {
   font-size: 14px;
-  color: #333;
+  color: #333333;
   margin-bottom: 5px;
 }
 .room-advance i {
@@ -2103,13 +2128,13 @@ ul.ul-sp2 li span:first-of-type {
   border: 1px solid #e6e6e6;
   margin-right: 16px;
   font-size: 12px;
-  color: #666;
+  color: #666666;
 }
 .property-floor-room ul li:last-of-type .property-room-status1 {
   text-align: center;
   padding-left: 0;
   font-size: 18px;
-  color: #999;
+  color: #999999;
 }
 #content-2 {
   height: 600px;
@@ -2125,7 +2150,7 @@ ul.ul-sp2 li span:first-of-type {
 }
 .property-room-content table tr td:nth-of-type(2) {
   padding-left: 57px;
-  color: #333;
+  color: #333333;
 }
 .property-contract-content {
   padding: 20px 20px 0;
@@ -2141,7 +2166,7 @@ ul.ul-sp2 li span:first-of-type {
 }
 .property-contract-content table tr th {
   background-color: #f5f5f5;
-  color: #333;
+  color: #333333;
 }
 .property-contract-content table tr th:first-of-type {
   text-align: right;
@@ -2193,7 +2218,7 @@ ul.ul-sp2 li span:first-of-type {
 }
 .property-checktable-content table tr th {
   background-color: #f5f5f5;
-  color: #333;
+  color: #333333;
 }
 .property-checktable-content table tr:nth-of-type(2n) {
   background-color: #fafcff;
@@ -2213,7 +2238,7 @@ ul.ul-sp2 li span:first-of-type {
   text-align: center;
   vertical-align: middle;
   background-color: #f5f5f5;
-  color: #333;
+  color: #333333;
 }
 .property-checktable-content table tr th:last-of-type,
 .property-checktable-content table tr td:last-of-type {
@@ -2236,7 +2261,7 @@ ul.ul-sp2 li span:first-of-type {
 }
 .property-repair-content table tr th {
   background-color: #f5f5f5;
-  color: #333;
+  color: #333333;
 }
 .property-repair-content table tr:nth-of-type(2n) {
   background-color: #fafcff;
@@ -2246,7 +2271,7 @@ ul.ul-sp2 li span:first-of-type {
   text-align: center;
   vertical-align: middle;
   background-color: #f5f5f5;
-  color: #333;
+  color: #333333;
 }
 .property-repair-content table tr td {
   height: 36px;
@@ -2279,7 +2304,7 @@ ul.ul-sp2 li span:first-of-type {
 .property-room-bottom ul li button {
   background-color: #417de6;
   border-radius: 4px;
-  color: #666;
+  color: #666666;
   cursor: pointer;
   font-size: 14px;
   height: 36px;
@@ -2321,7 +2346,7 @@ ul.ul-sp2 li span:first-of-type {
   padding: 20px 36px 70px;
 }
 .modal-property-data-sec p:first-of-type {
-  color: #333;
+  color: #333333;
   font-size: 16px;
   float: left;
 }
@@ -2346,7 +2371,7 @@ ul.ul-sp2 li span:first-of-type {
   width: 490px;
   padding-left: 60px;
   text-align: left;
-  color: #333;
+  color: #333333;
 }
 .modal-data-table tr td input {
   width: 100%;
@@ -2375,7 +2400,7 @@ ul.ul-sp2 li span:first-of-type {
   margin-left: 16px;
   background-color: #417de6;
   border-radius: 4px;
-  color: #666;
+  color: #666666;
   cursor: pointer;
   font-size: 14px;
   height: 36px;
@@ -2399,14 +2424,14 @@ ul.ul-sp2 li span:first-of-type {
   position: relative;
 }
 .top-modal-ip-wraper span {
-  color: #999;
+  color: #999999;
   display: inline-block;
   font-size: 12px;
   height: 30px;
   line-height: 30px;
   text-align: center;
   width: 30px;
-  color: #333;
+  color: #333333;
   position: absolute;
   right: 0;
   top: 0;
@@ -2452,7 +2477,7 @@ ul.ul-sp2 li span:first-of-type {
   background-color: #fff;
   border: 1px solid #8795ad;
   border-radius: 4px;
-  color: #666;
+  color: #666666;
   cursor: pointer;
   font-size: 14px;
   height: 30px;
@@ -2528,7 +2553,7 @@ ul.ul-sp2 li span:first-of-type {
 }
 /*** BEGIN自定义MessageBox ***/
 .modal#msgModal {
-  color: #333;
+  color: #333333;
 }
 #msgModal .modal-dialog {
   position: absolute !important;
@@ -2548,7 +2573,7 @@ ul.ul-sp2 li span:first-of-type {
   margin: 0px !important;
 }
 #msgModal .close > span {
-  color: #333;
+  color: #333333;
   font-size: 30px;
   line-height: 22px;
   font-weight: normal;
@@ -2599,17 +2624,10 @@ ul.ul-sp2 li span:first-of-type {
   min-width: 60px;
   line-height: 28px;
   padding: 0px 10px;
+  margin-left: 10px;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
-}
-#msgModal .modal-footer button.btn-confirm {
-  color: #ffffff;
-  background-color: #417de6;
-}
-#msgModal .modal-footer button.btn-cancel {
-  margin-left: 10px;
-  border: 1px solid #8795ad;
 }
 /*** END自定义MessageBox ***/
 @media screen and (max-width: 1367px) {
@@ -2829,35 +2847,6 @@ ul.ul-sp2 li span:first-of-type {
   padding: 0px 35px;
   background-color: #ffffff;
   border-top: 1px solid #e6e6e6;
-}
-.panel .panel-content .panel-modal .btn {
-  height: 30px;
-  color: #666666;
-  cursor: pointer;
-  min-width: 60px;
-  padding: 0px 15px;
-  font-size: 14px;
-  line-height: 28px;
-  margin-left: 16px;
-  text-align: center;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-}
-.panel .panel-content .panel-modal .btn.cancel {
-  border: 1px solid #8795ad;
-}
-.panel .panel-content .panel-modal .btn.confirm {
-  color: #ffffff;
-  background-color: #417de6;
-}
-.panel .panel-content .panel-modal .btn.delete {
-  float: left;
-  margin: 10px 0px;
-  border: 1px solid #8795ad;
-}
-.panel .panel-content .panel-modal .btn:focus {
-  outline: none;
 }
 .panel .panel-content .panel-modal.show {
   display: block;

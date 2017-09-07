@@ -104,8 +104,9 @@
 .system .right-block .right-item .item-header {
   margin: 0px;
   height: 36px;
-  padding: 0px 15px;
+  font-size: 0px;
   line-height: 36px;
+  padding: 0px 15px;
   background-color: #e0e7ec;
 }
 .system .right-block .right-item .item-title {
@@ -275,7 +276,4 @@
   .system input#appSecret {
     max-width: 200px;
   }
-}
-.confirm {
-  display: none;
 }

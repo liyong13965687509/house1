@@ -8,12 +8,12 @@
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>账单收款</title>
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css?v=bed7cb23bb"/>
-    <link rel="stylesheet" type="text/css" href="css/font.css?v=53c5b08946"/>
-    <link rel="stylesheet" type="text/css" href="css/plugins.css?v=b9b1e9df9e"/>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css?v=3073c415f0"/>
-    <link rel="stylesheet" type="text/css" href="css/datepicker.css?v=a0aca024e9"/>
-    <link rel="stylesheet" type="text/css" href="css/common.css?v=ddbe54a055"/>
-    <!--<link rel="stylesheet" type="text/css" href="css/property.page.css?v=9b2e4609c0"/>-->
+    <link rel="stylesheet" type="text/css" href="css/font.css?v=1128d866e1"/>
+    <link rel="stylesheet" type="text/css" href="css/plugins.css?v=2ece335f10"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css?v=1e9bc98d71"/>
+    <link rel="stylesheet" type="text/css" href="css/datepicker.css?v=1cbd87910b"/>
+    <link rel="stylesheet" type="text/css" href="css/common.css?v=a7a8f95611"/>
+    <!--<link rel="stylesheet" type="text/css" href="css/property.page.css?v=09ccc13059"/>-->
     <link rel="stylesheet" type="text/css" href="css/jquery.mCustomScrollbar.css?v=d3cc66edf4"/>
     <style type="text/css">
         body {
@@ -73,7 +73,7 @@
     <script type="text/javascript" src="libs/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/bootstrap-datepicker.js?v=eec6ad7105"></script>
     <script type="text/javascript" src="js/app.js?v=4e03e56a5f"></script>
-    <script type="text/javascript" src="js/components-pickers.js?v=d951e65bf7"></script>
+    <script type="text/javascript" src="js/components-pickers.js?v=00b12ed6a0"></script>
 </head>
 <body>
 <div class="container">
@@ -143,7 +143,7 @@
 </body>
 </html>
 <script type="text/javascript" src="js/host.js?v=2112a01532"></script>
-<script type="text/javascript" src="js/tools.js?v=f02bdd8457"></script>
+<script type="text/javascript" src="js/tools.js?v=ed4d381de6"></script>
 <script>
     $(function () {
         App.init();
@@ -153,8 +153,7 @@
 
     //绑定账单基础信息
     function BillBind() {
-        var billCharId = getUrlParam('billCharId');
-        ;
+        var billCharId = getUrlParam('billCharId');;
         var data = {
             requestKey: localStorage.getItem("requestKey"),
             billCharId: billCharId

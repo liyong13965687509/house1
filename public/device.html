@@ -7,11 +7,12 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>智能设备</title>
-    <link rel="stylesheet" type="text/css" href="css/font.css?v=53c5b08946"/>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css?v=3073c415f0"/>
-    <link rel="stylesheet" type="text/css" href="css/common.css?v=ddbe54a055"/>
-    <link rel="stylesheet" type="text/css" href="css/device.page.css?v=81059bb2ee"/>
-    <link rel="stylesheet" type="text/css" href="css/datepicker.css?v=a0aca024e9"/>
+    <link rel="stylesheet" type="text/css" href="css/font.css?v=1128d866e1"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css?v=1e9bc98d71"/>
+    <link rel="stylesheet" type="text/css" href="css/common.css?v=a7a8f95611"/>
+    <link rel="stylesheet" type="text/css" href="css/device.page.css?v=df21af26ed"/>
+    <link rel="stylesheet" type="text/css" href="css/datepicker.css?v=1cbd87910b"/>
+    <link rel="stylesheet" type="text/css" href="css/datetimepicker.css?v=797a04f9f5"/>
 </head>
 <body>
 <div class="header">
@@ -53,7 +54,7 @@
             </li>
             <li class="right-message">
                 <a href="message.html?v=65cb791780">
-                    <img src="images/yg_icon_07.png?v=9957859eb8?v=9957859eb8"/>
+                    <img src="images/yg_icon_07.png?v=9957859eb8"/>
                     <span class="message-nums">8</span>
                 </a>
             </li>
@@ -101,7 +102,7 @@
                                         <i class="drop-icon icon-drop-down"></i>
                                     </div>
                                     <div class="drop-body">
-                                        <ul id="EquBuilding"></ul>
+                                        <ul id="EquBuilding" data-target="EquNumber"></ul>
                                     </div>
                                     <div class="drop-footer"></div>
                                 </div>
@@ -115,7 +116,7 @@
                                         <i class="drop-icon icon-drop-down"></i>
                                     </div>
                                     <div class="drop-body">
-                                        <ul id="EquNumber">
+                                        <ul id="EquNumber" data-target="EquRoom">
                                             <li class="drop-option active" data-value="">不限</li>
                                         </ul>
                                     </div>
@@ -140,8 +141,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <button class="btn search">查询</button>
-                            <button class="btn add" data-panel="panel-sm" data-index="0">设备新增</button>
+                            <button class="btn confirm left clear" onclick="mg.exeBindDevices();">查询</button>
+                            <button class="btn confirm" data-panel="panel-sm" data-index="0">设备新增</button>
                         </div>
                     </div>
                     <div class="right-body">
@@ -266,12 +267,12 @@
                                 </div>
                             </div>
                             <div class="block-footer">
-                                <div class="block-button">
-                                    <div class="pull-left"></div>
-                                    <div class="pull-right" id="Lock_Bind_Btn">
-                                        <button class="btn cancel">取消</button>
+                                <div class="block-button clearfix">
+                                    <div class="pull-left">
+                                        <button class="btn delete clear" onclick="mg.exeDeleteDevices();">删除</button>
+                                        <button class="btn edit" data-panel="panel-sm" data-index="5">编辑</button>
                                     </div>
-                                    <div class="clearfix"></div>
+                                    <div class="pull-right" id="Lock_Bind_Btn"></div>
                                 </div>
                             </div>
                         </div>
@@ -301,24 +302,24 @@
                             <div class="block-header"></div>
                             <div class="block-body">
                                 <div class="table-header row">
-                                    <div class="table-item col-xs-12 col-md-4">
-                                        <div class="form-group">
+                                    <div class="table-item col-xs-12 col-md-5">
+                                        <div class="form-group limit">
                                             <label class="form-label" for="Lock_Open_Start">开始日期</label>
-                                            <input class="form-input group-date1" id="Lock_Open_Start"
+                                            <input class="form-input group-date1" readonly id="Lock_Open_Start"
                                                    placeholder="请输入开始日期"/>
                                         </div>
                                     </div>
-                                    <div class="table-item col-xs-12 col-md-4">
-                                        <div class="form-group">
+                                    <div class="table-item col-xs-12 col-md-5">
+                                        <div class="form-group limit">
                                             <label class="form-label" for="Lock_Open_End">结束日期</label>
-                                            <input class="form-input group-date1" id="Lock_Open_End"
+                                            <input class="form-input group-date1" readonly id="Lock_Open_End"
                                                    placeholder="请输入结束日期"/>
                                         </div>
                                     </div>
-                                    <div class="table-item col-xs-12 col-md-4">
+                                    <div class="table-item col-xs-12 col-md-2">
                                         <div class="form-group">
-                                            <label class="form-label hidden-xs hidden-sm">&nbsp;</label>
-                                            <button class="btn confirm" onclick="mg.exeLockOpenRecord();">查询</button>
+                                            <button class="btn confirm clear" onclick="mg.exeLockOpenRecord();">查询
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -341,24 +342,24 @@
                             <div class="block-header"></div>
                             <div class="block-body">
                                 <div class="table-header row">
-                                    <div class="table-item col-xs-12 col-md-4">
-                                        <div class="form-group">
+                                    <div class="table-item col-xs-12 col-md-5">
+                                        <div class="form-group limit">
                                             <label class="form-label" for="Lock_Oper_Start">开始日期</label>
-                                            <input class="form-input group-date1" id="Lock_Oper_Start"
+                                            <input class="form-input group-date1" readonly id="Lock_Oper_Start"
                                                    placeholder="请输入开始日期"/>
                                         </div>
                                     </div>
-                                    <div class="table-item col-xs-12 col-md-4">
-                                        <div class="form-group">
+                                    <div class="table-item col-xs-12 col-md-5">
+                                        <div class="form-group limit">
                                             <label class="form-label" for="Lock_Oper_End">结束日期</label>
-                                            <input class="form-input group-date1" id="Lock_Oper_End"
+                                            <input class="form-input group-date1" readonly id="Lock_Oper_End"
                                                    placeholder="请输入结束日期"/>
                                         </div>
                                     </div>
-                                    <div class="table-item col-xs-12 col-md-4">
+                                    <div class="table-item col-xs-12 col-md-2">
                                         <div class="form-group">
-                                            <label class="form-label hidden-xs hidden-sm">&nbsp;</label>
-                                            <button class="btn confirm" onclick="mg.exeLockOperRecord();">查询</button>
+                                            <button class="btn confirm clear" onclick="mg.exeLockOperRecord();">查询
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -412,7 +413,7 @@
                                                 <label class="group-label">名称</label>
                                             </div>
                                             <div class="col-xs-9 col-sm-10">
-                                                <span class="group-value" id="Power_name"></span>
+                                                <span class="group-value" id="Power_Name"></span>
                                             </div>
                                         </div>
                                         <div class="group-row row">
@@ -420,7 +421,7 @@
                                                 <label class="group-label">序列号</label>
                                             </div>
                                             <div class="col-xs-9 col-sm-10">
-                                                <span class="group-value"></span>
+                                                <span class="group-value" id="Power_SerialNumber"></span>
                                             </div>
                                         </div>
                                         <div class="group-row row">
@@ -428,7 +429,7 @@
                                                 <label class="group-label">状态</label>
                                             </div>
                                             <div class="col-xs-9 col-sm-10">
-                                                <span class="group-value"></span>
+                                                <span class="group-value" id="Power_EnableState"></span>
                                             </div>
                                         </div>
                                         <div class="group-row row">
@@ -436,7 +437,7 @@
                                                 <label class="group-label">UUID</label>
                                             </div>
                                             <div class="col-xs-9 col-sm-10">
-                                                <span class="group-value"></span>
+                                                <span class="group-value" id="Power_UUID"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -452,7 +453,7 @@
                                                 <label class="group-label">绑定状态</label>
                                             </div>
                                             <div class="col-xs-9 col-sm-10">
-                                                <span class="group-value"></span>
+                                                <span class="group-value" id="Power_IsBind"></span>
                                             </div>
                                         </div>
                                         <div class="group-row row">
@@ -460,15 +461,7 @@
                                                 <label class="group-label">绑定房源</label>
                                             </div>
                                             <div class="col-xs-9 col-sm-10">
-                                                <span class="group-value"></span>
-                                            </div>
-                                        </div>
-                                        <div class="group-row row">
-                                            <div class="col-xs-3 col-sm-2">
-                                                <label class="group-label">绑定时间</label>
-                                            </div>
-                                            <div class="col-xs-9 col-sm-10">
-                                                <span class="group-value"></span>
+                                                <span class="group-value" id="Power_Bind"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -476,15 +469,12 @@
                                 </div>
                             </div>
                             <div class="block-footer">
-                                <div class="block-button">
+                                <div class="block-button clearfix">
                                     <div class="pull-left">
-                                        <button class="btn delete" onclick="">解绑</button>
+                                        <button class="btn delete clear" onclick="mg.exeDeleteDevices();">删除</button>
+                                        <button class="btn edit" data-panel="panel-sm" data-index="5">编辑</button>
                                     </div>
-                                    <div class="pull-right">
-                                        <button class="btn cancel">取消</button>
-                                        <button class="btn confirm" onclick="">绑定</button>
-                                    </div>
-                                    <div class="clearfix"></div>
+                                    <div class="pull-right" id="Power_Bind_Btn"></div>
                                 </div>
                             </div>
                         </div>
@@ -496,9 +486,12 @@
                                         <div class="table-column">
                                             <div class="column-header">
                                                 <h3 class="column-title">剩余电量清零</h3>
-                                                <a href="javascript:;" class="column-icon icon-set"></a>
+                                                <a href="javascript:;" onclick="mg.exePowerReset();"
+                                                   class="column-icon icon-set"></a>
                                             </div>
-                                            <div class="column-body"></div>
+                                            <div class="column-body">
+                                                <p>1.清零后，电表剩余电量为零</p>
+                                            </div>
                                             <div class="column-footer"></div>
                                         </div>
                                     </div>
@@ -506,9 +499,13 @@
                                         <div class="table-column">
                                             <div class="column-header">
                                                 <h3 class="column-title">远程供断电设置</h3>
-                                                <a href="javascript:;" class="column-icon icon-set"></a>
+                                                <a href="javascript:;" onclick="mg.exePowerSwitch();"
+                                                   class="column-icon icon-set"></a>
                                             </div>
-                                            <div class="column-body"></div>
+                                            <div class="column-body">
+                                                <p>远程控制关合电表。</p>
+                                                <p>电表供断电状态：<span id="PowerStatus"></span></p>
+                                            </div>
                                             <div class="column-footer"></div>
                                         </div>
                                     </div>
@@ -516,9 +513,11 @@
                                         <div class="table-column">
                                             <div class="column-header">
                                                 <h3 class="column-title">电费充值</h3>
-                                                <a href="javascript:;" class="column-icon icon-set"></a>
+                                                <a href="javascript:;" class="column-icon icon-set btn-charge"></a>
                                             </div>
-                                            <div class="column-body"></div>
+                                            <div class="column-body">
+                                                <p>电费充值</p>
+                                            </div>
                                             <div class="column-footer"></div>
                                         </div>
                                     </div>
@@ -549,351 +548,110 @@
                             <div class="block-header"></div>
                             <div class="block-body">
                                 <div class="table-header row">
-                                    <div class="table-item col-xs-12 col-md-4">
-                                        <div class="form-group">
-                                            <label class="form-label" for="Start_Date">开始日期</label>
-                                            <input class="form-input group-date1" placeholder="请输入开始日期"/>
-                                        </div>
-                                    </div>
-                                    <div class="table-item col-xs-12 col-md-4">
-                                        <div class="form-group">
-                                            <label class="form-label" for="End_Date">结束日期</label>
-                                            <input class="form-input group-date1" placeholder="请输入结束日期"/>
-                                        </div>
-                                    </div>
-                                    <div class="table-item col-xs-12 col-md-4">
-                                        <div class="form-group">
-                                            <label class="form-label hidden-xs hidden-sm">&nbsp;</label>
-                                            <button class="btn confirm">查询</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-body row">
-                                    <div class="table-item col-xs-12 col-sm-6 col-md-12">
-                                        <div class="row-content row">
-                                            <div class="row-header col-xs-6 col-md-12">
-                                                <div class="row-title row">
-                                                    <div class="column col-xs-12 col-md-6">购电时间</div>
-                                                    <div class="column col-xs-12 col-md-6">购电量</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-body col-xs-6 col-md-12">
-                                                <div class="row-item row">
-                                                    <div class="column col-xs-12 col-md-6">购电时间</div>
-                                                    <div class="column col-xs-12 col-md-6">购电量</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-item col-xs-12 col-sm-6 col-md-12">
-                                        <div class="row-content row">
-                                            <div class="row-header col-xs-6 col-md-12">
-                                                <div class="row-title visible-xs visible-sm row">
-                                                    <div class="column col-xs-12 col-md-6">购电时间</div>
-                                                    <div class="column col-xs-12 col-md-6">购电量</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-body col-xs-6 col-md-12">
-                                                <div class="row-item row">
-                                                    <div class="column col-xs-12 col-md-6">购电时间</div>
-                                                    <div class="column col-xs-12 col-md-6">购电量</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-item col-xs-12 col-sm-6 col-md-12">
-                                        <div class="row-content row">
-                                            <div class="row-header col-xs-6 col-md-12">
-                                                <div class="row-title visible-xs visible-sm row">
-                                                    <div class="column col-xs-12 col-md-6">购电时间</div>
-                                                    <div class="column col-xs-12 col-md-6">购电量</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-body col-xs-6 col-md-12">
-                                                <div class="row-item row">
-                                                    <div class="column col-xs-12 col-md-6">购电时间</div>
-                                                    <div class="column col-xs-12 col-md-6">购电量</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-item col-xs-12 col-sm-6 col-md-12">
-                                        <div class="row-content row">
-                                            <div class="row-header col-xs-6 col-md-12">
-                                                <div class="row-title visible-xs visible-sm row">
-                                                    <div class="column col-xs-12 col-md-6">购电时间</div>
-                                                    <div class="column col-xs-12 col-md-6">购电量</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-body col-xs-6 col-md-12">
-                                                <div class="row-item row">
-                                                    <div class="column col-xs-12 col-md-6">购电时间</div>
-                                                    <div class="column col-xs-12 col-md-6">购电量</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-item col-xs-12 col-sm-6 col-md-12">
-                                        <div class="row-content row">
-                                            <div class="row-header col-xs-6 col-md-12">
-                                                <div class="row-title visible-xs visible-sm row">
-                                                    <div class="column col-xs-12 col-md-6">购电时间</div>
-                                                    <div class="column col-xs-12 col-md-6">购电量</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-body col-xs-6 col-md-12">
-                                                <div class="row-item row">
-                                                    <div class="column col-xs-12 col-md-6">购电时间</div>
-                                                    <div class="column col-xs-12 col-md-6">购电量</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-footer">
-                                    <div class="pagination"></div>
-                                </div>
-                            </div>
-                            <div class="block-footer">
-                                <div class="block-button">
-                                    <div class="pull-left"></div>
-                                    <div class="pull-right">
-                                        <button class="btn cancel">取消</button>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="block-content hide">
-                            <div class="block-header"></div>
-                            <div class="block-body">
-                                <div class="table-header row">
-                                    <div class="table-item col-xs-12 col-md-4">
-                                        <div class="form-group">
-                                            <label class="form-label" for="Start_Date">开始日期</label>
-                                            <input class="form-input group-date1" placeholder="请输入开始日期"/>
-                                        </div>
-                                    </div>
-                                    <div class="table-item col-xs-12 col-md-4">
-                                        <div class="form-group">
-                                            <label class="form-label" for="End_Date">结束日期</label>
-                                            <input class="form-input group-date1" placeholder="请输入结束日期"/>
-                                        </div>
-                                    </div>
-                                    <div class="table-item col-xs-12 col-md-4">
-                                        <div class="form-group">
-                                            <label class="form-label hidden-xs hidden-sm">&nbsp;</label>
-                                            <button class="btn confirm">查询</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-body row">
-                                    <div class="table-item col-xs-12 col-sm-6 col-md-12">
-                                        <div class="row-content row">
-                                            <div class="row-header col-xs-6 col-md-12">
-                                                <div class="row-title row">
-                                                    <div class="column col-xs-12 col-md-6">时间</div>
-                                                    <div class="column col-xs-12 col-md-6">房间用电量</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-body col-xs-6 col-md-12">
-                                                <div class="row-item row">
-                                                    <div class="column col-xs-12 col-md-6">时间</div>
-                                                    <div class="column col-xs-12 col-md-6">房间用电量</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-item col-xs-12 col-sm-6 col-md-12">
-                                        <div class="row-content row">
-                                            <div class="row-header col-xs-6 col-md-12">
-                                                <div class="row-title visible-xs visible-sm row">
-                                                    <div class="column col-xs-12 col-md-6">时间</div>
-                                                    <div class="column col-xs-12 col-md-6">房间用电量</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-body col-xs-6 col-md-12">
-                                                <div class="row-item row">
-                                                    <div class="column col-xs-12 col-md-6">时间</div>
-                                                    <div class="column col-xs-12 col-md-6">房间用电量</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-item col-xs-12 col-sm-6 col-md-12">
-                                        <div class="row-content row">
-                                            <div class="row-header col-xs-6 col-md-12">
-                                                <div class="row-title visible-xs visible-sm row">
-                                                    <div class="column col-xs-12 col-md-6">时间</div>
-                                                    <div class="column col-xs-12 col-md-6">房间用电量</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-body col-xs-6 col-md-12">
-                                                <div class="row-item row">
-                                                    <div class="column col-xs-12 col-md-6">时间</div>
-                                                    <div class="column col-xs-12 col-md-6">房间用电量</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-item col-xs-12 col-sm-6 col-md-12">
-                                        <div class="row-content row">
-                                            <div class="row-header col-xs-6 col-md-12">
-                                                <div class="row-title visible-xs visible-sm row">
-                                                    <div class="column col-xs-12 col-md-6">时间</div>
-                                                    <div class="column col-xs-12 col-md-6">房间用电量</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-body col-xs-6 col-md-12">
-                                                <div class="row-item row">
-                                                    <div class="column col-xs-12 col-md-6">时间</div>
-                                                    <div class="column col-xs-12 col-md-6">房间用电量</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-item col-xs-12 col-sm-6 col-md-12">
-                                        <div class="row-content row">
-                                            <div class="row-header col-xs-6 col-md-12">
-                                                <div class="row-title visible-xs visible-sm row">
-                                                    <div class="column col-xs-12 col-md-6">时间</div>
-                                                    <div class="column col-xs-12 col-md-6">房间用电量</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-body col-xs-6 col-md-12">
-                                                <div class="row-item row">
-                                                    <div class="column col-xs-12 col-md-6">时间</div>
-                                                    <div class="column col-xs-12 col-md-6">房间用电量</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-footer">
-                                    <div class="pagination"></div>
-                                </div>
-                            </div>
-                            <div class="block-footer">
-                                <div class="block-button">
-                                    <div class="pull-left"></div>
-                                    <div class="pull-right">
-                                        <button class="btn cancel">取消</button>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="block-content hide">
-                            <div class="block-header"></div>
-                            <div class="block-body">
-                                <div class="table-header row">
-                                    <div class="table-item col-xs-12 col-md-4">
-                                        <div class="form-group">
-                                            <label class="form-label" for="Start_Date">开始日期</label>
-                                            <input class="form-input group-date1" id="Start_Date"
+                                    <div class="table-item col-xs-12 col-md-5">
+                                        <div class="form-group limit">
+                                            <label class="form-label" for="Power_Buy_Start">开始日期</label>
+                                            <input class="form-input group-date1" readonly id="Power_Buy_Start"
                                                    placeholder="请输入开始日期"/>
                                         </div>
                                     </div>
-                                    <div class="table-item col-xs-12 col-md-4">
-                                        <div class="form-group">
-                                            <label class="form-label" for="End_Date">结束日期</label>
-                                            <input class="form-input group-date1" id="End_Date"
+                                    <div class="table-item col-xs-12 col-md-5">
+                                        <div class="form-group limit">
+                                            <label class="form-label" for="Power_Buy_End">结束日期</label>
+                                            <input class="form-input group-date1" readonly id="Power_Buy_End"
                                                    placeholder="请输入结束日期"/>
                                         </div>
                                     </div>
-                                    <div class="table-item col-xs-12 col-md-4">
+                                    <div class="table-item col-xs-12 col-md-2">
                                         <div class="form-group">
-                                            <label class="form-label hidden-xs hidden-sm">&nbsp;</label>
-                                            <button class="btn confirm" id="BtnOpenLock">查询</button>
+                                            <button class="btn confirm clear" onclick="mg.exePowerBuyRecord();">查询
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="table-body row">
-                                    <div class="table-item col-xs-12 col-sm-6 col-md-12">
-                                        <div class="row-content row">
-                                            <div class="row-header col-xs-6 col-md-12">
-                                                <div class="row-title row">
-                                                    <div class="column col-xs-12 col-md-6">操作时间</div>
-                                                    <div class="column col-xs-12 col-md-6">操作人</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-body col-xs-6 col-md-12">
-                                                <div class="row-item row">
-                                                    <div class="column col-xs-12 col-md-6">操作时间</div>
-                                                    <div class="column col-xs-12 col-md-6">操作人</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-item col-xs-12 col-sm-6 col-md-12">
-                                        <div class="row-content row">
-                                            <div class="row-header col-xs-6 col-md-12">
-                                                <div class="row-title visible-xs visible-sm row">
-                                                    <div class="column col-xs-12 col-md-6">操作时间</div>
-                                                    <div class="column col-xs-12 col-md-6">操作人</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-body col-xs-6 col-md-12">
-                                                <div class="row-item row">
-                                                    <div class="column col-xs-12 col-md-6">操作时间</div>
-                                                    <div class="column col-xs-12 col-md-6">操作人</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-item col-xs-12 col-sm-6 col-md-12">
-                                        <div class="row-content row">
-                                            <div class="row-header col-xs-6 col-md-12">
-                                                <div class="row-title visible-xs visible-sm row">
-                                                    <div class="column col-xs-12 col-md-6">操作时间</div>
-                                                    <div class="column col-xs-12 col-md-6">操作人</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-body col-xs-6 col-md-12">
-                                                <div class="row-item row">
-                                                    <div class="column col-xs-12 col-md-6">操作时间</div>
-                                                    <div class="column col-xs-12 col-md-6">操作人</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-item col-xs-12 col-sm-6 col-md-12">
-                                        <div class="row-content row">
-                                            <div class="row-header col-xs-6 col-md-12">
-                                                <div class="row-title visible-xs visible-sm row">
-                                                    <div class="column col-xs-12 col-md-6">操作时间</div>
-                                                    <div class="column col-xs-12 col-md-6">操作人</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-body col-xs-6 col-md-12">
-                                                <div class="row-item row">
-                                                    <div class="column col-xs-12 col-md-6">操作时间</div>
-                                                    <div class="column col-xs-12 col-md-6">操作人</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-item col-xs-12 col-sm-6 col-md-12">
-                                        <div class="row-content row">
-                                            <div class="row-header col-xs-6 col-md-12">
-                                                <div class="row-title visible-xs visible-sm row">
-                                                    <div class="column col-xs-12 col-md-6">操作时间</div>
-                                                    <div class="column col-xs-12 col-md-6">操作人</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-body col-xs-6 col-md-12">
-                                                <div class="row-item row">
-                                                    <div class="column col-xs-12 col-md-6">操作时间</div>
-                                                    <div class="column col-xs-12 col-md-6">操作人</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <div class="table-body row" id="PowerBuyRecord"></div>
                                 <div class="table-footer">
-                                    <div class="pagination" id="OpenRecord">
-
+                                    <div class="pagination" id="PagPowerBuy"></div>
+                                </div>
+                            </div>
+                            <div class="block-footer">
+                                <div class="block-button">
+                                    <div class="pull-left"></div>
+                                    <div class="pull-right">
+                                        <button class="btn cancel">取消</button>
                                     </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block-content hide">
+                            <div class="block-header"></div>
+                            <div class="block-body">
+                                <div class="table-header row">
+                                    <div class="table-item col-xs-12 col-md-5">
+                                        <div class="form-group limit">
+                                            <label class="form-label">开始日期</label>
+                                            <input class="form-input group-date1" readonly id="Power_Use_Start" readonly
+                                                   placeholder="请输入开始日期"/>
+                                        </div>
+                                    </div>
+                                    <div class="table-item col-xs-12 col-md-5">
+                                        <div class="form-group limit">
+                                            <label class="form-label">结束日期</label>
+                                            <input class="form-input group-date1" readonly id="Power_Use_End" readonly
+                                                   placeholder="请输入结束日期"/>
+                                        </div>
+                                    </div>
+                                    <div class="table-item col-xs-12 col-md-2">
+                                        <div class="form-group">
+                                            <button class="btn confirm clear" onclick="mg.exePowerUseRecord();">查询
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-body row" id="PowerUseRecord"></div>
+                                <div class="table-footer">
+                                    <div class="pagination" id="PagPowerUse"></div>
+                                </div>
+                            </div>
+                            <div class="block-footer">
+                                <div class="block-button">
+                                    <div class="pull-left"></div>
+                                    <div class="pull-right">
+                                        <button class="btn cancel">取消</button>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block-content hide">
+                            <div class="block-header"></div>
+                            <div class="block-body">
+                                <div class="table-header row">
+                                    <div class="table-item col-xs-12 col-md-5">
+                                        <div class="form-group limit">
+                                            <label class="form-label" for="Power_Oper_Start">开始日期</label>
+                                            <input class="form-input group-date1" readonly id="Power_Oper_Start"
+                                                   placeholder="请输入开始日期"/>
+                                        </div>
+                                    </div>
+                                    <div class="table-item col-xs-12 col-md-5">
+                                        <div class="form-group limit">
+                                            <label class="form-label" for="Power_Oper_End">结束日期</label>
+                                            <input class="form-input group-date1" readonly id="Power_Oper_End"
+                                                   placeholder="请输入结束日期"/>
+                                        </div>
+                                    </div>
+                                    <div class="table-item col-xs-12 col-md-2">
+                                        <div class="form-group">
+                                            <button class="btn confirm clear" onclick="mg.exePowerOperRecord();">查询
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-body row" id="PowerOperRecord"></div>
+                                <div class="table-footer">
+                                    <div class="pagination" id="PagPowerOper"></div>
                                 </div>
                             </div>
                             <div class="block-footer">
@@ -970,19 +728,15 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="Pwd_Begin">密码开始时间（时间戳）</label>
-                    <input class="form-input group-date1" id="Pwd_Begin" placeholder="请输入密码开始时间"/>
+                    <input class="form-input dateTimePicker" readonly id="Pwd_Begin" placeholder="请输入密码开始时间"/>
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="Pwd_End">密码结束时间（时间戳）</label>
-                    <input class="form-input group-date1" id="Pwd_End" placeholder="请输入密码结束时间"/>
+                    <input class="form-input dateTimePicker" readonly id="Pwd_End" placeholder="请输入密码结束时间"/>
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="Pwd_Phone">手机号码</label>
                     <input class="form-input" id="Pwd_Phone" placeholder="请输入手机号码"/>
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="Pwd_Uuid">门锁UUID</label>
-                    <input class="form-input" id="Pwd_Uuid" placeholder="请输入门锁UUID"/>
                 </div>
             </div>
             <div class="panel-footer">
@@ -1004,7 +758,7 @@
                                 <i class="drop-icon icon-drop-down"></i>
                             </div>
                             <div class="drop-body">
-                                <ul id="KeyEquBuilding"></ul>
+                                <ul id="KeyEquBuilding" data-target="KeyEquNumber"></ul>
                             </div>
                             <div class="drop-footer"></div>
                         </div>
@@ -1019,7 +773,7 @@
                                 <i class="drop-icon icon-drop-down"></i>
                             </div>
                             <div class="drop-body">
-                                <ul id="KeyEquNumber">
+                                <ul id="KeyEquNumber" data-target="KeyEquRoom">
                                     <li class="drop-option active" data-value="">不限</li>
                                 </ul>
                             </div>
@@ -1047,19 +801,137 @@
             </div>
             <div class="panel-footer">
                 <button class="btn cancel">取消</button>
-                <button class="btn confirm" onclick="">保存</button>
+                <button class="btn confirm" onclick="mg.exeDeviceBind();">保存</button>
+            </div>
+        </div>
+        <div class="panel-modal">
+            <div class="panel-header">
+                <h3 class="panel-title">修改密码</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="form-label" for="Update_Pwd_Name">密码名称</label>
+                    <input class="form-input" id="Update_Pwd_Name" placeholder="请输入密码名称"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="Update_Pwd_Pwd">密码明文</label>
+                    <input class="form-input" id="Update_Pwd_Pwd" placeholder="请输入密码明文"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="Update_Pwd_Begin">密码开始时间（时间戳）</label>
+                    <input class="form-input dateTimePicker" id="Update_Pwd_Begin" placeholder="请输入密码开始时间"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="Update_Pwd_End">密码结束时间（时间戳）</label>
+                    <input class="form-input dateTimePicker" id="Update_Pwd_End" placeholder="请输入密码结束时间"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="Update_Pwd_Phone">手机号码</label>
+                    <input class="form-input" id="Update_Pwd_Phone" placeholder="请输入手机号码"/>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button class="btn cancel">取消</button>
+                <button class="btn confirm" onclick="mg.exeUpdatePassword();">保存</button>
+            </div>
+        </div>
+        <div class="panel-modal">
+            <div class="panel-header">
+                <h3 class="panel-title">电费充值</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="form-label">充值房间</label>
+                    <span class="form-span">
+                        <span id="Charge_BuildingName"></span>
+                        <span id="Charge_RoomName"></span>室
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">租客姓名</label>
+                    <span class="form-span" id="Charge_CustomerName"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">联系方式</label>
+                    <span class="form-span" id="Charge_Phone"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">电费单价</label>
+                    <span class="form-span"><span id="Charge_EleUnitPrice"></span>元／度</span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="PowerPrice">充值金额</label>
+                    <input class="form-input" id="PowerPrice" placeholder="请输入充值金额"/>
+                    <label class="form-unit" for="PowerPrice">元</label>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="PowerAmount">充值电量</label>
+                    <input class="form-input" disabled id="PowerAmount"/>
+                    <label class="form-unit" for="PowerAmount">度</label>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">支付方式</label>
+                    <div class="drop-container hide" tabindex="1">
+                        <div class="drop-content">
+                            <div class="drop-header">
+                                <span class="drop-result" id="ChargePayMethodResult">支付宝</span>
+                                <i class="drop-icon icon-drop-down"></i>
+                            </div>
+                            <div class="drop-body">
+                                <ul id="ChargePayMethod"></ul>
+                            </div>
+                            <div class="drop-footer"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="PowerNumber">支付流水号</label>
+                    <input class="form-input" id="PowerNumber" placeholder="请输入支付流水号"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="PowerDescription">备注</label>
+                    <input class="form-input" id="PowerDescription" placeholder="请输入备注信息"/>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button class="btn cancel">取消</button>
+                <button class="btn confirm" onclick="mg.exeSavePowerRecharge();">保存</button>
+            </div>
+        </div>
+        <div class="panel-modal">
+            <div class="panel-header">
+                <h3 class="panel-title">修改设备</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="form-label">名称</label>
+                    <input class="form-input" placeholder="请输入设备名称"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">序列号</label>
+                    <input class="form-input" placeholder="请输入设备序列号"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">UUID</label>
+                    <input class="form-input" placeholder="请输入设备UUID"/>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button class="btn cancel">取消</button>
+                <button class="btn confirm" onclick="mg.exeUpdateDevices();">保存</button>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript" src="libs/jquery-1.11.3.js"></script>
 <script type="text/javascript" src="libs/bootstrap.min.js"></script>
+<script type="text/javascript" src="libs/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="js/bootstrap-datepicker.js?v=eec6ad7105"></script>
 <script type="text/javascript" src="js/app.js?v=4e03e56a5f"></script>
-<script type="text/javascript" src="js/components-pickers.js?v=d951e65bf7"></script>
+<script type="text/javascript" src="js/components-pickers.js?v=00b12ed6a0"></script>
 <script type="text/javascript" src="js/host.js?v=2112a01532"></script>
-<script type="text/javascript" src="js/tools.js?v=f02bdd8457"></script>
-<script type="text/javascript" src="js/device.page.js?v=67d3eb7283"></script>
+<script type="text/javascript" src="js/tools.js?v=ed4d381de6"></script>
+<script type="text/javascript" src="js/device.page.js?v=aa069d4542"></script>
 </body>
 </html>
 

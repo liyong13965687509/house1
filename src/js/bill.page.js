@@ -314,11 +314,11 @@ BillPage.prototype.ajaxRequestBillDetail = function (params) {
             if (data['succ']) {
                 var JSON_DATA = data['data'];
                 $("#BuildingName").text(JSON_DATA['BuildingName'] + JSON_DATA['FloorName'] + "层" + JSON_DATA['RoomName'] + "室");
-                $("#SerialNumber").text(JSON_DATA['SerialNumber']);
+                $("#SerialNumber").text(JSON_DATA['SerialNumber']?JSON_DATA['SerialNumber']:"");
                 $("#PayType").text(JSON_DATA['PayType']);
-                $("#ItemName").text(JSON_DATA['ItemName']);
+                $("#ItemName").text(JSON_DATA['ItemName']?JSON_DATA['ItemName']:"");
                 $("#Type").text(JSON_DATA['Type']);
-                $("#CustomerName").text(JSON_DATA['CustomerName']);
+                $("#CustomerName").text(JSON_DATA['CustomerName']?JSON_DATA['CustomerName']:"");
                 $("#BillDate").text(JSON_DATA['PayDate1'] + "~" + JSON_DATA['PayDate2']);
                 $("#PayDate").text(JSON_DATA['PayDate']);
                 $("#Description").text(JSON_DATA['Description']);

@@ -1,28 +1,28 @@
 var ComponentsPickers = function () {
 
-    
-	var groupdate1 = function () {
+
+    var groupdate1 = function () {
 
         if (jQuery().datepicker) {
             $('.group-date1').datepicker({
                 rtl: App.isRTL(),
-				format: 'yyyy-mm-dd',
+                format: 'yyyy-mm-dd',
                 autoclose: true
-            }).on('changeDate', function(e) {
+            }).on('changeDate', function (e) {
 
-			});
+            });
             $('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
         }
     }
-	var groupdate2 = function () {
+    var groupdate2 = function () {
         if (jQuery().datepicker) {
             $('.group-date2').datepicker({
                 rtl: App.isRTL(),
-				format: 'yyyy-mm-dd',
+                format: 'yyyy-mm-dd',
                 autoclose: true
-            }).on('changeDate', function(e) {
+            }).on('changeDate', function (e) {
 
-			});
+            });
             $('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
         }
     }
@@ -33,21 +33,21 @@ var ComponentsPickers = function () {
                 isRTL: App.isRTL(),
                 format: "yyyy 年  mm  月  dd 日  hh:ii",
                 pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left")
-            }).on('changeDate', function(ev){
+            }).on('changeDate', function (ev) {
                 alert(1);
-                
+
             });
             $('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
         }
     }
-	var handleDatePickers = function () {
+    var handleDatePickers = function () {
 
         if (jQuery().datepicker) {
             $('.date-picker').datepicker({
                 rtl: App.isRTL(),
                 format: 'yyyy-mm-dd',
                 autoclose: true
-            }).on('changeDate', function(e) {
+            }).on('changeDate', function (e) {
                 // `e` here contains the extra attributes
                 //console.log(e);
             });
@@ -67,17 +67,17 @@ var ComponentsPickers = function () {
                 autoclose: true,
                 minuteStep: 5
             });
-			$('.sale-time1').timepicker({
+            $('.sale-time1').timepicker({
                 autoclose: true,
                 minuteStep: 5,
                 showSeconds: false,
                 showMeridian: false
-            }).on('changeTime.timepicker', function(e) {
-				
-			});
+            }).on('changeTime.timepicker', function (e) {
+
+            });
 
             // handle input group button click
-            $('.timepicker').on('click', function(e){
+            $('.timepicker').on('click', function (e) {
                 e.preventDefault();
                 $(this).parent('.input-group').find('.timepicker').timepicker('showWidget');
             });
@@ -102,7 +102,7 @@ var ComponentsPickers = function () {
                 console.log("Callback has been called!");
                 $('#defaultrange input').val(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
             }
-        );        
+        );
 
         $('#defaultrange_modal').daterangepicker({
                 opens: (App.isRTL() ? 'left' : 'right'),
@@ -116,11 +116,11 @@ var ComponentsPickers = function () {
             function (start, end) {
                 $('#defaultrange_modal input').val(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
             }
-        );  
+        );
 
         // this is very important fix when daterangepicker is used in modal. in modal when daterange picker is opened and mouse clicked anywhere bootstrap modal removes the modal-open class from the body element.
         // so the below code will fix this issue.
-        $('#defaultrange_modal').on('click', function(){
+        $('#defaultrange_modal').on('click', function () {
             if ($('#daterangepicker_modal').is(":visible") && $('body').hasClass("modal-open") == false) {
                 $('body').addClass("modal-open");
             }
@@ -178,12 +178,12 @@ var ComponentsPickers = function () {
             isRTL: App.isRTL(),
             format: "yyyy 年  mm  月  dd 日  hh:ii",
             pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left")
-        }).on('changeDate', function(ev){
-			var pattern = /([\d]+)[^\d]+([\d]+)[^\d]+([\d]+)[^\d]+([\d]+):([\d]+)/;
-			var str = $(this).val();
-			var arr = $(this).val().match(pattern);
-			var str2 = arr[1]+'-'+arr[2]+'-'+arr[3]+' '+arr[4]+':'+arr[5];
-		});
+        }).on('changeDate', function (ev) {
+            var pattern = /([\d]+)[^\d]+([\d]+)[^\d]+([\d]+)[^\d]+([\d]+):([\d]+)/;
+            var str = $(this).val();
+            var arr = $(this).val().match(pattern);
+            var str2 = arr[1] + '-' + arr[2] + '-' + arr[3] + ' ' + arr[4] + ':' + arr[5];
+        });
 
         $(".form_advance_datetime").datetimepicker({
             isRTL: App.isRTL(),
@@ -249,15 +249,15 @@ var ComponentsPickers = function () {
         });
         $('.colorpicker-rgba').colorpicker();
     }
-   
+
 
     return {
         //main function to initiate the module
         init: function () {
             handleDatePickers();
-			$('.group-date1').length>0?groupdate1():null;
-			$('.group-date2').length>0?groupdate2():null;
-            $('.checktable-date').length>0?handleDatetimePicker():null;
+            $('.group-date1').length > 0 ? groupdate1() : null;
+            $('.group-date2').length > 0 ? groupdate2() : null;
+            $('.checktable-date').length > 0 ? handleDatetimePicker() : null;
             handleTimePickers();
             //handleDatetimePicker();
             //handleDateRangePickers();
@@ -267,7 +267,7 @@ var ComponentsPickers = function () {
             //     for(var i=0;i<obj.datetime.length;i++){
             //         obj.datetime[i]();
             //     }
-                
+
             // }
             // if(obj == 'date'){
             //     //handleDatePickers(obj.date);

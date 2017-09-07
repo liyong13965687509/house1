@@ -1272,14 +1272,14 @@ PropertyPage.prototype.ajaxRequestBuildingAddBind = function (params) {
             DropdownInit();
             //绑定配置、标签
             var JSON_EXTED = data['exted'];
-            for (var i = 0; i < JSON_EXTED.length; i++)//绑定配置、标签信息
-            {
-                var TEMP_HTML = "";
-                for (var j = 0; j < JSON_EXTED[i].Value.length; j++) {
-                    TEMP_HTML += "<li data-value=\"" + JSON_EXTED[i].Value[j].Key + "\">" + JSON_EXTED[i].Value[j].Value + "</li>";
+            for (var KEY in JSON_EXTED) {
+                TEMP_HTML = "";
+                for (var i = 0; i < JSON_EXTED[KEY].length; i++) {
+                    var KEY_DATA = JSON_EXTED[KEY][i];
+                    TEMP_HTML += "<li data-value=\"" + KEY_DATA['Key'] + "\">" + KEY_DATA['Value'] + "</li>";
                 }
                 TEMP_HTML += "<div class=\"clear\"></div>";
-                $("#" + JSON_EXTED[i].Key + "_Add>ul").html(TEMP_HTML);
+                $("#" + KEY + "_Add>ul").html(TEMP_HTML);
             }
         },
         error: function (XMLHttpRequest, txtStatus, errorThrown) {
@@ -1438,38 +1438,29 @@ PropertyPage.prototype.ajaxRequestBuildingUpdateBind = function (params) {
         dataType: "JSON",
         success: function (data) {
             //绑定基础信息
-            var TEMP_HTML = "";
-            var TEMP_DATA = data['exted'];
-            var JSON_DATA = data['data'];
+            var TEMP_HTML = "",
+                TEMP_DATA = data['exted'],
+                JSON_DATA = data['data'];
             $("#BuildingName_Edit").val(JSON_DATA['building']['Name']);
             $("#BuildingAddr_Edit").val(JSON_DATA['building']['Address']);
             $("#water_price_edit").val(JSON_DATA['building']['WaterUnitPrice']);
             $("#ele_price_edit").val(JSON_DATA['building']['EleUnitPrice']);
             //绑定标签
-
-            //绑定配置、标签
-            // var JSON_EXTED = data['exted'];
-            // for (var i = 0; i < JSON_EXTED.length; i++)//绑定配置、标签信息
-            // {
-            //     var TEMP_HTML = "";
-            //     for (var j = 0; j < JSON_EXTED[i].Value.length; j++) {
-            //         TEMP_HTML += "<li data-value=\"" + JSON_EXTED[i].Value[j].Key + "\">" + JSON_EXTED[i].Value[j].Value + "</li>";
-            //     }
-            //     TEMP_HTML += "<div class=\"clear\"></div>";
-            //     $("#" + JSON_EXTED[i].Key + "_Add>ul").html(TEMP_HTML);
-            // }
-            for (var i = 0; i < TEMP_DATA.length; i++)//绑定配置、标签信息
-            {
-                var TEMP_HTML = "";
-                for (var j = 0; j < TEMP_DATA[i]['Value'].length; j++) {
-                    TEMP_HTML += "<li data-value=\"" + TEMP_DATA[i]['Value'][j]['Key'] + "\">" + TEMP_DATA[i]['Value'][j]['Value'] + "</li>";
+            for (var KEY in TEMP_DATA) {
+                TEMP_HTML = "";
+                for (var i = 0; i < TEMP_DATA[KEY].length; i++) {
+                    var KEY_DATA = TEMP_DATA[KEY][i];
+                    TEMP_HTML += "<li data-value=\"" + KEY_DATA['Key'] + "\">" + KEY_DATA['Value'] + "</li>";
                 }
                 TEMP_HTML += "<div class=\"clear\"></div>";
-                $("#" + TEMP_DATA[i]['Key'] + "_Update>ul").html(TEMP_HTML);
+                $("#" + KEY + "_Update>ul").html(TEMP_HTML);
             }
+
 
             var allocs = JSON_DATA['building']['Alloc'] ? JSON_DATA['building']['Alloc'].split('|') : "";
             for (var i = 0; i < allocs.length; i++) {
+                console.log($("#BuildingAlloc_Update li[data-value='" + allocs[i] + "']"));
+                console.log($("#BuildingAlloc_Update li"));
                 $("#BuildingAlloc_Update li[data-value='" + allocs[i] + "']").addClass("tagli-sel");
             }
 
@@ -1546,7 +1537,7 @@ PropertyPage.prototype.ajaxRequestBuildingDetail = function (params) {
         success: function (data) {
             if (data['succ']) {
                 var JSON_DATA = data.data;
-                var TEMP_DATA=data.exted;
+                var TEMP_DATA = data.exted;
                 $("#Name_Detail").text(JSON_DATA['Name']);
                 $("#BuildingAddr_Detail").text(JSON_DATA['Address']);
                 $("#FloorNum_Detail").text(TEMP_DATA['RoomNum'] + "间（共" + TEMP_DATA['FloorNum'] + "层）");
@@ -1704,15 +1695,17 @@ PropertyPage.prototype.ajaxRequestRoomUpdateDetail = function (params) {
         success: function (data) {
             var TEMP_HTML = "";
             var TEMP_DATA = data['exted'];
-            for (var i = 0; i < TEMP_DATA.length; i++)//绑定配置、标签信息
-            {
-                TEMP_HTML = ""
-                for (var j = 0; j < TEMP_DATA[i].Value.length; j++) {
-                    TEMP_HTML += "<li data-value=\"" + TEMP_DATA[i].Value[j].Key + "\">" + TEMP_DATA[i].Value[j].Value + "</li>";
+            // 绑定配置、标签信息
+            for (var KEY in TEMP_DATA) {
+                TEMP_HTML = "";
+                for (var i = 0; i < TEMP_DATA[KEY].length; i++) {
+                    var KEY_DATA = TEMP_DATA[KEY][i];
+                    TEMP_HTML += "<li data-value=\"" + KEY_DATA['Key'] + "\">" + KEY_DATA['Value'] + "</li>";
                 }
                 TEMP_HTML += "<div class=\"clear\"></div>";
-                $("#" + TEMP_DATA[i].Key + "_Update>ul").html(TEMP_HTML);
+                $("#" + KEY + "_Update>ul").html(TEMP_HTML);
             }
+
             var JSON_DATA = data['data'];
             $("#RoomName_Update").val(JSON_DATA.RoomName);
             $("#Price_Update").val(JSON_DATA.Price);
@@ -1953,28 +1946,20 @@ PropertyPage.prototype.ajaxRequestServiceAddBind = function (params) {
         success: function (data) {
             if (data['succ']) {
                 var JSON_DATA = data['data'];
+                console.log(JSON_DATA);
                 //1、维修类别下拉列表
-                var TEMP_HTML = "";
-                for (var i = 0; i < JSON_DATA.ServiceItem.length; i++) {
-                    var style = "";
-                    if (i == 0) {
-                        style = "cur";
+                for (var KEY in JSON_DATA) {
+                    var TEMP_HTML = "";
+                    for (var i = 0; i < JSON_DATA[KEY].length; i++) {
+                        var KEY_DATA = JSON_DATA[KEY][i];
+                        TEMP_CLASS = i == 0 ? ' active' : '';
+                        TEMP_HTML += "<li data-value=\"" + KEY_DATA['Key'] + "\" class='" + TEMP_CLASS + "'>" + KEY_DATA['Value'] + "</li>";
                     }
-                    TEMP_HTML += "<li data-value=\"" + JSON_DATA.ServiceItem[i].Key + "\" class='" + style + "'>" + JSON_DATA.ServiceItem[i].Value + "</li>";
+                    TEMP_HTML += "<div class=\"clear\"></div>";
+                    $("#" + KEY + " ul").html(TEMP_HTML);
+                    $("#" + KEY + " span").text($("#" + KEY + " .active").text());
+
                 }
-                $("#ServiceItem ul").html(TEMP_HTML);
-                $("#ServiceItem span").text($("#ServiceItem li[class='cur']").text());
-                //2、承担对象下拉列表
-                TEMP_HTML = "";
-                for (var i = 0; i < JSON_DATA.ServiceObject.length; i++) {
-                    var style = "";
-                    if (i == 0) {
-                        style = "cur";
-                    }
-                    TEMP_HTML += "<li data-value=\"" + JSON_DATA.ServiceObject[i].Key + "\" class='" + style + "'>" + JSON_DATA.ServiceObject[i].Value + "</li>";
-                }
-                $("#ServiceObject ul").html(TEMP_HTML);
-                $("#ServiceObject span").text($("#ServiceObject li[class='cur']").text());
                 DropdownInit();
 
                 // 维修列表初始化

@@ -278,7 +278,7 @@
   .employee .form-group {
     position: relative;
     z-index: 1;
-    margin: 4px 15px 0px 0px;
+    margin: 0px 15px 0px 0px;
     display: inline-block !important;
   }
   .employee .form-group:last-child {

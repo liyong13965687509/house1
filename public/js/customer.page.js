@@ -257,14 +257,16 @@ CustomerPage.prototype.ajaxRequestConditionBind = function (params) {
             if (data['succ']) {
                 var TEMP_HTML = null;
                 var JSON_DATA = data['data'];
-                for (var i = 0; i < JSON_DATA.length; i++) {
+                for (var KEY in JSON_DATA) {
                     TEMP_HTML = "";
-                    for (var j = 0; j < JSON_DATA[i]['Value'].length; j++) {
-                        TEMP_HTML += "<li data-value=\"" + JSON_DATA[i]['Value'][j]['Key'] + "\" class='drop-option'>" + JSON_DATA[i]['Value'][j]['Value'] + "</li>";
+                    for (var i = 0; i < JSON_DATA[KEY].length; i++) {
+                        var KEY_DATA = JSON_DATA[KEY][i];
+                        TEMP_HTML += "<li class='drop-option' data-value=\"" + KEY_DATA['Key'] + "\">" + KEY_DATA['Value'] + "</li>";
                     }
-                    $("#" + JSON_DATA[i]['Key'] + "_Get ul li:first").nextAll().remove();
-                    $("#" + JSON_DATA[i]['Key'] + "_Get ul li:first").after(TEMP_HTML);
+                    TEMP_HTML += "<div class=\"clear\"></div>";
+                    $("#" + KEY + "_Get").html(TEMP_HTML);
                 }
+
             }
             else {
                 messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -612,7 +614,6 @@ CustomerPage.prototype.ajaxRequestCustomerAddBind = function (params) {
         success: function (data) {
             if (data['succ']) {
                 var JSON_DATA = data['data'];
-                console.log(JSON_DATA);
                 var TEMP_JSON = {
                     CustomerSource: "CustomerSource",
                     CustomerLevel: "CustomerLevel",
@@ -863,6 +864,7 @@ CustomerPage.prototype.ajaxRequestCustomerEditBind = function (params) {
         data: params,
         dataType: "JSON",
         success: function (data) {
+            console.log(data);
             if (data['succ']) {
                 var JSON_DATA = data['data'];
                 var TEMP_JSON = {
@@ -882,6 +884,7 @@ CustomerPage.prototype.ajaxRequestCustomerEditBind = function (params) {
                         $_DROP_RESULT.text($_TEMP_SELECTOR.text());
                     }
                 }
+
                 // 性别
                 $(".genders").text(JSON_DATA['Title']);
                 $("#Genders_Edit li").each(function () {
@@ -1069,7 +1072,6 @@ CustomerPage.prototype.ajaxRequestCustomerDelete = function (params) {
 CustomerPage.prototype.followBind = function () {
     $(this.FOLLOW_REMARK).val("");
     var params = this.getParams(this.API_CONFIG['FOLLOW_BIND']);
-    console.log(params);
     this.ajaxRequestFollowBind(params);
     return this;
 }
@@ -1088,6 +1090,7 @@ CustomerPage.prototype.ajaxRequestFollowBind = function (params) {
         dataType: "JSON",
         success: function (data) {
             if (data['succ']) {
+                console.log(data);
                 var JSON_DATA = data['data'],
                     TEMP_DATA = data['exted']['paramKey'],
                     TEMP_HTML = '',
@@ -1119,6 +1122,8 @@ CustomerPage.prototype.ajaxRequestFollowBind = function (params) {
                     TEMP_HTML += '<li class="drop-option ' + STYLE + '" data-value="' + TEMP_DATA[j]['Key'] + '" >' + TEMP_DATA[j]['Value'] + '</li>'
                 }
                 $("#titleList").html(TEMP_HTML);
+                $("#titleList").parents(".drop-body").prev().find(".drop-result").text($("#titleList .active").text());
+
             }
             else {
                 messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);

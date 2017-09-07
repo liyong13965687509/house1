@@ -58,7 +58,7 @@
 .datepicker-dropdown.datepicker-orient-bottom:before {
   bottom: -7px;
   border-bottom: 0;
-  border-top: 7px solid #999;
+  border-top: 7px solid #999999;
 }
 .datepicker-dropdown.datepicker-orient-bottom:after {
   bottom: -6px;
@@ -106,12 +106,12 @@
 }
 .datepicker table tr td.old,
 .datepicker table tr td.new {
-  color: #999;
+  color: #999999;
 }
 .datepicker table tr td.disabled,
 .datepicker table tr td.disabled:hover {
   background: none;
-  color: #999;
+  color: #999999;
   cursor: default;
 }
 .datepicker table tr td.today,
@@ -280,7 +280,7 @@
 .datepicker table tr td.selected:hover.active,
 .datepicker table tr td.selected.disabled.active,
 .datepicker table tr td.selected.disabled:hover.active {
-  background-color: #666;
+  background-color: #666666;
 }
 .datepicker table tr td.active,
 .datepicker table tr td.active:hover,
@@ -351,7 +351,7 @@
 .datepicker table tr td span.disabled,
 .datepicker table tr td span.disabled:hover {
   background: none;
-  color: #999;
+  color: #999999;
   cursor: default;
 }
 .datepicker table tr td span.active,
@@ -407,7 +407,7 @@
 }
 .datepicker table tr td span.old,
 .datepicker table tr td span.new {
-  color: #999;
+  color: #999999;
 }
 .datepicker th.datepicker-switch {
   width: 145px;

@@ -7,11 +7,11 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>系统</title>
-    <link rel="stylesheet" type="text/css" href="css/font.css?v=53c5b08946"/>
-    <link rel="stylesheet" type="text/css" href="css/plugins.css?v=b9b1e9df9e"/>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css?v=3073c415f0"/>
-    <link rel="stylesheet" type="text/css" href="css/common.css?v=ddbe54a055"/>
-    <link rel="stylesheet" type="text/css" href="css/system.page.css?v=c1b9605d47"/>
+    <link rel="stylesheet" type="text/css" href="css/font.css?v=1128d866e1"/>
+    <link rel="stylesheet" type="text/css" href="css/plugins.css?v=2ece335f10"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css?v=1e9bc98d71"/>
+    <link rel="stylesheet" type="text/css" href="css/common.css?v=a7a8f95611"/>
+    <link rel="stylesheet" type="text/css" href="css/system.page.css?v=fc34af6816"/>
 </head>
 <body>
 <div class="header">
@@ -47,7 +47,7 @@
             </li>
             <li class="right-message">
                 <a href="message.html?v=65cb791780">
-                    <img src="images/yg_icon_07.png?v=9957859eb8?v=9957859eb8"/>
+                    <img src="images/yg_icon_07.png?v=9957859eb8"/>
                     <span class="message-nums">8</span>
                 </a>
             </li>
@@ -104,7 +104,7 @@
                             <div class="item-content row">
                                 <div class="col-xs-12 col-sm-3 col-md-2 item-label">logo</div>
                                 <div class="col-xs-12 col-sm-9 col-md-10 item-select">
-                                    <img src="images/logo.png?v=894d6430b6" alt="" title=""/>
+                                    <img src="images/logo.png" alt="" title=""/>
                                 </div>
                             </div>
                             <div class="item-content row">
@@ -221,10 +221,38 @@
                             <div class="item-header row">
                                 <span class="pull-left item-title">物业参数</span>
                             </div>
+                            <div class="item-content row  BuildingAlloc">
+                                <label class="item-label">物业配备</label>
+
+                            </div>
+                            <div class="item-content row BuildingTag">
+                                <label class="item-label">物业标签</label>
+                            </div>
+                            <div class="item-content row RoomAlloc">
+                                <label class="item-label">房间配置</label>
+                            </div>
+                            <div class="item-content row RoomTag">
+                                <label class="item-label">房间标签</label>
+                            </div>
+                            <div class="item-content row ServiceItem">
+                                <label class="item-label">维修项目</label>
+                            </div>
                         </li>
                         <li class="right-item" id="CustomerParam">
                             <div class="item-header row">
                                 <span class="pull-left item-title">客户参数</span>
+                            </div>
+                            <div class="item-content row CustomerSource">
+                                <label class="item-label">客户来源</label>
+                            </div>
+                            <div class="item-content row CustomerLevel">
+                                <label class="item-label">客户等级</label>
+                            </div>
+                            <div class="item-content row FollowItem">
+                                <label class="item-label">跟进项目</label>
+                            </div>
+                            <div class="item-content row HouseType">
+                                <label class="item-label">户型需求</label>
                             </div>
                         </li>
                         <li class="right-item" id="ContractParam">
@@ -250,6 +278,10 @@
                                     <input type="text" id="UnitPriceC" class="form-input"/>
                                 </div>
                             </div>
+                            <div class="item-content row CostItem">
+                                <label class="item-label">费用项目</label>
+                            </div>
+
                             <div class="item-content row">
                                 <label class="item-label">合同到期</label>
                                 <div class="form-group">
@@ -264,6 +296,9 @@
                                 <span class="pull-left item-title">账单参数</span>
                                 <button class="pull-right btn confirm" onclick="sp.exeUpdateBill();">保存</button>
                             </div>
+                            <div class="item-content row PayType">
+                                <label class="item-label">支付方式</label>
+                            </div>
                             <div class="item-content row">
                                 <label class="item-label">账单到期</label>
                                 <div class="form-group">
@@ -276,6 +311,9 @@
                         <li class="right-item" id="EmployeeParam">
                             <div class="item-header row">
                                 <span class="pull-left item-title">员工参数</span>
+                            </div>
+                            <div class="item-content row Title">
+                                <label class="item-label">职称</label>
                             </div>
                         </li>
                     </ul>
@@ -323,7 +361,7 @@
 <script type="text/javascript" src="libs/jquery-1.11.3.js"></script>
 <script type="text/javascript" src="libs/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/host.js?v=2112a01532"></script>
-<script type="text/javascript" src="js/tools.js?v=f02bdd8457"></script>
-<script type="text/javascript" src="js/system.page.js?v=edc144d9f1"></script>
+<script type="text/javascript" src="js/tools.js?v=ed4d381de6"></script>
+<script type="text/javascript" src="js/system.page.js?v=2494b11a8e"></script>
 </body>
 </html>

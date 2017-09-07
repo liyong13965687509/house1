@@ -221,10 +221,38 @@
                             <div class="item-header row">
                                 <span class="pull-left item-title">物业参数</span>
                             </div>
+                            <div class="item-content row  BuildingAlloc">
+                                <label class="item-label">物业配备</label>
+
+                            </div>
+                            <div class="item-content row BuildingTag">
+                                <label class="item-label">物业标签</label>
+                            </div>
+                            <div class="item-content row RoomAlloc">
+                                <label class="item-label">房间配置</label>
+                            </div>
+                            <div class="item-content row RoomTag">
+                                <label class="item-label">房间标签</label>
+                            </div>
+                            <div class="item-content row ServiceItem">
+                                <label class="item-label">维修项目</label>
+                            </div>
                         </li>
                         <li class="right-item" id="CustomerParam">
                             <div class="item-header row">
                                 <span class="pull-left item-title">客户参数</span>
+                            </div>
+                            <div class="item-content row CustomerSource">
+                                <label class="item-label">客户来源</label>
+                            </div>
+                            <div class="item-content row CustomerLevel">
+                                <label class="item-label">客户等级</label>
+                            </div>
+                            <div class="item-content row FollowItem">
+                                <label class="item-label">跟进项目</label>
+                            </div>
+                            <div class="item-content row HouseType">
+                                <label class="item-label">户型需求</label>
                             </div>
                         </li>
                         <li class="right-item" id="ContractParam">
@@ -250,6 +278,10 @@
                                     <input type="text" id="UnitPriceC" class="form-input"/>
                                 </div>
                             </div>
+                            <div class="item-content row CostItem">
+                                <label class="item-label">费用项目</label>
+                            </div>
+
                             <div class="item-content row">
                                 <label class="item-label">合同到期</label>
                                 <div class="form-group">
@@ -264,6 +296,9 @@
                                 <span class="pull-left item-title">账单参数</span>
                                 <button class="pull-right btn confirm" onclick="sp.exeUpdateBill();">保存</button>
                             </div>
+                            <div class="item-content row PayType">
+                                <label class="item-label">支付方式</label>
+                            </div>
                             <div class="item-content row">
                                 <label class="item-label">账单到期</label>
                                 <div class="form-group">
@@ -276,6 +311,9 @@
                         <li class="right-item" id="EmployeeParam">
                             <div class="item-header row">
                                 <span class="pull-left item-title">员工参数</span>
+                            </div>
+                            <div class="item-content row Title">
+                                <label class="item-label">职称</label>
                             </div>
                         </li>
                     </ul>

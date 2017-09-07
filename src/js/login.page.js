@@ -9,12 +9,11 @@ function LoginPage() {
     this.NOT_EMPTY = arguments['NOT_EMPTY'] ? arguments['NOT_EMPTY'] : "NOT_EMPTY";
     this.AJAX_CHECK = arguments['AJAX_CHECK'] ? arguments['AJAX_CHECK'] : "AJAX_CHECK";
     this.SAVE_ACCOUNT = arguments['SAVE_ACCOUNT'] ? arguments['SAVE_ACCOUNT'] : "#checkbox";
-    this.SUBMIT_BUTTON = arguments['SUBMIT_BUTTON'] ? arguments['SUBMIT_BUTTON'] : ".submit";
-    
+    this.SUBMIT_BUTTON = arguments['SUBMIT_BUTTON'] ? arguments['SUBMIT_BUTTON'] : ".btn.confirm";
+
     this.API_CONFIG = arguments['API_CONFIG'] ? arguments['API_CONFIG'] : {
         IDENTITY_LOGIN: "/identity/login"
     };
-
 
 
     this.init();
@@ -26,7 +25,7 @@ function LoginPage() {
  * @returns {LoginPage} 返回当前对象实现连缀调用
  */
 LoginPage.prototype.init = function () {
-    sessionStorage.setItem('status',true);
+    sessionStorage.setItem('status', true);
     this.bindAccount();
     this.submit();
     this.keyPressEnter();
