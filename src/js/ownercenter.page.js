@@ -221,7 +221,6 @@ PersonalPage.prototype.exeGetCheckCode = function () {
             element: ".form-btn.code",
             initTime: 60,
             complete: function () {
-                console.log('complete');
             }
         });
         var params = _this.getParams(_this.GET_CODE);

@@ -1112,7 +1112,6 @@ function fyfoo2(pagerow, total, foo, fywrap) {
         var fybtn=$(this).parent('ul').find('li').not('.previous,.next,.page-total');
         $(this).addClass('active').siblings('li').removeClass('active');
         activenum = fybtn.index($(this));
-        // console.log(activenum);
         pagenum = parseInt($(this).find('a').html());
         foo(pagenum);
     });

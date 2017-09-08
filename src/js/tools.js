@@ -522,7 +522,8 @@ WebApp.prototype.init = function () {
 WebApp.prototype.initDateTimePicker = function () {
     if (undefined != $(this.DATE_TIME_PICKER)[0]) {
         $(this.DATE_TIME_PICKER).datetimepicker({
-            lang: 'zh-CN',
+            autoclose: true,
+            language: 'zh-CN',
             format: 'yyyy-mm-dd hh:ii'
         });
     }
@@ -788,7 +789,7 @@ WebApp.prototype.propertyGrantControl = function () {
     // 物业新增
     this.grantControl($(".fq-nav2-bottom"), "building_add");
     // 物业删除
-    this.grantControl($(".property-room-ul1"), "building_delete");
+    this.grantControl($(".building_delete"), "building_delete");
     // 楼层删除
     this.grantControl($(".sp11"), "floor_delete");
     // 房间编辑
@@ -977,13 +978,13 @@ WebApp.prototype.parseTime = function (params) {
  * @param str
  * @returns {boolean}
  */
-WebApp.prototype.specialCharacter=function(str){
-    var flag=true;
+WebApp.prototype.specialCharacter = function (str) {
+    var flag = true;
     var forbidChar = ["@", "#", "$", "%", "^", "&", "*", "……", "“", "'", "￥", "×", "\"", "<", ">", "’", "”"];
     for (var i = 0; i < forbidChar.length; i++) {
         if (str.indexOf(forbidChar[i]) >= 0) {
-            flag=false;
-            messageBox.show("提示","不能含有特殊字符！", MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            flag = false;
+            messageBox.show("提示", "不能含有特殊字符！", MessageBoxButtons.OK, MessageBoxIcons.infomation);
         }
     }
     return flag;
@@ -995,14 +996,14 @@ WebApp.prototype.specialCharacter=function(str){
  * @param str
  * @returns {number}
  */
-WebApp.prototype.textLength=function (str) {
-        var realLength = 0, len = str.length, charCode = -1;
-        for (var i = 0; i < len; i++) {
-            charCode = str.charCodeAt(i);
-            if (charCode >= 0 && charCode <= 128) realLength += 1;
-            else realLength += 2;
-        }
-        return realLength;
+WebApp.prototype.textLength = function (str) {
+    var realLength = 0, len = str.length, charCode = -1;
+    for (var i = 0; i < len; i++) {
+        charCode = str.charCodeAt(i);
+        if (charCode >= 0 && charCode <= 128) realLength += 1;
+        else realLength += 2;
+    }
+    return realLength;
 }
 
 

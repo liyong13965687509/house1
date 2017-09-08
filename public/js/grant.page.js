@@ -106,7 +106,7 @@ GrantPage.prototype.getParams = function (name) {
 GrantPage.prototype.selectRole = function () {
     var _this = this;
     $("#roles").on("click", "li", function () {
-        $(".post-edit .form-label").show();
+        $("#Job_Edit").show();
         $(".post-edit .form-content").hide();
         $(".form-content b").hide();
         $(this).addClass("active").siblings("li").removeClass("active");
@@ -181,7 +181,6 @@ GrantPage.prototype.showEditRoleDetail = function (params) {
             index: 1,
             element: ".panel-sm",
             complete: function () {
-                console.log("OPEN");
             }
         })
     });
@@ -208,7 +207,6 @@ GrantPage.prototype.roleEditSave = function () {
     }
 
 
-
     var result = true;
     $("#roles>li>span").each(function () {
         if ($(this).text() == TEMP_NAME) {
@@ -217,10 +215,10 @@ GrantPage.prototype.roleEditSave = function () {
         }
     })
 
-    if (!regular.check(regular.ROLE_REG_EXP, TEMP_NAME) & TEMP_NAME != ""&result) {
+    if (!regular.check(regular.ROLE_REG_EXP, TEMP_NAME) & TEMP_NAME != "" & result) {
         var params = _this.getParams(_this.API_CONFIG['ROLE_EDIT_SAVE']);
         _this.ajaxRequestroleEditSave(params);
-    }else if(!result){
+    } else if (!result) {
         messageBox.show("警告", "角色名称不能重复", MessageBoxButtons.OK, MessageBoxIcons.warning);
     } else {
         messageBox.show("警告", "请输入正确的角色", MessageBoxButtons.OK, MessageBoxIcons.warning);
@@ -295,7 +293,7 @@ GrantPage.prototype.ajaxRequestroleDel = function (params) {
                 mp.hideSmPanel();
                 _this.roleList();
                 _this.grantMenuBind();
-                $(".post-edit .form-label").show();
+                $("#Job_Edit").show();
                 $(".post-edit .form-content").hide();
                 messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
@@ -328,7 +326,7 @@ GrantPage.prototype.ajaxRequestroleAdd = function (params) {
                 mp.hideSmPanel();
                 _this.roleList();
                 _this.grantMenuBind();
-                $(".post-edit .form-label").show();
+                $("#Job_Edit").show();
                 $(".post-edit .form-content").hide();
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
                 $("#role-name").val("");//清空表单信息
@@ -363,10 +361,10 @@ GrantPage.prototype.roleAdd = function () {
         }
     });
 
-    if (!regular.check(regular.ROLE_REG_EXP, TEMP_NAME) & TEMP_NAME != ""& result) {
+    if (!regular.check(regular.ROLE_REG_EXP, TEMP_NAME) & TEMP_NAME != "" & result) {
         var params = _this.getParams(_this.API_CONFIG['ROLE_ADD']);
         _this.ajaxRequestroleAdd(params);
-    } else if(!result){
+    } else if (!result) {
         messageBox.show("警告", "角色名称不能重复", MessageBoxButtons.OK, MessageBoxIcons.warning);
     } else {
         messageBox.show("警告", "请输入正确的角色", MessageBoxButtons.OK, MessageBoxIcons.warning);
@@ -541,14 +539,14 @@ GrantPage.prototype.ajaxRequestRoleGrant = function (params) {
  */
 GrantPage.prototype.dutyEdit = function () {
     var _this = this;
-    $(".post-edit .form-label").click(function () {
+    $("#Job_Edit").click(function () {
         $(this).toggle();
         $(".post-edit .form-content").toggle();
         $(".form-content b").toggle();
         $(".form-handle li").addClass("cursor");
     });
     $(".post-edit .form-content button").click(function () {
-        $(".post-edit .form-label").toggle();
+        $("#Job_Edit").toggle();
         $(".post-edit .form-content").toggle();
         $(".form-content b").toggle();
         $(".form-handle li").removeClass("cursor");

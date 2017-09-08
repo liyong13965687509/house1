@@ -685,7 +685,6 @@ ContractPage.prototype.ajaxRequestContractDetail = function (params) {
             //绑定明细页面
             if (data['succ']) {
                 var JSON_DATA = data['data'];
-                console.log(JSON_DATA);
                 // 账单（列表）查看
                 webApp.grantControl($(".billInit"), "bill_select");
                 // 合同编辑
@@ -746,9 +745,7 @@ ContractPage.prototype.ajaxRequestContractBind = function (params) {
         success: function (data) {
             if (data['succ']) {
                 var JSON_DATA = data['data'];
-                console.log(JSON_DATA);
                 var TEMP_DATA = data['exted'];
-                console.log(TEMP_DATA);
                 //绑定支付方式下拉列表
                 var TEMP_HTML = "";
                 for (var i = 0; i < TEMP_DATA['PayType'].length; i++) {
@@ -908,7 +905,7 @@ ContractPage.prototype.ajaxRequestContractAbandon = function (params) {
  * @returns {ContractPage}
  */
 ContractPage.prototype.ajaxRequestEndBind = function (params) {
-    var _this=this;
+    var _this = this;
     $.ajax({
         type: "GET",
         url: host + this.API_CONFIG['END_BIND'],
@@ -1130,19 +1127,17 @@ ContractPage.prototype.ajaxRequestBillList = function (params) {
                 var JSON_DATA = data.data;
                 var TEMP_HTML = "";
                 for (var i = 0; i < JSON_DATA.length; i++) {
-                    TEMP_HTML += "<tr>" +
-                        "<td>" + JSON_DATA[i]['State'] + "</td>" +
-                        "<td>" + JSON_DATA[i]['Type'] + "</td>" +
-                        "<td>" + JSON_DATA[i]['PayDate1'] + "~" + JSON_DATA[i]['PayDate2'] + "</td>" +
-                        "<td>" + JSON_DATA[i]['Price'] + "</td>" +
-                        "<td>" + JSON_DATA[i]['Progress'] + "</td>" +
-                        "<td>" + JSON_DATA[i]['PayDate3'] + "</td>";
-                    if (webApp.grantControl($(".billDel"), "bill_delete")) {
-                        TEMP_HTML += "<td><button color=\"lan\" data-value='" + JSON_DATA[i].CharId + "' class=\"collection\" >收款</button><button color=\"lan\" data-value='" + JSON_DATA[i].CharId + "' class='billDel' onclick='cp.billDelete()'>删除</button></td>";
-                    } else {
-                        TEMP_HTML += "<td><button color=\"lan\"  data-value='" + JSON_DATA[i].CharId + "' class=\"collection\">收款</button></td>";
-                    }
-                    TEMP_HTML += "</tr>";
+                    TEMP_HTML += '<tr>'
+                        + '<td>' + JSON_DATA[i]['State'] + '</td>'
+                        + '<td>' + JSON_DATA[i]['Type'] + '</td>'
+                        + '<td>' + JSON_DATA[i]['PayDate1'] + "~"
+                        + JSON_DATA[i]['PayDate2'] + '</td>'
+                        + '<td>' + JSON_DATA[i]['Price'] + '</td>'
+                        + '<td>' + JSON_DATA[i]['Progress'] + '</td>'
+                        + '<td>' + JSON_DATA[i]['PayDate3'] + '</td>'
+                        + '<td><a color="lan" data-value="' + JSON_DATA[i].CharId + '" class="collection">收款</a>';
+                    TEMP_HTML += webApp.grantControl($(".billDel"), ".bill_delete") == true ? '</td></tr>' :
+                        '&nbsp;&nbsp;<a color="lan" data-value="' + JSON_DATA[i].CharId + '" class="billDel" onclick="cp.billDelete()">删除</a></td></tr>';
                 }
                 $("#Bills tr:first").nextAll().remove();
                 $("#Bills").append(TEMP_HTML);

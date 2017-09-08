@@ -174,7 +174,11 @@
         height: 100px;
       }
       .post-edit {
+        height: auto;
+        font-size: 0px;
+        text-align: right;
         position: relative;
+        padding: 15px 0px 30px;
         .form-label {
           position: absolute;
           width: 96px;
@@ -195,30 +199,6 @@
         }
         .form-content {
           display: none;
-          position: absolute;
-          top: 50%;
-          right: 0px;
-          margin-top: -15px;
-          button {
-            display: inline-block;
-            width: 60px;
-            height: 30px;
-            line-height: 28px;
-            text-align: center;
-            border-radius: 4px;
-            border: 1px solid #8795ad;
-            margin-left: 16px;
-            cursor: pointer;
-            color: #8795ad;
-            font-size: 14px;
-          }
-          .post-save {
-            background-color: #417de6;
-            color: #fff;
-            &:hover {
-              background-color: @hover;
-            }
-          }
         }
       }
     }
@@ -323,10 +303,11 @@
   }
 }
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 768px) {
   #menu-grant {
     padding-left: 116px;
   }
+
   #form-body {
     .form-content {
       width: auto;
@@ -334,6 +315,7 @@
   }
 
 }
+
 @media screen and (min-width: 768px) {
   .grant {
     .pull-left {
@@ -371,8 +353,9 @@
 
   }
 }
-@media screen and (min-width: 992px){
-  .grant{
+
+@media screen and (min-width: 992px) {
+  .grant {
     .pull-right {
       #form-body {
         .form-content {

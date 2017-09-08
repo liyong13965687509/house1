@@ -66,6 +66,9 @@
             padding-right: 20px;
             width: 50px !important;
         }
+        .top-modal-bottom{
+            border-top:none;
+        }
 
 
     </style>
@@ -135,8 +138,8 @@
             </div>
         </div>
         <div class="top-modal-bottom">
-            <button class="btn-cancel" onclick="CloseDiv()">取消</button>
-            <button class="btn-keep" onclick="BillReceive()">收款</button>
+            <button class="btn btn-cancel" onclick="CloseDiv()">取消</button>
+            <button class="btn btn-keep" onclick="BillReceive()">收款</button>
         </div>
     </div>
 </div>
@@ -164,6 +167,7 @@
             data: data,
             dataType: "json",
             success: function (jdata) {
+                console.log(jdata);
                 if (jdata.succ) {
                     var data = jdata.data;
 //                    账单标识
@@ -180,6 +184,7 @@
                     $("#TotalPrice").text(data[0].TotalPrice + "元");
 //                    描述
                     $("#Description").val(data[0].Description);
+
 
                     var html = "";
                     for (var i = 0; i < data.length; i++) {

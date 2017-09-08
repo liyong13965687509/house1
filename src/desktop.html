@@ -7,7 +7,9 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>桌面</title>
-    <link href="css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/font.css"/>
+    <link rel="stylesheet" type="text/css" href="css/plugins.css"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="css/calendar.css">
     <link rel="stylesheet" type="text/css" href="css/common.css"/>
@@ -230,8 +232,12 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn confirm" onclick="dp.addNote()">保存</button>
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="dp.addNote()">保存</button>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
         <div class="panel-modal panel-edit">
@@ -251,10 +257,10 @@
             <div class="panel-footer">
                 <div class="pull-left">
                     <button class="btn delete" onclick="dp.deleteNote();">删除</button>
+                    <button class="btn edit" onclick="dp.disposeNote()">处理</button>
                 </div>
                 <div class="pull-right">
                     <button class="btn cancel">取消</button>
-                    <button class="btn confirm" onclick="dp.disposeNote()">已处理</button>
                     <button class="btn confirm" onclick="dp.editNote()">保存</button>
                 </div>
                 <div class="clearfix"></div>

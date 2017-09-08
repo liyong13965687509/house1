@@ -9,8 +9,8 @@
     <title>系统</title>
     <link rel="stylesheet" type="text/css" href="css/font.css?v=1128d866e1"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css?v=1e9bc98d71"/>
-    <link rel="stylesheet" type="text/css" href="css/common.css?v=a7a8f95611"/>
-    <link rel="stylesheet" type="text/css" href="css/grant.page.css?v=32ec74bc97"/>
+    <link rel="stylesheet" type="text/css" href="css/common.css?v=761fe4c309"/>
+    <link rel="stylesheet" type="text/css" href="css/grant.page.css?v=a95875df6c"/>
 </head>
 <body>
 <div class="header">
@@ -77,10 +77,10 @@
                 <div class="right-content">
                     <div class="right-header">
                         <div class="form-group post-edit btn-hide">
-                            <button class="form-label">职务编辑</button>
+                            <button class="btn confirm" id="Job_Edit">职务编辑</button>
                             <div class="form-content">
-                                <button class="post-cancel">取消</button>
-                                <button class="post-save" onclick="gp.grantSave()">保存</button>
+                                <button class="btn cancel">取消</button>
+                                <button class="btn confirm left" onclick="gp.grantSave()">保存</button>
                             </div>
                             <div class="form-footer"></div>
                         </div>
@@ -132,8 +132,12 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn confirm" onclick="gp.roleAdd()">保存</button>
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="gp.roleAdd()">保存</button>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
         <div class="panel-modal panel-edit">
@@ -147,9 +151,14 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn  confirm" onclick="gp.roleEditSave()">保存</button>
-                <button class="btn btn-hide delete role-del" onclick="gp.roleDel()">删除</button>
+                <div class="pull-left">
+                    <button class="btn btn-hide delete role-del" onclick="gp.roleDel()">删除</button>
+                </div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn  confirm" onclick="gp.roleEditSave()">保存</button>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
     </div>
@@ -157,7 +166,7 @@
 <script type="text/javascript" src="libs/jquery-1.11.3.js"></script>
 <script type="text/javascript" src="libs/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/host.js?v=2112a01532"></script>
-<script type="text/javascript" src="js/tools.js?v=ed4d381de6"></script>
-<script type="text/javascript" src="js/grant.page.js?v=42f456c2b8"></script>
+<script type="text/javascript" src="js/tools.js?v=bca2b99cf1"></script>
+<script type="text/javascript" src="js/grant.page.js?v=cdfcb199d9"></script>
 </body>
 </html>

@@ -10,8 +10,8 @@
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css?v=bed7cb23bb"/>
     <link rel="stylesheet" type="text/css" href="css/font.css?v=1128d866e1"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css?v=1e9bc98d71"/>
-    <link rel="stylesheet" type="text/css" href="css/common.css?v=a7a8f95611"/>
-    <link rel="stylesheet" type="text/css" href="css/employee.page.css?v=3ad47a515e"/>
+    <link rel="stylesheet" type="text/css" href="css/common.css?v=761fe4c309"/>
+    <link rel="stylesheet" type="text/css" href="css/employee.page.css?v=10b37aac9a"/>
     <link rel="stylesheet" type="text/css" href="css/datepicker.css?v=1cbd87910b"/>
     <link rel="stylesheet" type="text/css" href="css/jquery.mCustomScrollbar.css?v=d3cc66edf4"/>
 
@@ -97,11 +97,14 @@
                         </div>
                     </div>
                     <div class="left-footer">
-                        <button class="btn delete clear department_add btn-hide" data-panel="panel-sm" data-index="0">
-                            部门新增
-                        </button>
-                        <button class="btn confirm department_update btn-hide" onclick="emp.showDptEditModal();">部门编辑
-                        </button>
+                        <div class="btns row">
+                            <div class="col-xs-6">
+                                <button class="btn confirm" data-panel="panel-sm" data-index="0">部门新增</button>
+                            </div>
+                            <div class="col-xs-6">
+                                <button class="btn confirm" onclick="emp.showDptEditModal();">部门编辑</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -156,7 +159,7 @@
                             <input id="search-input" type="text" class="form-input" placeholder="工号、姓名、手机号码"/>
                         </div>
                         <div class="form-group">
-                            <button class="btn confirm left clear" onclick="emp.exeBindEmployee();">查询</button>
+                            <button class="btn confirm left pull-left" onclick="emp.exeBindEmployee();">查询</button>
                             <button class="btn confirm employee-add btn-hide" data-panel="panel-sm" data-index="2">
                                 员工新增
                             </button>
@@ -215,7 +218,7 @@
                         <div class="column-label col-xs-4 col-sm-3">密码</div>
                         <div class="column-value col-xs-8 col-sm-9">
                             <span id="Password_EmpDetail"></span>
-                            <button class="btn btn-password">显示密码</button>
+                            <button class="btn confirm left btn-password">显示密码</button>
                         </div>
                     </div>
                     <div class="group-row row">
@@ -299,9 +302,15 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn delete employee_delete btn-hide" onclick="emp.exeDeleteEmployee();">删除</button>
-                <button class="btn confirm employee_update btn-hide" onclick="emp.showEditEmployee();">编辑</button>
+                <div class="pull-left">
+                    <button class="btn delete employee_delete btn-hide" onclick="emp.exeDeleteEmployee();">删除
+                    </button>
+                    <button class="btn edit employee_update btn-hide" onclick="emp.showEditEmployee();">编辑</button>
+                </div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
     </div>
@@ -309,7 +318,7 @@
 <div class="panel panel-sm hide">
     <div class="panel-bg"></div>
     <div class="panel-content">
-        <div class="panel-modal dpt-add show">
+        <div class="panel-modal show">
             <div class="panel-header">
                 <h3 class="panel-title">部门新增</h3>
             </div>
@@ -338,8 +347,11 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn confirm" onclick="emp.exeDepartmentAdd();">保存</button>
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="emp.exeDepartmentAdd();">保存</button>
+                </div>
             </div>
         </div>
         <div class="panel-modal dpt-edit">
@@ -389,9 +401,14 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn confirm" onclick="emp.exeDepartmentEdit();">保存</button>
-                <button class="btn delete btn-hide department_delete" onclick="emp.exeDeleteDepartment();">删除</button>
+                <div class="pull-left">
+                    <button class="btn delete btn-hide" onclick="emp.exeDeleteDepartment();">删除</button>
+                </div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="emp.exeDepartmentEdit();">保存</button>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
         <div class="panel-modal emp-add">
@@ -555,8 +572,12 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn confirm" onclick="emp.exeEmployeeAdd();">保存</button>
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="emp.exeEmployeeAdd();">保存</button>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
         <div class="panel-modal emp-edit">
@@ -738,8 +759,12 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn confirm" onclick="emp.exeUpdateEmployee();">保存</button>
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="emp.exeUpdateEmployee();">保存</button>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
     </div>
@@ -750,8 +775,8 @@
 <script type="text/javascript" src="js/app.js?v=4e03e56a5f"></script>
 <script type="text/javascript" src="js/components-pickers.js?v=00b12ed6a0"></script>
 <script type="text/javascript" src="js/host.js?v=2112a01532"></script>
-<script type="text/javascript" src="js/tools.js?v=ed4d381de6"></script>
-<script type="text/javascript" src="js/employee.page.js?v=2af5281353"></script>
+<script type="text/javascript" src="js/tools.js?v=bca2b99cf1"></script>
+<script type="text/javascript" src="js/employee.page.js?v=cc8b598015"></script>
 </body>
 </html>
 

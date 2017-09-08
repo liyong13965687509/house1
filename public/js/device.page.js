@@ -287,6 +287,27 @@ Management.prototype.saveChargeNotEmpty = function () {
 }
 /**
  *
+ * @returns {boolean}
+ */
+Management.prototype.updateDevicesNotEmpty = function () {
+    var message = '';
+    var result = false;
+    if (!$('#Update_Device_Name').val().trim()) {
+        message = '请输入设备名称！';
+    } else if (!$('#Update_Device_Number').val().trim()) {
+        message = '请输入设备序列号！';
+    } else if (!$('#Update_Device_Uuid').val().trim()) {
+        message = '请输入设备UUID！';
+    } else {
+        result = true;
+    }
+    if (!result) {
+        messageBox.show('提示', message, MessageBoxButtons.OK, MessageBoxIcons.infomation);
+    }
+    return result;
+}
+/**
+ *
  * @returns {Management}
  */
 Management.prototype.powerInputKeyUp = function () {
@@ -600,7 +621,6 @@ Management.prototype.ajaxRequestDeleteDevices = function (params) {
         dataType: "JSON",
         data: params,
         success: function (data) {
-            console.log(data);
             if (data['succ']) {
                 _this.exeBindDevices();
                 messageBox.show("提示", '设备删除成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -732,6 +752,9 @@ Management.prototype.ajaxRequestLockDetail = function (params) {
                 for (var KEY in JSON_DATA) {
                     $('#Lock_' + KEY).text(JSON_DATA[KEY]);
                 }
+                $('#Update_Device_Uuid').val(_this.DATA_UUID);
+                $('#Update_Device_Number').val($('#Lock_Name').text().trim());
+                $('#Update_Device_Name').val($('#Lock_SerialNumber').text().trim());
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
@@ -770,6 +793,9 @@ Management.prototype.ajaxRequestPowerDetail = function (params) {
                 for (var KEY in JSON_DATA) {
                     $('#Power_' + KEY).text(JSON_DATA[KEY]);
                 }
+                $('#Update_Device_Uuid').val(_this.DATA_UUID);
+                $('#Update_Device_Number').val($('#Power_Name').text().trim());
+                $('#Update_Device_Name').val($('#Power_SerialNumber').text().trim());
                 $(_this.POWER_STATUS).html(JSON_DATA['EnableState']);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -2107,7 +2133,7 @@ Management.prototype.exeDeviceUnbind = function () {
  */
 Management.prototype.exeDeleteDevices = function () {
     var _this = this;
-    messageBox.show("确认", "确认删除设备吗？", MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
+    messageBox.show("确认", "确认删除设备并解除绑定？", MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
     messageBox.confirm(function () {
         mp.hideLgPanel();
         var params = _this.getParams(_this.API_CONFIG.DELETE_DEVICES);
@@ -2120,8 +2146,10 @@ Management.prototype.exeDeleteDevices = function () {
  * @returns {Management}
  */
 Management.prototype.exeUpdateDevices = function () {
-    var params = this.getParams(this.API_CONFIG.UPDATE_DEVICES);
-    this.ajaxRequestUpdateDevices(params);
+    if (this.updateDevicesNotEmpty()) {
+        var params = this.getParams(this.API_CONFIG.UPDATE_DEVICES);
+        this.ajaxRequestUpdateDevices(params);
+    }
     return this;
 }
 /**

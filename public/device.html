@@ -7,10 +7,11 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>智能设备</title>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css?v=bed7cb23bb"/>
     <link rel="stylesheet" type="text/css" href="css/font.css?v=1128d866e1"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css?v=1e9bc98d71"/>
-    <link rel="stylesheet" type="text/css" href="css/common.css?v=a7a8f95611"/>
-    <link rel="stylesheet" type="text/css" href="css/device.page.css?v=df21af26ed"/>
+    <link rel="stylesheet" type="text/css" href="css/common.css?v=761fe4c309"/>
+    <link rel="stylesheet" type="text/css" href="css/device.page.css?v=ff44869581"/>
     <link rel="stylesheet" type="text/css" href="css/datepicker.css?v=1cbd87910b"/>
     <link rel="stylesheet" type="text/css" href="css/datetimepicker.css?v=797a04f9f5"/>
 </head>
@@ -141,7 +142,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <button class="btn confirm left clear" onclick="mg.exeBindDevices();">查询</button>
+                            <button class="btn confirm pull-left" onclick="mg.exeBindDevices();">查询</button>
                             <button class="btn confirm" data-panel="panel-sm" data-index="0">设备新增</button>
                         </div>
                     </div>
@@ -269,7 +270,7 @@
                             <div class="block-footer">
                                 <div class="block-button clearfix">
                                     <div class="pull-left">
-                                        <button class="btn delete clear" onclick="mg.exeDeleteDevices();">删除</button>
+                                        <button class="btn delete" onclick="mg.exeDeleteDevices();">删除</button>
                                         <button class="btn edit" data-panel="panel-sm" data-index="5">编辑</button>
                                     </div>
                                     <div class="pull-right" id="Lock_Bind_Btn"></div>
@@ -287,7 +288,7 @@
                             <div class="block-footer">
                                 <div class="block-button">
                                     <div class="pull-left">
-                                        <button class="btn confirm clear" onclick="mg.exeGetDynamicPassword();">动态密码
+                                        <button class="btn confirm" onclick="mg.exeGetDynamicPassword();">动态密码
                                         </button>
                                     </div>
                                     <div class="pull-right">
@@ -318,7 +319,7 @@
                                     </div>
                                     <div class="table-item col-xs-12 col-md-2">
                                         <div class="form-group">
-                                            <button class="btn confirm clear" onclick="mg.exeLockOpenRecord();">查询
+                                            <button class="btn confirm" onclick="mg.exeLockOpenRecord();">查询
                                             </button>
                                         </div>
                                     </div>
@@ -358,7 +359,7 @@
                                     </div>
                                     <div class="table-item col-xs-12 col-md-2">
                                         <div class="form-group">
-                                            <button class="btn confirm clear" onclick="mg.exeLockOperRecord();">查询
+                                            <button class="btn confirm" onclick="mg.exeLockOperRecord();">查询
                                             </button>
                                         </div>
                                     </div>
@@ -471,7 +472,7 @@
                             <div class="block-footer">
                                 <div class="block-button clearfix">
                                     <div class="pull-left">
-                                        <button class="btn delete clear" onclick="mg.exeDeleteDevices();">删除</button>
+                                        <button class="btn delete" onclick="mg.exeDeleteDevices();">删除</button>
                                         <button class="btn edit" data-panel="panel-sm" data-index="5">编辑</button>
                                     </div>
                                     <div class="pull-right" id="Power_Bind_Btn"></div>
@@ -521,16 +522,6 @@
                                             <div class="column-footer"></div>
                                         </div>
                                     </div>
-                                    <div class="table-item col-xs-12 col-sm-6">
-                                        <div class="table-column">
-                                            <div class="column-header">
-                                                <h3 class="column-title">电费余额查询</h3>
-                                                <a href="javascript:;" class="column-icon icon-set"></a>
-                                            </div>
-                                            <div class="column-body"></div>
-                                            <div class="column-footer"></div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="table-footer"></div>
                             </div>
@@ -564,7 +555,7 @@
                                     </div>
                                     <div class="table-item col-xs-12 col-md-2">
                                         <div class="form-group">
-                                            <button class="btn confirm clear" onclick="mg.exePowerBuyRecord();">查询
+                                            <button class="btn confirm" onclick="mg.exePowerBuyRecord();">查询
                                             </button>
                                         </div>
                                     </div>
@@ -604,7 +595,7 @@
                                     </div>
                                     <div class="table-item col-xs-12 col-md-2">
                                         <div class="form-group">
-                                            <button class="btn confirm clear" onclick="mg.exePowerUseRecord();">查询
+                                            <button class="btn confirm" onclick="mg.exePowerUseRecord();">查询
                                             </button>
                                         </div>
                                     </div>
@@ -644,7 +635,7 @@
                                     </div>
                                     <div class="table-item col-xs-12 col-md-2">
                                         <div class="form-group">
-                                            <button class="btn confirm clear" onclick="mg.exePowerOperRecord();">查询
+                                            <button class="btn confirm" onclick="mg.exePowerOperRecord();">查询
                                             </button>
                                         </div>
                                     </div>
@@ -709,8 +700,12 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn confirm" onclick="mg.exeAddDevices();">保存</button>
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="mg.exeAddDevices();">保存</button>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
         <div class="panel-modal">
@@ -732,7 +727,8 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="Pwd_End">密码结束时间（时间戳）</label>
-                    <input class="form-input dateTimePicker" readonly id="Pwd_End" placeholder="请输入密码结束时间"/>
+                    <input class="form-input dateTimePicker" readonly id="Pwd_End"
+                           placeholder="请输入密码结束时间"/>
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="Pwd_Phone">手机号码</label>
@@ -740,8 +736,12 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn confirm" onclick="mg.exeAddPassword();">保存</button>
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="mg.exeAddPassword();">保存</button>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
         <div class="panel-modal">
@@ -800,8 +800,12 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn confirm" onclick="mg.exeDeviceBind();">保存</button>
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="mg.exeDeviceBind();">保存</button>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
         <div class="panel-modal">
@@ -819,11 +823,11 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="Update_Pwd_Begin">密码开始时间（时间戳）</label>
-                    <input class="form-input dateTimePicker" id="Update_Pwd_Begin" placeholder="请输入密码开始时间"/>
+                    <input class="form-input dateTimePicker" readonly id="Update_Pwd_Begin" placeholder="请输入密码开始时间"/>
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="Update_Pwd_End">密码结束时间（时间戳）</label>
-                    <input class="form-input dateTimePicker" id="Update_Pwd_End" placeholder="请输入密码结束时间"/>
+                    <input class="form-input dateTimePicker" readonly id="Update_Pwd_End" placeholder="请输入密码结束时间"/>
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="Update_Pwd_Phone">手机号码</label>
@@ -831,8 +835,12 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn confirm" onclick="mg.exeUpdatePassword();">保存</button>
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="mg.exeUpdatePassword();">保存</button>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
         <div class="panel-modal">
@@ -894,8 +902,12 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn confirm" onclick="mg.exeSavePowerRecharge();">保存</button>
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="mg.exeSavePowerRecharge();">保存</button>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
         <div class="panel-modal">
@@ -904,21 +916,25 @@
             </div>
             <div class="panel-body">
                 <div class="form-group">
-                    <label class="form-label">名称</label>
-                    <input class="form-input" placeholder="请输入设备名称"/>
+                    <label class="form-label" for="Update_Device_Name">名称</label>
+                    <input class="form-input" id="Update_Device_Name" placeholder="请输入设备名称"/>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">序列号</label>
-                    <input class="form-input" placeholder="请输入设备序列号"/>
+                    <label class="form-label" for="Update_Device_Number">序列号</label>
+                    <input class="form-input" id="Update_Device_Number" placeholder="请输入设备序列号"/>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">UUID</label>
-                    <input class="form-input" placeholder="请输入设备UUID"/>
+                    <label class="form-label" for="Update_Device_Uuid">UUID</label>
+                    <input class="form-input" id="Update_Device_Uuid" placeholder="请输入设备UUID"/>
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn confirm" onclick="mg.exeUpdateDevices();">保存</button>
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="mg.exeUpdateDevices();">保存</button>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
     </div>
@@ -926,12 +942,13 @@
 <script type="text/javascript" src="libs/jquery-1.11.3.js"></script>
 <script type="text/javascript" src="libs/bootstrap.min.js"></script>
 <script type="text/javascript" src="libs/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="libs/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript" src="js/bootstrap-datepicker.js?v=eec6ad7105"></script>
 <script type="text/javascript" src="js/app.js?v=4e03e56a5f"></script>
 <script type="text/javascript" src="js/components-pickers.js?v=00b12ed6a0"></script>
 <script type="text/javascript" src="js/host.js?v=2112a01532"></script>
-<script type="text/javascript" src="js/tools.js?v=ed4d381de6"></script>
-<script type="text/javascript" src="js/device.page.js?v=aa069d4542"></script>
+<script type="text/javascript" src="js/tools.js?v=bca2b99cf1"></script>
+<script type="text/javascript" src="js/device.page.js?v=9887ac0769"></script>
 </body>
 </html>
 

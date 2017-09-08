@@ -180,8 +180,8 @@
 
         </div>
         <div class="top-modal-bottom">
-            <button class="btn-cancel">取消</button>
-            <button class="btn-keep history-btn-keep" onclick="HistoryContractAdd()">保存</button>
+            <button class="btn btn-cancel">取消</button>
+            <button class="btn confirm btn-keep history-btn-keep" onclick="HistoryContractAdd()">保存</button>
         </div>
         <div><input type="hidden" id="historyCustomerCharId" value=""/></div>
     </div>
@@ -237,11 +237,7 @@
                     }
                     $("#historyPayType ul").html(html);
                     $("#historyPayType span").text($("#historyPayType li[class='cur']").text());
-//                    html = "";
-//                    html += "<li value=\"\" class=\"cur\">不选</li>";
-//                    for (var i = 0; i < data.Dpts.length; i++) {
-//                        html += "<li data-value=\"" + data.Dpts[i].CharId + "\">" + data.Dpts[i].Name + "</li>";
-//                    }
+
                     html = "";
                     html += "<li data-value=\"\" class=\"cur\">不选</li>";
                     for (var j = 0; j < data.Dpts.length; j++) {

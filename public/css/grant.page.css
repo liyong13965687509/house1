@@ -164,7 +164,11 @@
   height: 100px;
 }
 .grant > .pull-right .right-header .post-edit {
+  height: auto;
+  font-size: 0px;
+  text-align: right;
   position: relative;
+  padding: 15px 0px 30px;
 }
 .grant > .pull-right .right-header .post-edit .form-label {
   position: absolute;
@@ -186,30 +190,6 @@
 }
 .grant > .pull-right .right-header .post-edit .form-content {
   display: none;
-  position: absolute;
-  top: 50%;
-  right: 0px;
-  margin-top: -15px;
-}
-.grant > .pull-right .right-header .post-edit .form-content button {
-  display: inline-block;
-  width: 60px;
-  height: 30px;
-  line-height: 28px;
-  text-align: center;
-  border-radius: 4px;
-  border: 1px solid #8795ad;
-  margin-left: 16px;
-  cursor: pointer;
-  color: #8795ad;
-  font-size: 14px;
-}
-.grant > .pull-right .right-header .post-edit .form-content .post-save {
-  background-color: #417de6;
-  color: #fff;
-}
-.grant > .pull-right .right-header .post-edit .form-content .post-save:hover {
-  background-color: #1c68ed;
 }
 .grant > .pull-right .right-body .form-group .form-label {
   float: left;

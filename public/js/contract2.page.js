@@ -746,6 +746,49 @@ ContractPage.prototype.ajaxRequestEmployeeBindEdit = function (params) {
  * @returns {ContractPage}
  */
 ContractPage.prototype.contractSave = function () {
+    var _this = this,
+        contractMessage = "",
+        result = false;
+    var REMARK = $("#Description_Edit").val().trim();
+    if (regular.check(regular.NAME_REG_EXP, $("#Name_Edit").val().trim())) {
+        contractMessage = "客户姓名输入有误！";
+    } else if (regular.check(regular.PHONE_REG_EXP, $("#Phone_Edit").val().trim())) {
+        contractMessage = "手机号码不正确！";
+    } else if (regular.check(regular.MONTH_REG_EXP, parseInt($("#Month_Edit").val().trim()))) {
+        contractMessage = "租期输入有误！";
+    } else if (regular.check(regular.MONEY_REG_EXP, parseFloat($("#RentalMin_Edit").val().trim())) || regular.check(regular.MONEY_REG_EXP, parseFloat($("#RentalMax_Edit").val().trim()))) {
+        contractMessage = "租金输入不正确！";
+    } else if (parseFloat($("#RentalMin_Edit").val().trim()) > parseFloat($("#RentalMax_Edit").val().trim())) {
+        contractMessage = "最高租金不能小于最低租金！";
+    } else if (regular.customerRegExpCheck($("#People_Edit").val().trim())) {
+        contractMessage = "租客人数不正确！";
+    } else if ($("#SeeTime_Edit").val() == "") {
+        contractMessage = "请选择预约看房日期！";
+    } else if ($("#InTime_Edit").val() == "") {
+        contractMessage = "请选择入住日期！";
+    } else if ($("#Dpts_Edit .active").length == 0 || $("#Emps_Edit .active").length == 0) {
+        contractMessage = "请选择所属员工！";
+    } else if (REMARK != "" && !webApp.specialCharacter(REMARK)) {
+        contractMessage = "不能含有特殊字符！";
+    } else if (REMARK != "" && webApp.textLength(REMARK) > 100) {
+        contractMessage = "文字长度不能超过100！";
+    } else {
+        result = true;
+    }
+    if (result) {
+        $("#HouseType_Edit li").each(function () {
+            if ($(this).hasClass("selected")) {
+                _this.HOUSE_TYPE_EDIT.push($(this).attr("data-value"));
+            }
+        });
+
+        var params = _this.getParams(_this.API_CONFIG['CUSTOMER_EDIT_SAVE']);
+        _this.ajaxRequestCustomerEditSave(params);
+    } else {
+        messageBox.show('提示', customerMessage, MessageBoxButtons.OK, MessageBoxIcons.infomation);
+    }
+    return this;
+
         var params = this.getParams(this.CONTRACT_SAVE);
         console.log(params);
         this.ajaxRequestContractSave(params);

@@ -90,16 +90,17 @@
                     </div>
                 </li>
                 <li>
-                    <div class="date-wraper"><input class="group-date1" type="text" id="StartDate"
-                                                    placeholder="开始时间" value=""><i
-                            class="icon iconfont icon-gongzuotai"></i></div>
+                    <div class="date-wraper">
+                        <input class="group-date1" type="text" id="StartDate" readonly placeholder="开始时间" value="">
+                        <i class="icon iconfont icon-gongzuotai"></i></div>
                 </li>
                 <li>
-                    <div class="date-wraper"><input class="group-date1" type="text" id="EndDate" placeholder="结束时间"
-                                                    value=""><i class="icon iconfont icon-gongzuotai"></i></div>
+                    <div class="date-wraper">
+                        <input class="group-date1" type="text" id="EndDate" readonly placeholder="结束时间" value="">
+                        <i class="icon iconfont icon-gongzuotai"></i></div>
                 </li>
                 <li>
-                    <button class="fq-btn fq-btn-size-50" onclick="cp.contractList()">查询</button>
+                    <button class="btn confirm full" onclick="cp.contractList()">查询</button>
                 </li>
             </ul>
         </div>
@@ -245,8 +246,9 @@
                                 </button>
                             </li>
                             <li>
-                                <button color="huang" id="id-restart" class="btn-contractadd btn-hide" type="contract-add"
-                                        dir="top" >续签
+                                <button color="huang" id="id-restart" class="btn-contractadd btn-hide"
+                                        type="contract-add"
+                                        dir="top">续签
                                 </button>
                             </li>
                         </ul>
@@ -256,9 +258,6 @@
                             </li>
                             <li class="contractUpdateBind btn-contractedit btn-hide" type="contract-edit"
                                 dir="top">
-                                <!--<button color="lan" id="btn-contractedit" class="btn-contractedit" type="contract-edit"-->
-                                        <!--dir="top" >编辑-->
-                                <!--</button>-->
                                 <button color="lan" id="btn-contractedit" class="btn-contractedit" type="contract-edit"
                                         dir="top" onclick="cp.ajaxRequestContractBind(cp.getParams(cp.CUB));">编辑
                                 </button>
@@ -270,11 +269,11 @@
                 <div class="fq-alert-modal-dv">
                     <div class="mCustomScrollbar">
                         <div class="Scrollbar-styledv p20">
-                            <div class="modal-needdv btn-billadd btn-hide" type="bill-add" dir="top" >
-                                <button color="lan"
-                                        onclick="cp.ajaxRequestBillBind(cp.getParams(cp.BBD))">单笔新增
+
+                            <div class="modal-needdv btn-billadd btn-hide" type="bill-add" dir="top">
+                                <button color="lan" class="btn confirm" onclick="cp.ajaxRequestBillBind(cp.getParams(cp.BBD))">单笔新增
                                 </button>
-                                <!--<button color="lan">重新新增</button>--></div>
+                            </div>
                             <table class="modal-table2" id="Bills">
                                 <tr>
                                     <th>状态</th>
@@ -327,24 +326,29 @@
                         <p>账单周期</p>
 
                         <div class="dv-wrap-2">
-                            <div class="date-wraper"><input class="group-date1" type="text" id="PayDate1_Add"
-                                                            value=""><i class="icon iconfont icon-Desktop"></i></div>
-                            <div class="date-wraper"><input class="group-date1" type="text" id="PayDate2_Add"
-                                                            value=""><i class="icon iconfont icon-Desktop"></i></div>
+                            <div class="date-wraper">
+                                <input class="group-date1" type="text" id="PayDate1_Add" value="" readonly placeholder="请选择账单开始时间">
+                                <i class="icon iconfont icon-Desktop"></i>
+                            </div>
+                            <div class="date-wraper">
+                                <input class="group-date1" type="text" id="PayDate2_Add" value="" readonly placeholder="请选择账单结束时间">
+                                <i class="icon iconfont icon-Desktop"></i></div>
                         </div>
                     </div>
                     <div class="modal-dv-row">
                         <p>金额</p>
-
-                        <div class="ip-wrap p10-0100"><input type="text" name="" id="CostPrice_Add" placeholder="请输入金额"><span>元</span>
+                        <div class="ip-wrap p10-0100">
+                            <input type="text" name="" id="CostPrice_Add" placeholder="请输入金额"><span>元</span>
                         </div>
                     </div>
                     <div class="modal-dv-row">
                         <p>应支付日</p>
 
                         <div class="dv-wrap">
-                            <div class="date-wraper"><input class="group-date1" type="text" id="PayDate3_Add"
-                                                            value=""><i class="icon iconfont icon-Desktop"></i></div>
+                            <div class="date-wraper">
+                                <input class="group-date1" type="text" id="PayDate3_Add" value="" readonly placeholder="请选择应支付日">
+                                <i class="icon iconfont icon-Desktop"></i>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-dv-row">
@@ -355,8 +359,8 @@
                 </div>
             </div>
             <div class="top-modal-bottom">
-                <button class="btn-cancel">取消</button>
-                <button class="btn-keep" onclick="cp.billAdd()">保存</button>
+                <button class="btn btn-cancel">取消</button>
+                <button class="btn confirm btn-keep" onclick="cp.billAdd()">保存</button>
             </div>
         </div>
         <div class="modal-con contract-edit">
@@ -487,9 +491,8 @@
                 </div>
             </div>
             <div class="top-modal-bottom">
-                <button class="btn-cancel">取消</button>
-                <button class="btn-keep contractSave" >保存</button>
-                <!--<button class="btn-keep contractSave" onclick="cp.ajaxRequestContractSave(cp.getParams(cp.CSE))">保存</button>-->
+                <button class="btn btn-cancel">取消</button>
+                <button class="btn confirm btn-keep contractSave">保存</button>
             </div>
         </div>
         <div class="modal-con back-rental">
@@ -525,65 +528,17 @@
                     </div>
                     <div class="dv-sec">
                         <p><span>杂费项目</span>
-                            <button color="lan" class="btn-more">更多</button>
+                            <button color="lan" class="btn btn-more">更多</button>
                         </p>
                         <ul class="ul-y1" id="CostItem">
-                            <!--<li class="sel">水费</li>
-                            <li class="sel">电费</li>
-                            <li class="sel">煤气费</li>
-                            <li>网费</li>
-                            <li>电视费</li>
-                            <li>保洁费</li>
-                            <li>物业费</li>
-                            <li>服务费</li><div class="clear"></div>-->
                         </ul>
 
 
                         <ul class="ul-y1-v" id="CostItemText">
-                            <!--<li>
-                                <p>水费</p>
-                                <div class="modal-dv-row">
-                                    <div type="click" class="fq-xiala">
-                                        <span class="fq-xiala-sel">应收</span><i class="icon iconfont icon-xiala"></i>
-                                        <ul>
-                                            <li class="cur">应收</li>
-                                            <li>应退</li>
-                                        </ul>
-                                    </div><div class="ip-wrap"><input type="text" value="0"><span>元</span></div>
-                                </div>
-                            </li>-->
                             <div class="clear"></div>
                         </ul>
                     </div>
-                    <!--<div class="dv-sec">
-                        <p><span>房租项目</span></p>
-                        <ul class="ul-y1-v">
-                            <li>
-                                <p>房租处理</p>
-                                <div class="modal-dv-row">
-                                    <div type="click" class="fq-xiala billaddtype">
-                                        <span class="fq-xiala-sel"></span><i class="icon iconfont icon-xiala"></i>
-                                        <ul>
-                                            <li class="cur">应收</li>
-                                            <li>应退</li>
-                                        </ul>
-                                    </div><div class="ip-wrap"><input type="text" value="0"><span>元</span></div>
-                                </div>
-                            </li>
-                            <li>
-                                <p>押金处理</p>
-                                <div class="modal-dv-row">
-                                    <div type="click" class="fq-xiala billaddtype">
-                                        <span class="fq-xiala-sel">应收</span><i class="icon iconfont icon-xiala"></i>
-                                        <ul>
-                                            <li class="cur">应收</li>
-                                            <li>应退</li>
-                                        </ul>
-                                    </div><div class="ip-wrap"><input type="text" value="0"><span>元</span></div>
-                                </div>
-                            </li><div class="clear"></div>
-                        </ul>
-                    </div>-->
+
                     <p class="total-p">总计 ： <font id="CostPrice">0</font></p>
 
                     <div class="dv-sec">
@@ -611,8 +566,8 @@
                 </div>
             </div>
             <div class="top-modal-bottom">
-                <button class="btn-cancel">取消</button>
-                <button class="btn-keep" onclick="cp.endSave()">保存</button>
+                <button class="btn btn-cancel">取消</button>
+                <button class="btn confirm btn-keep" onclick="cp.endSave()">保存</button>
             </div>
         </div>
     </div>
@@ -623,7 +578,7 @@
 <script type="text/javascript" src="js/app.js"></script>
 <script type="text/javascript" src="js/components-pickers.js"></script>
 <script type="text/javascript" src="js/host.js"></script>
-<script type="text/javascript" src="js/tools.js"></script>]
+<script type="text/javascript" src="js/tools.js"></script>
 <script type="text/javascript" src="libs/jquery.mCustomScrollbar.concat.min.js"></script>
 <script type="text/javascript" src="js/contract.page.js"></script>
 </body>

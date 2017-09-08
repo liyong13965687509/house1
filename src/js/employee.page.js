@@ -368,7 +368,6 @@ Employee.prototype.ajaxRequestBindDepartment = function (params) {
             localStorage.removeItem("isAlert");
             if (data['succ']) {
                 var JSON_DATA = data['data'];
-                console.log(JSON_DATA);
                 if (webApp.grantControl($(".tree-menu"), "department_select")) {
                     var TEMP_HTML = tm.getTemplate(JSON_DATA);
                     $(".tree-menu").html(TEMP_HTML);
@@ -403,10 +402,6 @@ Employee.prototype.ajaxRequestBindDropSearch = function (params) {
                 var JSON_DATA = data['data'];
                 for (var key in JSON_DATA) {
                     var TEMP_HTML = "";
-                    JSON_DATA[key].unshift({
-                        Key: "",
-                        Value: "不限"
-                    })
                     for (var i = 0; i < JSON_DATA[key].length; i++) {
                         var TEMP_OBJ = JSON_DATA[key][i];
                         var TEMP_KEY = TEMP_OBJ['CharId'] ? TEMP_OBJ['CharId'] : TEMP_OBJ['Key'];
@@ -674,7 +669,6 @@ Employee.prototype.ajaxRequestBindUpdateEmployee = function (params) {
         success: function (data) {
             if (data['succ']) {
                 var JSON_DATA = data['data'];
-                console.log(JSON_DATA);
                 var TEMP_JSON = {
                     State: "#States_EmpEdit", Gender: "#Genders_EmpEdit", IsMarry: "#IsMarry_EmpEdit",
                     RoleCharId: "#Roles_EmpEdit", CardIDIsCopy: "#IsCopy_EmpEdit",
@@ -952,7 +946,7 @@ Employee.prototype.exeDepartmentEdit = function () {
  * 员工新增置空
  * @returns {Employee}
  */
-Employee.prototype.addEmployee=function () {
+Employee.prototype.addEmployee = function () {
     $('.employee-add').click(function () {
         $('.emp-add .select-dep').html('请选择部门');
         $('.emp-add .select-role').html('请选择角色');
@@ -982,11 +976,11 @@ Employee.prototype.addEmployee=function () {
  * 部门新增置空
  * @returns {Employee}
  */
-Employee.prototype.addDpt=function () {
+Employee.prototype.addDpt = function () {
     $('.department_add').click(function () {
-        $('.dpt-add #Dpts_Add_Result').html('请选择部门');
-        $('.dpt-add #Dpts_Add_Name').val('');
-        $('.dpt-add .tree-item').removeClass('active');
+        $('#Dpts_Add_Result').html('请选择部门');
+        $('#Dpts_Add_Name').val('');
+        $('#Dpts_Add li').removeClass('active');
     })
     return this;
 }

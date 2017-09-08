@@ -31,6 +31,9 @@ body .container .fq-nav2 .property-nav2-top .lists {
 body .container .fq-nav2 .fq-nav2-bottom .btn-propertyadd {
   display: none;
 }
+body .container .fq-nav2 .fq-nav2-bottom .btn-propertyadd button {
+  height: 36px;
+}
 body .container .fq-contain-dv {
   display: none;
 }
@@ -45,16 +48,10 @@ body .container .fq-contain-dv .floorword {
   font-size: 12px !important;
 }
 body .alert-modal-wraper .hsitory-contractadd {
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  text-align: center;
   width: 120px;
   height: 36px;
   line-height: 36px;
-  background-color: #417de6;
-  color: #ffffff;
-  margin: 20px 35px;
+  margin: 20px 35px !important;
 }
 body .alert-modal-wraper #btn-order {
   display: none;
@@ -85,7 +82,7 @@ body .alert-modal-wraper .right-modal .property-detail .property-modal-content .
   border-top: 1px solid #e6e6e6;
   margin-top: 40px;
 }
-body .alert-modal-wraper .property-room-ul1 {
+body .alert-modal-wraper .building_delete {
   display: none;
 }
 body .alert-modal-wraper .but-roomEdit {

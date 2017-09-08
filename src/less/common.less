@@ -96,11 +96,10 @@ iframe {
   color: @assist;
   cursor: pointer;
   min-width: 60px;
-  padding: 0px 15px;
   font-size: 14px;
   line-height: 28px;
-  margin-left: 16px;
   text-align: center;
+  padding: 0px 15px;
   background-color: transparent;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -110,7 +109,7 @@ iframe {
     background-color: @yellow;
   }
   &.left {
-    float: left;
+    margin-left: 15px;
   }
   &.full {
     width: 100%;
@@ -474,19 +473,6 @@ select::-ms-expand {
   height: 30px;
   background: url('../images/yg_photo_05.png') 90% 50% no-repeat;
   vertical-align: middle;
-}
-
-/*下拉菜单end*/
-/*按钮公共样式*/
-.fq-btn {
-  background-color: @query;
-  border-radius: 4px;
-  cursor: pointer;
-  height: 36px;
-  line-height: 36px;
-  text-align: center;
-  color: #ffffff;
-  font-size: 14px;
 }
 
 .fq-btn i {
@@ -1090,31 +1076,12 @@ ul.tag-ul li:first-of-type {
   float: right;
 }
 
-.fq-modal-bottom ul li button {
-  background-color: @query;
-  border-radius: 4px;
-  color: @assist;
-  cursor: pointer;
-  font-size: 14px;
-  height: 36px;
-  line-height: 28px;
-  text-align: center;
-  width: 60px;
-  height: 30px;
-  line-height: 28px;
-}
-
 .fq-customer-content {
   display: block;
 }
 
 .fq-customer-content .mCustomScrollbar.div {
   padding-top: 20px;
-}
-
-.fq-modal-bottom ul li.btn-del button {
-  background-color: inherit;
-  border: 1px solid @assist;
 }
 
 .fq-modal-bottom ul li.btn-cancel button {
@@ -1337,7 +1304,6 @@ ul.tag-ul li:first-of-type {
     }
   }
 }
-
 
 .modal-dv-row-in-2 ul li {
   width: 50%;
@@ -2811,11 +2777,6 @@ ul.ul-sp2 li span:nth-of-type(2) {
   line-height: 30px;
 }
 
-.property-room-ul1 li:first-of-type button {
-  border: 1px solid @menuHover;
-  background-color: #fff;
-}
-
 .property-room-ul1 li:nth-of-type(2) button {
   background-color: @query;
   color: #ffffff;
@@ -3185,6 +3146,20 @@ ul.ul-sp2 li span:nth-of-type(2) {
   border-radius: 4px;
 }
 
+.left-footer {
+  padding: 20px 8px;
+  .btns {
+    margin: 0px;
+    .col-xs-6 {
+      padding: 0px 8px;
+      .btn {
+        width: 100%;
+        padding: 0px;
+      }
+    }
+  }
+}
+
 /*** END自定义MessageBox ***/
 
 @media screen and (max-width: 1367px) {
@@ -3325,19 +3300,6 @@ ul.ul-sp2 li span:nth-of-type(2) {
     font-size: 24px;
     color: #777;
     line-height: 40px;
-  }
-}
-
-//取消按钮背景色
-.btn-cancel {
-  > button {
-    background-color: #fff !important;
-  }
-}
-
-.btn-del {
-  > button {
-    background-color: #fff !important;
   }
 }
 
@@ -3493,6 +3455,16 @@ ul.ul-sp2 li span:nth-of-type(2) {
       -ms-transition: all 300ms ease 0.1s;
       -o-transition: all 300ms ease 0.1s;
       transition: all 300ms ease 0.1s;
+    }
+  }
+  .pull-left {
+    .btn {
+      margin-right: 15px;
+    }
+  }
+  .pull-right {
+    .btn {
+      margin-left: 15px;
     }
   }
 }
@@ -4067,6 +4039,36 @@ ul.ul-sp2 li span:nth-of-type(2) {
   }
 }
 
+.btn-hide {
+  display: none;
+}
+
+.glyphicon {
+  width: 8px;
+  height: 8px;
+  position: relative;
+  top: -2px;
+  border-top: 1px solid #666666;
+  &.icon-arrow-left {
+    left: 2px;
+    border-left: 1px solid #666666;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+  }
+  &.icon-arrow-right {
+    left: -2px;
+    border-right: 1px solid #666666;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+}
+
 @media screen and (min-width: 768px) {
   .panel {
     &.panel-sm {
@@ -4104,8 +4106,4 @@ ul.ul-sp2 li span:nth-of-type(2) {
     -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0);
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0);
   }
-}
-
-.btn-hide {
-  display: none;
 }

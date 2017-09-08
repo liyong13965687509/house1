@@ -12,7 +12,7 @@
     <link href="css/plugins.css?v=2ece335f10" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css?v=1e9bc98d71"/>
     <link rel="stylesheet" type="text/css" href="css/datepicker.css?v=1cbd87910b"/>
-    <link rel="stylesheet" type="text/css" href="css/common.css?v=a7a8f95611"/>
+    <link rel="stylesheet" type="text/css" href="css/common.css?v=761fe4c309"/>
     <link rel="stylesheet" type="text/css" href="css/fq_nav2_css.css?v=12eff15bf4"/>
     <link rel="stylesheet" type="text/css" href="css/customer.page.css?v=665c50a978"/>
 
@@ -71,7 +71,7 @@
                         </div>
                         <div class="from-group">
                             <div class="drop-container hide" tabIndex="1">
-                                <div class="drop-content" >
+                                <div class="drop-content">
                                     <div class="drop-header">
                                         <span class="drop-result">类型不限</span>
                                         <i class="drop-icon icon-drop-down"></i>
@@ -93,7 +93,7 @@
                                         <i class="drop-icon icon-drop-down"></i>
                                     </div>
                                     <div class="drop-body">
-                                        <ul  id="CustomerLevel_Get">
+                                        <ul id="CustomerLevel_Get">
                                             <li class="drop-option" data-value="0">等级不限</li>
                                         </ul>
                                     </div>
@@ -125,7 +125,7 @@
                                         <i class="drop-icon icon-drop-down"></i>
                                     </div>
                                     <div class="drop-body">
-                                        <ul  id="CustomerDateType_Get">
+                                        <ul id="CustomerDateType_Get">
                                             <li class="drop-option" data-value="0">日期不限</li>
                                         </ul>
                                     </div>
@@ -146,7 +146,7 @@
                             </div>
                         </div>
                         <div class="from-group">
-                            <button class="fq-btn query" onclick="cp.customer()">查询</button>
+                            <button class="btn confirm full" onclick="cp.customer()">查询</button>
                         </div>
                     </div>
                     <div class="query-footer">
@@ -330,7 +330,9 @@
                             <div class="block-footer">
                                 <div class="block-button">
                                     <div class="pull-left">
-                                        <button class="btn delete customer_delete btn-hide" onclick="cp.customerDelete()">删除</button>
+                                        <button class="btn delete customer_delete btn-hide"
+                                                onclick="cp.customerDelete()">删除
+                                        </button>
                                     </div>
                                     <div class="pull-right">
                                         <button class="btn cancel">取消</button>
@@ -533,14 +535,14 @@
                                         <input type="text" class="form-input follow-remark" placeholder="请输入备注信息"/>
                                     </div>
                                     <div class="form-group">
-                                        <button class="btn submit-follow" onclick="cp.followAdd()">提交跟进</button>
+                                        <button class="btn confirm submit-follow" onclick="cp.followAdd()">提交跟进</button>
                                     </div>
 
 
                                 </div>
                                 <div class="pull-right">
                                     <button class="btn  cancel">取消</button>
-                                    <button class="btn  repeal btn-hide" onclick="cp.giveUpCustomer()">放弃</button>
+                                    <button class="btn  confirm repeal btn-hide" onclick="cp.giveUpCustomer()">放弃</button>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -549,8 +551,7 @@
                     <div class="tab-footer"></div>
                 </div>
             </div>
-            <div class="panel-footer">
-            </div>
+            <div class="panel-footer"></div>
         </div>
     </div>
 </div>
@@ -660,7 +661,8 @@
                                                     placeholder="请选择预约看房日期"><i
                             class="icon iconfont icon-gongzuotai"></i>
                     </div>
-                    <div class="date-wraper"><input class="group-date1 form-input group-top"  readonly type="text" id="InTime_Add"
+                    <div class="date-wraper"><input class="group-date1 form-input group-top" readonly type="text"
+                                                    id="InTime_Add"
                                                     placeholder="请选择入住日期"><i
                             class="icon iconfont icon-gongzuotai"></i>
                     </div>
@@ -695,7 +697,7 @@
                                         </div>
                                         <div class="drop-body">
                                             <ul id="Emps_Add">
-                                                <li  class="drop-option">不选</li>
+                                                <li class="drop-option">不选</li>
                                             </ul>
                                         </div>
                                         <div class="drop-footer"></div>
@@ -712,8 +714,12 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn confirm" onclick="cp.customerAddSave()">保存</button>
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="cp.customerAddSave()">保存</button>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
         <div class="panel-modal panel-edit">
@@ -816,7 +822,8 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="SeeTime_Edit">预约日期</label>
-                    <div class="date-wraper"><input class="group-date1 form-input" readonly type="text" id="SeeTime_Edit"
+                    <div class="date-wraper"><input class="group-date1 form-input" readonly type="text"
+                                                    id="SeeTime_Edit"
                                                     placeholder="请选择预约看房日期"><i
                             class="icon iconfont icon-gongzuotai"></i>
                     </div>
@@ -856,7 +863,7 @@
                                         </div>
                                         <div class="drop-body">
                                             <ul id="Emps_Edit">
-                                                <li  class="drop-option">不选</li>
+                                                <li class="drop-option">不选</li>
                                             </ul>
                                         </div>
                                         <div class="drop-footer"></div>
@@ -874,8 +881,12 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn confirm" onclick="cp.customerEditSave()">保存</button>
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="cp.customerEditSave()">保存</button>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
     </div>
@@ -886,8 +897,8 @@
 <script type="text/javascript" src="js/app.js?v=4e03e56a5f"></script>
 <script type="text/javascript" src="js/components-pickers.js?v=00b12ed6a0"></script>
 <script type="text/javascript" src="js/host.js?v=2112a01532"></script>
-<script type="text/javascript" src="js/tools.js?v=ed4d381de6"></script>
-<script type="text/javascript" src="js/customer.page.js?v=e4a785959d"></script>
+<script type="text/javascript" src="js/tools.js?v=bca2b99cf1"></script>
+<script type="text/javascript" src="js/customer.page.js?v=e3b81224bd"></script>
 </body>
 </html>
 

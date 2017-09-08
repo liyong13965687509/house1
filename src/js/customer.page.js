@@ -495,7 +495,6 @@ CustomerPage.prototype.tabChange = function () {
                     _this.contractBind();
                     break;
                 case 2:
-                    console.log(11);
                     _this.followBind();
                     break;
             }
@@ -613,34 +612,24 @@ CustomerPage.prototype.ajaxRequestCustomerAddBind = function (params) {
         dataType: "JSON",
         success: function (data) {
             if (data['succ']) {
-                var JSON_DATA = data['data'];
-                var TEMP_JSON = {
-                    CustomerSource: "CustomerSource",
-                    CustomerLevel: "CustomerLevel",
-                    genders: "Genders",
-                    HouseType: "HouseType"
-                };
-                for (var i = 0; i < JSON_DATA.length; i++) {
-                    for (var KEY in TEMP_JSON) {
-                        if (JSON_DATA[i]['Key'] == TEMP_JSON[KEY]) {
-                            var TEMP_HTML = "", TEMP_NAME = "";
-                            var TEMP_VALUE = JSON_DATA[i]['Value'];
-                            for (var j = 0; j < TEMP_VALUE.length; j++) {
-                                TEMP_NAME = j == 0 ? ' active' : '';
-                                var TEMP_KEY = TEMP_VALUE[j]['Key'] ? TEMP_VALUE[j]['Key'] : TEMP_VALUE[j]["CharId"];
-                                var DATA_VALUE = TEMP_VALUE[j]['Value'] ? TEMP_VALUE[j]['Value'] : TEMP_VALUE[j]["Name"];
-                                TEMP_HTML += '<li class="drop-option ' + TEMP_NAME + '" data-value="' + TEMP_KEY + '">' + DATA_VALUE + '</li>'
-                            }
-                            $("#" + TEMP_JSON[KEY] + "_Add").html(TEMP_HTML);
-                            $("#" + TEMP_JSON[KEY] + "_Edit").html(TEMP_HTML);
-                        }
+                var JSON_DATA = data['data'],
+                    TEMP_DATA1 = JSON_DATA['data1'],
+                    TEMP_DATA2 = JSON_DATA['data2'],
+                    TEMP_HTML="";
+                for (var KEY in TEMP_DATA1) {
+                    var TEMP_HTML = "", TEMP_NAME = "";
+                    var TEMP_VALUE = TEMP_DATA1[KEY];
+                    for (var i = 0; i < TEMP_VALUE.length; i++) {
+                        TEMP_NAME = i == 0 ? ' active' : '';
+                        var TEMP_KEY = TEMP_VALUE[i]['Key'] ? TEMP_VALUE[i]['Key'] : TEMP_VALUE[i]["CharId"];
+                        var DATA_VALUE = TEMP_VALUE[i]['Value'] ? TEMP_VALUE[i]['Value'] : TEMP_VALUE[i]["Name"];
+                        TEMP_HTML += '<li class="drop-option ' + TEMP_NAME + '" data-value="' + TEMP_KEY + '">' + DATA_VALUE + '</li>'
                     }
-                    if (JSON_DATA[i]['Key'] == "Dpts") {//绑定部门
-                        var TEMP_HTML = tm.customerGetTemplate(JSON_DATA[i]['Value']);
-                        $(".tree-menu").html(TEMP_HTML);
-                    }
+                    $("#" + KEY + "_Add").html(TEMP_HTML);
+                    $("#" + KEY + "_Edit").html(TEMP_HTML);
                 }
-
+                TEMP_HTML = tm.customerGetTemplate(TEMP_DATA2);
+                $(".tree-menu").html(TEMP_HTML);
             }
             else {
                 messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -672,7 +661,7 @@ CustomerPage.prototype.customerAddSave = function () {
         customerMessage = "租期输入有误！";
     } else if (regular.check(regular.MONEY_REG_EXP, parseFloat($("#RentalMin_Add").val().trim())) || regular.check(regular.MONEY_REG_EXP, parseFloat($("#RentalMax_Add").val().trim()))) {
         customerMessage = "租金输入不正确！";
-    }  else if (parseFloat($("#RentalMin_Add").val().trim())>parseFloat($("#RentalMax_Add").val().trim())) {
+    } else if (parseFloat($("#RentalMin_Add").val().trim()) > parseFloat($("#RentalMax_Add").val().trim())) {
         customerMessage = "最高租金不能小于最低租金！";
     } else if (regular.customerRegExpCheck($("#People_Add").val().trim())) {
         customerMessage = "租客人数不正确！";
@@ -755,9 +744,9 @@ CustomerPage.prototype.customerEditSave = function () {
         customerMessage = "租期输入有误！";
     } else if (regular.check(regular.MONEY_REG_EXP, parseFloat($("#RentalMin_Edit").val().trim())) || regular.check(regular.MONEY_REG_EXP, parseFloat($("#RentalMax_Edit").val().trim()))) {
         customerMessage = "租金输入不正确！";
-    } else if (parseFloat($("#RentalMin_Edit").val().trim())>parseFloat($("#RentalMax_Edit").val().trim())) {
+    } else if (parseFloat($("#RentalMin_Edit").val().trim()) > parseFloat($("#RentalMax_Edit").val().trim())) {
         customerMessage = "最高租金不能小于最低租金！";
-    }else if (regular.customerRegExpCheck($("#People_Edit").val().trim())) {
+    } else if (regular.customerRegExpCheck($("#People_Edit").val().trim())) {
         customerMessage = "租客人数不正确！";
     } else if ($("#SeeTime_Edit").val() == "") {
         customerMessage = "请选择预约看房日期！";
@@ -864,7 +853,6 @@ CustomerPage.prototype.ajaxRequestCustomerEditBind = function (params) {
         data: params,
         dataType: "JSON",
         success: function (data) {
-            console.log(data);
             if (data['succ']) {
                 var JSON_DATA = data['data'];
                 var TEMP_JSON = {
@@ -1090,7 +1078,6 @@ CustomerPage.prototype.ajaxRequestFollowBind = function (params) {
         dataType: "JSON",
         success: function (data) {
             if (data['succ']) {
-                console.log(data);
                 var JSON_DATA = data['data'],
                     TEMP_DATA = data['exted']['paramKey'],
                     TEMP_HTML = '',
@@ -1323,8 +1310,8 @@ CustomerPage.prototype.ajaxRequestFollowAdd = function (params) {
  * 树形菜单
  * @returns {CustomerPage}
  */
-CustomerPage.prototype.treeItem=function () {
-    var _this=this;
+CustomerPage.prototype.treeItem = function () {
+    var _this = this;
     tm.customerClickTreeItem(function () {
         if ($("#Dpts_Add ul li.active").length != 0) {
             _this.employeeBindAdd();

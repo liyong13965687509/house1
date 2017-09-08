@@ -841,7 +841,6 @@ SystemPage.prototype.getParams = function (name) {
  */
 SystemPage.prototype.getTemplate = function (params) {
     var TEMP_HTML = '';
-    console.log(params);
     for (var KEY in params) {
         TEMP_HTML = '<ul class="item-list">'
         for(var i=0;i<params[KEY].length;i++){

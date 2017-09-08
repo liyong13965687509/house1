@@ -11,8 +11,8 @@
     <link rel="stylesheet" type="text/css" href="css/plugins.css?v=2ece335f10"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css?v=1e9bc98d71"/>
     <link rel="stylesheet" type="text/css" href="css/datepicker.css?v=1cbd87910b"/>
-    <link rel="stylesheet" type="text/css" href="css/common.css?v=a7a8f95611"/>
-    <link rel="stylesheet" type="text/css" href="css/property.page.css?v=09ccc13059"/>
+    <link rel="stylesheet" type="text/css" href="css/common.css?v=761fe4c309"/>
+    <link rel="stylesheet" type="text/css" href="css/property.page.css?v=18cc2fd188"/>
     <link rel="stylesheet" type="text/css" href="css/jquery.mCustomScrollbar.css?v=d3cc66edf4"/>
 </head>
 <body>
@@ -55,7 +55,7 @@
     <div class="fq-nav2">
         <div class="property-nav2-top">
             <div class="property-list"><span>物业列表</span></div>
-            <div  class="lists">
+            <div class="lists">
                 <dl class="property-nav2-dl" id="Buildings">
                     <!--<dt><i class="icon iconfont icon-jichuwuye"></i><span>物业列表</span></dt>-->
                 </dl>
@@ -335,10 +335,10 @@
                         <input type="hidden" id="CurRoomCharId" value=""/>
                         <ul class="property-room-ul1">
                             <li>
-                                <button onclick="propertyPage.roomDelete()" class="btn-roomdel">删除</button>
+                                <button onclick="propertyPage.roomDelete()" class="btn delete btn-roomdel">删除</button>
                             </li>
                             <li>
-                                <button id="btn-order">预定</button>
+                                <button class="btn confirm" id="btn-order">预定</button>
                             </li>
                             <li class="btn-contractadd" id="btn-let" type="contract-add"
                                 dir="top">
@@ -350,11 +350,10 @@
                         <ul class="property-room-ul2">
 
                             <li>
-                                <button class="btn-cancel">取消</button>
+                                <button class="btn cancel btn-cancel">取消</button>
                             </li>
                             <li type="room-edit" dir="top" class="btn-roomedit">
-                                <!--<button onclick="RoomUpdateDetail()">-->
-                                <button class="but-roomEdit"
+                                <button class="btn edit but-roomEdit"
                                         onclick="propertyPage.ajaxRequestRoomUpdateDetail(propertyPage.getParams(propertyPage.ROOM_UPDATE_DETAIL))">
                                     编辑
                                 </button>
@@ -501,7 +500,7 @@
                         <div class="fy-wrap history-fy-wrap">
                         </div>
                         <div class="history-button">
-                            <button class="hsitory-contractadd "
+                            <button class="btn confirm full hsitory-contractadd "
                                     onclick="propertyPage.historyAdd()">
                                 历史合同新增
                             </button>
@@ -558,17 +557,15 @@
                 <input type="hidden" id="BuildingCharId" value=""/>
                 <ul class="property-room-ul1">
                     <li>
-                        <button onclick="propertyPage.buildingDelete()">删除</button>
+                        <button onclick="propertyPage.buildingDelete()" class="btn delete building_delete">删除</button>
                     </li>
                 </ul>
                 <ul class="property-room-ul2">
                     <li>
-                        <button class="btn-cancel">取消</button>
+                        <button class="btn cancel btn-cancel">取消</button>
                     </li>
                     <li class="btn-propertyedit" type="property-edit" dir="top">
-                        <button class="buildingUpdateBind">
-                            编辑
-                        </button>
+                        <button class="btn edit buildingUpdateBind">编辑</button>
                     </li>
                 </ul>
                 <div class="clear"></div>
@@ -728,8 +725,8 @@
                 </div>
             </div>
             <div class="top-modal-bottom">
-                <button class="btn-cancel">取消</button>
-                <button class="btn-keep" onclick="propertyPage.contractAdd()">保存</button>
+                <button class="btn cancel btn-cancel">取消</button>
+                <button class="btn confirm btn-keep" onclick="propertyPage.contractAdd()">保存</button>
             </div>
         </div>
 
@@ -806,8 +803,8 @@
                 </div>
             </div>
             <div class="top-modal-bottom">
-                <button class="btn-cancel">取消</button>
-                <button class="btn-keep" onclick="propertyPage.roomUpdateAdd()">保存</button>
+                <button class="btn cancel btn-cancel">取消</button>
+                <button class="btn confirm btn-keep" onclick="propertyPage.roomUpdateAdd()">保存</button>
             </div>
         </div>
         <div class="modal-con checktable-add">
@@ -818,9 +815,9 @@
                 <div class="top-modal-container">
                     <div class="modal-dv-wraper">
                         <p>抄表日期</p>
-
                         <div class="modal-dv-row modal-dv-row-in-3">
-                            <div class="date-wraper"><input class="group-date1" type="text" id="RecordDate" value=""><i
+                            <div class="date-wraper"><input class="group-date1" type="text" readonly id="RecordDate"
+                                                            value="" placeholder="请选择抄表日期"><i
                                     class="icon iconfont icon-gongzuotai"></i></div>
                         </div>
                     </div>
@@ -832,7 +829,8 @@
                                 <ul>
                                     <li>
                                         <div type="click" class="fq-xiala" id="ReadItem">
-                                            <span class="fq-xiala-sel"></span><i class="icon iconfont icon-drop-down"></i>
+                                            <span class="fq-xiala-sel"></span><i
+                                                class="icon iconfont icon-drop-down"></i>
                                             <ul></ul>
                                         </div>
                                     </li>
@@ -852,8 +850,8 @@
                 </div>
             </div>
             <div class="top-modal-bottom">
-                <button class="btn-cancel">取消</button>
-                <button class="btn-keep" onclick="propertyPage.readAdd()">保存</button>
+                <button class="btn cancel btn-cancel">取消</button>
+                <button class="btn confirm btn-keep" onclick="propertyPage.readAdd()">保存</button>
             </div>
         </div>
         <div class="modal-con repair-add">
@@ -899,8 +897,8 @@
                 </div>
             </div>
             <div class="top-modal-bottom">
-                <button class="btn-cancel">取消</button>
-                <button class="btn-keep" onclick="propertyPage.serviceAdd()">保存</button>
+                <button class="btn cancel btn-cancel">取消</button>
+                <button class="btn confirm btn-keep" onclick="propertyPage.serviceAdd()">保存</button>
             </div>
         </div>
         <div class="modal-con property-add">
@@ -921,7 +919,8 @@
                             <ul>
                                 <li>
                                     <div type="hov" class="fq-xiala" id="Province_Add">
-                                        <span class="fq-xiala-sel">选择省份</span><i class="icon iconfont icon-drop-down"></i>
+                                        <span class="fq-xiala-sel">选择省份</span><i
+                                            class="icon iconfont icon-drop-down"></i>
                                         <ul>
                                         </ul>
                                     </div>
@@ -937,7 +936,8 @@
                             <ul>
                                 <li>
                                     <div type="hov" class="fq-xiala" id="City_Add">
-                                        <span class="fq-xiala-sel">选择城市</span><i class="icon iconfont icon-drop-down"></i>
+                                        <span class="fq-xiala-sel">选择城市</span><i
+                                            class="icon iconfont icon-drop-down"></i>
                                         <ul></ul>
                                     </div>
                                 </li>
@@ -952,7 +952,8 @@
                             <ul>
                                 <li>
                                     <div type="hov" class="fq-xiala" id="District_Add">
-                                        <span class="fq-xiala-sel">选择区域</span><i class="icon iconfont icon-drop-down"></i>
+                                        <span class="fq-xiala-sel">选择区域</span><i
+                                            class="icon iconfont icon-drop-down"></i>
                                         <ul></ul>
                                     </div>
                                 </li>
@@ -980,7 +981,7 @@
                     <div class="modal-dv-row">
                         <p>水费价格<sup>*</sup></p>
 
-                        <div><input  type="text"  name="" id="water_price" placeholder="请输入水费价格"></div>
+                        <div><input type="text" name="" id="water_price" placeholder="请输入水费价格"></div>
                     </div>
 
                     <div class="modal-dv-row">
@@ -1003,8 +1004,8 @@
                 </div>
             </div>
             <div class="top-modal-bottom">
-                <button class="btn-cancel">取消</button>
-                <button class="btn-keep" onclick="propertyPage.buildingAdd()">保存</button>
+                <button class="btn cancel btn-cancel">取消</button>
+                <button class="btn confirm btn-keep" onclick="propertyPage.buildingAdd()">保存</button>
             </div>
         </div>
         <div class="modal-con property-edit">
@@ -1026,7 +1027,8 @@
                             <ul>
                                 <li>
                                     <div type="hov" class="fq-xiala" id="Province_Edit">
-                                        <span class="fq-xiala-sel">选择省份</span><i class="icon iconfont icon-drop-down"></i>
+                                        <span class="fq-xiala-sel">选择省份</span><i
+                                            class="icon iconfont icon-drop-down"></i>
                                         <ul></ul>
                                     </div>
                                 </li>
@@ -1041,7 +1043,8 @@
                             <ul>
                                 <li>
                                     <div type="hov" class="fq-xiala" id="City_Edit">
-                                        <span class="fq-xiala-sel">选择城市</span><i class="icon iconfont icon-drop-down"></i>
+                                        <span class="fq-xiala-sel">选择城市</span><i
+                                            class="icon iconfont icon-drop-down"></i>
                                         <ul></ul>
                                     </div>
                                 </li>
@@ -1056,7 +1059,8 @@
                             <ul>
                                 <li>
                                     <div type="hov" class="fq-xiala" id="District_Edit">
-                                        <span class="fq-xiala-sel">选择区域</span><i class="icon iconfont icon-drop-down"></i>
+                                        <span class="fq-xiala-sel">选择区域</span><i
+                                            class="icon iconfont icon-drop-down"></i>
                                         <ul></ul>
                                     </div>
                                 </li>
@@ -1073,7 +1077,7 @@
                     <div class="modal-dv-row">
                         <p>水费价格<sup>*</sup></p>
 
-                        <div><input  type="text"  name="" id="water_price_edit" placeholder="请输入水费价格"></div>
+                        <div><input type="text" name="" id="water_price_edit" placeholder="请输入水费价格"></div>
                     </div>
 
                     <div class="modal-dv-row">
@@ -1097,8 +1101,8 @@
                 </div>
             </div>
             <div class="top-modal-bottom">
-                <button class="btn-cancel">取消</button>
-                <button class="btn-keep" onclick="propertyPage.buildingUpdateAdd()">保存</button>
+                <button class="btn cancel btn-cancel">取消</button>
+                <button class="btn confirm btn-keep" onclick="propertyPage.buildingUpdateAdd()">保存</button>
             </div>
         </div>
         <div class="modal-con floor-edit">
@@ -1119,9 +1123,15 @@
                     </div>
                 </div>
             </div>
-            <div class="top-modal-bottom"><span class="sp11" onclick="propertyPage.floorDelete()"><botton>删除</botton></span>
-                <button class="btn-cancel">取消</button>
-                <button class="btn-keep" onclick=propertyPage.floorUpdate()>保存</button>
+            <div class="top-modal-bottom">
+                <div class="pull-left">
+                    <botton class="btn delete" onclick="propertyPage.floorDelete()">删除</botton>
+                </div>
+                <div class="pull-right">
+                    <button class="btn cancel btn-cancel">取消</button>
+                    <button class="btn confirm btn-keep" onclick=propertyPage.floorUpdate()>保存</button>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
     </div>
@@ -1133,8 +1143,8 @@
 <script type="text/javascript" src="js/app.js?v=4e03e56a5f"></script>
 <script type="text/javascript" src="js/components-pickers.js?v=00b12ed6a0"></script>
 <script type="text/javascript" src="js/host.js?v=2112a01532"></script>
-<script type="text/javascript" src="js/tools.js?v=ed4d381de6"></script>
-<script type="text/javascript" src="js/property.page.js?v=6956efaf0d"></script>
+<script type="text/javascript" src="js/tools.js?v=bca2b99cf1"></script>
+<script type="text/javascript" src="js/property.page.js?v=42c8b6b94b"></script>
 <script type="text/javascript" src="libs/jquery.mCustomScrollbar.concat.min.js"></script>
 </body>
 </html>

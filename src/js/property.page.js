@@ -1262,20 +1262,21 @@ PropertyPage.prototype.ajaxRequestBuildingAddBind = function (params) {
         dataType: "JSON",
         success: function (data) {
             //绑定省份信息
-            var TEMP_HTML = "";
-            var JSON_DATA = data['data'];
-            for (var i = 0; i < JSON_DATA.length; i++) {
-                TEMP_HTML += "<li data-value=\"" + JSON_DATA[i].Key + "\">" + JSON_DATA[i].Name + "</li>";
+            var TEMP_HTML = "",
+                JSON_DATA = data['data'],
+                TEMP_DATA1=JSON_DATA['data1'],
+                TEMP_DATA2=JSON_DATA['data2'];
+            for (var i = 0; i < TEMP_DATA2.length; i++) {
+                TEMP_HTML += "<li data-value=\"" + TEMP_DATA2[i]['Key'] + "\">" + TEMP_DATA2[i]['Value'] + "</li>";
             }
             $("#Province_Add ul").html(TEMP_HTML);
             $("#Province_Add span").text("选择省份");
             DropdownInit();
             //绑定配置、标签
-            var JSON_EXTED = data['exted'];
-            for (var KEY in JSON_EXTED) {
+            for (var KEY in TEMP_DATA1) {
                 TEMP_HTML = "";
-                for (var i = 0; i < JSON_EXTED[KEY].length; i++) {
-                    var KEY_DATA = JSON_EXTED[KEY][i];
+                for (var i = 0; i < TEMP_DATA1[KEY].length; i++) {
+                    var KEY_DATA = TEMP_DATA1[KEY][i];
                     TEMP_HTML += "<li data-value=\"" + KEY_DATA['Key'] + "\">" + KEY_DATA['Value'] + "</li>";
                 }
                 TEMP_HTML += "<div class=\"clear\"></div>";
@@ -1300,7 +1301,7 @@ PropertyPage.prototype.ajaxRequestCityBind = function (params) {
             var TEMP_HTML = "";
             var JSON_DATA = data['data'];
             for (var i = 0; i < JSON_DATA.length; i++) {
-                TEMP_HTML += "<li data-value=\"" + JSON_DATA[i]['Key'] + "\" >" + JSON_DATA[i]['Name'] + "</li>";
+                TEMP_HTML += "<li data-value=\"" + JSON_DATA[i]['Key'] + "\" >" + JSON_DATA[i]['Value'] + "</li>";
             }
             $("#City_Add ul").html(TEMP_HTML);
             $("#City_Add span").text("选择城市");
@@ -1327,7 +1328,7 @@ PropertyPage.prototype.ajaxRequestDistrictBind = function (params) {
             var TEMP_HTML = "";
             var JSON_DATA = data['data'];
             for (var i = 0; i < JSON_DATA.length; i++) {
-                TEMP_HTML += "<li data-value=\"" + JSON_DATA[i].Key + "\">" + JSON_DATA[i].Name + "</li>";
+                TEMP_HTML += "<li data-value=\"" + JSON_DATA[i]['Key'] + "\">" + JSON_DATA[i]['Value'] + "</li>";
             }
             $("#District_Add ul").html(TEMP_HTML);
             $("#District_Add span").text("选择区域");
@@ -1351,7 +1352,7 @@ PropertyPage.prototype.ajaxRequestUptCityBind = function (params) {
             var TEMP_HTML = "";
             var JSON_DATA = data['data'];
             for (var i = 0; i < JSON_DATA.length; i++) {
-                TEMP_HTML += "<li data-value=\"" + JSON_DATA[i].Key + "\" >" + JSON_DATA[i].Name + "</li>";
+                TEMP_HTML += "<li data-value=\"" + JSON_DATA[i].Key + "\" >" + JSON_DATA[i]['Value'] + "</li>";
             }
             $("#City_Edit ul").html(TEMP_HTML);
             $("#City_Edit span").text("选择城市");
@@ -1378,7 +1379,7 @@ PropertyPage.prototype.ajaxRequestDistrictUptBind = function (params) {
             var TEMP_HTML = "";
             var JSON_DATA = data['data'];
             for (var i = 0; i < JSON_DATA.length; i++) {
-                TEMP_HTML += "<li data-value=\"" + JSON_DATA[i]['Key'] + "\">" + JSON_DATA[i]['Name'] + "</li>";
+                TEMP_HTML += "<li data-value=\"" + JSON_DATA[i]['Key'] + "\">" + JSON_DATA[i]['Value'] + "</li>";
             }
             $("#District_Edit ul").html(TEMP_HTML);
             $("#District_Edit span").text("选择区域");
@@ -1459,8 +1460,6 @@ PropertyPage.prototype.ajaxRequestBuildingUpdateBind = function (params) {
 
             var allocs = JSON_DATA['building']['Alloc'] ? JSON_DATA['building']['Alloc'].split('|') : "";
             for (var i = 0; i < allocs.length; i++) {
-                console.log($("#BuildingAlloc_Update li[data-value='" + allocs[i] + "']"));
-                console.log($("#BuildingAlloc_Update li"));
                 $("#BuildingAlloc_Update li[data-value='" + allocs[i] + "']").addClass("tagli-sel");
             }
 
@@ -1472,15 +1471,16 @@ PropertyPage.prototype.ajaxRequestBuildingUpdateBind = function (params) {
             //绑定下拉信息
             var TEMP_HTML = "";
             for (var i = 0; i < JSON_DATA['provinces'].length; i++) {
-                TEMP_HTML += "<li data-value=\"" + JSON_DATA['provinces'][i]['Key'] + "\" >" + JSON_DATA['provinces'][i]['Name'] + "</li>";
+                TEMP_HTML += "<li data-value=\"" + JSON_DATA['provinces'][i]['Key'] + "\" >" + JSON_DATA['provinces'][i]['Value'] + "</li>";
             }
+
             $("#Province_Edit ul").html(TEMP_HTML);
             $("#Province_Edit li[data-value='" + JSON_DATA['building']['ProvinceCharId'] + "']").addClass("cur");
             $("#Province_Edit span").text($("#Province_Edit li[class='cur']").text());
 
             TEMP_HTML = "";
             for (var i = 0; i < JSON_DATA['citys'].length; i++) {
-                TEMP_HTML += "<li data-value=\"" + JSON_DATA['citys'][i]['Key'] + "\" >" + JSON_DATA['citys'][i]['Name'] + "</li>";
+                TEMP_HTML += "<li data-value=\"" + JSON_DATA['citys'][i]['Key'] + "\" >" + JSON_DATA['citys'][i]['Value'] + "</li>";
             }
             $("#City_Edit ul").html(TEMP_HTML);
             $("#City_Edit li[data-value='" + JSON_DATA['building']['CityCharId'] + "']").addClass("cur");
@@ -1488,7 +1488,7 @@ PropertyPage.prototype.ajaxRequestBuildingUpdateBind = function (params) {
 
             TEMP_HTML = "";
             for (var i = 0; i < JSON_DATA['districts'].length; i++) {
-                TEMP_HTML += "<li data-value=\"" + JSON_DATA['districts'][i]['Key'] + "\" >" + JSON_DATA['districts'][i]['Name'] + "</li>";
+                TEMP_HTML += "<li data-value=\"" + JSON_DATA['districts'][i]['Key'] + "\" >" + JSON_DATA['districts'][i]['Value'] + "</li>";
             }
             $("#District_Edit ul").html(TEMP_HTML);
             $("#District_Edit li[data-value='" + JSON_DATA['building']['DistrictCharId'] + "']").addClass("cur");
@@ -1946,7 +1946,6 @@ PropertyPage.prototype.ajaxRequestServiceAddBind = function (params) {
         success: function (data) {
             if (data['succ']) {
                 var JSON_DATA = data['data'];
-                console.log(JSON_DATA);
                 //1、维修类别下拉列表
                 for (var KEY in JSON_DATA) {
                     var TEMP_HTML = "";
@@ -2248,6 +2247,7 @@ PropertyPage.prototype.ajaxRequestReadAddItem = function (params) {
         success: function (data) {
             if (data['succ']) {
                 var TEMP_HTML = "";
+
                 var JSON_DATA = data['data'];
                 for (var i = 0; i < JSON_DATA.length; i++) {
                     var style = i == 0 ? "cur" : "";
