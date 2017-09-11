@@ -65,6 +65,10 @@
   color: #ffffff;
   width: 100%;
   height: 36px;
+  background-color: #417de6;
+}
+.contract > .pull-left .query-body .from-group .query:hover {
+  background-color: #1c68ed;
 }
 .contract > .pull-left .query-footer {
   position: absolute;
@@ -272,6 +276,68 @@
 .panel.panel-sm .group-row .col-xs-3 {
   text-align: right;
   padding-right: 0px;
+}
+.panel.panel-sm .panel-end .col-xs-3 {
+  text-align: left;
+}
+.panel.panel-sm .panel-end .col-sm-10 {
+  padding-left: 40px;
+}
+.panel.panel-sm .panel-end #more_end {
+  line-height: 45px;
+  color: #417de6;
+  cursor: pointer;
+}
+.panel.panel-sm .panel-end .fees-project {
+  padding-bottom: 10px;
+}
+.panel.panel-sm .panel-end #CostItem {
+  padding-left: 13px;
+  display: none;
+}
+.panel.panel-sm .panel-end #CostItem ul li {
+  float: left;
+  margin-right: 15px;
+  margin-top: 10px;
+  height: 30px;
+  line-height: 28px;
+  border: 1px solid #e6e6e6;
+  min-width: 55px;
+  padding: 0 12px;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+}
+.panel.panel-sm .panel-end #CostItem ul li.sel {
+  border-color: #417de6;
+  color: #417de6;
+}
+.panel.panel-sm .panel-end .column-end:first-child {
+  padding-right: 0px;
+}
+.panel.panel-sm .panel-end .column-end:first-child .drop-container .drop-header {
+  -webkit-border-radius: 4px 0px 0px 4px !important;
+  -moz-border-radius: 4px 0px 0px 4px !important;
+  border-radius: 4px 0px 0px 4px !important;
+}
+.panel.panel-sm .panel-end .column-end:last-child {
+  padding-left: 0px;
+}
+.panel.panel-sm .panel-end .column-end:last-child input {
+  border-left: 0px !important;
+  -webkit-border-radius: 0px 4px 4px 0px;
+  -moz-border-radius: 0px 4px 4px 0px;
+  border-radius: 0px 4px 4px 0px;
+}
+.panel.panel-sm .panel-end .column-end:last-child span {
+  top: 4px;
+  right: 25px;
+}
+.panel.panel-sm .panel-end .money-total {
+  font-size: 16px;
+}
+.panel.panel-sm .panel-end .money-total span {
+  padding-right: 20px;
 }
 .panel .tab-block {
   height: 100%;

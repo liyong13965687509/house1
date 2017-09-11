@@ -897,6 +897,7 @@ ContractPage.prototype.ajaxRequestEndBind = function (params) {
         success: function (data) {
             //绑定明细页面
             if (data['succ']) {
+               console.log(data);
                 var JSON_DATA = data['data'];
                 var TEMP_DATA = data['exted'];
                 $("#CustomerName_End").text(JSON_DATA['CustomerName']);
@@ -932,6 +933,8 @@ ContractPage.prototype.ajaxRequestEndBind = function (params) {
                     TEMP_HTML += "</li>";
                 }
                 TEMP_HTML += "<div class=\"clear\"></div>";
+
+                alert(TEMP_HTML);
                 $("#CostItemText").html(TEMP_HTML);//绑定收费项-输入金额 列表
 
                 //html = "";

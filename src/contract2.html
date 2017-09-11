@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="css/datepicker.css"/>
     <link rel="stylesheet" type="text/css" href="css/common.css"/>
     <link rel="stylesheet" type="text/css" href="css/fq_nav2_css.css"/>
-    <link rel="stylesheet" type="text/css" href="css/contract.page.css"/>
+    <link rel="stylesheet" type="text/css" href="css/contract.page2.css"/>
 
 </head>
 <body>
@@ -130,7 +130,7 @@
                             </div>
                         </div>
                         <div class="from-group">
-                            <button class="fq-btn query" onclick="ctp.contractList()">查询</button>
+                            <button class="btn fq-btn query" onclick="ctp.contractList()">查询</button>
                         </div>
                     </div>
                     <div class="footer">
@@ -324,7 +324,7 @@
                                                 <label class="group-label">合同附件</label>
                                             </div>
                                             <div class="col-xs-9 col-sm-10">
-                                                <span class="group-value Description"></span>
+                                                <span class="group-value"></span>
                                             </div>
                                         </div>
                                         <div class="group-row row">
@@ -348,7 +348,7 @@
                                 </div>
                                 <div class="pull-right">
                                     <button class="btn  cancel">取消</button>
-                                    <button class="btn  btn-edit">编辑</button>
+                                    <button class="btn  confirm btn-edit">编辑</button>
                                 </div>
                             </div>
                         </div>
@@ -374,15 +374,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--<div class="block-footer">-->
-                            <!--</div>-->
                         </div>
                     </div>
-                    <!--<div class="tab-footer"></div>-->
                 </div>
             </div>
-            <!--<div class="panel-footer">-->
-            <!--</div>-->
         </div>
     </div>
 </div>
@@ -404,7 +399,7 @@
                                 <label class="group-label">姓名</label>
                             </div>
                             <div class="col-xs-9 col-sm-10">
-                                <span class="group-value CustomerName" id="Customer_Name"></span>
+                                <span class="group-value" id="CustomerName_edit"></span>
                             </div>
                         </div>
                         <div class="group-row row">
@@ -412,7 +407,7 @@
                                 <label class="group-label">手机号</label>
                             </div>
                             <div class="col-xs-9 col-sm-10">
-                                <span class="group-value Phone" id="Customer_Phone"></span>
+                                <span class="group-valuene" id="Phone_edit"></span>
                             </div>
                         </div>
                         <div class="group-row row">
@@ -420,7 +415,7 @@
                                 <label class="group-label">证件号</label>
                             </div>
                             <div class="col-xs-9 col-sm-10">
-                                <span class="group-value  CardID"></span>
+                                <span class="group-value" id="CardID_edit"></span>
                             </div>
                         </div>
                     </div>
@@ -433,11 +428,11 @@
                     <div class="group-body">
                         <div class="group-row row">
                             <div class="col-xs-3 col-sm-2">
-                                <label class="group-label" id="bulid">物业</label>
+                                <label class="group-label" id="bulid_edit">物业</label>
                             </div>
                             <div class="col-xs-9 col-sm-10">
-                                <span class="group-value BuildingName" ></span>
-                                <span class="group-value FloorName"></span>层
+                                <span class="group-value" id=" BuildingName_edit"></span>
+                                <span class="group-value" id="FloorName_edit"></span>层
                             </div>
                         </div>
                         <div class="group-row row">
@@ -445,7 +440,7 @@
                                 <label class="group-label">房号</label>
                             </div>
                             <div class="col-xs-9 col-sm-10">
-                                <span class="group-value RoomName"></span>室
+                                <span class="group-value" id="RoomName_edit"></span>室
                             </div>
                         </div>
                     </div>
@@ -461,7 +456,7 @@
                                 <label class="group-label">编号</label>
                             </div>
                             <div class="col-xs-9 col-sm-10">
-                                <span class="group-value Number"></span>
+                                <span class="group-value" id="Number_edit"></span>
                             </div>
                         </div>
 
@@ -470,17 +465,17 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="">租金</label>
-                    <input class="form-input Price" type="text" id="" placeholder="请输入租金"/>
+                    <input class="form-input" type="text" id="Price_edit" placeholder="请输入租金"/>
                     <span class="group-span">元</span>
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="">押金</label>
-                    <input class="form-input Deposit" type="text" placeholder="请输入押金"/>
+                    <input class="form-input" type="text" placeholder="请输入押金" id="Deposit_edit"/>
                     <span class="group-span">元</span>
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="">付押方式</label>
-                    <div class="drop-container hide  PayType" tabIndex="1">
+                    <div class="drop-container hide" tabIndex="1" id="PayType_edit">
                         <div class="drop-content">
                             <div class="drop-header">
                                 <span class="drop-result">付一压一</span>
@@ -488,7 +483,6 @@
                             </div>
                             <div class="drop-body">
                                 <ul>
-
                                 </ul>
                             </div>
                             <div class="drop-footer"></div>
@@ -497,23 +491,23 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="">入住人数</label>
-                    <input class="form-input Total" type="text" placeholder="请输入入住人数"/>
+                    <input class="form-input" type="text" id="Total_edit" placeholder="请输入入住人数"/>
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="">起租/退租<sup>*</sup></label>
                     <div class="row">
                         <div class="col-xs-6">
                             <div class="date-wraper">
-                                <input class="group-date1 form-input InDate" readonly type="text"
-                                                            placeholder="请选择起租日期"><i
-                                    class="icon iconfont icon-gongzuotai"></i>
+                                <input class="group-date1 form-input" readonly type="text" id="InDate_edit"
+                                       placeholder="请选择起租日期">
+                                <i class="icon iconfont icon-gongzuotai"></i>
                             </div>
                         </div>
                         <div class="col-xs-6">
                             <div class="date-wraper">
-                                <input class="group-date1 form-input OutDate" readonly type="text"
-                                                            placeholder="请选择退租日期"><i
-                                    class="icon iconfont icon-gongzuotai"></i>
+                                <input class="group-date1 form-input" readonly type="text" id="OutDate_edit"
+                                       placeholder="请选择退租日期">
+                                <i class="icon iconfont icon-gongzuotai"></i>
                             </div>
                         </div>
                     </div>
@@ -561,14 +555,15 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="">签约日期<sup>*</sup></label>
-                    <div class="date-wraper"><input class="group-date1 form-input CreateTime" readonly type="text"
-                                                    placeholder="请选择签约日期"><i
-                            class="icon iconfont icon-gongzuotai"></i>
+                    <div class="date-wraper">
+                        <input class="group-date1 form-input" readonly type="text" id="CreateTime_edit"
+                               placeholder="请选择签约日期">
+                        <i class="icon iconfont icon-gongzuotai"></i>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="">备注</label>
-                    <input class="form-input Description" type="text"  placeholder="请输入备注"/>
+                    <input class="form-input" type="text" id="Description_edit" placeholder="请输入备注"/>
                 </div>
             </div>
             <div class="panel-footer">
@@ -576,8 +571,181 @@
                 <button class="btn confirm" onclick="ctp.contractSave()">保存</button>
             </div>
         </div>
+        <div class="panel-modal panel-end">
+            <div class="panel-header">
+                <h3 class="panel-title">退租</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="group-header">
+                        <div class="group-title">房间资料</div>
+                    </div>
+                    <div class="group-body">
+                        <div class="group-row row">
+                            <div class="col-xs-3 col-sm-2">
+                                <label class="group-label">房间信息</label>
+                            </div>
+                            <div class="col-xs-9 col-sm-10">
+                                <span class="group-value" id="BuildingName-End"></span>
+                                <span class="group-value" id="FloorName-End"></span>层
+                                <span class="group-value" id="RoomName-End"></span>室
+                            </div>
+                        </div>
+                        <div class="group-row row">
+                            <div class="col-xs-3 col-sm-2">
+                                <label class="group-label">租客姓名</label>
+                            </div>
+                            <div class="col-xs-9 col-sm-10">
+                                <span class="group-valuene" id="CustomerName-End"></span>
+                            </div>
+                        </div>
+                        <div class="group-row row">
+                            <div class="col-xs-3 col-sm-2">
+                                <label class="group-label">手机号码</label>
+                            </div>
+                            <div class="col-xs-9 col-sm-10">
+                                <span class="group-value" id="Phone-End"></span>
+                            </div>
+                        </div>
+                        <div class="group-row row">
+                            <div class="col-xs-3 col-sm-2">
+                                <label class="group-label">合同周期</label>
+                            </div>
+                            <div class="col-xs-9 col-sm-10">
+                                <span class="group-value" id="InDate-End"></span>
+                                <span class="group-value" id="OutDate-End"></span>
+                            </div>
+                        </div>
+                        <div class="group-row row">
+                            <div class="col-xs-3 col-sm-2">
+                                <label class="group-label">房间押金</label>
+                            </div>
+                            <div class="col-xs-9 col-sm-10">
+                                <span class="group-value" id="Deposit-End"></span>
+                                <span>元/月</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-footer"></div>
+                </div>
+                <div class="form-group">
+                    <div class="group-row row fees-project">
+                        <div class="group-header col-xs-3 col-sm-3">
+                            <div class="group-title">杂费项目</div>
+                        </div>
+                        <div class="col-xs-9 col-sm-9">
+                            <span class="group-value" id="more_end">更多</span>
+                        </div>
+                        <div id="CostItem">
+                            <ul></ul>
+                        </div>
+                    </div>
+                    <div class="group-body fees-money">
+                        <div class="form-group">
+                            <label class="form-label" for="">租金</label>
+                            <div class="row rent">
+                                <div class="col-xs-4 column-end">
+                                    <div class="drop-container hide" tabIndex="1" id="BillAddType">
+                                        <div class="drop-content">
+                                            <div class="drop-header">
+                                                <span class="drop-result"></span>
+                                                <i class="drop-icon icon-drop-down"></i>
+                                            </div>
+                                            <div class="drop-body">
+                                                <ul>
+
+                                                </ul>
+                                            </div>
+                                            <div class="drop-footer"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-8 column-end">
+                                    <input class="form-input" type="text" id="Price_end" placeholder="请输入租金"
+                                           onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+                                    <span class="group-span">元</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="">押金</label>
+                            <div class="row deposit">
+                                <div class="col-xs-4 column-end">
+                                    <div class="drop-container hide BillAddType" tabIndex="1">
+                                        <div class="drop-content">
+                                            <div class="drop-header">
+                                                <span class="drop-result"></span>
+                                                <i class="drop-icon icon-drop-down"></i>
+                                            </div>
+                                            <div class="drop-body">
+                                                <ul>
+                                                </ul>
+                                            </div>
+                                            <div class="drop-footer"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-8 column-end">
+                                    <input class="form-input" type="text" id="deposit_end" placeholder="请输入押金"
+                                           onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+                                    <span class="group-span">元</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-foote">
+                        <div class="money-total">
+                            <span>总计 :</span><span></span>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+                    <div class="group-row row">
+                        <div class="group-header col-xs-3 col-sm-3">
+                            <div class="group-title">退租时间</div>
+                        </div>
+                    </div>
+                    <div class="group-body">
+                        <div class="row sign">
+                            <div class="col-xs-4 column-end">
+                                <div class="drop-container hide" tabIndex="1" id="EndContractType">
+                                    <div class="drop-content">
+                                        <div class="drop-header">
+                                            <span class="drop-result"></span>
+                                            <i class="drop-icon icon-drop-down"></i>
+                                        </div>
+                                        <div class="drop-body">
+                                            <ul>
+                                            </ul>
+                                        </div>
+                                        <div class="drop-footer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-8 column-end">
+                                <input class="group-date1 form-input" type="text" readonly id="end-date" type="text"
+                                       placeholder="请选择退租日期"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-footer"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="">备注</label>
+                    <input class="form-input" type="text" id="Description_end" placeholder="请输入备注"/>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button class="btn cancel">取消</button>
+                <button class="btn confirm" onclick="ctp.endSave()">保存</button>
+            </div>
+        </div>
     </div>
 </div>
+
 <script type="text/javascript" src="libs/jquery-1.11.3.js"></script>
 <script type="text/javascript" src="libs/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
@@ -585,7 +753,7 @@
 <script type="text/javascript" src="js/components-pickers.js"></script>
 <script type="text/javascript" src="js/host.js"></script>
 <script type="text/javascript" src="js/tools.js"></script>
-<script type="text/javascript" src="js/contract.page.js"></script>
+<script type="text/javascript" src="js/contract2.page.js"></script>
 </body>
 </html>
 

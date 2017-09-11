@@ -8,7 +8,8 @@
   left: 0px;
   padding-top: 49px;
 }
- .contract{
+
+.contract {
   width: 100%;
   height: 100%;
   margin: 0px;
@@ -63,6 +64,11 @@
           color: #ffffff;
           width: 100%;
           height: 36px;
+          background-color: @query;
+          &:hover {
+            background-color: @hover;
+          }
+
         }
       }
     }
@@ -87,9 +93,9 @@
         -moz-border-radius: 4px;
         border-radius: 4px;
       }
-      .customer_add{
-        &:hover{
-          background-color:@hover;
+      .customer_add {
+        &:hover {
+          background-color: @hover;
         }
       }
     }
@@ -259,7 +265,7 @@
       position: absolute;
       right: 0;
       bottom: 50px;
-      padding-right:15px;
+      padding-right: 15px;
     }
     .table-column {
       height: 200px;
@@ -275,19 +281,92 @@
       box-shadow: 1px 1px 5px rgba(0, 0, 0, .15);
     }
   }
-  &.panel-sm{
-    .group-title{
+  &.panel-sm {
+    .group-title {
       margin: 0px;
       font-size: 16px;
       line-height: 45px;
     }
-    .group-row{
+    .group-row {
       line-height: 40px;
-      .col-xs-3{
+      .col-xs-3 {
         text-align: right;
         padding-right: 0px;
       }
     }
+    .panel-end {
+      .col-xs-3 {
+        text-align: left;
+      }
+      .col-sm-10 {
+        padding-left: 40px;
+      }
+      #more_end{
+        line-height:45px;
+        color:@blue;
+        cursor: pointer;
+      }
+      .fees-project{
+        padding-bottom: 10px;
+      }
+      #CostItem{
+        padding-left: 13px;
+        display: none;
+        ul{
+          li{
+            &.sel{
+              border-color: #417de6;
+              color: #417de6;
+            }
+            float: left;
+            margin-right: 15px;
+            margin-top: 10px;
+            height: 30px;
+            line-height: 28px;
+            border: 1px solid #e6e6e6;
+            min-width: 55px;
+            padding: 0 12px;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+          }
+        }
+      }
+      .column-end {
+        &:first-child {
+          padding-right: 0px;
+          .drop-container {
+            .drop-header {
+              -webkit-border-radius: 4px 0px 0px 4px !important;
+              -moz-border-radius: 4px 0px 0px 4px !important;
+              border-radius: 4px 0px 0px 4px !important;
+            }
+          }
+
+        }
+        &:last-child {
+          padding-left: 0px;
+          input {
+            border-left: 0px !important;
+            -webkit-border-radius: 0px 4px 4px 0px;
+            -moz-border-radius: 0px 4px 4px 0px;
+            border-radius: 0px 4px 4px 0px;
+          }
+          span {
+            top: 4px;
+            right: 25px;
+          }
+        }
+
+      }
+      .money-total{
+        font-size:16px;
+        span{
+          padding-right: 20px;
+        }
+      }
+    }
+
   }
   .tab-block {
     height: 100%;
@@ -363,28 +442,28 @@
         z-index: 10;
       }
     }
-    .bill-body{
+    .bill-body {
       margin-left: 15px;
       margin-right: 15px;
     }
-    .tab-bill{
-      .block-content{
+    .tab-bill {
+      .block-content {
         padding-bottom: 0px;
-        .column{
-          font-size:14px;
+        .column {
+          font-size: 14px;
         }
-        .row-header{
+        .row-header {
           min-height: 0px;
           background-color: @tableHeader;
         }
-        .table-item{
-          &:nth-child(even){
-            background-color:#fafcff;
+        .table-item {
+          &:nth-child(even) {
+            background-color: #fafcff;
           }
         }
       }
     }
-    #pagBill{
+    #pagBill {
       bottom: 0px;
     }
     .tab-footer {
@@ -445,45 +524,44 @@
       }
 
     }
-    .group-top{
-      margin-top:10px;
+    .group-top {
+      margin-top: 10px;
     }
   }
-  .selected{
+  .selected {
     border-color: #417de6 !important;
     color: #417de6 !important;
   }
-  .btn-edit{
-    color:@white !important;
-    &:hover{
+  .btn-edit {
+    color: @white !important;
+    &:hover {
       background-color: @hover;
     }
   }
-  .btn-abandon{
+  .btn-abandon {
     background-color: @white;
     border: 1px solid #8795ad;
-    color:@black;
+    color: @black;
   }
-  .btn-end{
+  .btn-end {
     background-color: @green;
     border-color: @green;
-    color:@white !important;
+    color: @white !important;
   }
-  .btn-renewal{
+  .btn-renewal {
     background-color: @yellow;
     border-color: @yellow;
-    color:@white !important;
+    color: @white !important;
   }
-  .bill-add{
+  .bill-add {
     padding: 0 15px 15px;
     float: right;
   }
-  .bill-table{
+  .bill-table {
     text-align: center;
     font-size: 14px;
   }
 }
-
 
 .no-result {
   padding: 0px;
@@ -520,10 +598,12 @@
       padding-left: 214px !important;
     }
   }
+
   .block-body {
     padding: 15px !important;
   }
-  .withoutContract{
+
+  .withoutContract {
     padding: 15px;
   }
 }
