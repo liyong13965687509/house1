@@ -510,6 +510,7 @@ ContractPage.prototype.ajaxRequestCondition = function (params) {
         data: params,
         dataType: "JSON",
         success: function (data) {
+            console.log(data);
             if (data['succ']) {
                 var JSON_DATA = data['data'];
                 //绑定日期类别
@@ -951,6 +952,7 @@ ContractPage.prototype.ajaxRequestEndBind = function (params) {
                     console.log(TEMP_HTML);
                 }
                 TEMP_HTML += "<div class=\"clear\"></div>";
+                console.log(TEMP_HTML);
                 $("#CostItemText").html(TEMP_HTML);//绑定收费项-输入金额 列表
 
                 //html = "";

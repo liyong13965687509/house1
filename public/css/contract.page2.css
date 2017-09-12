@@ -291,6 +291,9 @@
 .panel.panel-sm .panel-end .fees-project {
   padding-bottom: 10px;
 }
+.panel.panel-sm .panel-end .fees-money .form-group {
+  display: none;
+}
 .panel.panel-sm .panel-end #CostItem {
   padding-left: 13px;
   display: none;

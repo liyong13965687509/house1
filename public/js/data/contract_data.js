@@ -663,7 +663,6 @@ ContractPage.prototype.ajaxRequestContractDetail = function (params) {
     var _this = this;
     $.ajax({
         type: "GET",
-        // url:params['url'],
         url: host + "/contract",
         data: params,
         dataType: "JSON",

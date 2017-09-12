@@ -512,6 +512,7 @@ WebApp.prototype.init = function () {
     this.selectDropOption();
     this.propertyGrantControl();
     this.customerGrantControl();
+    this.contractGrantControl();
     this.employeeGrantControl();
     return this;
 }
@@ -850,6 +851,34 @@ WebApp.prototype.customerGrantControl = function () {
     this.grantControl($(".follow_add"), "follow_add");
     return this;
 
+}
+/**
+ * Author:LIYONG
+ * Date:2017-9-12
+ *合同固定按钮权限
+ * @returns {WebApp}
+ */
+WebApp.prototype.contractGrantControl=function () {
+    // 账单（列表）查看
+    this.grantControl($(".bill-list"), "bill_select");
+    // 合同编辑
+    this.grantControl($(".btn-edit"), "contract_update");
+    // 退租
+    this.grantControl($(".btn-end"), "contract_end");
+    // 作废
+    this.grantControl($(".btn-abandon"), "contract_abandon");
+    //续约
+    this.grantControl($(".btn-renewal"), "contract_add");
+
+
+    // webApp.grantControl($(".contractUpdateBind>button"), "contract_update");
+    //
+    // webApp.grantControl($(".btn-backrental"), "contract_end");
+    //
+    // webApp.grantControl($("#btn-abandon"), "contract_abandon");
+    //
+    // webApp.grantControl($(".btn-contractadd"), "contract_add");
+    return this;
 }
 
 /**
