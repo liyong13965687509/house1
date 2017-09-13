@@ -613,7 +613,7 @@
                             </div>
                             <div class="col-xs-9 col-sm-10">
                                 <span class="group-value" id="InDate-End"></span>
-                                <span class="group-value" id="OutDate-End"></span>
+                                ~ <span class="group-value" id="OutDate-End"></span>
                             </div>
                         </div>
                         <div class="group-row row">
@@ -676,7 +676,7 @@
                             </div>
                             <div class="col-xs-8 column-end">
                                 <input class="group-date1 form-input" type="text" readonly id="end-date" type="text"
-                                       placeholder="请选择退租日期" />
+                                       placeholder="请选择退租日期"/>
                             </div>
                         </div>
                     </div>
@@ -736,39 +736,143 @@
                             <div class="date-wraper">
                                 <input class="group-date1 form-input" readonly type="text" id="InDate_bill"
                                        placeholder="请选择账单开始时间">
-                                <i class="icon-date"></i>
+                                <label class="icon-date" for="InDate_bill"></label>
                             </div>
                         </div>
                         <div class="col-xs-6">
                             <div class="date-wraper">
                                 <input class="group-date1 form-input" readonly type="text" id="OutDate_bill"
                                        placeholder="请选择账单结束时间">
-                                <i class="icon-date"></i>
+                                <label class="icon-date" for="OutDate_bill"></label>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                <label class="form-label" for="Price_edit">金额</label>
-                <input class="form-input" type="text" id="Price_bill" placeholder="请输入金额"/>
-                <span class="group-span">元</span>
+                    <label class="form-label" for="Price_bill">金额</label>
+                    <input class="form-input" type="text" id="Price_bill" placeholder="请输入金额"/>
+                    <span class="group-span">元</span>
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="CreateTime_edit">应支付日</label>
+                    <label class="form-label" for="pay-bill">应支付日</label>
                     <div class="date-wraper">
                         <input class="group-date1 form-input" readonly type="text" id="pay-bill"
                                placeholder="请选择应支付日期">
-                        <i class="icon-date"></i>
+                        <label class="icon-date" for="pay-bill"></label>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="Description_edit">备注</label>
+                    <label class="form-label" for="Description_bill">备注</label>
                     <input class="form-input" type="text" id="Description_bill" placeholder="请输入备注"/>
                 </div>
             </div>
             <div class="panel-footer">
                 <button class="btn cancel">取消</button>
-                <button class="btn confirm" onclick="ctp.contractSave()">保存</button>
+                <button class="btn confirm" onclick="ctp.billSave()">保存</button>
+            </div>
+        </div>
+        <div class="panel-modal panel-collect">
+            <div class="panel-header">
+                <h3 class="panel-title">账单收款</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="group-header">
+                    </div>
+                    <div class="group-body">
+                        <div class="group-row row">
+                            <div class="col-xs-3 col-sm-2">
+                                <label class="group-label">账单标识</label>
+                            </div>
+                            <div class="col-xs-9 col-sm-10">
+                                <span class="group-valuene" id="Number-coll"></span>
+                            </div>
+                        </div>
+                        <div class="group-row row">
+                            <div class="col-xs-3 col-sm-2">
+                                <label class="group-label">账单房源</label>
+                            </div>
+                            <div class="col-xs-9 col-sm-10">
+                                <span class="group-value" id="BuildingName-coll"></span>
+                                <span class="group-value" id="FloorName-coll"></span>层
+                                <span class="group-value" id="RoomName-coll"></span>室
+                            </div>
+                        </div>
+                        <div class="group-row row">
+                            <div class="col-xs-3 col-sm-2">
+                                <label class="group-label">租客姓名</label>
+                            </div>
+                            <div class="col-xs-9 col-sm-10">
+                                <span class="group-value" id="CustomerName-coll"></span>
+                            </div>
+                        </div>
+                        <div class="group-row row">
+                            <div class="col-xs-3 col-sm-2">
+                                <label class="group-label">账单周期</label>
+                            </div>
+                            <div class="col-xs-9 col-sm-10">
+                                <span class="group-value" id="PayDate1-coll"></span>
+                                ~ <span class="group-value" id="PayDate2-coll"></span>
+                            </div>
+                        </div>
+                        <div class="group-row row">
+                            <div class="col-xs-3 col-sm-2">
+                                <label class="group-label">账单金额</label>
+                            </div>
+                            <div class="col-xs-9 col-sm-10">
+                                <span class="group-value" id="TotalPrice-coll"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-footer"></div>
+                </div>
+                <div class="form-group">
+                    <div class="group-header">
+                        <div class="group-title">费用项</div>
+                    </div>
+                    <div class="group-body" id="items-cost">
+                    </div>
+                    <div class="group-foote">
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="total_coll">实收金额</label>
+                    <input class="form-input" type="text" id="total_coll" readonly placeholder="请输入实收金额"/>
+                    <span class="group-span">元</span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="PayType_coll">付款方式<sup>*</sup></label>
+                    <div class="drop-container hide" tabIndex="1" id="PayType_coll">
+                        <div class="drop-content">
+                            <div class="drop-header">
+                                <span class="drop-result"></span>
+                                <i class="drop-icon icon-drop-down"></i>
+                            </div>
+                            <div class="drop-body">
+                                <ul>
+                                </ul>
+                            </div>
+                            <div class="drop-footer"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="Price_bill">流水账号</label>
+                    <input class="form-input" type="text" id="follow_coll" placeholder="请输入流水账号"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="Price_bill">支付日期</label>
+                    <input class="group-date1 form-input" type="text" readonly id="date_coll" placeholder="请输入支付日期"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="Description_end">备注</label>
+                    <input class="form-input" type="text" id="Description_coll" placeholder="请输入备注"/>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button class="btn cancel">取消</button>
+                <button class="btn confirm bill-receive" onclick="ctp.billReceive();">收款</button>
             </div>
         </div>
     </div>

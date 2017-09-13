@@ -89,6 +89,9 @@ iframe {
   color: #ffffff !important;
   background-color: #f6ba2a;
 }
+.btn.edit:hover {
+  background-color: #e9a606;
+}
 .btn.left {
   margin-left: 15px;
 }
@@ -100,13 +103,19 @@ iframe {
 .btn:focus {
   outline: none !important;
 }
+.btn.delete {
+  color: #ffffff !important;
+  background-color: #d9534f;
+}
+.btn.delete:hover {
+  background-color: #e52b26;
+}
 .btn.confirm {
   color: #ffffff !important;
   background-color: #417de6;
 }
-.btn.delete {
-  color: #ffffff !important;
-  background-color: #d9534f;
+.btn.confirm:hover {
+  background-color: #1c68ed;
 }
 .btn.plus,
 .btn.cancel {

@@ -380,11 +380,10 @@
   margin: 0px;
   line-height: 45px;
 }
-.panel .tab-block .tab-body .block-body .group-row .col-xs-3 {
-  text-align: right;
-}
-.panel .tab-block .tab-body .block-body .group-row .col-xs-3 .group-label {
+.panel .tab-block .tab-body .block-body .group-row .group-label {
   margin: 0px;
+  display: block;
+  text-align: right;
 }
 .panel .tab-block .tab-body .block-footer {
   position: absolute;

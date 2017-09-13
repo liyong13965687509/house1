@@ -403,7 +403,6 @@ TreeMenu.prototype.getTemplate = function (params) {
     TEMP_HTML += '</ul>';
     return TEMP_HTML;
 }
-
 /**
  *LIYONG
  * Date:2017-8-31
@@ -510,6 +509,7 @@ WebApp.prototype.init = function () {
     this.showDropOption();
     this.dropMenuBlur();
     this.selectDropOption();
+    this.keyUpRequireNumber();
     this.propertyGrantControl();
     this.customerGrantControl();
     this.contractGrantControl();
@@ -678,7 +678,6 @@ WebApp.prototype.bindCompany = function () {
     }
     return this;
 }
-
 /**
  *
  * @param params
@@ -830,8 +829,6 @@ WebApp.prototype.propertyGrantControl = function () {
 
     return this;
 }
-
-
 /**
  * 客户固定按钮权限
  * @returns {WebApp}
@@ -852,6 +849,7 @@ WebApp.prototype.customerGrantControl = function () {
     return this;
 
 }
+
 /**
  * Author:LIYONG
  * Date:2017-9-12
@@ -869,15 +867,6 @@ WebApp.prototype.contractGrantControl=function () {
     this.grantControl($(".btn-abandon"), "contract_abandon");
     //续约
     this.grantControl($(".btn-renewal"), "contract_add");
-
-
-    // webApp.grantControl($(".contractUpdateBind>button"), "contract_update");
-    //
-    // webApp.grantControl($(".btn-backrental"), "contract_end");
-    //
-    // webApp.grantControl($("#btn-abandon"), "contract_abandon");
-    //
-    // webApp.grantControl($(".btn-contractadd"), "contract_add");
     return this;
 }
 
@@ -912,7 +901,6 @@ WebApp.prototype.noGrant = function () {
     $(".fq-contain-dv").show();
     return this;
 }
-
 /**
  * 没有查看权限
  * @returns {WebApp}
@@ -999,7 +987,17 @@ WebApp.prototype.parseTime = function (params) {
     TEMP_DATE = null;
     return TEMP_TIME;
 }
-
+/**
+ *
+ * @returns {WebApp}
+ */
+WebApp.prototype.keyUpRequireNumber = function () {
+    var TEMP_SELECTOR = 'input[data-keyup="number"]';
+    $(document).on('keyup', TEMP_SELECTOR, function () {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+    return this;
+}
 /**
  * Author:LIYONG
  * Date:2017-9-4
@@ -1034,15 +1032,11 @@ WebApp.prototype.textLength = function (str) {
     }
     return realLength;
 }
-
-
 /**
  *
  * @type {WebApp}
  */
 var webApp = new WebApp();
-
-
 /**
  * BEGIN
  * 3个月 6个月 1年按钮功能实现
@@ -1067,7 +1061,6 @@ function getNowFormatDate() {
     return currentdate;
 }
 getNowFormatDate();
-
 function getNextMonth(date, b) {
     var arr = date.split('-');
     var year = arr[0]; //获取当前日期的年份
@@ -1110,17 +1103,16 @@ $(".modal-property-data-contract-dv span:eq(0)").click(function () {
     var leftDate = $(".modal-property-data-contract-dv .group-date1").val();
     getNextMonth(leftDate, 3);
 })
-//    6个月
+//6个月
 $(".modal-property-data-contract-dv span:eq(1)").click(function () {
     var leftDate = $(".modal-property-data-contract-dv .group-date1").val();
     getNextMonth(leftDate, 6);
 });
-//       1年
+//1年
 $(".modal-property-data-contract-dv span:eq(2)").click(function () {
     var leftDate = $(".modal-property-data-contract-dv .group-date1").val();
     getNextMonth(leftDate, 12);
 });
-
 /**
  * BEGIN
  * 自定义MessageBox弹窗
@@ -1193,14 +1185,12 @@ MessageBox.prototype.confirm = function (fn) {
  * @type {MessageBox}
  */
 var messageBox = new MessageBox();
-
 //zhrong初始化下拉
 function DropdownInit() {
     var xiala;
     xiala = new fq.xiala(null, $('.fq-xiala'));
     xiala.init();
 }
-
 //下拉初始
 window.fq = {};
 //param
@@ -1318,7 +1308,6 @@ fq.xiala = function (data, obj) {
     }
 
 }
-
 // ly二级菜单下拉
 $(".fq-xiala").click(function () {
     var li = $(this).children("ul").find("li");

@@ -10,7 +10,7 @@
   "calendar/underscore-min.js": "calendar/underscore-min.js?v=543feb1eca",
   "components-pickers.js": "components-pickers.js?v=00b12ed6a0",
   "contract.page.js": "contract.page.js?v=8b6b1e0056",
-  "contract2.page.js": "contract2.page.js?v=d715999a8c",
+  "contract2.page.js": "contract2.page.js?v=c39c120419",
   "count.page.js": "count.page.js?v=4439d95c3b",
   "customer.page.js": "customer.page.js?v=e3b81224bd",
   "data/contract_data.js": "data/contract_data.js?v=49cf012018",
@@ -19,7 +19,7 @@
   "data/power_data.js": "data/power_data.js?v=7f894a55f9",
   "data/property_data.js": "data/property_data.js?v=7f24b267b0",
   "desktop.page.js": "desktop.page.js?v=80998b7484",
-  "device.page.js": "device.page.js?v=9887ac0769",
+  "device.page.js": "device.page.js?v=801b0c9808",
   "employee.page.js": "employee.page.js?v=cc8b598015",
   "grant.page.js": "grant.page.js?v=cdfcb199d9",
   "gycom.js": "gycom.js?v=655219abbc",
@@ -32,5 +32,5 @@
   "report.page.js": "report.page.js?v=9e44ecb405",
   "resetpwd.page.js": "resetpwd.page.js?v=36802c79e1",
   "system.page.js": "system.page.js?v=e34fa60bdb",
-  "tools.js": "tools.js?v=dd5d953502"
+  "tools.js": "tools.js?v=73101e8283"
 }

@@ -16,9 +16,16 @@ function ContractPage() {
     this.CONTRACT_EDIT = arguments['CONTRACT_EDIT'] ? arguments['CONTRACT_EDIT'] : '.btn-edit';
     this.BILL_ADD = arguments['BILL_ADD'] ? arguments['BILL_ADD'] : '.bill-add';
     this.CONTRACT_END = arguments['CONTRACT_END'] ? arguments['CONTRACT_END'] : '.btn-end';
+    this.BILL_DEL = arguments['BILL_DEL'] ? arguments['BILL_DEL'] : '.bill-del';
+    this.BILL_COLLECT = arguments['BILL_COLLECT'] ? arguments['BILL_COLLECT'] : '.bill-collect';
     this.CONTRACT_CHARTID = arguments['CONTRACT_CHARTID'] ? arguments['CONTRACT_CHARTID'] : 'CONTRACT_CHARTID';
     this.CONTRACT_SAVE = arguments['CONTRACT_SAVE'] ? arguments['CONTRACT_SAVE'] : 'CONTRACT_SAVE';
     this.COST_ITEMS = arguments['COST_ITEMS'] ? arguments['COST_ITEMS'] : 'COST_ITEMS';
+    this.BILL_SAVE = arguments['BILL_SAVE'] ? arguments['BILL_SAVE'] : 'BILL_SAVE';
+    this.BILL_CHARID = arguments['BILL_CHARID'] ? arguments['BILL_CHARID'] : 'BILL_CHARID';
+    this.COLLECT_CHARID = arguments['COLLECT_CHARID'] ? arguments['COLLECT_CHARID'] : 'COLLECT_CHARID';
+    this.BILL_RECEIVE = arguments['BILL_RECEIVE'] ? arguments['BILL_RECEIVE'] : 'BILL_RECEIVE';
+    this.RECEIVE_JSON = arguments['RECEIVE_JSON'] ? arguments['RECEIVE_JSON'] : 'RECEIVE_JSON';
 
     this.API_CONFIG = arguments['API_CONFIG'] ? arguments['API_CONFIG'] : {
         QUERY: '/contract/condition',
@@ -30,6 +37,8 @@ function ContractPage() {
         EMPLOYEE_BIND_EDIT: '/employee/employees',
         END_BIND: '/contract/end',
         BILL_ADD: '/bill/add',
+        BILL_DEL: '/bill/delete',
+        COLLECT_BIND: '/bill/receive',
     }
     this.init();
 }
@@ -52,6 +61,8 @@ ContractPage.prototype.init = function () {
     this.contractEnd();
     this.sundrySwitch();
     this.billAdd();
+    this.billDelete();
+    this.collectBind();
     return this;
 }
 
@@ -133,7 +144,6 @@ ContractPage.prototype.getParams = function (name) {
                 ownerEmployeeCharId: $("#Emps_Edit .active").attr("data-value"),
                 description: $("#Description_edit").val()
             };
-            console.log(params);
             break;
         case this.API_CONFIG['END_BIND']:
             params = {
@@ -155,6 +165,50 @@ ContractPage.prototype.getParams = function (name) {
         case this.API_CONFIG['BILL_ADD']:
             params = {
                 requestKey: localStorage.getItem("requestKey")
+            };
+            break;
+        case this.BILL_SAVE:
+            params = {
+                requestKey: localStorage.getItem("requestKey"),
+                contractCharId: _this.CONTRACT_CHARTID,
+                costCharId: $("#CostItems-bill .active").attr("data-value"),
+                type: $("#BillTypes-bill .active").attr("data-value"),
+                payDate1: $("#InDate_bill").val().trim(),
+                payDate2: $("#OutDate_bill").val().trim(),
+                payDate3: $("#pay-bill").val().trim(),
+                costPrice: $("#Price_bill").val().trim(),
+                description: $("#Description_bill").val().trim()
+            };
+            break;
+        case this.API_CONFIG['BILL_DEL']:
+            params = {
+                requestKey: localStorage.getItem("requestKey"),
+                billCharId: _this.BILL_CHARID
+            };
+            break;
+        case this.API_CONFIG['COLLECT_BIND']:
+            params = {
+                requestKey: localStorage.getItem("requestKey"),
+                billCharId: _this.BILL_CHARID
+            };
+            break;
+        case this.BILL_RECEIVE:
+            params={
+                requestKey: localStorage.getItem("requestKey"),
+//            账单唯一标示
+                billCharId:  _this.BILL_CHARID,
+//            实收
+                costItems: _this.RECEIVE_JSON,
+//            实收金额
+                progress: $("#total_coll").val().trim(),
+//            付款方式
+                payType: $("#PayType_coll .active").attr("data-value").trim(),
+//            支付流水号
+                serialNumber:$("#follow_coll").val().trim(),
+//            支付日期
+                payDate: $("#date_coll").val().trim(),
+//            备注
+                description: $("#Description_coll").val().trim()
             };
             break;
     }
@@ -255,7 +309,7 @@ ContractPage.prototype.getTemplate = function (params) {
             + '<div class="column col-xs-12 col-md-1"><span>' + JSON_DATA['RoomName'] + '</span></div></div></div>'
             + '<div class="column col-xs-12 col-md-1"><span>' + JSON_DATA['Price'] + '</span></div>'
             + '<div class="col-xs-12 col-md-5"><div class="row"><div class="column col-xs-12 col-md-3"><span>' + JSON_DATA['InDate'] + '</span></div>'
-            + '<div class="column col-xs-12 col-md-3"><span>' + JSON_DATA['OutDate'] + '</span></div><div class="column col-xs-12 col-md-4"><span>' + JSON_DATA['CreateTime'] + '</span></div>'
+            + '<div class="column col-xs-12 col-md-3"><span>' + JSON_DATA['EndDate'] + '</span></div><div class="column col-xs-12 col-md-4"><span>' + JSON_DATA['CreateTime'] + '</span></div>'
             + '<div class="column col-xs-12 col-md-2"><span>'
             + '<a data-value="' + JSON_DATA['CharId'] + '" href="javascript:void(0)" class="btn-detail">查看</a></span></div></div></div></div></div></div></div>'
     }
@@ -292,6 +346,7 @@ ContractPage.prototype.ajaxRequestContractList = function (params) {
         data: params,
         dataType: "JSON",
         success: function (data) {
+            console.log(data);
             if (data['succ']) {
                 var TEMP_HTML = webApp['NO_RESULT'];
                 var JSON_DATA = data['data'];
@@ -362,8 +417,8 @@ ContractPage.prototype.contractDetail = function () {
             element: ".panel-lg",
             complete: function () {
                 _this.contractDetailBind();
-                // $('.tabs li').eq(0).addClass("active").siblings("li").removeClass("active");
-                // $('.tab-body .block-content').eq(0).removeClass("hide").siblings().addClass("hide");
+                $('.tabs li').eq(0).addClass("active").siblings("li").removeClass("active");
+                $('.tab-body .block-content').eq(0).removeClass("hide").siblings().addClass("hide");
             }
         });
     });
@@ -455,23 +510,24 @@ ContractPage.prototype.tabChange = function () {
  */
 ContractPage.prototype.getBillTemplate = function (params) {
     var TEMP_HTML = '';
+    console.log(params);
     for (var i = 0; i < params.length; i++) {
         var JSON_DATA = params[i];
         var className = i >= 1 ? " visible-xs visible-sm" : "";
         TEMP_HTML += '<div class="table-item col-xs-12 col-sm-6 col-md-12"><div class="row-content row">'
             + '<div class="row-header col-xs-5 col-md-12"><div class="row-title' + className + ' row">'
-            + '<div class="column col-xs-12 col-md-1"><span>状态</span></div><div class="column col-xs-12 col-md-1"><span>类型</span></div>'
-            + '<div class="col-xs-12 col-md-5"><div class="row"><div class="column col-xs-12 col-md-9"><span>账单周期</span></div><div class="column col-xs-12 col-md-3"><span>应收</span></div></div></div>'
+            + '<div class="column col-xs-12 col-md-2"><span>状态</span></div><div class="column col-xs-12 col-md-1"><span>类型</span></div>'
+            + '<div class="col-xs-12 col-md-4"><div class="row"><div class="column col-xs-12 col-md-9"><span>账单周期</span></div><div class="column col-xs-12 col-md-3"><span>应收</span></div></div></div>'
             + '<div class="column col-xs-12 col-md-1"><span>已收</span></div><div class="column col-xs-12 col-md-2"><span>应支付日</span></div>'
             + '<div class="column col-xs-12 col-md-2"><span>操作</span></div></div></div>'
             + '<div class="row-body col-xs-7 col-md-12"><div class="row-item row">'
-            + '<div class="column col-xs-12 col-md-1"><span>' + JSON_DATA['State'] + '</span></div><div class="column col-xs-12 col-md-1"><span>' + JSON_DATA['Type'] + '</span></div>'
-            + '<div class="col-xs-12 col-md-5"><div class="row"><div class="column col-xs-12 col-md-9"><span>' + JSON_DATA['PayDate1'] + "~" + JSON_DATA['PayDate2'] + '</span></div><div class="column col-xs-12 col-md-3"><span>' + JSON_DATA['Price'] + '</span></div></div></div>'
+            + '<div class="column col-xs-12 col-md-2"><span>' + JSON_DATA['State'] + '</span></div><div class="column col-xs-12 col-md-1"><span>' + JSON_DATA['Type'] + '</span></div>'
+            + '<div class="col-xs-12 col-md-4"><div class="row"><div class="column col-xs-12 col-md-9"><span>' + JSON_DATA['PayDate1'] + "~" + JSON_DATA['PayDate2'] + '</span></div><div class="column col-xs-12 col-md-3"><span>' + JSON_DATA['Price'] + '</span></div></div></div>'
             + '<div class="column col-xs-12 col-md-1"><span>' + JSON_DATA['Progress'] + '</span></div>'
             + '<div class="column col-xs-12 col-md-2"><span>' + JSON_DATA['PayDate3'] + '</span></div>'
             + '<div class="column col-xs-12 col-md-2"><span>'
-            + '<a data-value="' + JSON_DATA['CharId'] + '" href="javascript:void(0)" class="btn-detail">收款</a>'
-            + '&nbsp;&nbsp;<a href="javascript:void(0)">删除</a></span></div></div></div></div></div></div></div>'
+            + '<a data-value="' + JSON_DATA['CharId'] + '" href="javascript:void(0)" class="bill-collect">收款</a>'
+            + '&nbsp;&nbsp;<a data-value="' + JSON_DATA['CharId'] + '" href="javascript:void(0)" class="bill-del">删除</a></span></div></div></div></div></div></div></div>'
     }
     return TEMP_HTML;
 }
@@ -1047,10 +1103,6 @@ ContractPage.prototype.ajaxRequestEndBind = function (params) {
  * @returns {ContractPage}
  */
 ContractPage.prototype.sum = function () {
-    // if($('.fees-money .form-group').css('display') == 'block'){
-    //     alert(11);
-    //     console.log($('.fees-money .form-group'));
-    // }
     var TEMP_VALUE = $('.fees-money .form-group');
     var TEMP_HTML, TEMP_DT = 0 / 1;
     for (var i = 0; i < TEMP_VALUE.length; i++) {
@@ -1060,11 +1112,6 @@ ContractPage.prototype.sum = function () {
         TEMP_DT += TEMP_HTML;
     }
     $('.money-total span:eq(1)').html(TEMP_DT);
-    // var PRICE = ($('#Price_end').val() ? $('#Price_end').val() : 0) / 1;
-    // var DEPOSIT = ($('#deposit_end').val() ? $('#deposit_end').val() : 0) / 1;
-    // PRICE = $('#BillAddType .active').attr('data-value') == 1 ? PRICE : -PRICE;
-    // DEPOSIT = $('.BillAddType .active').attr('data-value') == 1 ? DEPOSIT : -DEPOSIT;
-    // $('.money-total span:eq(1)').html(PRICE + DEPOSIT);
     return this;
 }
 
@@ -1157,7 +1204,7 @@ ContractPage.prototype.billAdd = function () {
             index: 2,
             element: ".panel-sm",
             complete: function () {
-                var params=_this.getParams(_this.API_CONFIG['BILL_ADD']);
+                var params = _this.getParams(_this.API_CONFIG['BILL_ADD']);
                 _this.ajaxRequestBillAdd(params);
             }
         });
@@ -1175,7 +1222,7 @@ ContractPage.prototype.billAdd = function () {
 ContractPage.prototype.ajaxRequestBillAdd = function (params) {
     $.ajax({
         type: "GET",
-        url: host+this.API_CONFIG['BILL_ADD'],
+        url: host + this.API_CONFIG['BILL_ADD'],
         data: params,
         dataType: "JSON",
         success: function (data) {
@@ -1183,16 +1230,16 @@ ContractPage.prototype.ajaxRequestBillAdd = function (params) {
                 var JSON_DATA = data['data'];
                 console.log(JSON_DATA);
                 //绑定账单费用类别列表
-                var TEMP_HTML = "",TEMP_CLASS ='';
-                for(var KEY in JSON_DATA){
-                        TEMP_HTML = '';
-                        for (var i = 0; i < JSON_DATA[KEY].length; i++) {
-                            TEMP_CLASS = i == 0 ? ' active' : '';
-                            TEMP_HTML += "<li class='drop-option" + TEMP_CLASS + "' data-value='" + JSON_DATA[KEY][i].Key + "'>" + JSON_DATA[KEY][i].Value + "</li>";
-                        }
-                        $("#" + KEY + "-bill ul").html(TEMP_HTML);
-                        $('#' + KEY + '-bill  .drop-header .drop-result').text($('#' + KEY + '-bill ul .active').text());
+                var TEMP_HTML = "", TEMP_CLASS = '';
+                for (var KEY in JSON_DATA) {
+                    TEMP_HTML = '';
+                    for (var i = 0; i < JSON_DATA[KEY].length; i++) {
+                        TEMP_CLASS = i == 0 ? ' active' : '';
+                        TEMP_HTML += "<li class='drop-option" + TEMP_CLASS + "' data-value='" + JSON_DATA[KEY][i].Key + "'>" + JSON_DATA[KEY][i].Value + "</li>";
                     }
+                    $("#" + KEY + "-bill ul").html(TEMP_HTML);
+                    $('#' + KEY + '-bill  .drop-header .drop-result').text($('#' + KEY + '-bill ul .active').text());
+                }
                 //     for(var i=0;i<JSON_DATA[KEY].length;i++){
                 //         TEMP_HTML ='<li class=drop'
                 //     }
@@ -1227,6 +1274,277 @@ ContractPage.prototype.ajaxRequestBillAdd = function (params) {
             messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
         }
     });
+    return this;
+}
+
+
+/**
+ * 账单新增保存
+ * Author:LiYong
+ * Date:2017-09-13
+ * @param params
+ * @returns {ContractPage}
+ */
+ContractPage.prototype.billSave = function () {
+    var _this = this, contractMessage = "", result = false,
+        REMARK = $("#Description_bill").val().trim();
+    if ($('#InDate_bill').val() == "" || $('#OutDate_bill').val() == "") {
+        contractMessage = "请输入账单周期";
+    } else if (regular.check(regular.MONEY_REG_EXP, $('#Price_bill').val())) {
+        contractMessage = "金额输入不正确";
+    } else if ($('#pay-bill').val() == "") {
+        contractMessage = "请输入应支付日";
+    } else if (REMARK != "" && webApp.textLength(REMARK) > 100) {
+        contractMessage = "文字长度不能超过100！";
+    } else {
+        result = true;
+    }
+    if (result) {
+        var params = _this.getParams(_this.BILL_SAVE);
+        _this.ajaxRequestBillSave(params);
+    } else {
+        messageBox.show('提示', contractMessage, MessageBoxButtons.OK, MessageBoxIcons.infomation);
+    }
+    return this;
+}
+
+/**
+ * 账单新增保存ajax
+ * Author:LiYong
+ * Date:2017-09-13
+ * @param params
+ * @returns {ContractPage}
+ */
+ContractPage.prototype.ajaxRequestBillSave = function (params) {
+    var _this = this;
+    $.ajax({
+        type: "POST",
+        url: host + this.API_CONFIG['BILL_ADD'],
+        data: params,
+        dataType: "JSON",
+        success: function (data) {
+            messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            _this.billList();
+            mp.hideSmPanel();
+        },
+        error: function (XMLHttpRequest, txtStatus, errorThrown) {
+            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
+        }
+    });
+    return this;
+}
+
+/**
+ *  账单删除
+ *  Author:LiYong
+ * Date:2017-09-13
+ * @returns {ContractPage}
+ */
+
+ContractPage.prototype.billDelete = function () {
+    var _this = this;
+    $(document).on("click", _this.BILL_DEL, function () {
+        _this.BILL_CHARID = $(this).attr("data-value").trim();
+        var params = _this.getParams(_this.API_CONFIG['BILL_DEL']);
+        messageBox.show("确认", "确定删除账单？", MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
+        messageBox.confirm(function () {
+            _this.ajaxRequestBillDelete(params);
+        });
+    });
+    return this;
+}
+/**
+ * BEGIN 账单删除ajax
+ * Author:LiYong
+ * Date:2017-09-13
+ * @param params
+ * @returns {ContractPage}
+ */
+ContractPage.prototype.ajaxRequestBillDelete = function (params) {
+    var _this = this;
+    $.ajax({
+        type: "POST",
+        url: host + this.API_CONFIG['BILL_DEL'],
+        data: params,
+        dataType: "JSON",
+        success: function (data) {
+            messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            _this.billList();
+        },
+        error: function (XMLHttpRequest, txtStatus, errorThrown) {
+            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
+        }
+    });
+    return this;
+}
+
+/**
+ * 打开账单收款窗口
+ * Author:LiYong
+ * Date:2017-09-13
+ * @param params
+ * @returns {ContractPage}
+ */
+ContractPage.prototype.collectBind = function () {
+    var _this = this;
+    $('#items-cost').on('keyup', '.form-group input', function () {
+        _this.add();
+    });
+
+    $(document).on("click", _this.BILL_COLLECT, function () {
+        $('#total_coll').val('');
+        $('#follow_coll').val('');
+        $('#date_coll').val('');
+        $('#Description_coll').val('');
+        _this.BILL_CHARID = $(this).attr("data-value").trim();
+        var params = _this.getParams(_this.API_CONFIG['COLLECT_BIND']);
+        mp.manualShowPanel({
+            index: 3,
+            element: ".panel-sm",
+            complete: function () {
+                _this.ajaxRequestCollectBind(params);
+            }
+        });
+    });
+    return this;
+}
+
+
+/**
+ * 打开账单收款窗口ajax
+ * Author:LiYong
+ * Date:2017-09-13
+ * @param params
+ * @returns {ContractPage}
+ */
+ContractPage.prototype.ajaxRequestCollectBind = function (params) {
+    $.ajax({
+        type: 'GET',
+        url: host + this.API_CONFIG['COLLECT_BIND'],
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                var JSON_DATA=data['data'],TEMP_DATA=data['exted'],TEMP_HTML='', TEMP_CLASS='';
+
+                for(var i=0;i<JSON_DATA.length;i++){
+                    TEMP_HTML+= '<div class="form-group"><div class="group-row row"><div class="col-xs-6"> '
+                        +'<div class="row row-should"><div class="col-xs-6"><span>'+JSON_DATA[i]["Item"]+'</span></div>'
+                        +'<div class="col-xs-6"><span>'+JSON_DATA[i]["ItemPrice"]+'</span></div>'
+                        +'</div></div><div class="col-xs-6"><span>实收</span>'
+                        + '<input type="text" data-value="'+JSON_DATA[i]["ItemCharId"]+'" onkeyup="this.value=this.value.replace(/\\D/g,\'\')" onafterpaste="this.value=this.value.replace(/\\D/g,\'\')"></div></div></div>';
+                    for(var KEY in JSON_DATA[i]){
+                        $('#'+KEY+'-coll').html(JSON_DATA[i][KEY]);
+                    }
+                }
+                $('#items-cost').html(TEMP_HTML);
+
+
+                TEMP_HTML=''
+                for(var i=0;i<TEMP_DATA.length;i++){
+                    TEMP_CLASS = i == 0 ? ' active' : '';
+                    TEMP_HTML += "<li class='drop-option" + TEMP_CLASS + "' data-value='" + TEMP_DATA[i].Key + "'>" + TEMP_DATA[i].Value + "</li>";
+                }
+                $("#PayType_coll ul").html(TEMP_HTML);
+                $('#PayType_coll  .drop-header .drop-result').text($('#PayType_coll ul .active').text());
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (XMLHttpRequest, txtStatus, errorThrown) {
+            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
+        }
+    })
+    return this;
+}
+
+/**
+ * Author:LIYONG
+ * Date:2017-9-13
+ * 账单收款 调用
+ * @returns {ContractPage}
+ */
+ContractPage.prototype.billReceive=function () {
+    var _this = this, contractMessage = "", result = false,
+        REMARK = $("#Description_coll").val().trim(),
+        ARR=[],flag=false;
+    $("#items-cost .form-group input").each(function(){
+        var OBJ={
+            CharId:$(this).attr("data-value"),
+            Progress:$(this).val()
+        };
+        ARR.push(OBJ);
+    });
+    _this.RECEIVE_JSON=JSON.stringify(ARR);
+    $('#items-cost input').each(function () {
+        if($(this).val().trim()== ""){
+            flag=true;
+        };
+    })
+    if (flag) {
+        contractMessage = "请输入实收金额";
+    } else if ($('#follow_coll').val().trim() == "") {
+        contractMessage = "请输入流水账号";
+    }else if ($('#date_coll').val().trim() == "") {
+        contractMessage = "请输入支付日期";
+    } else if (REMARK != "" && webApp.textLength(REMARK) > 100) {
+        contractMessage = "文字长度不能超过100！";
+    } else {
+        result = true;
+    }
+    if (result) {
+        var params = _this.getParams(_this.BILL_RECEIVE);
+        _this.ajaxRequestBillReceive(params);
+    } else {
+        messageBox.show('提示', contractMessage, MessageBoxButtons.OK, MessageBoxIcons.infomation);
+    }
+    return this;
+}
+/**
+ * Author:LIYONG
+ * Date:2017-9-13
+ * 账单收款 ajax
+ * @returns {ContractPage}
+ */
+ContractPage.prototype.ajaxRequestBillReceive=function (params) {
+    var _this=this;
+    $.ajax({
+        type: "Post",
+        url: host + this.API_CONFIG['COLLECT_BIND'],
+        data: params,
+        dataType: "JSON",
+        success: function (data) {
+            if (data['succ']) {
+                _this.billList();
+                messageBox.show("提醒", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+                mp.hideSmPanel();
+            }
+            else {
+                messageBox.show("错误", data.msg, MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        },
+        error: function (XMLHttpRequest, txtStatus, errorThrown) {
+            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
+        }
+    });
+    return this;
+}
+
+/**
+ * Author:LIYONG
+ * Date:2017-9-11
+ * 求和
+ * @returns {ContractPage}
+ */
+ContractPage.prototype.add = function () {
+    var TEMP_VALUE = $('#items-cost .form-group');
+    var TEMP_HTML, TEMP_DT = 0 / 1;
+    for (var i = 0; i < TEMP_VALUE.length; i++) {
+        TEMP_HTML= '';
+        TEMP_HTML = (TEMP_VALUE.eq(i).find('input').val() ? TEMP_VALUE.eq(i).find('input').val() : 0) / 1;
+        TEMP_DT += TEMP_HTML;
+    }
+    $('#total_coll').val(TEMP_DT);
     return this;
 }
 

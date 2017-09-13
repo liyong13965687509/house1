@@ -75,14 +75,6 @@
 }
 .employee > .pull-left .left-footer button {
   height: 36px;
-  cursor: pointer;
-  color: #ffffff;
-  font-size: 14px;
-  text-align: center;
-  background-color: #417de6;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
 }
 .employee > .pull-left .left-footer button.btn-edit {
   margin-left: 10px;

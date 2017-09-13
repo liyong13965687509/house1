@@ -10,6 +10,7 @@ function Management() {
     this.DATA_VALUE = arguments['DATA_VALUE'] ? arguments['DATA_VALUE'] : '';
     this.TAB_BTN = arguments['TAB_BTN'] ? arguments['TAB_BTN'] : '.tab-bar li';
     this.PAGINATION = arguments['PAGINATION'] ? arguments['PAGINATION'] : null;
+    this.BTN_RESET = arguments['BTN_RESET'] ? arguments['BTN_RESET'] : '.btn-reset';
     this.BTN_DETAIL = arguments['BTN_DETAIL'] ? arguments['BTN_DETAIL'] : '.btn-detail';
     this.BTN_UPDATE = arguments['BTN_UPDATE'] ? arguments['BTN_UPDATE'] : '.btn-update';
     this.BTN_CHARGE = arguments['BTN_CHARGE'] ? arguments['BTN_CHARGE'] : '.btn-charge';
@@ -36,11 +37,18 @@ function Management() {
     this.LOCK_OPER_REC = arguments['LOCK_OPER_REC'] ? arguments['LOCK_OPER_REC'] : 'LOCK_OPER_REC';
     this.POWER_OPER_REC = arguments['POWER_OPER_REC'] ? arguments['POWER_OPER_REC'] : 'POWER_OPER_REC';
     this.POWER_RECHARGE = arguments['POWER_RECHARGE'] ? arguments['POWER_RECHARGE'] : 'POWER_RECHARGE';
+    this.BUILDING_CHARID = arguments['BUILDING_CHARID'] ? arguments['BUILDING_CHARID'] : 'BUILDING_CHARID';
+    this.BUILDROOM_CHARID = arguments['BUILDROOM_CHARID'] ? arguments['BUILDROOM_CHARID'] : 'BUILDROOM_CHARID';
+    this.BUILDFLOOR_CHARID = arguments['BUILDFLOOR_CHARID'] ? arguments['BUILDFLOOR_CHARID'] : 'BUILDFLOOR_CHARID';
 
     this.GRANT_CONFIG = arguments['GRANT_CONFIG'] ? arguments['GRANT_CONFIG'] : {
         selectmanage: {
             value: '查看',
             class: 'select'
+        },
+        resetmanage: {
+            value: '重置',
+            class: 'reset'
         },
         delete: {
             value: '删除',
@@ -88,7 +96,9 @@ function Management() {
         POWER_RESET: '/elemeter/elemeter-charge-reset',
         POWER_SWITCH_ON: '/elemeter/elemeter-switch-on',
         POWER_SWITCH_OFF: '/elemeter/elemeter-switch-off',
-        POWER_RECHARGE: '/elemeter/elemeter-charge'
+        POWER_RECHARGE: '/elemeter/elemeter-charge',
+        GETNEW_POWER: '/elemeter/elemeter-read',
+        RESET_PASSWORD: '/lock/update-manager-password',
     }
 
     this.init();
@@ -105,6 +115,7 @@ Management.prototype.init = function () {
     this.dropChange();
     this.btnDetailClick();
     this.tabChange();
+    this.btnResetClick();
     this.btnUpdateClick();
     this.btnChargeClick();
     this.powerInputKeyUp();
@@ -127,31 +138,6 @@ Management.prototype.navChange = function () {
         _this.exeBindDevices();
     });
     return this;
-}
-/**
- *
- * @returns {boolean}
- */
-Management.prototype.addPasswordNotEmpty = function () {
-    var message = '';
-    var result = false;
-    if (!$('#Pwd_Name').val().trim()) {
-        message = '请输入密码名称！';
-    } else if (!$('#Pwd_Pwd').val().trim()) {
-        message = '请输入密码明文！';
-    } else if (!$('#Pwd_Begin').val().trim()) {
-        message = '请输入密码开始时间！';
-    } else if (!$('#Pwd_End').val().trim()) {
-        message = '请输入密码结束时间！';
-    } else if (!$('#Pwd_Phone').val().trim()) {
-        message = '请输入手机号码！';
-    } else {
-        result = true;
-    }
-    if (!result) {
-        messageBox.show('提示', message, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-    }
-    return result;
 }
 /**
  *
@@ -289,6 +275,27 @@ Management.prototype.saveChargeNotEmpty = function () {
  *
  * @returns {boolean}
  */
+Management.prototype.deviceBindNotEmpty = function () {
+    var message = '';
+    var result = false;
+    if (undefined == $('#KeyEquBuilding .active')[0]) {
+        message = '请选择楼盘！';
+    } else if (undefined == $('#KeyEquNumber .active')[0]) {
+        message = '请选择层号！';
+    } else if (undefined == $('#KeyEquRoom .active')[0]) {
+        message = '请选择房间！';
+    } else {
+        result = true;
+    }
+    if (!result) {
+        messageBox.show('提示', message, MessageBoxButtons.OK, MessageBoxIcons.infomation);
+    }
+    return result;
+}
+/**
+ *
+ * @returns {boolean}
+ */
 Management.prototype.updateDevicesNotEmpty = function () {
     var message = '';
     var result = false;
@@ -298,6 +305,86 @@ Management.prototype.updateDevicesNotEmpty = function () {
         message = '请输入设备序列号！';
     } else if (!$('#Update_Device_Uuid').val().trim()) {
         message = '请输入设备UUID！';
+    } else {
+        result = true;
+    }
+    if (!result) {
+        messageBox.show('提示', message, MessageBoxButtons.OK, MessageBoxIcons.infomation);
+    }
+    return result;
+}
+/**
+ *
+ * @returns {boolean}
+ */
+Management.prototype.resetPasswordNotEmpty = function () {
+    var message = '';
+    var result = false;
+    if (!$('#Reset_Password').val().trim()) {
+        message = '请输入管理员密码！';
+    } else if ($('#Reset_Password').val().trim().length != 6) {
+        message = '密码长度必须为6位！';
+    } else {
+        result = true;
+    }
+    if (!result) {
+        messageBox.show('提示', message, MessageBoxButtons.OK, MessageBoxIcons.infomation);
+    }
+    return result;
+}
+
+/**
+ *
+ * @returns {boolean}
+ */
+Management.prototype.addPasswordNotEmpty = function () {
+    var message = '';
+    var result = false;
+    var SYSTEM_TIME = new Date().getTime();
+    var END_TIME = webApp.parseTime($('#Pwd_End').val().trim()) * 1000;
+    var BEGIN_TIME = webApp.parseTime($('#Pwd_Begin').val().trim()) * 1000;
+    if (!$('#Pwd_Name').val().trim()) {
+        message = '请输入密码名称！';
+    } else if (!$('#Pwd_Pwd').val().trim()) {
+        message = '请输入密码明文！';
+    } else if (!$('#Pwd_Begin').val().trim()) {
+        message = '请输入密码开始时间！';
+    } else if (!$('#Pwd_End').val().trim()) {
+        message = '请输入密码结束时间！';
+    } else if (BEGIN_TIME >= END_TIME || SYSTEM_TIME >= END_TIME) {
+        message = '结束时间必须大于开始时间和系统时间！';
+    } else if (!$('#Pwd_Phone').val().trim()) {
+        message = '请输入手机号码！';
+    } else {
+        result = true;
+    }
+    if (!result) {
+        messageBox.show('提示', message, MessageBoxButtons.OK, MessageBoxIcons.infomation);
+    }
+    return result;
+}
+/**
+ *
+ * @returns {boolean}
+ */
+Management.prototype.updatePasswordNotEmpty = function () {
+    var message = '';
+    var result = false;
+    var SYSTEM_TIME = new Date().getTime();
+    var END_TIME = webApp.parseTime($('#Update_Pwd_End').val().trim()) * 1000;
+    var BEGIN_TIME = webApp.parseTime($('#Update_Pwd_Begin').val().trim()) * 1000;
+    if (!$('#Update_Pwd_Name').val().trim()) {
+        message = '请输入密码名称！';
+    } else if (!$('#Update_Pwd_Pwd').val().trim()) {
+        message = '请输入密码明文！';
+    } else if (!$('#Update_Pwd_Begin').val().trim()) {
+        message = '请输入密码开始时间！';
+    } else if (!$('#Update_Pwd_End').val().trim()) {
+        message = '请输入密码结束时间！';
+    } else if (BEGIN_TIME >= END_TIME || SYSTEM_TIME >= END_TIME) {
+        message = '结束时间必须大于开始时间和系统时间！';
+    } else if (!$('#Update_Pwd_Phone').val().trim()) {
+        message = '请输入手机号码！';
     } else {
         result = true;
     }
@@ -357,12 +444,37 @@ Management.prototype.btnDetailClick = function () {
 Management.prototype.btnUpdateClick = function () {
     var _this = this;
     $(document).on('click', this.BTN_UPDATE, function () {
+        var DATA_NAME = $(this).attr('data-name').trim();
+        var DATA_BEGIN = $(this).attr('data-begin').trim();
+        var DATA_END = $(this).attr('data-end').trim();
+        var DATA_PHONE = $(this).attr('data-phone').trim();
         _this.PASSWORD_ID = $(this).attr('data-value').trim();
         mp.manualShowPanel({
             index: 3,
             element: '.panel-sm',
             complete: function () {
-
+                $('#Update_Pwd_Name').val(DATA_NAME);
+                $('#Update_Pwd_Begin').val(DATA_BEGIN);
+                $('#Update_Pwd_End').val(DATA_END);
+                $('#Update_Pwd_Phone').val(DATA_PHONE);
+            }
+        });
+    });
+    return this;
+}
+/**
+ *
+ * @returns {Management}
+ */
+Management.prototype.btnResetClick = function () {
+    var _this = this;
+    $(document).on('click', this.BTN_RESET, function () {
+        _this.PASSWORD_ID = $(this).attr('data-value').trim();
+        mp.manualShowPanel({
+            index: 6,
+            element: '.panel-sm',
+            complete: function () {
+                $('#Reset_Password').val('');
             }
         });
     });
@@ -446,11 +558,10 @@ Management.prototype.ajaxRequestBindFloor = function (params, selector) {
                 var TEMP_HTML = '';
                 var TEMP_DATA = null;
                 var JSON_DATA = data['data'];
-                JSON_DATA.unshift({CharId: '', Name: '不限'});
+                if ('KeyEquNumber' != selector) JSON_DATA.unshift({CharId: '', Name: '不限'});
                 for (var i = 0; i < JSON_DATA.length; i++) {
-                    var TEMP_NAME = i == 0 ? ' active' : '';
                     TEMP_DATA = JSON_DATA[i];
-                    TEMP_HTML += '<li class="drop-option' + TEMP_NAME + '" data-value="' + TEMP_DATA['CharId'] + '">' + TEMP_DATA['Name'] + '</li>';
+                    TEMP_HTML += '<li class="drop-option" data-value="' + TEMP_DATA['CharId'] + '">' + TEMP_DATA['Name'] + '</li>';
                 }
                 TEMP_DATA = null;
                 $('#' + selector).html(TEMP_HTML);
@@ -485,11 +596,10 @@ Management.prototype.ajaxRequestBindRooms = function (params, selector) {
                 var TEMP_HTML = '';
                 var TEMP_DATA = null;
                 var JSON_DATA = data['data'];
-                JSON_DATA.unshift({Key: '', Value: '不限'});
+                if ('KeyEquRoom' != selector) JSON_DATA.unshift({Key: '', Value: '不限'});
                 for (var i = 0; i < JSON_DATA.length; i++) {
-                    var TEMP_NAME = i == 0 ? ' active' : '';
                     TEMP_DATA = JSON_DATA[i];
-                    TEMP_HTML += '<li class="drop-option' + TEMP_NAME + '" data-value="' + TEMP_DATA['Key'] + '">' + TEMP_DATA['Value'] + '</li>';
+                    TEMP_HTML += '<li class="drop-option" data-value="' + TEMP_DATA['Key'] + '">' + TEMP_DATA['Value'] + '</li>';
                 }
                 TEMP_DATA = null;
                 $('#' + selector).html(TEMP_HTML);
@@ -712,6 +822,13 @@ Management.prototype.ajaxRequestBindLoad = function (params) {
                     TEMP_HTML += '<li class="drop-option' + TEMP_NAME + '" data-value="' + TEMP_DATA['CharId'] + '">' + TEMP_DATA['Name'] + '</li>';
                 }
                 $('#EquBuilding').html(TEMP_HTML);
+
+                TEMP_HTML = '';
+                JSON_DATA['Building'].splice(0, 1);
+                for (var i = 0; i < JSON_DATA['Building'].length; i++) {
+                    TEMP_DATA = JSON_DATA['Building'][i];
+                    TEMP_HTML += '<li class="drop-option" data-value="' + TEMP_DATA['CharId'] + '">' + TEMP_DATA['Name'] + '</li>';
+                }
                 $('#KeyEquBuilding').html(TEMP_HTML);
                 _this.exeBindDevices();
             } else {
@@ -753,8 +870,8 @@ Management.prototype.ajaxRequestLockDetail = function (params) {
                     $('#Lock_' + KEY).text(JSON_DATA[KEY]);
                 }
                 $('#Update_Device_Uuid').val(_this.DATA_UUID);
-                $('#Update_Device_Number').val($('#Lock_Name').text().trim());
-                $('#Update_Device_Name').val($('#Lock_SerialNumber').text().trim());
+                $('#Update_Device_Name').val($('#Lock_Name').text().trim());
+                $('#Update_Device_Number').val($('#Lock_SerialNumber').text().trim());
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
@@ -790,12 +907,19 @@ Management.prototype.ajaxRequestPowerDetail = function (params) {
                 TEMP_BUTTONS = 1 == JSON_DATA['IsBind'] ? TEMP_BUTTONS + UNBIND_BUTTON : TEMP_BUTTONS + BIND_BUTTON;
                 $('#Power_Bind_Btn').html(TEMP_BUTTONS);
                 JSON_DATA['IsBind'] = 1 == JSON_DATA['IsBind'] ? '是' : '否';
+                JSON_DATA['CapacityUpdateTime'] = webApp.parseDate(JSON_DATA['CapacityUpdateTime']);
+                JSON_DATA['OverdraftUpdateTime'] = webApp.parseDate(JSON_DATA['OverdraftUpdateTime']);
+                JSON_DATA['PowerTotalUpdateTime'] = webApp.parseDate(JSON_DATA['PowerTotalUpdateTime']);
+                JSON_DATA['EnableStateUpdateTime'] = webApp.parseDate(JSON_DATA['EnableStateUpdateTime']);
+                JSON_DATA['ConsumeAmountUpdateTime'] = webApp.parseDate(JSON_DATA['ConsumeAmountUpdateTime']);
+                JSON_DATA['OnOffStateLastUpdateTime'] = webApp.parseDate(JSON_DATA['OnOffStateLastUpdateTime']);
+
                 for (var KEY in JSON_DATA) {
                     $('#Power_' + KEY).text(JSON_DATA[KEY]);
                 }
                 $('#Update_Device_Uuid').val(_this.DATA_UUID);
-                $('#Update_Device_Number').val($('#Power_Name').text().trim());
-                $('#Update_Device_Name').val($('#Power_SerialNumber').text().trim());
+                $('#Update_Device_Name').val($('#Power_Name').text().trim());
+                $('#Update_Device_Number').val($('#Power_SerialNumber').text().trim());
                 $(_this.POWER_STATUS).html(JSON_DATA['EnableState']);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -826,7 +950,7 @@ Management.prototype.ajaxRequestLockPassword = function (params) {
         success: function (data) {
             if (data['succ']) {
                 var JSON_DATA = data['data'];
-                _this.ajaxRequestChangePageLockPassword(webApp.pageGetDataSet({
+                _this.appendChangePageLockPasswordTemplate(webApp.pageGetDataSet({
                     pageData: JSON_DATA,
                     pageSize: _this.PAGE_SIZE,
                     pageCode: _this.PAGE_INDEX
@@ -836,7 +960,7 @@ Management.prototype.ajaxRequestLockPassword = function (params) {
                     PAGE_SIZE: _this.PAGE_SIZE,
                     DATA_NUMS: JSON_DATA.length,
                     CHANGE_PAGE: function (pageCode) {
-                        _this.ajaxRequestChangePageLockPassword(webApp.pageGetDataSet({
+                        _this.appendChangePageLockPasswordTemplate(webApp.pageGetDataSet({
                             pageCode: pageCode,
                             pageData: JSON_DATA,
                             pageSize: _this.PAGE_SIZE
@@ -1168,7 +1292,7 @@ Management.prototype.appendPowerOperRecordTemplate = function (params) {
  * @param params
  * @returns {Management}
  */
-Management.prototype.ajaxRequestChangePageLockPassword = function (params) {
+Management.prototype.appendChangePageLockPasswordTemplate = function (params) {
     var JSON_DATA = null;
     var TEMP_HTML = '', TEMP_NAME = '';
     for (var i = 0; i < params.length; i++) {
@@ -1208,7 +1332,9 @@ Management.prototype.ajaxRequestChangePageLockPassword = function (params) {
                 var TEMP_VALUE = this.GRANT_CONFIG[TEMP_GRANT[j]]['value'];
                 var TEMP_CLASS = this.GRANT_CONFIG[TEMP_GRANT[j]]['class'];
                 TEMP_HTML += TEMP_SPLIT + '<a href="javascript:void(0)" class="btn-' +
-                    TEMP_CLASS + '" data-value="' + JSON_DATA['Id'] + '">' + TEMP_VALUE + '</a>';
+                    TEMP_CLASS + '" data-name="' + JSON_DATA['SendToName'] + '" data-begin="' + TEMP_BEGIN + '" ' +
+                    ' data-end="' + TEMP_END + '" data-phone="' + JSON_DATA['SendToPhone'] + '" data-value="' +
+                    JSON_DATA['Id'] + '">' + TEMP_VALUE + '</a>';
             }
         }
         TEMP_HTML += '</div></div></div></div></div>';
@@ -1431,6 +1557,7 @@ Management.prototype.ajaxRequestAddPassword = function (params) {
             if (data['succ']) {
                 mp.hideSmPanel();
                 _this.exeLockPassword();
+                $('.panel-sm .show input').val('');
                 messageBox.show("提示", '密码新增成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -1490,9 +1617,41 @@ Management.prototype.ajaxRequestUpdatePassword = function (params) {
         data: params,
         success: function (data) {
             if (data['succ']) {
-                messageBox.show("提示", '密码修改成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
-                _this.exeLockPassword();
                 mp.hideSmPanel();
+                _this.exeLockPassword();
+                $('#Update_Pwd_Pwd').val('');
+                messageBox.show("提示", '密码修改成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {Management}
+ */
+Management.prototype.ajaxRequestResetPassword = function (params) {
+    var _this = this;
+    $.ajax({
+        url: host + _this.API_CONFIG.RESET_PASSWORD,
+        type: "POST",
+        dataType: "JSON",
+        data: params,
+        success: function (data) {
+            if (data['succ']) {
+                mp.hideSmPanel();
+                _this.exeLockPassword();
+                messageBox.show("提示", '管理员密码重置成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
@@ -1612,8 +1771,7 @@ Management.prototype.ajaxRequestDeviceBind = function (params) {
         success: function (data) {
             if (data['succ']) {
                 mp.hideSmPanel();
-                mp.hideLgPanel();
-                _this.exeBindLoad();
+                _this.exeBindCallBack();
                 messageBox.show("提示", '绑定成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -1801,8 +1959,7 @@ Management.prototype.ajaxRequestDeviceUnbind = function (params) {
         data: params,
         success: function (data) {
             if (data['succ']) {
-                mp.hideLgPanel();
-                _this.exeBindLoad();
+                _this.exeBindCallBack();
                 messageBox.show("提示", '门锁解绑成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -1848,6 +2005,45 @@ Management.prototype.ajaxRequestGetDynamicPassword = function (params) {
             }
         }
     });
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {Management}
+ */
+Management.prototype.ajaxRequestGetNewPower = function (params) {
+    var _this = this;
+    $.ajax({
+        url: host + _this.API_CONFIG.GETNEW_POWER,
+        type: "POST",
+        data: params,
+        dataType: "JSON",
+        success: function (data) {
+            if (data['succ']) {
+                var TEMP_INFO = '获取电量命令下达成功，等待设备返回...';
+                messageBox.show('提示', TEMP_INFO, MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @returns {Management}
+ */
+Management.prototype.exeGetNewPower = function () {
+    var params = this.getParams(this.API_CONFIG.GETNEW_POWER);
+    this.ajaxRequestGetNewPower(params);
     return this;
 }
 /**
@@ -2057,8 +2253,21 @@ Management.prototype.exeDeletePassword = function () {
  * @returns {Management}
  */
 Management.prototype.exeUpdatePassword = function () {
-    var params = this.getParams(this.API_CONFIG.UPDATE_PASSWORD);
-    this.ajaxRequestUpdatePassword(params);
+    if (this.updatePasswordNotEmpty()) {
+        var params = this.getParams(this.API_CONFIG.UPDATE_PASSWORD);
+        this.ajaxRequestUpdatePassword(params);
+    }
+    return this;
+}
+/**
+ *
+ * @returns {Management}
+ */
+Management.prototype.exeResetPassword = function () {
+    if (this.resetPasswordNotEmpty()) {
+        var params = this.getParams(this.API_CONFIG.RESET_PASSWORD);
+        this.ajaxRequestResetPassword(params);
+    }
     return this;
 }
 /**
@@ -2110,8 +2319,10 @@ Management.prototype.exeUnfrozenPassword = function () {
  * @returns {Management}
  */
 Management.prototype.exeDeviceBind = function () {
-    var params = this.getParams(this.API_CONFIG.DEVICE_BIND);
-    this.ajaxRequestDeviceBind(params);
+    if (this.deviceBindNotEmpty()) {
+        var params = this.getParams(this.API_CONFIG.DEVICE_BIND);
+        this.ajaxRequestDeviceBind(params);
+    }
     return this;
 }
 /**
@@ -2149,6 +2360,26 @@ Management.prototype.exeUpdateDevices = function () {
     if (this.updateDevicesNotEmpty()) {
         var params = this.getParams(this.API_CONFIG.UPDATE_DEVICES);
         this.ajaxRequestUpdateDevices(params);
+    }
+    return this;
+}
+/**
+ *
+ * @returns {Management}
+ */
+Management.prototype.exeBindCallBack = function () {
+    $('#KeyEquRoom').html('');
+    $('#KeyEquNumber').html('');
+    $('.reset').html('请选择');
+    this.exeBindLoad();
+    var TAB_INDEX = $('#EquType .active').index();
+    switch (TAB_INDEX) {
+        case 0:
+            this.exeLockDetail();
+            break;
+        case 1:
+            this.exePowerDetail();
+            break;
     }
     return this;
 }
@@ -2216,6 +2447,18 @@ Management.prototype.getResult = function (name) {
             TEMP_RESULT = $('#Power_Use_End').val().trim();
             TEMP_RESULT = TEMP_RESULT ? webApp.parseTime(TEMP_RESULT) : 0;
             break;
+        case this.BUILDING_CHARID:
+            var TEMP_OBJ = $('#EquBuilding .active');
+            TEMP_RESULT = TEMP_OBJ[0] ? TEMP_OBJ.attr('data-value') : '';
+            break;
+        case this.BUILDROOM_CHARID:
+            var TEMP_OBJ = $('#EquRoom .active');
+            TEMP_RESULT = TEMP_OBJ[0] ? TEMP_OBJ.attr('data-value') : '';
+            break;
+        case this.BUILDFLOOR_CHARID:
+            var TEMP_OBJ = $('#EquNumber .active');
+            TEMP_RESULT = TEMP_OBJ[0] ? TEMP_OBJ.attr('data-value') : '';
+            break;
     }
     return TEMP_RESULT;
 }
@@ -2262,9 +2505,9 @@ Management.prototype.getParams = function (name) {
                 pageSize: _this.PAGE_SIZE,
                 pageIndex: _this.PAGE_INDEX,
                 requestKey: localStorage.getItem("requestKey"),
-                buildingCharId: $('#EquBuilding .active').attr('data-value'),
-                buildingRoomCharId: $('#EquRoom .active').attr('data-value'),
-                buildingFloorCharId: $('#EquNumber .active').attr('data-value')
+                buildingCharId: _this.getResult(_this.BUILDING_CHARID),
+                buildingRoomCharId: _this.getResult(_this.BUILDROOM_CHARID),
+                buildingFloorCharId: _this.getResult(_this.BUILDFLOOR_CHARID),
             }
             break;
         case this.API_CONFIG.LOCK_DETAIL:
@@ -2454,6 +2697,19 @@ Management.prototype.getParams = function (name) {
         case this.API_CONFIG.DELETE_DEVICES:
             params = {
                 deviceCharId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
+            break;
+        case this.API_CONFIG.GETNEW_POWER:
+            params = {
+                uuid: _this.DATA_UUID,
+                requestKey: localStorage.getItem("requestKey")
+            }
+            break;
+        case this.API_CONFIG.RESET_PASSWORD:
+            params = {
+                uuid: _this.DATA_UUID,
+                password: $('#Reset_Password').val().trim(),
                 requestKey: localStorage.getItem("requestKey")
             }
             break;

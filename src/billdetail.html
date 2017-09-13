@@ -161,6 +161,7 @@
             requestKey: localStorage.getItem("requestKey"),
             billCharId: billCharId
         };
+        console.log(data);
         $.ajax({
             type: "GET",
             url: host + "/bill/receive",
@@ -170,6 +171,7 @@
                 console.log(jdata);
                 if (jdata.succ) {
                     var data = jdata.data;
+                    console.log(jdata);
 //                    账单标识
                     $("#BillCharId").text(data[0].BillCharId);
 //                    账单房源
@@ -252,10 +254,10 @@
             url: host + "/bill/receive",
             data: data,
             dataType: "JSON",
-            success: function (jdata) {
-                if (jdata.succ) {
+            success: function (data) {
+                if (data['succ']) {
                     var r ;
-                    messageBox.show("提醒", jdata.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
+                    messageBox.show("提醒", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
                     $(".btn-confirm").click(function () {
                         r = true;
                         billReceive();
@@ -269,7 +271,7 @@
                     }
                 }
                 else {
-                    messageBox.show("错误", jdata.msg, MessageBoxButtons.OK, MessageBoxIcons.error);
+                    messageBox.show("错误", data.msg, MessageBoxButtons.OK, MessageBoxIcons.error);
                 }
             },
             error: function (XMLHttpRequest, txtStatus, errorThrown) {

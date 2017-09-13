@@ -164,7 +164,7 @@
     </div>
 </div>
 <div class="footer"></div>
-<!--门锁-->
+
 <div class="panel panel-lg hide">
     <div class="panel-bg"></div>
     <div class="panel-content">
@@ -410,35 +410,123 @@
                                     </div>
                                     <div class="group-body">
                                         <div class="group-row row">
-                                            <div class="col-xs-3 col-sm-2">
+                                            <div class="col-xs-5 col-sm-3">
                                                 <label class="group-label">名称</label>
                                             </div>
-                                            <div class="col-xs-9 col-sm-10">
+                                            <div class="col-xs-7 col-sm-9">
                                                 <span class="group-value" id="Power_Name"></span>
                                             </div>
                                         </div>
                                         <div class="group-row row">
-                                            <div class="col-xs-3 col-sm-2">
+                                            <div class="col-xs-5 col-sm-3">
                                                 <label class="group-label">序列号</label>
                                             </div>
-                                            <div class="col-xs-9 col-sm-10">
+                                            <div class="col-xs-7 col-sm-9">
                                                 <span class="group-value" id="Power_SerialNumber"></span>
                                             </div>
                                         </div>
                                         <div class="group-row row">
-                                            <div class="col-xs-3 col-sm-2">
+                                            <div class="col-xs-5 col-sm-3">
                                                 <label class="group-label">状态</label>
                                             </div>
-                                            <div class="col-xs-9 col-sm-10">
+                                            <div class="col-xs-7 col-sm-9">
                                                 <span class="group-value" id="Power_EnableState"></span>
                                             </div>
                                         </div>
                                         <div class="group-row row">
-                                            <div class="col-xs-3 col-sm-2">
+                                            <div class="col-xs-5 col-sm-3">
                                                 <label class="group-label">UUID</label>
                                             </div>
-                                            <div class="col-xs-9 col-sm-10">
+                                            <div class="col-xs-7 col-sm-9">
                                                 <span class="group-value" id="Power_UUID"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-5 col-sm-3">
+                                                <label class="group-label">额定功率</label>
+                                            </div>
+                                            <div class="col-xs-7 col-sm-9">
+                                                <span class="group-value" id="Power_Capacity"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-5 col-sm-3">
+                                                <label class="group-label">总用电量</label>
+                                            </div>
+                                            <div class="col-xs-7 col-sm-9">
+                                                <span class="group-value" id="Power_ConsumeAmount"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-5 col-sm-3">
+                                                <label class="group-label">在线离线状态</label>
+                                            </div>
+                                            <div class="col-xs-7 col-sm-9">
+                                                <span class="group-value" id="Power_OnOffState"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-5 col-sm-3">
+                                                <label class="group-label">透支额度</label>
+                                            </div>
+                                            <div class="col-xs-7 col-sm-9">
+                                                <span class="group-value" id="Power_Overdraft"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-5 col-sm-3">
+                                                <label class="group-label">剩余电量</label>
+                                            </div>
+                                            <div class="col-xs-7 col-sm-9">
+                                                <span class="group-value" id="Power_PowerTotal"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-5 col-sm-3">
+                                                <label class="group-label">额定功率刷新时间</label>
+                                            </div>
+                                            <div class="col-xs-7 col-sm-9">
+                                                <span class="group-value" id="Power_CapacityUpdateTime"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-5 col-sm-3">
+                                                <label class="group-label">总用电量刷新时间</label>
+                                            </div>
+                                            <div class="col-xs-7 col-sm-9">
+                                                <span class="group-value" id="Power_ConsumeAmountUpdateTime"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-5 col-sm-3">
+                                                <label class="group-label">合闸断电更新时间</label>
+                                            </div>
+                                            <div class="col-xs-7 col-sm-9">
+                                                <span class="group-value" id="Power_EnableStateUpdateTime"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-5 col-sm-3">
+                                                <label class="group-label">在线离线更新时间</label>
+                                            </div>
+                                            <div class="col-xs-7 col-sm-9">
+                                                <span class="group-value" id="Power_OnOffStateLastUpdateTime"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-5 col-sm-3">
+                                                <label class="group-label">透支额度刷新时间</label>
+                                            </div>
+                                            <div class="col-xs-7 col-sm-9">
+                                                <span class="group-value" id="Power_OverdraftUpdateTime"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-5 col-sm-3">
+                                                <label class="group-label">剩余电量刷新时间</label>
+                                            </div>
+                                            <div class="col-xs-7 col-sm-9">
+                                                <span class="group-value" id="Power_PowerTotalUpdateTime"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -450,18 +538,18 @@
                                     </div>
                                     <div class="group-body">
                                         <div class="group-row row">
-                                            <div class="col-xs-3 col-sm-2">
+                                            <div class="col-xs-5 col-sm-3">
                                                 <label class="group-label">绑定状态</label>
                                             </div>
-                                            <div class="col-xs-9 col-sm-10">
+                                            <div class="col-xs-7 col-sm-9">
                                                 <span class="group-value" id="Power_IsBind"></span>
                                             </div>
                                         </div>
                                         <div class="group-row row">
-                                            <div class="col-xs-3 col-sm-2">
+                                            <div class="col-xs-5 col-sm-3">
                                                 <label class="group-label">绑定房源</label>
                                             </div>
-                                            <div class="col-xs-9 col-sm-10">
+                                            <div class="col-xs-7 col-sm-9">
                                                 <span class="group-value" id="Power_Bind"></span>
                                             </div>
                                         </div>
@@ -610,6 +698,7 @@
                                     <div class="pull-left"></div>
                                     <div class="pull-right">
                                         <button class="btn cancel">取消</button>
+                                        <button class="btn confirm" onclick="mg.exeGetNewPower();">获取最新电量</button>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -746,7 +835,7 @@
         </div>
         <div class="panel-modal">
             <div class="panel-header">
-                <h3 class="panel-title">门锁绑定</h3>
+                <h3 class="panel-title">设备绑定</h3>
             </div>
             <div class="panel-body">
                 <div class="form-group">
@@ -754,7 +843,7 @@
                     <div class="drop-container hide" tabIndex="1">
                         <div class="drop-content">
                             <div class="drop-header">
-                                <span class="drop-result">楼盘</span>
+                                <span class="drop-result reset">请选择</span>
                                 <i class="drop-icon icon-drop-down"></i>
                             </div>
                             <div class="drop-body">
@@ -769,13 +858,11 @@
                     <div class="drop-container hide" tabIndex="1">
                         <div class="drop-content">
                             <div class="drop-header">
-                                <span class="drop-result">层号</span>
+                                <span class="drop-result reset">请选择</span>
                                 <i class="drop-icon icon-drop-down"></i>
                             </div>
                             <div class="drop-body">
-                                <ul id="KeyEquNumber" data-target="KeyEquRoom">
-                                    <li class="drop-option active" data-value="">不限</li>
-                                </ul>
+                                <ul id="KeyEquNumber" data-target="KeyEquRoom"></ul>
                             </div>
                             <div class="drop-footer"></div>
                         </div>
@@ -786,13 +873,11 @@
                     <div class="drop-container hide" tabIndex="1">
                         <div class="drop-content">
                             <div class="drop-header">
-                                <span class="drop-result">房间</span>
+                                <span class="drop-result reset">请选择</span>
                                 <i class="drop-icon icon-drop-down"></i>
                             </div>
                             <div class="drop-body">
-                                <ul id="KeyEquRoom">
-                                    <li class="drop-option active" data-value="">不限</li>
-                                </ul>
+                                <ul id="KeyEquRoom"></ul>
                             </div>
                             <div class="drop-footer"></div>
                         </div>
@@ -815,7 +900,7 @@
             <div class="panel-body">
                 <div class="form-group">
                     <label class="form-label" for="Update_Pwd_Name">密码名称</label>
-                    <input class="form-input" id="Update_Pwd_Name" placeholder="请输入密码名称"/>
+                    <input class="form-input" id="Update_Pwd_Name" readonly disabled placeholder="请输入密码名称"/>
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="Update_Pwd_Pwd">密码明文</label>
@@ -831,7 +916,7 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="Update_Pwd_Phone">手机号码</label>
-                    <input class="form-input" id="Update_Pwd_Phone" placeholder="请输入手机号码"/>
+                    <input class="form-input" id="Update_Pwd_Phone" readonly disabled placeholder="请输入手机号码"/>
                 </div>
             </div>
             <div class="panel-footer">
@@ -933,6 +1018,26 @@
                 <div class="pull-right">
                     <button class="btn cancel">取消</button>
                     <button class="btn confirm" onclick="mg.exeUpdateDevices();">保存</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="panel-modal">
+            <div class="panel-header">
+                <h3 class="panel-title">重置管理员密码</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="form-label" for="Reset_Password">管理员密码</label>
+                    <input class="form-input" data-keyup="number" type="password" id="Reset_Password"
+                           placeholder="请输入六位数字管理员密码" maxlength="6"/>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="mg.exeResetPassword();">保存</button>
                 </div>
                 <div class="clearfix"></div>
             </div>

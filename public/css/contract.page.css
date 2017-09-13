@@ -5,10 +5,15 @@
   width: 38%;
 }
 .contract-nav2-section {
-  height: 100%;
+  height: 84%;
   overflow: auto;
-  padding-bottom: 50px;
 }
 .fq-contain .fq-contain-dv {
   overflow: auto;
+}
+.fq-contain-in {
+  overflow: auto;
+}
+.fq-contain-dv {
+  min-height: 540px;
 }

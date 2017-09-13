@@ -301,25 +301,25 @@
       .col-sm-10 {
         padding-left: 40px;
       }
-      #more_end{
-        line-height:45px;
-        color:@blue;
+      #more_end {
+        line-height: 45px;
+        color: @blue;
         cursor: pointer;
       }
-      .fees-project{
+      .fees-project {
         padding-bottom: 10px;
       }
-      .fees-money{
-        .form-group{
+      .fees-money {
+        .form-group {
           display: none;
         }
       }
-      #CostItem{
+      #CostItem {
         padding-left: 13px;
         display: none;
-        ul{
-          li{
-            &.sel{
+        ul {
+          li {
+            &.sel {
               border-color: #417de6;
               color: #417de6;
             }
@@ -364,9 +364,9 @@
         }
 
       }
-      .money-total{
-        font-size:16px;
-        span{
+      .money-total {
+        font-size: 16px;
+        span {
           padding-right: 20px;
         }
       }
@@ -565,6 +565,34 @@
   .bill-table {
     text-align: center;
     font-size: 14px;
+    .column{
+      padding-left:0px;
+      padding-right:0px;
+    }
+  }
+  .date-wraper {
+    label {
+      position: absolute;
+      right: 10px;
+      top: 5px;
+      font-size: 14px;
+      color: #999999;
+      display: inline-block;
+    }
+  }
+  .panel-collect {
+    .row-should {
+      .col-xs-6 {
+        text-align: center;
+      }
+    }
+    #items-cost{
+      input {
+        margin-left: 5%;
+        width: 80%;
+      }
+    }
+
   }
 }
 

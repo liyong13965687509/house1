@@ -519,6 +519,25 @@
   text-align: center;
   font-size: 14px;
 }
+.panel .bill-table .column {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.panel .date-wraper label {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  font-size: 14px;
+  color: #999999;
+  display: inline-block;
+}
+.panel .panel-collect .row-should .col-xs-6 {
+  text-align: center;
+}
+.panel .panel-collect #items-cost input {
+  margin-left: 5%;
+  width: 80%;
+}
 .no-result {
   padding: 0px;
   font-size: 20px;

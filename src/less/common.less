@@ -107,6 +107,9 @@ iframe {
   &.edit {
     color: @white !important;
     background-color: @yellow;
+    &:hover {
+      background-color: #e9a606;
+    }
   }
   &.left {
     margin-left: 15px;
@@ -119,13 +122,19 @@ iframe {
   &:focus {
     outline: none !important;
   }
-  &.confirm {
-    color: @white !important;
-    background-color: @blue;
-  }
   &.delete {
     color: @white !important;
     background-color: #d9534f;;
+    &:hover {
+      background-color: #e52b26;
+    }
+  }
+  &.confirm {
+    color: @white !important;
+    background-color: @blue;
+    &:hover {
+      background-color: @hover;
+    }
   }
   &.plus, &.cancel {
     border: 1px solid #8795ad;
