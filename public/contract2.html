@@ -12,9 +12,9 @@
     <link href="css/plugins.css?v=2ece335f10" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css?v=1e9bc98d71"/>
     <link rel="stylesheet" type="text/css" href="css/datepicker.css?v=1cbd87910b"/>
-    <link rel="stylesheet" type="text/css" href="css/common.css?v=f0bca40999"/>
+    <link rel="stylesheet" type="text/css" href="css/common.css?v=60a536fcb6"/>
     <link rel="stylesheet" type="text/css" href="css/fq_nav2_css.css?v=12eff15bf4"/>
-    <link rel="stylesheet" type="text/css" href="css/contract.page2.css?v=47821c88bf"/>
+    <link rel="stylesheet" type="text/css" href="css/contract.page2.css?v=2045a92151"/>
 
 </head>
 <body>
@@ -78,7 +78,6 @@
                                     </div>
                                     <div class="drop-body">
                                         <ul id="building">
-                                            <li class="drop-option" data-value="">物业不限</li>
                                         </ul>
                                     </div>
                                     <div class="drop-footer"></div>
@@ -94,7 +93,6 @@
                                     </div>
                                     <div class="drop-body">
                                         <ul id="contractState">
-                                            <li class="drop-option" data-value="3">状态不限</li>
                                         </ul>
                                     </div>
                                     <div class="drop-footer"></div>
@@ -110,7 +108,6 @@
                                     </div>
                                     <div class="drop-body">
                                         <ul id="dateType">
-                                            <li class="drop-option" data-value="-1">日期不限</li>
                                         </ul>
                                     </div>
                                     <div class="drop-footer"></div>
@@ -342,13 +339,14 @@
                             </div>
                             <div class="block-footer">
                                 <div class="pull-left">
-                                    <button class="btn btn-abandon btn-hide" onclick="ctp.contractAbandon()">作废</button>
-                                    <button class="btn btn-end btn-hide">退租</button>
-                                    <button class="btn btn-renewal btn-hide">续签</button>
+                                    <button class="btn contract-abandon delete btn-hide" onclick="ctp.contractAbandon()">作废
+                                    </button>
+                                    <button class="btn contract-end end btn-hide">退租</button>
+                                    <button class="btn contract-edit edit btn-hide">编辑</button>
                                 </div>
                                 <div class="pull-right">
                                     <button class="btn  cancel">取消</button>
-                                    <button class="btn  confirm btn-edit btn-hide">编辑</button>
+                                    <button class="btn contract-renewal confirm  btn-hide">续签</button>
                                 </div>
                             </div>
                         </div>
@@ -361,7 +359,7 @@
                                     </div>
                                     <div class="group-body">
                                         <div class="bill-header">
-                                            <a href="javascript:void(0)" class="bill-add">单笔新增</a>
+                                            <button class="btn confirm bill-add btn-hide">单笔新增</button>
                                             <div class="clear"></div>
                                         </div>
                                         <div class="bill-table row">
@@ -567,8 +565,11 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn confirm" onclick="ctp.contractSave()">保存</button>
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="ctp.contractSave()">保存</button>
+                </div>
             </div>
         </div>
         <div class="panel-modal panel-end">
@@ -688,8 +689,11 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn confirm" onclick="ctp.endSave()">保存</button>
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="ctp.endSave()">保存</button>
+                </div>
             </div>
         </div>
         <div class="panel-modal panel-billAdd">
@@ -767,8 +771,11 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn confirm" onclick="ctp.billSave()">保存</button>
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="ctp.billSave()">保存</button>
+                </div>
             </div>
         </div>
         <div class="panel-modal panel-collect">
@@ -871,8 +878,11 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn confirm bill-receive" onclick="ctp.billReceive();">收款</button>
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm bill-receive" onclick="ctp.billReceive();">收款</button>
+                </div>
             </div>
         </div>
     </div>
@@ -884,8 +894,8 @@
 <script type="text/javascript" src="js/app.js?v=4e03e56a5f"></script>
 <script type="text/javascript" src="js/components-pickers.js?v=00b12ed6a0"></script>
 <script type="text/javascript" src="js/host.js?v=2112a01532"></script>
-<script type="text/javascript" src="js/tools.js?v=73101e8283"></script>
-<script type="text/javascript" src="js/contract2.page.js?v=c39c120419"></script>
+<script type="text/javascript" src="js/tools.js?v=1d7fe25107"></script>
+<script type="text/javascript" src="js/contract2.page.js?v=9552aa5c07"></script>
 </body>
 </html>
 

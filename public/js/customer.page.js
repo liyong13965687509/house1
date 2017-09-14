@@ -16,7 +16,7 @@ function CustomerPage() {
     this.DATA_CHARID = arguments['DATA_CHARID'] ? arguments['DATA_CHARID'] : "DATA_CHARID";
     this.HOUSE_TYPE = arguments['HOUSE_TYPE'] ? arguments['HOUSE_TYPE'] : [];
     this.HOUSE_TYPE_EDIT = arguments['HOUSE_TYPE_EDIT'] ? arguments['HOUSE_TYPE_EDIT'] : [];
-    this.CUSTOMER_EDIT = arguments['CUSTOMER_EDIT'] ? arguments['CUSTOMER_EDIT'] : '.btn-edit';
+    this.CUSTOMER_EDIT = arguments['CUSTOMER_EDIT'] ? arguments['CUSTOMER_EDIT'] : '.customer_update';
     this.FOLLOW_CHARID = arguments['FOLLOW_CHARID'] ? arguments['FOLLOW_CHARID'] : 'FOLLOW_CHARID';
     this.FOLLOW_DEL = arguments['FOLLOW_DEL'] ? arguments['FOLLOW_DEL'] : '.column-del';
     this.FOLLOW_REMARK = arguments['FOLLOW_REMARK'] ? arguments['FOLLOW_REMARK'] : '.follow-remark';

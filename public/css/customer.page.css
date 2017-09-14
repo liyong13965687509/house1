@@ -459,12 +459,6 @@
   -o-transform: translateY(-10px);
   transform: translateY(0px) !important;
 }
-.panel .btn-edit {
-  color: #fff !important;
-}
-.panel .btn-edit:hover {
-  background-color: #1c68ed;
-}
 .no-result {
   padding: 0px;
   font-size: 20px;

@@ -837,7 +837,7 @@ WebApp.prototype.customerGrantControl = function () {
     // 客户新增
     this.grantControl($(".customer_add"), "customer_add");
     // 客户编辑
-    this.grantControl($(".btn-edit"), "customer_update");
+    this.grantControl($(".customer_update"), "customer_update");
     // 客户废弃
     this.grantControl($(".repeal"), "customer_abandon");
     // 客户删除
@@ -859,14 +859,16 @@ WebApp.prototype.customerGrantControl = function () {
 WebApp.prototype.contractGrantControl=function () {
     // 账单（列表）查看
     this.grantControl($(".bill-list"), "bill_select");
+    // 账单新增
+    this.grantControl($(".bill-add"), "bill_add");
     // 合同编辑
-    this.grantControl($(".btn-edit"), "contract_update");
+    this.grantControl($(".contract-edit"), "contract_update");
     // 退租
-    this.grantControl($(".btn-end"), "contract_end");
+    this.grantControl($(".contract-end"), "contract_end");
     // 作废
-    this.grantControl($(".btn-abandon"), "contract_abandon");
+    this.grantControl($(".contract-abandon"), "contract_abandon");
     //续约
-    this.grantControl($(".btn-renewal"), "contract_add");
+    this.grantControl($(".contract-renewal"), "contract_add");
     return this;
 }
 

@@ -45,6 +45,10 @@
   -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
 }
+.contract > .pull-left .query-container {
+  overflow: auto;
+  height: 100%;
+}
 .contract > .pull-left .query-body {
   padding: 0 20px;
 }
@@ -91,9 +95,6 @@
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
-}
-.contract > .pull-left .query-footer .customer_add:hover {
-  background-color: #1c68ed;
 }
 .contract > .pull-right {
   width: 100%;
@@ -157,6 +158,7 @@
 }
 .contract > .pull-right .right-container .table-body {
   margin: 0px;
+  padding-bottom: 90px;
   font-size: 14px;
   line-height: 34px;
   text-align: center;
@@ -319,6 +321,7 @@
   padding-right: 0px;
 }
 .panel.panel-sm .panel-end .column-end:first-child .drop-container .drop-header {
+  border-right: 0px !important;
   -webkit-border-radius: 4px 0px 0px 4px !important;
   -moz-border-radius: 4px 0px 0px 4px !important;
   border-radius: 4px 0px 0px 4px !important;
@@ -327,7 +330,6 @@
   padding-left: 0px;
 }
 .panel.panel-sm .panel-end .column-end:last-child input {
-  border-left: 0px !important;
   -webkit-border-radius: 0px 4px 4px 0px;
   -moz-border-radius: 0px 4px 4px 0px;
   border-radius: 0px 4px 4px 0px;
@@ -490,29 +492,8 @@
   border-color: #417de6 !important;
   color: #417de6 !important;
 }
-.panel .btn-edit {
-  color: #ffffff !important;
-}
-.panel .btn-edit:hover {
-  background-color: #1c68ed;
-}
-.panel .btn-abandon {
-  background-color: #ffffff;
-  border: 1px solid #8795ad;
-  color: #000000;
-}
-.panel .btn-end {
-  background-color: #56cc8d;
-  border-color: #56cc8d;
-  color: #ffffff !important;
-}
-.panel .btn-renewal {
-  background-color: #f6ba2a;
-  border-color: #f6ba2a;
-  color: #ffffff !important;
-}
 .panel .bill-add {
-  padding: 0 15px 15px;
+  margin-bottom: 15px;
   float: right;
 }
 .panel .bill-table {

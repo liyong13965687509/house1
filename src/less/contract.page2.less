@@ -46,6 +46,10 @@
       -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
       box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
     }
+    .query-container{
+      overflow: auto;
+      height:100%;
+    }
     .query-body {
       padding: 0 20px;
       .from-group {
@@ -92,11 +96,6 @@
         -webkit-border-radius: 4px;
         -moz-border-radius: 4px;
         border-radius: 4px;
-      }
-      .customer_add {
-        &:hover {
-          background-color: @hover;
-        }
       }
     }
   }
@@ -161,6 +160,7 @@
       }
       .table-body {
         margin: 0px;
+        padding-bottom: 90px;
         font-size: 14px;
         line-height: 34px;
         text-align: center;
@@ -342,6 +342,7 @@
           padding-right: 0px;
           .drop-container {
             .drop-header {
+              border-right:0px !important;
               -webkit-border-radius: 4px 0px 0px 4px !important;
               -moz-border-radius: 4px 0px 0px 4px !important;
               border-radius: 4px 0px 0px 4px !important;
@@ -352,7 +353,6 @@
         &:last-child {
           padding-left: 0px;
           input {
-            border-left: 0px !important;
             -webkit-border-radius: 0px 4px 4px 0px;
             -moz-border-radius: 0px 4px 4px 0px;
             border-radius: 0px 4px 4px 0px;
@@ -537,29 +537,8 @@
     border-color: #417de6 !important;
     color: #417de6 !important;
   }
-  .btn-edit {
-    color: @white !important;
-    &:hover {
-      background-color: @hover;
-    }
-  }
-  .btn-abandon {
-    background-color: @white;
-    border: 1px solid #8795ad;
-    color: @black;
-  }
-  .btn-end {
-    background-color: @green;
-    border-color: @green;
-    color: @white !important;
-  }
-  .btn-renewal {
-    background-color: @yellow;
-    border-color: @yellow;
-    color: @white !important;
-  }
   .bill-add {
-    padding: 0 15px 15px;
+    margin-bottom: 15px;
     float: right;
   }
   .bill-table {

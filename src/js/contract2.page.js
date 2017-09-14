@@ -1,8 +1,4 @@
-﻿//移除本地缓存
-localStorage.removeItem("isAlert");
-var pageSize = 10;
-
-/**
+﻿/**
  * 构造函数
  * Author:LiYong
  * Date:2017-09-5
@@ -13,9 +9,9 @@ function ContractPage() {
     this.PAGE_SIZE = arguments['PAGE_SIZE'] ? arguments['PAGE_SIZE'] : 10;
     this.PAGE_INDEX = arguments['PAGE_INDEX'] ? arguments['PAGE_INDEX'] : 1;
     this.DETAIL_BTN = arguments['DETAIL_BTN'] ? arguments['DETAIL_BTN'] : '.btn-detail';
-    this.CONTRACT_EDIT = arguments['CONTRACT_EDIT'] ? arguments['CONTRACT_EDIT'] : '.btn-edit';
+    this.CONTRACT_EDIT = arguments['CONTRACT_EDIT'] ? arguments['CONTRACT_EDIT'] : '.contract-edit';
     this.BILL_ADD = arguments['BILL_ADD'] ? arguments['BILL_ADD'] : '.bill-add';
-    this.CONTRACT_END = arguments['CONTRACT_END'] ? arguments['CONTRACT_END'] : '.btn-end';
+    this.CONTRACT_END = arguments['CONTRACT_END'] ? arguments['CONTRACT_END'] : '.contract-end';
     this.BILL_DEL = arguments['BILL_DEL'] ? arguments['BILL_DEL'] : '.bill-del';
     this.BILL_COLLECT = arguments['BILL_COLLECT'] ? arguments['BILL_COLLECT'] : '.bill-collect';
     this.CONTRACT_CHARTID = arguments['CONTRACT_CHARTID'] ? arguments['CONTRACT_CHARTID'] : 'CONTRACT_CHARTID';
@@ -50,6 +46,8 @@ function ContractPage() {
  * @returns {ContractPage}
  */
 ContractPage.prototype.init = function () {
+    //移除本地缓存
+    localStorage.removeItem("isAlert");
     App.init();
     ComponentsPickers.init();
     this.conditionBind();
@@ -244,25 +242,13 @@ ContractPage.prototype.ajaxRequestCondition = function (params) {
         dataType: "JSON",
         success: function (data) {
             if (data['succ']) {
-                var TEMP_HTML;
-                var JSON_DATA = data['data'];
-                var TEMP_DATA = Object.keys(JSON_DATA);
-                for (var i = 0; i < TEMP_DATA.length; i++) {
-                    var OBJECT_DATA = JSON_DATA[TEMP_DATA[i]];
-                    TEMP_HTML = "";
-                    for (var j = 0; j < OBJECT_DATA.length; j++) {
-                        if (i == TEMP_DATA.length - 1) {
-                            TEMP_HTML += "<li data-value='" + OBJECT_DATA[j]['CharId'] + "' class='drop-option'>" + OBJECT_DATA[j]['Name'] + "</li>";
-                        } else {
-                            TEMP_HTML += "<li data-value='" + OBJECT_DATA[j]['Key'] + "' class='drop-option'>" + OBJECT_DATA[j]['Value'] + "</li>";
-                        }
+                var JSON_DATA = data['data'],TEMP_HTML;
+                for(var KEY in JSON_DATA){
+                    TEMP_HTML='';
+                    for (var i = 0; i < JSON_DATA[KEY].length; i++) {
+                        TEMP_HTML += "<li data-value='" +JSON_DATA[KEY][i]['Key'] + "' class='drop-option'>" + JSON_DATA[KEY][i]['Value'] + "</li>";
                     }
-                    $("#" + TEMP_DATA[i] + " li:first").nextAll().remove();
-                    // if (TEMP_DATA[i] == "contractState") {
-                    //     $("#" + TEMP_DATA[i]).after(TEMP_HTML);
-                    // } else {
-                    $("#" + TEMP_DATA[i] + " li:first").after(TEMP_HTML);
-                    // }
+                    $("#" + KEY).html(TEMP_HTML);
                 }
             }
             else {
@@ -346,7 +332,6 @@ ContractPage.prototype.ajaxRequestContractList = function (params) {
         data: params,
         dataType: "JSON",
         success: function (data) {
-            console.log(data);
             if (data['succ']) {
                 var TEMP_HTML = webApp['NO_RESULT'];
                 var JSON_DATA = data['data'];
@@ -364,7 +349,7 @@ ContractPage.prototype.ajaxRequestContractList = function (params) {
                 $(".table-body").html(TEMP_HTML);
             }
             else {
-                messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
         },
         error: function (XMLHttpRequest, txtStatus, errorThrown) {
@@ -392,7 +377,7 @@ ContractPage.prototype.ajaxRequestContractLists = function (params) {
                 $(".table-body").html(_this.getTemplate(JSON_DATA));
             }
             else {
-                messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
         },
         error: function (XMLHttpRequest, txtStatus, errorThrown) {
@@ -453,14 +438,18 @@ ContractPage.prototype.ajaxRequestContractDetailBind = function (params) {
         success: function (data) {
             if (data['succ']) {
                 var JSON_DATA = data['data'];
-                console.log(JSON_DATA);
                 for (var JSON_KEY in JSON_DATA) {
                     $("#" + JSON_KEY + "_Detail").text(JSON_DATA[JSON_KEY] ? JSON_DATA[JSON_KEY] : "");
                 }
-                if (JSON_DATA['State'] == '完成') {
-                    $('.btn-end').hide();
+                if (JSON_DATA['EndDate']) {
+                    $('.contract-end').hide();
                 } else {
-                    $('.btn-end').show();
+                    $('.contract-end').show();
+                }
+                if(JSON_DATA['State']=='作废'){
+                    $('.contract-abandon').hide();
+                }else{
+                    $('.contract-abandon').show();
                 }
             }
             else {
@@ -510,7 +499,6 @@ ContractPage.prototype.tabChange = function () {
  */
 ContractPage.prototype.getBillTemplate = function (params) {
     var TEMP_HTML = '';
-    console.log(params);
     for (var i = 0; i < params.length; i++) {
         var JSON_DATA = params[i];
         var className = i >= 1 ? " visible-xs visible-sm" : "";
@@ -527,7 +515,8 @@ ContractPage.prototype.getBillTemplate = function (params) {
             + '<div class="column col-xs-12 col-md-2"><span>' + JSON_DATA['PayDate3'] + '</span></div>'
             + '<div class="column col-xs-12 col-md-2"><span>'
             + '<a data-value="' + JSON_DATA['CharId'] + '" href="javascript:void(0)" class="bill-collect">收款</a>'
-            + '&nbsp;&nbsp;<a data-value="' + JSON_DATA['CharId'] + '" href="javascript:void(0)" class="bill-del">删除</a></span></div></div></div></div></div></div></div>'
+        TEMP_HTML += webApp.grantControl($(".billDel"), "bill_delete") == false ? '</td></tr>' :
+            '&nbsp;&nbsp;<a data-value="' + JSON_DATA['CharId'] + '" href="javascript:void(0)" class="bill-del">删除</a></span></div></div></div></div></div></div></div>'
     }
     return TEMP_HTML;
 }
@@ -711,7 +700,6 @@ ContractPage.prototype.ajaxRequestContractEditBind = function (params) {
         data: params,
         dataType: "JSON",
         success: function (data) {
-            console.log(data);
             if (data['succ']) {
                 var JSON_DATA = data['data'];
                 var TEMP_DATA = data['exted'];
@@ -719,7 +707,6 @@ ContractPage.prototype.ajaxRequestContractEditBind = function (params) {
                     $("#" + JSON_KEY + "_edit").text(JSON_DATA[JSON_KEY] ? JSON_DATA[JSON_KEY] : "");
                     $("#" + JSON_KEY + "_edit").val(JSON_DATA[JSON_KEY] ? JSON_DATA[JSON_KEY] : "");
                 }
-
 
                 for (var KEY in TEMP_DATA) {
                     if (KEY == "Dpts") {//绑定部门
@@ -770,9 +757,7 @@ ContractPage.prototype.ajaxRequestContractEditBind = function (params) {
 ContractPage.prototype.treeItem = function () {
     var _this = this;
     tm.customerClickTreeItem(function () {
-        console.log(2222);
         _this.employeeBindEdit();
-        console.log(1);
         $("#Emps_Edit").parents(".drop-body").prev().find(".drop-result").text($("#Emps_Edit li").eq(0).html());
     });
 
@@ -804,7 +789,6 @@ ContractPage.prototype.ajaxRequestEmployeeBindEdit = function (params) {
         data: params,
         dataType: "JSON",
         success: function (data) {
-            console.log(data);
             if (data['succ']) {
                 var JSON_DATA = data['data'];
                 var TEMP_HTML = "";
@@ -883,11 +867,8 @@ ContractPage.prototype.ajaxRequestContractSave = function (params) {
         success: function (data) {
             if (data['succ']) {
                 _this.contractDetailBind();
-                // _this.ajaxRequestContractDetail(_this.getParams(_this.CTT));
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
-                // baocun();
-                mp.hideSmPanel()
-                // _this.contractList();
+                mp.hideSmPanel();
                 _this.contractList();
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -980,7 +961,6 @@ ContractPage.prototype.ajaxRequestEndBind = function (params) {
         data: params,
         dataType: "JSON",
         success: function (data) {
-            console.log(data);
             var JSON_DATA = data['data'],
                 TEMP_DATA = data['exted'],
                 TEMP_HTML = '',
@@ -1024,66 +1004,6 @@ ContractPage.prototype.ajaxRequestEndBind = function (params) {
                 $('.fees-money').html(TEMP_HTML);
                 $('.fees-money .column-end .drop-header .drop-result').html($('.fees-money .column-end ul .active').html());
 
-
-                // $('#CostItem ul li:eq(0)').addClass('sel');
-                // $('#CostItem ul li:eq(1)').addClass('sel');
-
-
-                // var JSON_DATA = data['data'];
-                // var TEMP_DATA = data['exted'];
-                // $("#CustomerName_End").text(JSON_DATA['CustomerName']);
-                // $("#Phone_End").text(JSON_DATA['Phone']);
-                // $("#BuildingName_End").text(JSON_DATA['BuildingName'] + JSON_DATA['FloorName'] + "层" + JSON_DATA['RoomName'] + "室");
-                // $("#Price_End").text(JSON_DATA['Price'] + "元/月");
-                // $("#Deposit_End").text(JSON_DATA['Deposit'] + "元/月");
-                // $("#RentsDate_End").text(JSON_DATA['InDate'] + "~" + JSON_DATA['OutDate']);
-                // var TEMP_HTML = "";
-                // for (var i = 0; i < TEMP_DATA['CostItem'].length; i++) {
-                //     var style = i < 2 ? "sel" : "";
-                //     TEMP_HTML += "<li class=\"" + style + "\" value=\"" + TEMP_DATA['CostItem'][i]['Key'] + "\">" + TEMP_DATA['CostItem'][i]['Value'] + "</li>";
-                // }
-                // TEMP_HTML += "<div class=\"clear\"></div>";
-                // $("#CostItem").html(TEMP_HTML);//绑定收费项标签列表
-                //
-                // TEMP_HTML = "";
-                // for (var i = 0; i < TEMP_DATA['CostItem'].length; i++) {
-                //     TEMP_HTML += "<li>";
-                //     TEMP_HTML += "	<p data-value=\"" + TEMP_DATA['CostItem'][i]['Key'] + "\">" + TEMP_DATA['CostItem'][i]['Value'] + "</p>";
-                //     TEMP_HTML += "	<div class=\"modal-dv-row\">";
-                //     TEMP_HTML += "		<div type=\"click\" class=\"fq-xiala\">";
-                //     TEMP_HTML += "			<span class=\"fq-xiala-sel\">" + TEMP_DATA['BillAddType'][0]['Value'] + "</span><i class=\"icon iconfont icon-xiala\"></i>";
-                //     TEMP_HTML += "			<ul>";
-                //
-                //     for (var j = 0; j < TEMP_DATA['BillAddType'].length; j++) {
-                //         var style = j == 0 ? "cur" : "";
-                //         TEMP_HTML += "	<li class=\"" + style + "\" data-value=\"" + TEMP_DATA['BillAddType'][j]['Key'] + "\">" + TEMP_DATA['BillAddType'][j]['Value'] + "</li>";
-                //     }
-                //     TEMP_HTML += "			</ul>";
-                //     TEMP_HTML += "		</div><div class=\"ip-wrap\"><input type=\"text\" value=\"0\"><span>元</span></div>";
-                //     TEMP_HTML += "	</div>";
-                //     TEMP_HTML += "</li>";
-                // }
-                // TEMP_HTML += "<div class=\"clear\"></div>";
-                // $("#CostItemText").html(TEMP_HTML);//绑定收费项-输入金额 列表
-
-                //html = "";
-                //for (var j = 0; j < jdata.exted.BillAddType.length; j++) {
-                //    var style = j == 0 ? "cur" : "";
-                //    html += "				<li class=\"" + style + "\" value=\"" + jdata.exted.BillAddType[j].Key + "\">" + jdata.exted.BillAddType[j].Value + "</li>";
-                //}
-                //$(".billaddtype span").text(jdata.exted.BillAddType[0].Value);
-                ////绑定租金、押金下拉
-                //$(".billaddtype ul").html(html);
-
-                // TEMP_HTML = "";
-                // for (var j = 0; j < TEMP_DATA['EndContractType'].length; j++) {
-                //     var style = j == 0 ? "cur" : "";
-                //     TEMP_HTML += "				<li class=\"" + style + "\" data-value=\"" + TEMP_DATA['EndContractType'][j]['Key'] + "\">" + TEMP_DATA['EndContractType'][j]['Value'] + "</li>";
-                // }
-                // $("#EndContractType span").text(TEMP_DATA['EndContractType'][0]['Value']);
-                // //绑定租金、押金下拉
-                // $("#EndContractType ul").html(TEMP_HTML);
-                // DropdownInit();
             }
             else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -1148,9 +1068,7 @@ ContractPage.prototype.endSave = function () {
         result = true;
     }
     if (result) {
-        console.log(result)
         var params = _this.getParams(_this.API_CONFIG['END_SAVE']);
-        console.log(params);
         _this.ajaxRequestEndSave(params);
     } else {
         messageBox.show('提示', contractMessage, MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -1174,9 +1092,7 @@ ContractPage.prototype.ajaxRequestEndSave = function (params) {
         success: function (data) {
             if (data['succ']) {
                 _this.contractDetailBind();
-                // cp.ajaxRequestContractDetail(cp.getParams(cp.CTT));
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
-                // baocun();
                 mp.hideSmPanel();
                 _this.contractList();
             }
@@ -1228,7 +1144,6 @@ ContractPage.prototype.ajaxRequestBillAdd = function (params) {
         success: function (data) {
             if (data['succ']) {
                 var JSON_DATA = data['data'];
-                console.log(JSON_DATA);
                 //绑定账单费用类别列表
                 var TEMP_HTML = "", TEMP_CLASS = '';
                 for (var KEY in JSON_DATA) {
@@ -1240,31 +1155,7 @@ ContractPage.prototype.ajaxRequestBillAdd = function (params) {
                     $("#" + KEY + "-bill ul").html(TEMP_HTML);
                     $('#' + KEY + '-bill  .drop-header .drop-result').text($('#' + KEY + '-bill ul .active').text());
                 }
-                //     for(var i=0;i<JSON_DATA[KEY].length;i++){
-                //         TEMP_HTML ='<li class=drop'
-                //     }
-                // }
-                // for (var i = 0; i < JSON_DATA['CostItems'].length; i++) {
-                //     var style = "";
-                //     if (i == 0) {
-                //         style = "cur";
-                //     }
-                //     TEMP_HTML += "<li data-value='" + JSON_DATA['CostItems'][i]['Key'] + "' class='" + style + "'>" + JSON_DATA['CostItems'][i]['Value'] + "</li>";
-                // }
-                // $("#CostItems ul").html(TEMP_HTML);
-                // $("#CostItems span").text($("#CostItems li[class='cur']").text());
-                // //绑定账单类别列表
-                // TEMP_HTML = "";
-                // for (var i = 0; i < JSON_DATA['BillTypes'].length; i++) {
-                //     var style = "";
-                //     if (i == 0) {
-                //         style = "cur";
-                //     }
-                //     TEMP_HTML += "<li data-value='" + JSON_DATA['BillTypes'][i]['Key'] + "' class='" + style + "'>" + JSON_DATA['BillTypes'][i]['Value'] + "</li>";
-                // }
-                // $("#BillTypes ul").html(TEMP_HTML);
-                // $("#BillTypes span").text($("#BillTypes li[class='cur']").text());
-                // DropdownInit();
+
             }
             else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -1389,6 +1280,9 @@ ContractPage.prototype.collectBind = function () {
     var _this = this;
     $('#items-cost').on('keyup', '.form-group input', function () {
         _this.add();
+        if($(this).val()/1-$(this).parents('.col-xs-6').prev('.col-xs-6').find('span:eq(1)').html()>0){
+            messageBox.show("提示", "实收金额应小于应收金额！", MessageBoxButtons.OK, MessageBoxIcons.infomation);
+        }
     });
 
     $(document).on("click", _this.BILL_COLLECT, function () {
@@ -1520,7 +1414,7 @@ ContractPage.prototype.ajaxRequestBillReceive=function (params) {
                 mp.hideSmPanel();
             }
             else {
-                messageBox.show("错误", data.msg, MessageBoxButtons.OK, MessageBoxIcons.error);
+                messageBox.show("错误", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.error);
             }
         },
         error: function (XMLHttpRequest, txtStatus, errorThrown) {
