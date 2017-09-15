@@ -1,6 +1,7 @@
 {
   "app.js": "app.js?v=4e03e56a5f",
-  "bill.page.js": "bill.page.js?v=40f47b9008",
+  "backstage.page.js": "backstage.page.js?v=d41d8cd98f",
+  "bill.page.js": "bill.page.js?v=9a1a342acb",
   "bootstrap-datepicker.js": "bootstrap-datepicker.js?v=eec6ad7105",
   "calendar.js": "calendar.js?v=f8a8fe4c3f",
   "calendar/app.js": "calendar/app.js?v=b063e17ccf",
@@ -9,7 +10,8 @@
   "calendar/jquery.min.js": "calendar/jquery.min.js?v=4a356126b9",
   "calendar/underscore-min.js": "calendar/underscore-min.js?v=543feb1eca",
   "components-pickers.js": "components-pickers.js?v=00b12ed6a0",
-  "contract.page.js": "contract.page.js?v=8b6b1e0056",
+  "contract.page.js": "contract.page.js?v=9552aa5c07",
+  "contract.page3.js": "contract.page3.js?v=8b6b1e0056",
   "contract2.page.js": "contract2.page.js?v=9552aa5c07",
   "count.page.js": "count.page.js?v=4439d95c3b",
   "customer.page.js": "customer.page.js?v=9e56085a7e",

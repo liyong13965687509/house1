@@ -215,6 +215,10 @@ BillPage.prototype.ajaxRequestBillList = function (params) {
         url: host + _this.API_CONFIG['BILL_LIST'],
         data: params,
         dataType: "JSON",
+        beforeSend:function(){
+            console.log(1);
+            $(".main>.row>.pull-right").append('<div id="vvv"><img  src="images/loading3.gif" style="width: 300px;height:300px;position: absolute;z-index: 999;left: 50%;top: 50%;margin-top: -150px;margin-left: -45px;"/></div>');
+        },
         success: function (data) {
             if (data['succ']) {
                 var TEMP_HTML = webApp['NO_RESULT'];
@@ -239,6 +243,11 @@ BillPage.prototype.ajaxRequestBillList = function (params) {
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
+            $('body').append()
+        },
+        complete: function() {
+            console.log(2);
+            // $("#vvv").remove();
         },
         error: function (XMLHttpRequest, txtStatus, errorThrown) {
             messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
