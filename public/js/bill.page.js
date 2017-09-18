@@ -247,7 +247,7 @@ BillPage.prototype.ajaxRequestBillList = function (params) {
         },
         complete: function() {
             console.log(2);
-            // $("#vvv").remove();
+            $("#vvv").remove();
         },
         error: function (XMLHttpRequest, txtStatus, errorThrown) {
             messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);

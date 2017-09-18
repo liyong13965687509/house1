@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,14 +7,14 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>合同</title>
-    <link rel="stylesheet" type="text/css" href="css/font.css?v=1128d866e1"/>
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css?v=bed7cb23bb"/>
-    <link href="css/plugins.css?v=2ece335f10" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css?v=1e9bc98d71"/>
-    <link rel="stylesheet" type="text/css" href="css/datepicker.css?v=1cbd87910b"/>
-    <link rel="stylesheet" type="text/css" href="css/common.css?v=60a536fcb6"/>
-    <link rel="stylesheet" type="text/css" href="css/fq_nav2_css.css?v=12eff15bf4"/>
-    <link rel="stylesheet" type="text/css" href="css/contract.page.css?v=2e63e0aecb"/>
+    <link rel="stylesheet" type="text/css" href="css/font.css"/>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
+    <link href="css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="css/datepicker.css"/>
+    <link rel="stylesheet" type="text/css" href="css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="css/fq_nav2_css.css"/>
+    <link rel="stylesheet" type="text/css" href="css/message1.page.css"/>
 
 </head>
 <body>
@@ -45,12 +45,12 @@
             <li class="right-account">
                 <p class="right-phone"></p>
                 <ul class="right-oprea">
-                    <li><a href="ownercenter.html?v=668b0f6c2b">个人中心</a></li>
+                    <li><a href="ownercenter.html">个人中心</a></li>
                     <li><a href="javascript:void(0);">安全退出</a></li>
                 </ul>
             </li>
             <li class="right-message">
-                <a href="message.html?v=b09143db19">
+                <a href="message.html">
                     <img src="images/yg_icon_07.png?v=9957859eb8"/>
                     <span class="message-nums">8</span>
                 </a>
@@ -66,55 +66,6 @@
                     <div class="query-header"></div>
                     <div class="query-body">
                         <div class="from-group">
-                            <input class="from-input" type="text" name="" id="Key"
-                                   placeholder="姓名、手机、合同编号">
-                        </div>
-                        <div class="from-group">
-                            <div class="drop-container hide" tabIndex="1">
-                                <div class="drop-content">
-                                    <div class="drop-header">
-                                        <span class="drop-result">物业不限</span>
-                                        <i class="drop-icon icon-drop-down"></i>
-                                    </div>
-                                    <div class="drop-body">
-                                        <ul id="building">
-                                        </ul>
-                                    </div>
-                                    <div class="drop-footer"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="from-group">
-                            <div class="drop-container hide" tabIndex="1">
-                                <div class="drop-content">
-                                    <div class="drop-header">
-                                        <span class="drop-result">状态不限</span>
-                                        <i class="drop-icon icon-drop-down"></i>
-                                    </div>
-                                    <div class="drop-body">
-                                        <ul id="contractState">
-                                        </ul>
-                                    </div>
-                                    <div class="drop-footer"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="from-group">
-                            <div class="drop-container hide" tabIndex="1">
-                                <div class="drop-content">
-                                    <div class="drop-header">
-                                        <span class="drop-result">日期不限</span>
-                                        <i class="drop-icon icon-drop-down"></i>
-                                    </div>
-                                    <div class="drop-body">
-                                        <ul id="dateType">
-                                        </ul>
-                                    </div>
-                                    <div class="drop-footer"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="from-group">
                             <div class="date-wraper"><input class="group-date1" readonly type="text" id="StartDate"
                                                             placeholder="开始时间"><i
                                     class="icon iconfont icon-gongzuotai"></i>
@@ -127,7 +78,25 @@
                             </div>
                         </div>
                         <div class="from-group">
-                            <button class="btn fq-btn query" onclick="ctp.contractList()">查询</button>
+                            <label class="form-label">消息类型</label>
+                            <div class="drop-container hide" tabIndex="1">
+                                <div class="drop-content">
+                                    <div class="drop-header">
+                                        <span class="drop-result">消息类型</span>
+                                        <i class="drop-icon icon-drop-down"></i>
+                                    </div>
+                                    <div class="drop-body">
+                                        <ul id="building">
+                                            <li class="drop-option">消息种类</li>
+                                            <li class="drop-option">计划入住日期</li>
+                                        </ul>
+                                    </div>
+                                    <div class="drop-footer"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="from-group">
+                            <button class="btn confirm full">查询</button>
                         </div>
                     </div>
                     <div class="footer"></div>
@@ -137,11 +106,15 @@
         <div class="pull-right">
             <div class="right-container">
                 <div class="right-content">
-                    <div class="right-body">
-                        <div class="right-table">
-                            <div class="table-header"></div>
-                            <div class="table-body row"></div>
+                    <div class="right-header">
+                        <div class="header-left">
+                            全部通知
                         </div>
+                        <div class="header-right">
+                            <button class="btn confirm">全部标记已读</button>
+                        </div>
+                    </div>
+                    <div class="right-body">
                     </div>
                     <div class="right-footer">
                         <div class="pagination row btn-hide" id="Main"></div>
@@ -896,12 +869,12 @@
 
 <script type="text/javascript" src="libs/jquery-1.11.3.js"></script>
 <script type="text/javascript" src="libs/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/bootstrap-datepicker.js?v=eec6ad7105"></script>
-<script type="text/javascript" src="js/app.js?v=4e03e56a5f"></script>
-<script type="text/javascript" src="js/components-pickers.js?v=00b12ed6a0"></script>
-<script type="text/javascript" src="js/host.js?v=2112a01532"></script>
-<script type="text/javascript" src="js/tools.js?v=1d7fe25107"></script>
-<script type="text/javascript" src="js/contract.page.js?v=9552aa5c07"></script>
+<script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/components-pickers.js"></script>
+<script type="text/javascript" src="js/host.js"></script>
+<script type="text/javascript" src="js/tools.js"></script>
+<script type="text/javascript" src="js/contract.page.js"></script>
 </body>
 </html>
 

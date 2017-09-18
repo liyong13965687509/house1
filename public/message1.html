@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="css/datepicker.css?v=1cbd87910b"/>
     <link rel="stylesheet" type="text/css" href="css/common.css?v=60a536fcb6"/>
     <link rel="stylesheet" type="text/css" href="css/fq_nav2_css.css?v=12eff15bf4"/>
-    <link rel="stylesheet" type="text/css" href="css/contract.page.css?v=2e63e0aecb"/>
+    <link rel="stylesheet" type="text/css" href="css/message1.page.css?v=2e63e0aecb"/>
 
 </head>
 <body>
@@ -66,55 +66,6 @@
                     <div class="query-header"></div>
                     <div class="query-body">
                         <div class="from-group">
-                            <input class="from-input" type="text" name="" id="Key"
-                                   placeholder="姓名、手机、合同编号">
-                        </div>
-                        <div class="from-group">
-                            <div class="drop-container hide" tabIndex="1">
-                                <div class="drop-content">
-                                    <div class="drop-header">
-                                        <span class="drop-result">物业不限</span>
-                                        <i class="drop-icon icon-drop-down"></i>
-                                    </div>
-                                    <div class="drop-body">
-                                        <ul id="building">
-                                        </ul>
-                                    </div>
-                                    <div class="drop-footer"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="from-group">
-                            <div class="drop-container hide" tabIndex="1">
-                                <div class="drop-content">
-                                    <div class="drop-header">
-                                        <span class="drop-result">状态不限</span>
-                                        <i class="drop-icon icon-drop-down"></i>
-                                    </div>
-                                    <div class="drop-body">
-                                        <ul id="contractState">
-                                        </ul>
-                                    </div>
-                                    <div class="drop-footer"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="from-group">
-                            <div class="drop-container hide" tabIndex="1">
-                                <div class="drop-content">
-                                    <div class="drop-header">
-                                        <span class="drop-result">日期不限</span>
-                                        <i class="drop-icon icon-drop-down"></i>
-                                    </div>
-                                    <div class="drop-body">
-                                        <ul id="dateType">
-                                        </ul>
-                                    </div>
-                                    <div class="drop-footer"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="from-group">
                             <div class="date-wraper"><input class="group-date1" readonly type="text" id="StartDate"
                                                             placeholder="开始时间"><i
                                     class="icon iconfont icon-gongzuotai"></i>
@@ -127,7 +78,25 @@
                             </div>
                         </div>
                         <div class="from-group">
-                            <button class="btn fq-btn query" onclick="ctp.contractList()">查询</button>
+                            <label class="form-label">消息类型</label>
+                            <div class="drop-container hide" tabIndex="1">
+                                <div class="drop-content">
+                                    <div class="drop-header">
+                                        <span class="drop-result">消息类型</span>
+                                        <i class="drop-icon icon-drop-down"></i>
+                                    </div>
+                                    <div class="drop-body">
+                                        <ul id="building">
+                                            <li class="drop-option">消息种类</li>
+                                            <li class="drop-option">计划入住日期</li>
+                                        </ul>
+                                    </div>
+                                    <div class="drop-footer"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="from-group">
+                            <button class="btn confirm full">查询</button>
                         </div>
                     </div>
                     <div class="footer"></div>
@@ -137,11 +106,15 @@
         <div class="pull-right">
             <div class="right-container">
                 <div class="right-content">
-                    <div class="right-body">
-                        <div class="right-table">
-                            <div class="table-header"></div>
-                            <div class="table-body row"></div>
+                    <div class="right-header">
+                        <div class="header-left">
+                            全部通知
                         </div>
+                        <div class="header-right">
+                            <button class="btn confirm">全部标记已读</button>
+                        </div>
+                    </div>
+                    <div class="right-body">
                     </div>
                     <div class="right-footer">
                         <div class="pagination row btn-hide" id="Main"></div>

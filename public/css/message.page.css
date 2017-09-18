@@ -1,0 +1,43 @@
+.main {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  padding-top: 49px;
+}
+.message {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow: auto;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+.message .pull-left {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 10;
+  width: 214px;
+  height: 100%;
+  padding-bottom: 77px;
+  background-color: #ffffff;
+  -webkit-transform: translateX(-214px);
+  -moz-transform: translateX(-214px);
+  -ms-transform: translateX(-214px);
+  -o-transform: translateX(-214px);
+  transform: translateX(-214px);
+  -webkit-transition: all 300ms ease-out;
+  -moz-transition: all 300ms ease-out;
+  -ms-transition: all 300ms ease-out;
+  -o-transition: all 300ms ease-out;
+  transition: all 300ms ease-out;
+}
+.from-group {
+  padding-top: 20px;
+}
+.from-group ul li {
+  margin-top: 0px;
+}
