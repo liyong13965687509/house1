@@ -216,8 +216,7 @@ BillPage.prototype.ajaxRequestBillList = function (params) {
         data: params,
         dataType: "JSON",
         beforeSend:function(){
-            console.log(1);
-            $(".main>.row>.pull-right").append('<div id="vvv"><img  src="images/loading3.gif" style="width: 300px;height:300px;position: absolute;z-index: 999;left: 50%;top: 50%;margin-top: -150px;margin-left: -45px;"/></div>');
+            $(".main>.row>.pull-right .right-container").append(webApp.TEMP_LOAD);
         },
         success: function (data) {
             if (data['succ']) {
@@ -246,8 +245,7 @@ BillPage.prototype.ajaxRequestBillList = function (params) {
             $('body').append()
         },
         complete: function() {
-            console.log(2);
-            $("#vvv").remove();
+            $(".spinner").remove();
         },
         error: function (XMLHttpRequest, txtStatus, errorThrown) {
             messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);

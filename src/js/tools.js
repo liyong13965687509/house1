@@ -486,6 +486,8 @@ function WebApp() {
     this.DATE_TIME_PICKER = arguments['DATE_TIME_PICKER'] ? arguments['DATE_TIME_PICKER'] : ".dateTimePicker";
     this.NO_RESULT = arguments['NO_RESULT'] ? arguments['NO_RESULT'] :
         "<div class='no-result'><img src='images/no_result.png' /><p>抱歉~，暂无数据</p></div>";
+    this.TEMP_LOAD= arguments['TEMP_LOAD'] ? arguments['TEMP_LOAD'] :
+        '<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>';
 
     this.API_CONFOG = arguments['API_CONFOG'] ? arguments['API_CONFOG'] : {
         LOGIN_OUT: "/identity/logout",

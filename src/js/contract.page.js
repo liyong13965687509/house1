@@ -997,7 +997,7 @@ ContractPage.prototype.ajaxRequestEndBind = function (params) {
                     }
                     TEMP_HTML += '</ul></div><div class="drop-footer"></div></div></div></div>'
                         + '<div class="col-xs-8 column-end">'
-                        + '<input class="form-input" type="text" onkeyup="this.value=this.value.replace(/\\D/g,\'\')" onafterpaste="this.value=this.value.replace(/\\D/g,\'\')"/>'
+                        + '<input class="form-input" type="text" data-keyup="number"/>'
                         + '</div></div></div><div class="group-footer"></div></div>'
                 }
 
@@ -1326,7 +1326,7 @@ ContractPage.prototype.ajaxRequestCollectBind = function (params) {
                         +'<div class="row row-should"><div class="col-xs-6"><span>'+JSON_DATA[i]["Item"]+'</span></div>'
                         +'<div class="col-xs-6"><span>'+JSON_DATA[i]["ItemPrice"]+'</span></div>'
                         +'</div></div><div class="col-xs-6"><span>实收</span>'
-                        + '<input type="text" data-value="'+JSON_DATA[i]["ItemCharId"]+'" onkeyup="this.value=this.value.replace(/\\D/g,\'\')" onafterpaste="this.value=this.value.replace(/\\D/g,\'\')"></div></div></div>';
+                        + '<input type="text" data-value="'+JSON_DATA[i]["ItemCharId"]+'" data-keyup="number"></div></div></div>';
                     for(var KEY in JSON_DATA[i]){
                         $('#'+KEY+'-coll').html(JSON_DATA[i][KEY]);
                     }
@@ -1438,7 +1438,7 @@ ContractPage.prototype.add = function () {
         TEMP_HTML = (TEMP_VALUE.eq(i).find('input').val() ? TEMP_VALUE.eq(i).find('input').val() : 0) / 1;
         TEMP_DT += TEMP_HTML;
     }
-    $('#total_coll').val(TEMP_DT);
+    $('#total_coll').val(TEMP_DT?TEMP_DT:'');
     return this;
 }
 
