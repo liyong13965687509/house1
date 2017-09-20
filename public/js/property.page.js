@@ -276,6 +276,8 @@ PropertyPage.prototype.getParams = function (name) {
             params = {
                 requestKey: localStorage.getItem("requestKey"),
                 buildingRoomCharId: $("#CurRoomCharId").val()
+                // EleUnitPrice:$("#EleUnitPrice_Detail").text(),
+                // WaterUnitPrice:$("#WaterUnitPrice_Detail").text()
             };
             break;
 
@@ -291,7 +293,9 @@ PropertyPage.prototype.getParams = function (name) {
                 div2: parseInt($("#Div2").val()),
                 div3: parseInt($("#Div3").val()),
                 alloc: _this.ROOM_UPDATE_ALLOCS,
-                tag: _this.ROOM_UPDATE_TAGS
+                tag: _this.ROOM_UPDATE_TAGS,
+                eleUnitPrice:$('#EleUnitPrice_Update').val().trim(),
+                waterUnitPrice:$('#WaterUnitPrice_Update').val().trim()
             };
             break;
 
@@ -1636,7 +1640,7 @@ PropertyPage.prototype.ajaxRequestRoomDetail = function (params) {
         data: params,
         dataType: "JSON",
         success: function (data) {
-            var JSON_DATA = data.data;
+            var JSON_DATA = data['data'];
             if (JSON_DATA['State'] != "已租") {
                 $("#btn-let").show();
                 $("#RoomState_Detail").text(JSON_DATA.State + "（" + JSON_DATA.DateDiff + "天）");
@@ -1653,6 +1657,8 @@ PropertyPage.prototype.ajaxRequestRoomDetail = function (params) {
             $("#Layout_Detail").text(JSON_DATA.Div1 + "室" + JSON_DATA.Div2 + "厅" + JSON_DATA.Div3 + "卫" + JSON_DATA.Div4 + "阳台");
             $("#RoomAlloc_Detail").text(JSON_DATA.Alloc);
             $("#RoomTag_Detail").text(JSON_DATA.Tag);
+            $("#WaterUnitPrice_Detail").text(JSON_DATA['WaterUnitPrice']);
+            $("#EleUnitPrice_Detail").text(JSON_DATA['EleUnitPrice']);
             $("#CurRoomCharId").val(_this.RoomDetail_CHARID);
         },
         error: function (XMLHttpRequest, txtStatus, errorThrown) {
@@ -1710,6 +1716,8 @@ PropertyPage.prototype.ajaxRequestRoomUpdateDetail = function (params) {
             $("#RoomName_Update").val(JSON_DATA.RoomName);
             $("#Price_Update").val(JSON_DATA.Price);
             $("#Square_Update").val(JSON_DATA.Square);
+            $("#WaterUnitPrice_Update").val(JSON_DATA['WaterUnitPrice']);
+            $("#EleUnitPrice_Update").val(JSON_DATA['EleUnitPrice']);
             $("#Div1").val(JSON_DATA.Div1);
             $("#Div2").val(JSON_DATA.Div2);
             $("#Div3").val(JSON_DATA.Div3);

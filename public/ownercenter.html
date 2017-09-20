@@ -24,6 +24,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <button class="visible-xs navbar-toggle ft-bar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <button class="visible-xs navbar-toggle sm-nav">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
             </li>
             <li class="left-front">
                 <a href="http://apt.2ma2.cn" target="_blank">官网</a>
@@ -36,7 +47,7 @@
             <li class="right-account">
                 <p class="right-phone"></p>
                 <ul class="right-oprea">
-                    <li><a href="ownercenter.html?v=668b0f6c2b">个人中心</a></li>
+                    <li><a href="ownercenter.html?v=9964d2c0e1">个人中心</a></li>
                     <li><a href="javascript:void(0);">安全退出</a></li>
                 </ul>
             </li>
@@ -55,7 +66,6 @@
             <p><i class="icon icon-account"></i><span>个人中心</span></p>
             <ul>
                 <li class="cur"><span>手机认证</span></li>
-                <!--<li><span>手机更换</span></li>-->
                 <li><span>密码修改</span></li>
             </ul>
         </div>
@@ -70,7 +80,7 @@
                             <tr>
                                 <td>当前号码</td>
                                 <td class="pass-number"><span id="empPhone">18252713292</span>
-                                    <button class="fq-btn fq-btn-yzm fq-btn-yzm1 form-btn code">获取验证码</button>
+                                    <button class="fq-btn fq-btn-yzm fq-btn-yzm1 form-btn code btn confirm">获取验证码</button>
                                 </td>
                             </tr>
                             <tr>
@@ -80,14 +90,12 @@
                             <tr>
                                 <td></td>
                                 <td>
-                                    <button class="fq-btn" onclick="personal.valid()">提交认证</button>
+                                    <button class="fq-btn btn-comfirm" onclick="personal.valid()">提交认证</button>
                                 </td>
                             </tr>
                         </table>
                     </div>
                 </div>
-
-
                 <div class="contain-passwordreset ownercenter-dv">
                     <div class="ownercenter-title"><p>密码修改</p></div>
                     <div class="ownercenter-content">
@@ -107,7 +115,7 @@
                             <tr>
                                 <td></td>
                                 <td>
-                                    <button class="fq-btn" onclick="personal.pwdChange()">更新密码</button>
+                                    <button class="fq-btn btn confirm" onclick="personal.pwdChange()">更新密码</button>
                                 </td>
                             </tr>
                         </table>

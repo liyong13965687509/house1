@@ -19,6 +19,7 @@
   "data/power_data.js": "data/power_data.js?v=7f894a55f9",
   "data/property_data.js": "data/property_data.js?v=7f24b267b0",
   "desktop.page.js": "desktop.page.js?v=80998b7484",
+  "device.page - 副本.js": "device.page - 副本.js?v=801b0c9808",
   "device.page.js": "device.page.js?v=801b0c9808",
   "employee.page.js": "employee.page.js?v=cc8b598015",
   "grant.page.js": "grant.page.js?v=cdfcb199d9",
@@ -29,9 +30,10 @@
   "message.page.js": "message.page.js?v=9282cf76d2",
   "nav.page.js": "nav.page.js?v=05238c9871",
   "ownercenter.page.js": "ownercenter.page.js?v=12a156db9f",
-  "property.page.js": "property.page.js?v=42c8b6b94b",
+  "property.page.js": "property.page.js?v=3379347ee7",
   "report.page.js": "report.page.js?v=9e44ecb405",
   "resetpwd.page.js": "resetpwd.page.js?v=36802c79e1",
+  "self.page.js": "self.page.js?v=ca3400e1e4",
   "system.page.js": "system.page.js?v=e34fa60bdb",
   "tools.js": "tools.js?v=f122d8c39e"
 }

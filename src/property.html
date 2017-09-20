@@ -329,6 +329,14 @@
                                 <td>标签</td>
                                 <td id="RoomTag_Detail"></td>
                             </tr>
+                            <tr>
+                                <td>水费单价</td>
+                                <td id="WaterUnitPrice_Detail"></td>
+                            </tr>
+                            <tr>
+                                <td>电费单价</td>
+                                <td id="EleUnitPrice_Detail"></td>
+                            </tr>
                         </table>
                     </div>
                     <div class="property-room-bottom">
@@ -337,13 +345,13 @@
                             <li>
                                 <button onclick="propertyPage.roomDelete()" class="btn delete btn-roomdel">删除</button>
                             </li>
-                            <li>
+                            <li style="margin-right: -4px;">
                                 <button class="btn confirm" id="btn-order">预定</button>
                             </li>
-                            <li class="btn-contractadd" id="btn-let" type="contract-add"
-                                dir="top">
-                                <button onclick="propertyPage.ajaxRequestContractAddBind(propertyPage.getParams(propertyPage.CONTRACT_ADD_BIND))">
-                                    签约
+                            <li type="room-edit" dir="top" class="btn-roomedit" >
+                                <button class="btn edit but-roomEdit"
+                                        onclick="propertyPage.ajaxRequestRoomUpdateDetail(propertyPage.getParams(propertyPage.ROOM_UPDATE_DETAIL))">
+                                    编辑
                                 </button>
                             </li>
                         </ul>
@@ -352,10 +360,10 @@
                             <li>
                                 <button class="btn cancel btn-cancel">取消</button>
                             </li>
-                            <li type="room-edit" dir="top" class="btn-roomedit">
-                                <button class="btn edit but-roomEdit"
-                                        onclick="propertyPage.ajaxRequestRoomUpdateDetail(propertyPage.getParams(propertyPage.ROOM_UPDATE_DETAIL))">
-                                    编辑
+                            <li class="btn-contractadd" id="btn-let" type="contract-add"
+                                dir="top">
+                                <button  class="btn confirm"  onclick="propertyPage.ajaxRequestContractAddBind(propertyPage.getParams(propertyPage.CONTRACT_ADD_BIND))">
+                                    签约
                                 </button>
                             </li>
 
@@ -758,6 +766,18 @@
 
                         <div class="top-modal-ip-wraper"><input type="text" name="" id="Square_Update"
                                                                 value=""><span>m²</span></div>
+                    </div>
+                    <div class="modal-dv-row">
+                        <p>水费单价<sup>*</sup></p>
+
+                        <div class="top-modal-ip-wraper"><input type="text" name="" id="WaterUnitPrice_Update"
+                                                                value=""><span>元/吨</span></div>
+                    </div>
+                    <div class="modal-dv-row">
+                        <p>电费单价<sup>*</sup></p>
+
+                        <div class="top-modal-ip-wraper"><input type="text" name="" id="EleUnitPrice_Update"
+                                                                value=""><span>元/度</span></div>
                     </div>
                     <div class="modal-dv-row modal-dv-row-in-3">
                         <p>户型<sup>*</sup></p>

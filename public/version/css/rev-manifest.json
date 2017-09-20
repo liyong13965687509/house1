@@ -13,6 +13,7 @@
   "datepicker.css": "datepicker.css?v=1cbd87910b",
   "datetimepicker.css": "datetimepicker.css?v=797a04f9f5",
   "desktop.page.css": "desktop.page.css?v=879d822711",
+  "device.page - 副本.css": "device.page - 副本.css?v=1e48b7f715",
   "device.page.css": "device.page.css?v=fd9c870029",
   "employee.page.css": "employee.page.css?v=c1e0d42e52",
   "font-awesome.min.css": "font-awesome.min.css?v=bed7cb23bb",
@@ -30,6 +31,7 @@
   "property.page.css": "property.page.css?v=18cc2fd188",
   "report.page.css": "report.page.css?v=2e05a6d181",
   "resetpwd.page.css": "resetpwd.page.css?v=ed7bf7eb8c",
+  "self.page.css": "self.page.css?v=cc36ac8fe7",
   "system.page.css": "system.page.css?v=fc34af6816",
   "variable.css": "variable.css?v=d41d8cd98f"
 }
