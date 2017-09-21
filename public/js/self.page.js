@@ -7,7 +7,6 @@
 function PersonalPage() {
     var arguments = arguments.length != 0 ? arguments[0] : arguments;
 
-    this.GET_CODE = arguments['GET_CODE'] ? arguments['GET_CODE'] : "GET_CODE";
     this.API_CONFIG = arguments['API_CONFIG'] ? arguments['API_CONFIG'] : {
         GET_CHECKCODE: "/identity/phonevalidcode",
         PWD_CHANGE: "/identity/pwdresetuser",
@@ -21,7 +20,6 @@ function PersonalPage() {
  * @returns {PersonalPage}
  */
 PersonalPage.prototype.init = function () {
-
     this.checkTab();
     this.validBind();
     this.exeGetCheckCode();
@@ -48,7 +46,6 @@ PersonalPage.prototype.checkTab = function () {
         $('#NewPwd1').val('');
         $('#NewPwd2').val('');
     });
-    $("#now-phone").text(localStorage.getItem("phone"));
     return this;
 }
 /**
@@ -60,7 +57,7 @@ PersonalPage.prototype.getParams = function (name) {
     var _this = this;
     var params = null;
     switch (name) {
-        case _this.GET_CODE:
+        case _this.API_CONFIG['GET_CHECKCODE']:
             params = {
                 requestKey: localStorage.getItem("requestKey"),
                 phone: $("#empPhone").val().trim()
@@ -71,17 +68,17 @@ PersonalPage.prototype.getParams = function (name) {
             params = {
                 requestKey: localStorage.getItem("requestKey"),
                 employeeCharId: localStorage.getItem("employeeCharId"),
-                oldPwd: $("#OldPwd").val(),
-                newPwd1: $("#NewPwd1").val(),
-                newPwd2: $("#NewPwd2").val()
+                oldPwd: $("#OldPwd").val().trim(),
+                newPwd1: $("#NewPwd1").val().trim(),
+                newPwd2: $("#NewPwd2").val().trim()
             };
             break;
         // 手机验证
         case this.API_CONFIG['VALID']:
             params = {
                 requestKey: localStorage.getItem("requestKey"),
-                phone: $("#empPhone").val(),
-                code: $('#validYzm').val()
+                phone: $("#empPhone").val().trim(),
+                code: $('#validYzm').val().trim()
             };
             break;
     }
@@ -99,14 +96,13 @@ PersonalPage.prototype.validBind = function () {
     var txt = "";
     if (localStorage.getItem("isValid") != 1) {
         txt = "（未认证）";
-        $(".unapprove").text(txt);
-    }
-    else {
+    } else {
         txt = "（已认证）";
         $('.none-approve').addClass('hide').prev('.already-approve').removeClass('hide');
-        // _this.certified();
+        $("#now-phone").text(localStorage.getItem("phone"));
     }
     $(".unapprove").text(txt);
+    $(".pull-right .hidden-xs").text(txt);
     return this;
 }
 
@@ -190,8 +186,6 @@ PersonalPage.prototype.ajaxRequestValid = function (params) {
         type: "POST",
         data: params,
         success: function (data) {
-            console.log(params);
-            console.log(data);
             if (data['succ']) {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
 //                        liyong认证成功后刷新页面
@@ -226,7 +220,7 @@ PersonalPage.prototype.exeGetCheckCode = function () {
             complete: function () {
             }
         });
-        var params = _this.getParams(_this.GET_CODE);
+        var params = _this.getParams(_this.API_CONFIG['GET_CHECKCODE']);
         _this.ajaxRequestCodeCheck(params);
     });
     return this;
@@ -247,8 +241,6 @@ PersonalPage.prototype.ajaxRequestCodeCheck = function (params) {
         type: "POST",
         data: params,
         success: function (data) {
-            console.log(data);
-            console.log(params);
             if (data['succ']) {
                 localStorage.setItem("code", data['data']['code']);
                 messageBox.show("提示", "验证码获取成功 ! 请查看您的手机 ! ", MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -265,7 +257,7 @@ PersonalPage.prototype.ajaxRequestCodeCheck = function (params) {
         }
     });
     return this;
-}
+};
 
 var personal = new PersonalPage();
 

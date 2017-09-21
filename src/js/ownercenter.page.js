@@ -1,13 +1,12 @@
 /**
  *构造函数
+ * Author:LIYONG
+ * Date:2017-9-20
  * @constructor
  */
 function PersonalPage() {
     var arguments = arguments.length != 0 ? arguments[0] : arguments;
-    this.PWDCHANGE = arguments['PWDCHANGE'] ? arguments['PWDCHANGE'] : 'PWDCHANGE';
-    this.VALID = arguments['VALID'] ? arguments['VALID'] : 'VALID';
 
-    this.GET_CODE = arguments['GET_CODE'] ? arguments['GET_CODE'] : "GET_CODE";
     this.API_CONFIG = arguments['API_CONFIG'] ? arguments['API_CONFIG'] : {
         GET_CHECKCODE: "/identity/phonevalidcode",
         PWD_CHANGE: "/identity/pwdresetuser",
@@ -21,23 +20,34 @@ function PersonalPage() {
  * @returns {PersonalPage}
  */
 PersonalPage.prototype.init = function () {
-    $('.nav2-ownercenter ul li').on('click', function () {
-        $(this).addClass('cur').siblings().removeClass('cur');
-        var ownercenter_dvindex = $('.nav2-ownercenter ul li').index($(this));
-        $('.fq-contain-dv>div').hide();
-        $('.fq-contain-dv>div').eq(ownercenter_dvindex).show();
-        $("#validYzm").val("");
-    });
-    $("#empPhone").text(localStorage.getItem("phone"));
-
-    $(function () {
-        personal.validBind();
-    });
-
+    this.checkTab();
+    this.validBind();
     this.exeGetCheckCode();
     return this;
 }
 
+/**
+ * Author:LIYONG
+ * Date:2017-9-20
+ * 选项卡选择
+ * @returns {PersonalPage}
+ */
+PersonalPage.prototype.checkTab = function () {
+    $('.person-list li').on('click', function () {
+        $(this).addClass('active').siblings().removeClass('active');
+        var INDEX = $('.person-list li').index($(this));
+        $('.righr-content>.form-body').eq(INDEX).removeClass('hide')
+            .siblings('.form-body').addClass('hide');
+        $('.right-title .form-group').eq(INDEX).removeClass('hide')
+            .siblings('.form-group').addClass('hide');
+        $('#empPhone').val('');
+        $('#validYzm').val('');
+        $('#OldPwd').val('');
+        $('#NewPwd1').val('');
+        $('#NewPwd2').val('');
+    });
+    return this;
+}
 /**
  *参数
  * @param name
@@ -47,28 +57,28 @@ PersonalPage.prototype.getParams = function (name) {
     var _this = this;
     var params = null;
     switch (name) {
-        case _this.GET_CODE:
+        case _this.API_CONFIG['GET_CHECKCODE']:
             params = {
                 requestKey: localStorage.getItem("requestKey"),
-                phone: $("#empPhone").html().trim()
+                phone: $("#empPhone").val().trim()
             }
             break;
         // 密码修改
-        case this.PWDCHANGE:
+        case this.API_CONFIG['PWD_CHANGE']:
             params = {
                 requestKey: localStorage.getItem("requestKey"),
                 employeeCharId: localStorage.getItem("employeeCharId"),
-                oldPwd: $("#OldPwd").val(),
-                newPwd1: $("#NewPwd1").val(),
-                newPwd2: $("#NewPwd2").val()
+                oldPwd: $("#OldPwd").val().trim(),
+                newPwd1: $("#NewPwd1").val().trim(),
+                newPwd2: $("#NewPwd2").val().trim()
             };
             break;
         // 手机验证
-        case this.VALID:
+        case this.API_CONFIG['VALID']:
             params = {
                 requestKey: localStorage.getItem("requestKey"),
-                phone: $("#empPhone").text(),
-                code: $('#validYzm').val()
+                phone: $("#empPhone").val().trim(),
+                code: $('#validYzm').val().trim()
             };
             break;
     }
@@ -86,27 +96,15 @@ PersonalPage.prototype.validBind = function () {
     var txt = "";
     if (localStorage.getItem("isValid") != 1) {
         txt = "（未认证）";
-        $(".hidden-xs").text(txt);
-    }
-    else {
+    } else {
         txt = "（已认证）";
-        _this.certified();
+        $('.none-approve').addClass('hide').prev('.already-approve').removeClass('hide');
+        $("#now-phone").text(localStorage.getItem("phone"));
     }
-    $("#IsValid").text(txt);
+    $(".unapprove").text(txt);
+    $(".pull-right .hidden-xs").text(txt);
     return this;
 }
-/**
- * Author:liyong
- * Date:2017-8-15
- * 已认证
- * @returns {PersonalPage}
- */
-PersonalPage.prototype.certified = function () {
-    $('.fq-btn-yzm1').hide();
-    $('.rz-table tr').eq(0).show().siblings('tr').hide();
-    return this;
-}
-
 
 /**
  * 手机认证
@@ -115,7 +113,7 @@ PersonalPage.prototype.certified = function () {
 PersonalPage.prototype.valid = function () {
     var _this = this;
     if (localStorage.getItem('code') == $('#validYzm').val()) {//zhrong0303判断验证码是否正确
-        _this.ajaxRequestValid(_this.getParams(_this.VALID));
+        _this.ajaxRequestValid(_this.getParams(_this.API_CONFIG['VALID']));
     }
     else {
         messageBox.show("错误", "验证码不正确 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
@@ -140,7 +138,7 @@ PersonalPage.prototype.pwdChange = function () {
     } else if (params.oldPassword == params.newPassword) {
         messageBox.show("提示", "新密码不能与当前密码相同！", MessageBoxButtons.OK, MessageBoxIcons.infomation);
     } else {
-        _this.ajaxRequestPwdChange(_this.getParams(_this.PWDCHANGE))
+        _this.ajaxRequestPwdChange(_this.getParams(_this.API_CONFIG['PWD_CHANGE']))
     }
     return this;
 }
@@ -209,21 +207,20 @@ PersonalPage.prototype.ajaxRequestValid = function (params) {
 }
 
 
-
 /**
  *触发获取验证码按钮
  * @returns {PersonalPage}
  */
 PersonalPage.prototype.exeGetCheckCode = function () {
     var _this = this;
-    $(document).on("click", ".form-btn.code", function () {
+    $(document).on("click", ".get-code", function () {
         new TimerComponent({
-            element: ".form-btn.code",
+            element: ".get-code",
             initTime: 60,
             complete: function () {
             }
         });
-        var params = _this.getParams(_this.GET_CODE);
+        var params = _this.getParams(_this.API_CONFIG['GET_CHECKCODE']);
         _this.ajaxRequestCodeCheck(params);
     });
     return this;
@@ -260,8 +257,9 @@ PersonalPage.prototype.ajaxRequestCodeCheck = function (params) {
         }
     });
     return this;
-}
+};
 
 var personal = new PersonalPage();
+
 
 

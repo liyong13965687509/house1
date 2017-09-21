@@ -270,6 +270,16 @@
 }
 .panel.panel-lg .group-footer {
   width: 100%;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  height: 50px;
+  font-size: 0px;
+  text-align: right;
+  line-height: 50px;
+  padding: 0px 30px;
+  background-color: #ffffff;
+  z-index: 10;
 }
 .panel.panel-lg .group-footer .pull-right {
   position: absolute;
@@ -504,6 +514,7 @@
   float: right;
 }
 .panel .bill-table {
+  padding-bottom: 100px;
   text-align: center;
   font-size: 14px;
 }

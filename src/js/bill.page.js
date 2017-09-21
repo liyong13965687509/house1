@@ -216,7 +216,7 @@ BillPage.prototype.ajaxRequestBillList = function (params) {
         data: params,
         dataType: "JSON",
         beforeSend:function(){
-            $(".main>.row>.pull-right .right-container").append(webApp.TEMP_LOAD);
+            // $(".main>.row>.pull-right .right-container").append(webApp.TEMP_LOAD);
         },
         success: function (data) {
             if (data['succ']) {
@@ -245,7 +245,7 @@ BillPage.prototype.ajaxRequestBillList = function (params) {
             $('body').append()
         },
         complete: function() {
-            $(".spinner").remove();
+            // $(".spinner").remove();
         },
         error: function (XMLHttpRequest, txtStatus, errorThrown) {
             messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);

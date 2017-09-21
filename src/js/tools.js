@@ -471,6 +471,7 @@ Tools.prototype.init = function () {
  */
 function WebApp() {
     var arguments = arguments.length != 0 ? arguments[0] : arguments;
+    this.TIMER = arguments['TIMER'] ? arguments['TIMER'] : null;
     this.APP_BG = arguments['APP_BG'] ? arguments['APP_BG'] : ".app-bg";
     this.LOGIN_OUT = arguments['LOGIN_OUT'] ? arguments['LOGIN_OUT'] : "LOGIN_OUT";
     this.LG_NAV_BAR = arguments['LG_NAV_BAR'] ? arguments['LG_NAV_BAR'] : ".lg-nav";
@@ -484,9 +485,11 @@ function WebApp() {
     this.TEMPLATE = arguments['TEMPLATE'] ? arguments['TEMPLATE'] : "<div class='app-bg'></div>";
     this.DROP_CONTAINER = arguments['DROP_CONTAINER'] ? arguments['DROP_CONTAINER'] : ".drop-container";
     this.DATE_TIME_PICKER = arguments['DATE_TIME_PICKER'] ? arguments['DATE_TIME_PICKER'] : ".dateTimePicker";
+    this.RIGHT_CONTENT = arguments['RIGHT_CONTENT'] ? arguments['RIGHT_CONTENT'] : ".main  .right-content";
+
     this.NO_RESULT = arguments['NO_RESULT'] ? arguments['NO_RESULT'] :
         "<div class='no-result'><img src='images/no_result.png' /><p>抱歉~，暂无数据</p></div>";
-    this.TEMP_LOAD= arguments['TEMP_LOAD'] ? arguments['TEMP_LOAD'] :
+    this.TEMP_LOAD = arguments['TEMP_LOAD'] ? arguments['TEMP_LOAD'] :
         '<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>';
 
     this.API_CONFOG = arguments['API_CONFOG'] ? arguments['API_CONFOG'] : {
@@ -516,6 +519,8 @@ WebApp.prototype.init = function () {
     this.customerGrantControl();
     this.contractGrantControl();
     this.employeeGrantControl();
+    this.loading();
+
     return this;
 }
 /**
@@ -858,7 +863,7 @@ WebApp.prototype.customerGrantControl = function () {
  *合同固定按钮权限
  * @returns {WebApp}
  */
-WebApp.prototype.contractGrantControl=function () {
+WebApp.prototype.contractGrantControl = function () {
     // 账单（列表）查看
     this.grantControl($(".bill-list"), "bill_select");
     // 账单新增
@@ -1035,6 +1040,53 @@ WebApp.prototype.textLength = function (str) {
         else realLength += 2;
     }
     return realLength;
+}
+/**
+ * Author:LIYONG
+ * Date:2017-9-21
+ * 加载中
+ * @returns {WebApp}
+ */
+WebApp.prototype.loading = function () {
+    var _this = this;
+    $(document).ajaxSend(function () {
+        if ($(".right-content .spinner").length == 0) {
+                $(_this.RIGHT_CONTENT).append(webApp.TEMP_LOAD);
+                $(".spinner").removeClass('hide').siblings().addClass('hide');
+        }
+    });
+    $(document).ajaxComplete(function () {
+        _this.TIMER = setTimeout(function () {
+            $(".right-content .spinner").addClass('hide').siblings().removeClass('hide');
+        }, 1000);
+    });
+    return this;
+}
+
+
+/**
+ * Author:LIYONG
+ * Date:2017-9-21
+ * 加载中
+ * @returns {WebApp}
+ */
+$(document).on('click','.tabs li',function(){
+    webApp.checkLoading();
+})
+WebApp.prototype.checkLoading= function () {
+    var _this = this;
+    $(document).ajaxSend(function () {
+        if ($(".block-body .spinner").length == 0) {
+            $('.block-body').append(webApp.TEMP_LOAD);
+            $(".block-body .spinner").removeClass('hide').siblings().addClass('hide');
+        }
+    });
+    $(document).ajaxComplete(function () {
+        _this.TIMER = setTimeout(function () {
+            $(".block-body .spinner").addClass('hide').siblings().removeClass('hide');
+        }, 1000);
+    });
+    return this;
 }
 /**
  *
@@ -2643,4 +2695,5 @@ RegularExpress.prototype.labelRegExpCheck = function (params) {
     }
     return result;
 }
+
 var regular = new RegularExpress();

@@ -90,10 +90,10 @@
   position: relative;
 }
 .system .right-block {
-  display: none !important;
+  display: none ;
 }
 .system .right-block.active {
-  display: block !important;
+  display: block;
 }
 .system .right-block .right-item {
   display: none !important;

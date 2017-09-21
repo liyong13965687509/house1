@@ -94,7 +94,6 @@
 .container .statistic .chart-box h2 {
   font-size: 16px;
   color: #666;
-  font-family: "Microsoft YaHei";
   margin: 0px 0px 12px 0px;
   padding-left: 10px;
 }
@@ -116,11 +115,9 @@
 }
 .container .statistic .chart-box .chart-box-content .description span {
   padding-left: 10px;
-  font-family: "Microsoft YaHei";
   color: #646464;
 }
 .container .statistic .chart-box .chart-box-content .description b {
-  font-family: "Microsoft YaHei";
   color: #646464;
   font-weight: 400;
 }
