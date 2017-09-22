@@ -191,10 +191,10 @@ ContractPage.prototype.getParams = function (name) {
             };
             break;
         case this.BILL_RECEIVE:
-            params={
+            params = {
                 requestKey: localStorage.getItem("requestKey"),
 //            账单唯一标示
-                billCharId:  _this.BILL_CHARID,
+                billCharId: _this.BILL_CHARID,
 //            实收
                 costItems: _this.RECEIVE_JSON,
 //            实收金额
@@ -202,7 +202,7 @@ ContractPage.prototype.getParams = function (name) {
 //            付款方式
                 payType: $("#PayType_coll .active").attr("data-value").trim(),
 //            支付流水号
-                serialNumber:$("#follow_coll").val().trim(),
+                serialNumber: $("#follow_coll").val().trim(),
 //            支付日期
                 payDate: $("#date_coll").val().trim(),
 //            备注
@@ -242,11 +242,11 @@ ContractPage.prototype.ajaxRequestCondition = function (params) {
         dataType: "JSON",
         success: function (data) {
             if (data['succ']) {
-                var JSON_DATA = data['data'],TEMP_HTML;
-                for(var KEY in JSON_DATA){
-                    TEMP_HTML='';
+                var JSON_DATA = data['data'], TEMP_HTML;
+                for (var KEY in JSON_DATA) {
+                    TEMP_HTML = '';
                     for (var i = 0; i < JSON_DATA[KEY].length; i++) {
-                        TEMP_HTML += "<li data-value='" +JSON_DATA[KEY][i]['Key'] + "' class='drop-option'>" + JSON_DATA[KEY][i]['Value'] + "</li>";
+                        TEMP_HTML += "<li data-value='" + JSON_DATA[KEY][i]['Key'] + "' class='drop-option'>" + JSON_DATA[KEY][i]['Value'] + "</li>";
                     }
                     $("#" + KEY).html(TEMP_HTML);
                 }
@@ -446,9 +446,9 @@ ContractPage.prototype.ajaxRequestContractDetailBind = function (params) {
                 } else {
                     $('.contract-end').show();
                 }
-                if(JSON_DATA['State']=='作废'){
+                if (JSON_DATA['State'] == '作废') {
                     $('.contract-abandon').hide();
-                }else{
+                } else {
                     $('.contract-abandon').show();
                 }
             }
@@ -480,6 +480,7 @@ ContractPage.prototype.tabChange = function () {
             $_BLOCK_CONTENT.eq(TAB_INDEX).removeClass('hide');
             switch (TAB_INDEX) {
                 case 0:
+                    _this.contractDetailBind();
                     break;
                 case 1:
                     _this.billList();
@@ -1280,7 +1281,7 @@ ContractPage.prototype.collectBind = function () {
     var _this = this;
     $('#items-cost').on('keyup', '.form-group input', function () {
         _this.add();
-        if($(this).val()/1-$(this).parents('.col-xs-6').prev('.col-xs-6').find('span:eq(1)').html()>0){
+        if ($(this).val() / 1 - $(this).parents('.col-xs-6').prev('.col-xs-6').find('span:eq(1)').html() > 0) {
             messageBox.show("提示", "实收金额应小于应收金额！", MessageBoxButtons.OK, MessageBoxIcons.infomation);
         }
     });
@@ -1319,23 +1320,23 @@ ContractPage.prototype.ajaxRequestCollectBind = function (params) {
         dataType: 'JSON',
         success: function (data) {
             if (data['succ']) {
-                var JSON_DATA=data['data'],TEMP_DATA=data['exted'],TEMP_HTML='', TEMP_CLASS='';
+                var JSON_DATA = data['data'], TEMP_DATA = data['exted'], TEMP_HTML = '', TEMP_CLASS = '';
 
-                for(var i=0;i<JSON_DATA.length;i++){
-                    TEMP_HTML+= '<div class="form-group"><div class="group-row row"><div class="col-xs-6"> '
-                        +'<div class="row row-should"><div class="col-xs-6"><span>'+JSON_DATA[i]["Item"]+'</span></div>'
-                        +'<div class="col-xs-6"><span>'+JSON_DATA[i]["ItemPrice"]+'</span></div>'
-                        +'</div></div><div class="col-xs-6"><span>实收</span>'
-                        + '<input type="text" data-value="'+JSON_DATA[i]["ItemCharId"]+'" data-keyup="number"></div></div></div>';
-                    for(var KEY in JSON_DATA[i]){
-                        $('#'+KEY+'-coll').html(JSON_DATA[i][KEY]);
+                for (var i = 0; i < JSON_DATA.length; i++) {
+                    TEMP_HTML += '<div class="form-group"><div class="group-row row"><div class="col-xs-6"> '
+                        + '<div class="row row-should"><div class="col-xs-6"><span>' + JSON_DATA[i]["Item"] + '</span></div>'
+                        + '<div class="col-xs-6"><span>' + JSON_DATA[i]["ItemPrice"] + '</span></div>'
+                        + '</div></div><div class="col-xs-6"><span>实收</span>'
+                        + '<input type="text" data-value="' + JSON_DATA[i]["ItemCharId"] + '" data-keyup="number"></div></div></div>';
+                    for (var KEY in JSON_DATA[i]) {
+                        $('#' + KEY + '-coll').html(JSON_DATA[i][KEY]);
                     }
                 }
                 $('#items-cost').html(TEMP_HTML);
 
 
-                TEMP_HTML=''
-                for(var i=0;i<TEMP_DATA.length;i++){
+                TEMP_HTML = ''
+                for (var i = 0; i < TEMP_DATA.length; i++) {
                     TEMP_CLASS = i == 0 ? ' active' : '';
                     TEMP_HTML += "<li class='drop-option" + TEMP_CLASS + "' data-value='" + TEMP_DATA[i].Key + "'>" + TEMP_DATA[i].Value + "</li>";
                 }
@@ -1358,28 +1359,29 @@ ContractPage.prototype.ajaxRequestCollectBind = function (params) {
  * 账单收款 调用
  * @returns {ContractPage}
  */
-ContractPage.prototype.billReceive=function () {
+ContractPage.prototype.billReceive = function () {
     var _this = this, contractMessage = "", result = false,
         REMARK = $("#Description_coll").val().trim(),
-        ARR=[],flag=false;
-    $("#items-cost .form-group input").each(function(){
-        var OBJ={
-            CharId:$(this).attr("data-value"),
-            Progress:$(this).val()
+        ARR = [], flag = false;
+    $("#items-cost .form-group input").each(function () {
+        var OBJ = {
+            CharId: $(this).attr("data-value"),
+            Progress: $(this).val()
         };
         ARR.push(OBJ);
     });
-    _this.RECEIVE_JSON=JSON.stringify(ARR);
+    _this.RECEIVE_JSON = JSON.stringify(ARR);
     $('#items-cost input').each(function () {
-        if($(this).val().trim()== ""){
-            flag=true;
-        };
+        if ($(this).val().trim() == "") {
+            flag = true;
+        }
+        ;
     })
     if (flag) {
         contractMessage = "请输入实收金额";
     } else if ($('#follow_coll').val().trim() == "") {
         contractMessage = "请输入流水账号";
-    }else if ($('#date_coll').val().trim() == "") {
+    } else if ($('#date_coll').val().trim() == "") {
         contractMessage = "请输入支付日期";
     } else if (REMARK != "" && webApp.textLength(REMARK) > 100) {
         contractMessage = "文字长度不能超过100！";
@@ -1400,8 +1402,8 @@ ContractPage.prototype.billReceive=function () {
  * 账单收款 ajax
  * @returns {ContractPage}
  */
-ContractPage.prototype.ajaxRequestBillReceive=function (params) {
-    var _this=this;
+ContractPage.prototype.ajaxRequestBillReceive = function (params) {
+    var _this = this;
     $.ajax({
         type: "Post",
         url: host + this.API_CONFIG['COLLECT_BIND'],
@@ -1434,11 +1436,11 @@ ContractPage.prototype.add = function () {
     var TEMP_VALUE = $('#items-cost .form-group');
     var TEMP_HTML, TEMP_DT = 0 / 1;
     for (var i = 0; i < TEMP_VALUE.length; i++) {
-        TEMP_HTML= '';
+        TEMP_HTML = '';
         TEMP_HTML = (TEMP_VALUE.eq(i).find('input').val() ? TEMP_VALUE.eq(i).find('input').val() : 0) / 1;
         TEMP_DT += TEMP_HTML;
     }
-    $('#total_coll').val(TEMP_DT?TEMP_DT:'');
+    $('#total_coll').val(TEMP_DT ? TEMP_DT : '');
     return this;
 }
 

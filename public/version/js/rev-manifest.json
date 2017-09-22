@@ -10,9 +10,9 @@
   "calendar/jquery.min.js": "calendar/jquery.min.js?v=4a356126b9",
   "calendar/underscore-min.js": "calendar/underscore-min.js?v=543feb1eca",
   "components-pickers.js": "components-pickers.js?v=00b12ed6a0",
-  "contract.page.js": "contract.page.js?v=b5d75ab4f4",
+  "contract.page.js": "contract.page.js?v=d91c1efbc8",
   "count.page.js": "count.page.js?v=4439d95c3b",
-  "customer.page.js": "customer.page.js?v=9e56085a7e",
+  "customer.page.js": "customer.page.js?v=446b64efa1",
   "data/contract_data.js": "data/contract_data.js?v=49cf012018",
   "data/customer_data.js": "data/customer_data.js?v=f723e8cc38",
   "data/ownercenter_data.js": "data/ownercenter_data.js?v=44db42293b",
@@ -35,5 +35,5 @@
   "resetpwd.page.js": "resetpwd.page.js?v=36802c79e1",
   "self.page.js": "self.page.js?v=89044c5f15",
   "system.page.js": "system.page.js?v=e34fa60bdb",
-  "tools.js": "tools.js?v=0aace5e4c1"
+  "tools.js": "tools.js?v=a3ca3d9e0e"
 }

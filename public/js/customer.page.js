@@ -490,6 +490,7 @@ CustomerPage.prototype.tabChange = function () {
             $_BLOCK_CONTENT.eq(TAB_INDEX).removeClass('hide');
             switch (TAB_INDEX) {
                 case 0:
+                    _this.CustomerDetailBind();
                     break;
                 case 1:
                     _this.contractBind();

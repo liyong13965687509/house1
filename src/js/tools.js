@@ -486,6 +486,8 @@ function WebApp() {
     this.DROP_CONTAINER = arguments['DROP_CONTAINER'] ? arguments['DROP_CONTAINER'] : ".drop-container";
     this.DATE_TIME_PICKER = arguments['DATE_TIME_PICKER'] ? arguments['DATE_TIME_PICKER'] : ".dateTimePicker";
     this.RIGHT_CONTENT = arguments['RIGHT_CONTENT'] ? arguments['RIGHT_CONTENT'] : ".main  .right-content";
+    this.BLOCK_BODY = arguments['BLOCK_BODY'] ? arguments['BLOCK_BODY'] : ".panel-lg .block-body";
+    this.PANEL_BODY = arguments['PANEL_BODY'] ? arguments['PANEL_BODY'] : ".panel-sm .panel-body";
 
     this.NO_RESULT = arguments['NO_RESULT'] ? arguments['NO_RESULT'] :
         "<div class='no-result'><img src='images/no_result.png' /><p>抱歉~，暂无数据</p></div>";
@@ -519,8 +521,7 @@ WebApp.prototype.init = function () {
     this.customerGrantControl();
     this.contractGrantControl();
     this.employeeGrantControl();
-    this.loading();
-
+    this.checkLoading();
     return this;
 }
 /**
@@ -1047,52 +1048,60 @@ WebApp.prototype.textLength = function (str) {
  * 加载中
  * @returns {WebApp}
  */
-WebApp.prototype.loading = function () {
+
+WebApp.prototype.loading = function (element) {
     var _this = this;
     $(document).ajaxSend(function () {
-        if ($(".right-content .spinner").length == 0) {
-                $(_this.RIGHT_CONTENT).append(webApp.TEMP_LOAD);
-                $(".spinner").removeClass('hide').siblings().addClass('hide');
+        $(".spinner").addClass('hide').siblings().removeClass('hide');
+        if (element.find(".spinner").length == 0) {
+            element.append(webApp.TEMP_LOAD);
         }
+        element.find(".spinner").removeClass('hide').siblings().addClass('hide');
     });
     $(document).ajaxComplete(function () {
         _this.TIMER = setTimeout(function () {
-            $(".right-content .spinner").addClass('hide').siblings().removeClass('hide');
+            element.find(".spinner").addClass('hide').siblings().removeClass('hide');
         }, 1000);
     });
-    return this;
 }
 
 
 /**
  * Author:LIYONG
  * Date:2017-9-21
- * 加载中
+ * panel加载中 调用
  * @returns {WebApp}
  */
-$(document).on('click','.tabs li',function(){
-    webApp.checkLoading();
-})
-WebApp.prototype.checkLoading= function () {
-    var _this = this;
-    $(document).ajaxSend(function () {
-        if ($(".block-body .spinner").length == 0) {
-            $('.block-body').append(webApp.TEMP_LOAD);
-            $(".block-body .spinner").removeClass('hide').siblings().addClass('hide');
-        }
-    });
-    $(document).ajaxComplete(function () {
-        _this.TIMER = setTimeout(function () {
-            $(".block-body .spinner").addClass('hide').siblings().removeClass('hide');
-        }, 1000);
-    });
-    return this;
+
+WebApp.prototype.checkLoading=function () {
+    var _this=this;
+    _this.loading($(_this.RIGHT_CONTENT));
+    $(document).on('click', '.right-table a', function () {
+        _this.loading($(_this.BLOCK_BODY));
+    })
+    $(document).on('click', '.tab-header>.tabs>li', function () {
+        _this.loading($(_this.BLOCK_BODY));
+    })
+
+    $(document).on('click', '.panel-lg button', function () {
+        _this.loading($(_this.PANEL_BODY));
+    })
+
+    $(document).on('click', '.panel-lg a', function () {
+        _this.loading($(_this.PANEL_BODY));
+    })
+
 }
+
 /**
  *
  * @type {WebApp}
  */
 var webApp = new WebApp();
+
+$(document).ajaxSend(function () {
+    webApp.checkLoading();
+});
 /**
  * BEGIN
  * 3个月 6个月 1年按钮功能实现
