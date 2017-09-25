@@ -12,7 +12,7 @@
   "components-pickers.js": "components-pickers.js?v=00b12ed6a0",
   "contract.page.js": "contract.page.js?v=d91c1efbc8",
   "count.page.js": "count.page.js?v=4439d95c3b",
-  "customer.page.js": "customer.page.js?v=446b64efa1",
+  "customer.page.js": "customer.page.js?v=4bd77fd5f3",
   "data/contract_data.js": "data/contract_data.js?v=49cf012018",
   "data/customer_data.js": "data/customer_data.js?v=f723e8cc38",
   "data/ownercenter_data.js": "data/ownercenter_data.js?v=44db42293b",
@@ -30,10 +30,10 @@
   "message.page.js": "message.page.js?v=9282cf76d2",
   "nav.page.js": "nav.page.js?v=05238c9871",
   "ownercenter.page.js": "ownercenter.page.js?v=89044c5f15",
-  "property.page.js": "property.page.js?v=3379347ee7",
+  "property.page.js": "property.page.js?v=57b295da9e",
   "report.page.js": "report.page.js?v=9e44ecb405",
   "resetpwd.page.js": "resetpwd.page.js?v=36802c79e1",
   "self.page.js": "self.page.js?v=89044c5f15",
   "system.page.js": "system.page.js?v=e34fa60bdb",
-  "tools.js": "tools.js?v=a3ca3d9e0e"
+  "tools.js": "tools.js?v=f02e84b869"
 }

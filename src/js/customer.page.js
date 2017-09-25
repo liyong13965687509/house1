@@ -20,6 +20,7 @@ function CustomerPage() {
     this.FOLLOW_CHARID = arguments['FOLLOW_CHARID'] ? arguments['FOLLOW_CHARID'] : 'FOLLOW_CHARID';
     this.FOLLOW_DEL = arguments['FOLLOW_DEL'] ? arguments['FOLLOW_DEL'] : '.column-del';
     this.FOLLOW_REMARK = arguments['FOLLOW_REMARK'] ? arguments['FOLLOW_REMARK'] : '.follow-remark';
+    this.FOLLOW_RECORD = arguments['FOLLOW_RECORD'] ? arguments['FOLLOW_RECORD'] : '.follow-record';
 
 
     this.API_CONFIG = arguments['API_CONFIG'] ? arguments['API_CONFIGE'] : {
@@ -616,7 +617,7 @@ CustomerPage.prototype.ajaxRequestCustomerAddBind = function (params) {
                 var JSON_DATA = data['data'],
                     TEMP_DATA1 = JSON_DATA['data1'],
                     TEMP_DATA2 = JSON_DATA['data2'],
-                    TEMP_HTML="";
+                    TEMP_HTML = "";
                 for (var KEY in TEMP_DATA1) {
                     var TEMP_HTML = "", TEMP_NAME = "";
                     var TEMP_VALUE = TEMP_DATA1[KEY];
@@ -1084,14 +1085,20 @@ CustomerPage.prototype.ajaxRequestFollowBind = function (params) {
                     TEMP_HTML = '',
                     STYLE;
                 for (var i = 0; i < JSON_DATA.length; i++) {
-                    TEMP_HTML += '<div class="column col-xs-3">' + JSON_DATA[i]["CreateTime"] + '</div>'
+                    TEMP_HTML += '<div class="column col-xs-4">' + JSON_DATA[i]["CreateTime"] + '</div>'
                         + '<div class="column col-xs-2">' + JSON_DATA[i]["Value"] + '</div>'
-                        + '<div class="column col-xs-5">' + JSON_DATA[i]["Description"] + '</div>'
+                        + '<div class="column col-xs-4">' + JSON_DATA[i]["Description"] + '</div>'
                     if (webApp.grantControl($(".followDelete"), "follow_delete")) {
                         TEMP_HTML += '<div class="column col-xs-2 column-del" data-value=" ' + JSON_DATA[i]["CharId"] + '">删除</div>';
                     }
                 }
-                $(".follow-record").html(TEMP_HTML);
+                $(_this.FOLLOW_RECORD).html(TEMP_HTML);
+
+                if ($(_this.FOLLOW_RECORD).find('.column').length == 0) {
+                    $(_this.FOLLOW_RECORD).hide()
+                } else {
+                    $(_this.FOLLOW_RECORD).show()
+                }
 
                 _this.PAGINATION = new Pagination({
                     PAGINATION: '#PagPassword',

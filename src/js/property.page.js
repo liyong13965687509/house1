@@ -1959,12 +1959,12 @@ PropertyPage.prototype.ajaxRequestServiceAddBind = function (params) {
                     var TEMP_HTML = "";
                     for (var i = 0; i < JSON_DATA[KEY].length; i++) {
                         var KEY_DATA = JSON_DATA[KEY][i];
-                        TEMP_CLASS = i == 0 ? ' active' : '';
+                        TEMP_CLASS = i == 0 ? 'cur' : '';
                         TEMP_HTML += "<li data-value=\"" + KEY_DATA['Key'] + "\" class='" + TEMP_CLASS + "'>" + KEY_DATA['Value'] + "</li>";
                     }
                     TEMP_HTML += "<div class=\"clear\"></div>";
                     $("#" + KEY + " ul").html(TEMP_HTML);
-                    $("#" + KEY + " span").text($("#" + KEY + " .active").text());
+                    $("#" + KEY + " span").text($("#" + KEY + " .cur").text());
 
                 }
                 DropdownInit();

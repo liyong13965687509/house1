@@ -487,7 +487,7 @@ function WebApp() {
     this.DATE_TIME_PICKER = arguments['DATE_TIME_PICKER'] ? arguments['DATE_TIME_PICKER'] : ".dateTimePicker";
     this.RIGHT_CONTENT = arguments['RIGHT_CONTENT'] ? arguments['RIGHT_CONTENT'] : ".main  .right-content";
     this.BLOCK_BODY = arguments['BLOCK_BODY'] ? arguments['BLOCK_BODY'] : ".panel-lg .block-body";
-    this.PANEL_BODY = arguments['PANEL_BODY'] ? arguments['PANEL_BODY'] : ".panel-sm .panel-body";
+    this.PANEL_BODY = arguments['PANEL_BODY'] ? arguments['PANEL_BODY'] : ".panel-sm .panel-modal .panel-body";
 
     this.NO_RESULT = arguments['NO_RESULT'] ? arguments['NO_RESULT'] :
         "<div class='no-result'><img src='images/no_result.png' /><p>抱歉~，暂无数据</p></div>";
@@ -1051,10 +1051,11 @@ WebApp.prototype.textLength = function (str) {
 
 WebApp.prototype.loading = function (element) {
     var _this = this;
+    $(".spinner").addClass('hide').siblings().removeClass('hide');
     $(document).ajaxSend(function () {
         $(".spinner").addClass('hide').siblings().removeClass('hide');
         if (element.find(".spinner").length == 0) {
-            element.append(webApp.TEMP_LOAD);
+            element.append(_this.TEMP_LOAD);
         }
         element.find(".spinner").removeClass('hide').siblings().addClass('hide');
     });
@@ -1079,6 +1080,7 @@ WebApp.prototype.checkLoading=function () {
     $(document).on('click', '.right-table a', function () {
         _this.loading($(_this.BLOCK_BODY));
     })
+
     $(document).on('click', '.tab-header>.tabs>li', function () {
         _this.loading($(_this.BLOCK_BODY));
     })
@@ -1091,6 +1093,9 @@ WebApp.prototype.checkLoading=function () {
         _this.loading($(_this.PANEL_BODY));
     })
 
+    $(document).on('click', '.panel-sm .panel-footer button', function () {
+        _this.loading($('.panel-sm .panel-footer a'));
+    })
 }
 
 /**
@@ -1099,9 +1104,7 @@ WebApp.prototype.checkLoading=function () {
  */
 var webApp = new WebApp();
 
-$(document).ajaxSend(function () {
-    webApp.checkLoading();
-});
+
 /**
  * BEGIN
  * 3个月 6个月 1年按钮功能实现
@@ -1906,8 +1909,10 @@ Pagination.prototype.codeButtonPress = function () {
  */
 Pagination.prototype.prevButtonPress = function () {
     var _this = this;
+    var TEMP_PAGE=0;
     $(this.PAGINATION_PREV).on("click", function () {
         _this.PAGE_CODE--;
+        TEMP_PAGE=_this.PAGE_CODE;
         _this.PAGE_CODE = _this.PAGE_CODE <= 1 ? 1 : _this.PAGE_CODE;
         var FIRST_TEXT = parseInt($(_this.PAGINATION_CODE).eq(0).text().trim());
         if (FIRST_TEXT != 1) {
@@ -1916,7 +1921,7 @@ Pagination.prototype.prevButtonPress = function () {
             });
         }
         _this.bindStatus(this);
-        if ("function" == typeof _this.CHANGE_PAGE) _this.CHANGE_PAGE(_this.PAGE_CODE);
+        if ("function" == typeof _this.CHANGE_PAGE&&TEMP_PAGE!=0) _this.CHANGE_PAGE(_this.PAGE_CODE);
     });
     return this;
 }
@@ -1928,8 +1933,10 @@ Pagination.prototype.prevButtonPress = function () {
  */
 Pagination.prototype.nextButtonPress = function () {
     var _this = this;
+    var TEMP_PAGE=0;
     $(this.PAGINATION_NEXT).on("click", function () {
         _this.PAGE_CODE++;
+        TEMP_PAGE=_this.PAGE_CODE;
         _this.PAGE_CODE = _this.PAGE_CODE >= _this.TOTAL_PAGES ? _this.TOTAL_PAGES : _this.PAGE_CODE;
         var FIRST_TEXT = parseInt($(_this.PAGINATION_CODE).eq(0).text().trim());
         var PARAMS_VALUE = _this.TOTAL_PAGES - $(_this.PAGINATION_CODE).length + 1;
@@ -1939,7 +1946,7 @@ Pagination.prototype.nextButtonPress = function () {
             });
         }
         _this.bindStatus(this);
-        if ("function" == typeof _this.CHANGE_PAGE) _this.CHANGE_PAGE(_this.PAGE_CODE);
+        if ("function" == typeof _this.CHANGE_PAGE&&TEMP_PAGE<= _this.TOTAL_PAGES) _this.CHANGE_PAGE(_this.PAGE_CODE);
     });
     return this;
 }
