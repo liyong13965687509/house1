@@ -10,7 +10,7 @@
   "calendar/jquery.min.js": "calendar/jquery.min.js?v=4a356126b9",
   "calendar/underscore-min.js": "calendar/underscore-min.js?v=543feb1eca",
   "components-pickers.js": "components-pickers.js?v=00b12ed6a0",
-  "contract.page.js": "contract.page.js?v=d91c1efbc8",
+  "contract.page.js": "contract.page.js?v=7de3ad69cb",
   "count.page.js": "count.page.js?v=4439d95c3b",
   "customer.page.js": "customer.page.js?v=4bd77fd5f3",
   "data/contract_data.js": "data/contract_data.js?v=49cf012018",
@@ -20,13 +20,13 @@
   "data/property_data.js": "data/property_data.js?v=7f24b267b0",
   "desktop.page.js": "desktop.page.js?v=80998b7484",
   "device.page - 副本.js": "device.page - 副本.js?v=801b0c9808",
-  "device.page.js": "device.page.js?v=801b0c9808",
-  "employee.page.js": "employee.page.js?v=cc8b598015",
+  "device.page.js": "device.page.js?v=8960b9d773",
+  "employee.page.js": "employee.page.js?v=10f0a58283",
   "grant.page.js": "grant.page.js?v=cdfcb199d9",
   "gycom.js": "gycom.js?v=655219abbc",
   "host.js": "host.js?v=2112a01532",
   "log.page.js": "log.page.js?v=2cc3df7bd6",
-  "login.page.js": "login.page.js?v=fae5ac7c6f",
+  "login.page.js": "login.page.js?v=694babb2f6",
   "message.page.js": "message.page.js?v=9282cf76d2",
   "nav.page.js": "nav.page.js?v=05238c9871",
   "ownercenter.page.js": "ownercenter.page.js?v=89044c5f15",
@@ -35,5 +35,5 @@
   "resetpwd.page.js": "resetpwd.page.js?v=36802c79e1",
   "self.page.js": "self.page.js?v=89044c5f15",
   "system.page.js": "system.page.js?v=e34fa60bdb",
-  "tools.js": "tools.js?v=f02e84b869"
+  "tools.js": "tools.js?v=4909deb77a"
 }

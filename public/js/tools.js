@@ -488,7 +488,19 @@ function WebApp() {
     this.RIGHT_CONTENT = arguments['RIGHT_CONTENT'] ? arguments['RIGHT_CONTENT'] : ".main  .right-content";
     this.BLOCK_BODY = arguments['BLOCK_BODY'] ? arguments['BLOCK_BODY'] : ".panel-lg .block-body";
     this.PANEL_BODY = arguments['PANEL_BODY'] ? arguments['PANEL_BODY'] : ".panel-sm .panel-modal .panel-body";
-
+    this.PAGINATION_CODE = arguments['PAGINATION_CODE'] ? arguments['PAGINATION_CODE'] : ".main .right-content .pagination-box .pagination-code";
+    this.PAGINATION_PREV = arguments['PAGINATION_PREV'] ? arguments['PAGINATION_PREV'] : ".main .right-content .pagination-box .pagination-prev";
+    this.PAGINATION_NEXT = arguments['PAGINATION_NEXT'] ? arguments['PAGINATION_NEXT'] : ".main .right-content .pagination-box .pagination-next";
+    this.LEFT_FULL = arguments['LEFT_FULL'] ? arguments['LEFT_FULL'] : ".main .pull-left .full";
+    this.TAB_CHECK = arguments['TAB_CHECK'] ? arguments['TAB_CHECK'] : ".main .right-table a";
+    this.TABS_LI = arguments['TABS_LI'] ? arguments['TABS_LI'] : ".tab-header>.tabs>li";
+    this.LG_BUTTON = arguments['LG_BUTTON'] ? arguments['LG_BUTTON'] : ".panel-lg .block-footer button";
+    this.LG_BILLADD = arguments['LG_BILLADD'] ? arguments['LG_BILLADD'] : ".panel-lg .bill-add";
+    this.LG_A = arguments['LG_A'] ? arguments['LG_A'] : ".panel-lg a";
+    this.LG_CODE = arguments['LG_CODE'] ? arguments['LG_CODE'] : ".panel-lg .pagination-code";
+    this.LG_PREV = arguments['LG_PREV'] ? arguments['LG_PREV'] : ".panel-lg .pagination-prev";
+    this.LG_NEXT = arguments['LG_NEXT'] ? arguments['LG_NEXT'] : ".panel-lg .pagination-next";
+    this.SM_BUTTON  = arguments['SM_BUTTON'] ? arguments['SM_BUTTON'] : ".panel-sm .panel-footer button";
     this.NO_RESULT = arguments['NO_RESULT'] ? arguments['NO_RESULT'] :
         "<div class='no-result'><img src='images/no_result.png' /><p>抱歉~，暂无数据</p></div>";
     this.TEMP_LOAD = arguments['TEMP_LOAD'] ? arguments['TEMP_LOAD'] :
@@ -1051,21 +1063,24 @@ WebApp.prototype.textLength = function (str) {
 
 WebApp.prototype.loading = function (element) {
     var _this = this;
-    $(".spinner").addClass('hide').siblings().removeClass('hide');
+    if (element['selector'] == _this.RIGHT_CONTENT||element['selector']==_this.BLOCK_BODY) {
+        element.find(".spinner").removeClass('hide').siblings().addClass('hide');
+    } else {
+        $(".spinner").addClass('hide').siblings().removeClass('hide');
+    }
+    // ajax加载前
     $(document).ajaxSend(function () {
         $(".spinner").addClass('hide').siblings().removeClass('hide');
-        if (element.find(".spinner").length == 0) {
-            element.append(_this.TEMP_LOAD);
-        }
+        if (element.find(".spinner").length == 0) element.append(_this.TEMP_LOAD);
         element.find(".spinner").removeClass('hide').siblings().addClass('hide');
     });
+    //ajax加载完成后
     $(document).ajaxComplete(function () {
         _this.TIMER = setTimeout(function () {
             element.find(".spinner").addClass('hide').siblings().removeClass('hide');
         }, 1000);
     });
 }
-
 
 /**
  * Author:LIYONG
@@ -1074,37 +1089,83 @@ WebApp.prototype.loading = function (element) {
  * @returns {WebApp}
  */
 
-WebApp.prototype.checkLoading=function () {
-    var _this=this;
+WebApp.prototype.checkLoading = function () {
+    var _this = this;
+    //第一层
     _this.loading($(_this.RIGHT_CONTENT));
-    $(document).on('click', '.right-table a', function () {
+    $(document).on('click', _this.LEFT_FULL, function () {
+        _this.loading($(_this.RIGHT_CONTENT));
+    })
+
+    $(document).on('click', _this.PAGINATION_CODE, function () {
+        _this.loading($(_this.RIGHT_CONTENT));
+    })
+
+    $(document).on('click', _this.PAGINATION_PREV, function () {
+        var TEMP_ACTIVE = $(this).next('.pagination-item').find('.active').html();
+        if (1 != TEMP_ACTIVE) {
+            _this.loading($(_this.RIGHT_CONTENT));
+        }
+    })
+
+    $(document).on('click', _this.PAGINATION_NEXT, function () {
+        var LENGTH = $(this).prev('.pagination-item').find('.pagination-code').length;
+        var TEMP_ACTIVE = $(this).prev('.pagination-item').find('.active').html();
+        if (LENGTH + 1 != TEMP_ACTIVE) {
+            _this.loading($(_this.RIGHT_CONTENT));
+        }
+    })
+    //第二层
+    $(document).on('click', _this.TAB_CHECK, function () {
         _this.loading($(_this.BLOCK_BODY));
     })
 
-    $(document).on('click', '.tab-header>.tabs>li', function () {
+    $(document).on('click', _this.TABS_LI, function () {
         _this.loading($(_this.BLOCK_BODY));
     })
 
-    $(document).on('click', '.panel-lg button', function () {
+    $(document).on('click', _this.LG_CODE, function () {
+        _this.loading($(_this.BLOCK_BODY));
+    })
+
+    $(document).on('click', _this.LG_PREV, function () {
+        var TEMP_ACTIVE = $(this).next('.pagination-item').find('.active').html();
+        if (1 != TEMP_ACTIVE) {
+            _this.loading($(_this.BLOCK_BODY));
+        }
+    })
+
+    $(document).on('click', _this.LG_NEXT, function () {
+        var LENGTH = $(this).prev('.pagination-item').find('.pagination-code').length;
+        var TEMP_ACTIVE = $(this).prev('.pagination-item').find('.active').html();
+        if (LENGTH!= TEMP_ACTIVE) {
+            _this.loading($(_this.BLOCK_BODY));
+        }
+    })
+    // 第三层
+    $(document).on('click', _this.LG_BUTTON, function () {
         _this.loading($(_this.PANEL_BODY));
     })
 
-    $(document).on('click', '.panel-lg a', function () {
+    $(document).on('click', _this.LG_BILLADD, function () {
         _this.loading($(_this.PANEL_BODY));
     })
 
-    $(document).on('click', '.panel-sm .panel-footer button', function () {
-        _this.loading($('.panel-sm .panel-footer a'));
+    $(document).on('click',_this.LG_A, function () {
+        _this.loading($(_this.PANEL_BODY));
+    })
+    //第四层
+    $(document).on('click', _this.SM_BUTTON, function () {
+        _this.loading($(_this.SM_BUTTON).find('a'));
     })
 }
+
 
 /**
  *
  * @type {WebApp}
  */
 var webApp = new WebApp();
-
-
 /**
  * BEGIN
  * 3个月 6个月 1年按钮功能实现
@@ -1837,6 +1898,8 @@ function Pagination() {
     this.PAGE_SIZE = arguments['PAGE_SIZE'] ? arguments['PAGE_SIZE'] : 10;
     this.DATA_NUMS = arguments['DATA_NUMS'] ? arguments['DATA_NUMS'] : 0;
     this.PAGINATION = arguments['PAGINATION'] ? arguments['PAGINATION'] : ".pagination";
+    this.MIN_PAGE = arguments['MIN_PAGE'] ? arguments['MIN_PAGE'] : 'MIN_PAGE';
+    this.MAX_PAGE = arguments['MAX_PAGE'] ? arguments['MAX_PAGE'] : 'MAX_PAGE';
     this.TOTAL_PAGES = parseInt((parseInt(this.DATA_NUMS) + this.PAGE_SIZE - 1) / this.PAGE_SIZE);
     this.PAGINATION_PREV = arguments['PAGINATION_PREV'] ? arguments['PAGINATION_PREV'] : this.PAGINATION + " .pagination-prev";
     this.PAGINATION_CODE = arguments['PAGINATION_CODE'] ? arguments['PAGINATION_CODE'] : this.PAGINATION + " .pagination-code";
@@ -1909,10 +1972,9 @@ Pagination.prototype.codeButtonPress = function () {
  */
 Pagination.prototype.prevButtonPress = function () {
     var _this = this;
-    var TEMP_PAGE=0;
     $(this.PAGINATION_PREV).on("click", function () {
         _this.PAGE_CODE--;
-        TEMP_PAGE=_this.PAGE_CODE;
+        _this.MIN_PAGE = _this.PAGE_CODE;
         _this.PAGE_CODE = _this.PAGE_CODE <= 1 ? 1 : _this.PAGE_CODE;
         var FIRST_TEXT = parseInt($(_this.PAGINATION_CODE).eq(0).text().trim());
         if (FIRST_TEXT != 1) {
@@ -1921,7 +1983,7 @@ Pagination.prototype.prevButtonPress = function () {
             });
         }
         _this.bindStatus(this);
-        if ("function" == typeof _this.CHANGE_PAGE&&TEMP_PAGE!=0) _this.CHANGE_PAGE(_this.PAGE_CODE);
+        if ("function" == typeof _this.CHANGE_PAGE && _this.MIN_PAGE != 0) _this.CHANGE_PAGE(_this.PAGE_CODE);
     });
     return this;
 }
@@ -1933,10 +1995,9 @@ Pagination.prototype.prevButtonPress = function () {
  */
 Pagination.prototype.nextButtonPress = function () {
     var _this = this;
-    var TEMP_PAGE=0;
     $(this.PAGINATION_NEXT).on("click", function () {
         _this.PAGE_CODE++;
-        TEMP_PAGE=_this.PAGE_CODE;
+        _this.MAX_PAGE = _this.PAGE_CODE;
         _this.PAGE_CODE = _this.PAGE_CODE >= _this.TOTAL_PAGES ? _this.TOTAL_PAGES : _this.PAGE_CODE;
         var FIRST_TEXT = parseInt($(_this.PAGINATION_CODE).eq(0).text().trim());
         var PARAMS_VALUE = _this.TOTAL_PAGES - $(_this.PAGINATION_CODE).length + 1;
@@ -1946,7 +2007,7 @@ Pagination.prototype.nextButtonPress = function () {
             });
         }
         _this.bindStatus(this);
-        if ("function" == typeof _this.CHANGE_PAGE&&TEMP_PAGE<= _this.TOTAL_PAGES) _this.CHANGE_PAGE(_this.PAGE_CODE);
+        if ("function" == typeof _this.CHANGE_PAGE && _this.MAX_PAGE <= _this.TOTAL_PAGES) _this.CHANGE_PAGE(_this.PAGE_CODE);
     });
     return this;
 }

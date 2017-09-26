@@ -294,6 +294,7 @@ Employee.prototype.ajaxRequestBindEmployee = function (params) {
         data: params,
         dataType: "JSON",
         success: function (data) {
+            webApp.loading($(webApp.RIGHT_CONTENT));
             if (data['succ']) {
                 var TEMP_HTML = webApp['NO_RESULT'];
                 var JSON_DATA = data['data'];
@@ -667,6 +668,10 @@ Employee.prototype.ajaxRequestBindUpdateEmployee = function (params) {
         data: params,
         dataType: "JSON",
         success: function (data) {
+            if ($(webApp.PANEL_BODY).find(".spinner").length == 0) {
+                $(webApp.PANEL_BODY).append(webApp.TEMP_LOAD);
+            }
+            $(webApp.PANEL_BODY).find(".spinner").removeClass('hide').siblings().addClass('hide');
             if (data['succ']) {
                 var JSON_DATA = data['data'];
                 var TEMP_JSON = {
