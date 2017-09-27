@@ -76,7 +76,8 @@ LoginPage.prototype.ajaxRequestCheck = function (params) {
         dataType: "JSON",
         data: params,
         beforeSend: function () {
-            webApp.loading($('.form-login'));
+            var TEMP_HTML='正在登录 ...'
+            $('.full').html(TEMP_HTML);
         },
         success: function (data) {
             if (data != null) {
@@ -85,7 +86,7 @@ LoginPage.prototype.ajaxRequestCheck = function (params) {
                         webApp.TIMER = setTimeout(function () {
                             _this.saveLoginAccount(params);
                             _this.localStorageSaveData(data, params);
-                        }, 900);
+                        }, 1000);
 
                     } else {
                         messageBox.show("错误", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.error);

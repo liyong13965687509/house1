@@ -495,11 +495,13 @@ function WebApp() {
     this.TAB_CHECK = arguments['TAB_CHECK'] ? arguments['TAB_CHECK'] : ".main .right-table a";
     this.TABS_LI = arguments['TABS_LI'] ? arguments['TABS_LI'] : ".tab-header>.tabs>li";
     this.LG_BUTTON = arguments['LG_BUTTON'] ? arguments['LG_BUTTON'] : ".panel-lg .block-footer button";
+    this.LG_PANEL = arguments['LG_PANEL'] ? arguments['LG_PANEL'] : ".panel-lg .panel-footer button";
     this.LG_BILLADD = arguments['LG_BILLADD'] ? arguments['LG_BILLADD'] : ".panel-lg .bill-add";
     this.LG_A = arguments['LG_A'] ? arguments['LG_A'] : ".panel-lg a";
     this.LG_CODE = arguments['LG_CODE'] ? arguments['LG_CODE'] : ".panel-lg .pagination-code";
     this.LG_PREV = arguments['LG_PREV'] ? arguments['LG_PREV'] : ".panel-lg .pagination-prev";
     this.LG_NEXT = arguments['LG_NEXT'] ? arguments['LG_NEXT'] : ".panel-lg .pagination-next";
+    this.LG_PASSWORD = arguments['LG_PASSWORD'] ? arguments['LG_PASSWORD'] : ".panel-lg .btn-password";
     this.SM_BUTTON  = arguments['SM_BUTTON'] ? arguments['SM_BUTTON'] : ".panel-sm .panel-footer button";
     this.NO_RESULT = arguments['NO_RESULT'] ? arguments['NO_RESULT'] :
         "<div class='no-result'><img src='images/no_result.png' /><p>抱歉~，暂无数据</p></div>";
@@ -1071,7 +1073,9 @@ WebApp.prototype.loading = function (element) {
     // ajax加载前
     $(document).ajaxSend(function () {
         $(".spinner").addClass('hide').siblings().removeClass('hide');
-        if (element.find(".spinner").length == 0) element.append(_this.TEMP_LOAD);
+        if (element.find(".spinner").length == 0){
+            element.append(_this.TEMP_LOAD);
+        }
         element.find(".spinner").removeClass('hide').siblings().addClass('hide');
     });
     //ajax加载完成后
@@ -1109,9 +1113,9 @@ WebApp.prototype.checkLoading = function () {
     })
 
     $(document).on('click', _this.PAGINATION_NEXT, function () {
-        var LENGTH = $(this).prev('.pagination-item').find('.pagination-code').length;
+        var LENGTH =Math.ceil($(this).next('.pagination-total').html().replace(/[^0-9]/ig,"")/10);
         var TEMP_ACTIVE = $(this).prev('.pagination-item').find('.active').html();
-        if (LENGTH + 1 != TEMP_ACTIVE) {
+        if (LENGTH !=TEMP_ACTIVE) {
             _this.loading($(_this.RIGHT_CONTENT));
         }
     })
@@ -1136,14 +1140,18 @@ WebApp.prototype.checkLoading = function () {
     })
 
     $(document).on('click', _this.LG_NEXT, function () {
-        var LENGTH = $(this).prev('.pagination-item').find('.pagination-code').length;
+        var LENGTH =Math.ceil($(this).next('.pagination-total').html().replace(/[^0-9]/ig,"")/10);
         var TEMP_ACTIVE = $(this).prev('.pagination-item').find('.active').html();
-        if (LENGTH!= TEMP_ACTIVE) {
+        if (LENGTH !=TEMP_ACTIVE) {
             _this.loading($(_this.BLOCK_BODY));
         }
     })
     // 第三层
     $(document).on('click', _this.LG_BUTTON, function () {
+        _this.loading($(_this.PANEL_BODY));
+    })
+
+    $(document).on('click', _this.LG_PANEL, function () {
         _this.loading($(_this.PANEL_BODY));
     })
 
@@ -1154,10 +1162,17 @@ WebApp.prototype.checkLoading = function () {
     $(document).on('click',_this.LG_A, function () {
         _this.loading($(_this.PANEL_BODY));
     })
+
+    $(document).on('click', _this.LG_PASSWORD, function () {
+        _this.loading($(_this.SM_BUTTON).find('a'));
+    })
+
     //第四层
     $(document).on('click', _this.SM_BUTTON, function () {
         _this.loading($(_this.SM_BUTTON).find('a'));
     })
+
+
 }
 
 

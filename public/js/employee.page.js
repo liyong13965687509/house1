@@ -668,10 +668,15 @@ Employee.prototype.ajaxRequestBindUpdateEmployee = function (params) {
         data: params,
         dataType: "JSON",
         success: function (data) {
+            // webApp.loading($(webApp.PANEL_BODY));
+            // $(".spinner").addClass('hide').siblings().removeClass('hide');
             if ($(webApp.PANEL_BODY).find(".spinner").length == 0) {
                 $(webApp.PANEL_BODY).append(webApp.TEMP_LOAD);
             }
             $(webApp.PANEL_BODY).find(".spinner").removeClass('hide').siblings().addClass('hide');
+            webApp.TIMER = setTimeout(function () {
+                $(webApp.PANEL_BODY).find(".spinner").addClass('hide').siblings().removeClass('hide');
+            }, 1000);
             if (data['succ']) {
                 var JSON_DATA = data['data'];
                 var TEMP_JSON = {
