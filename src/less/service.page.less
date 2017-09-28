@@ -148,6 +148,66 @@
         padding: 5px;
         min-height: 100%;
         background-color: #ffffff;
+        .table-body{
+          .column-fault{
+            &:hover{
+              .column-float{
+                display: block;
+              }
+            }
+            word-wrap: break-word;
+            position: relative;
+            .column-content{
+              cursor: pointer;
+              widthword-break: keep-all;
+              white-space:nowrap;
+              overflow:hidden;
+              text-overflow: ellipsis;
+              margin: 0 !important;
+            }
+
+            .column-float{
+              display: none;
+              position: absolute;
+              background-color: #fff;
+              width:160%;
+              left:20%;
+              bottom:45px;
+              padding: 10px;
+              line-height:20px;
+              text-align: left;
+              border:1px solid #e6e6e6;
+              -webkit-border-radius:4px;
+              -moz-border-radius:4px;
+              border-radius:4px;
+              z-index: 1000;
+              -webkit-box-shadow:  0 0 4px #e6e6e6;
+              -moz-box-shadow:  0 0 4px #e6e6e6;
+              box-shadow:  0 0 15px #e6e6e6;
+              &:before{
+                background-color: red;
+                content:'';
+                width:12px;
+                height:12px;
+                display: block;
+                position: absolute;
+                background-color: #fff;
+                transform: rotate(45deg);
+                border-bottom:1px solid #e6e6e6;
+                border-right:1px solid #e6e6e6;
+                left:15%;
+                bottom:-6px;
+                box-shadow-bottom:  -2px -2px 4px #e6e6e6;
+                box-shadow-right:  -2px -2px 4px #e6e6e6;
+                //box-shadow: -2px -2px 4px rgba(255,0,0.5);
+                //-webkit-box-shadow:  -2px -2px 4px rgba(255,0,0.5);
+                //-moz-box-shadow:  -2px -2px 4px rgba(255,0,0.5);
+
+              }
+            }
+          }
+
+        }
       }
       .right-footer {
         position: fixed;
@@ -185,7 +245,7 @@
     }
   }
   .panel-group {
-    padding: 20px 15px;
+    //padding: 20px 15px;
     margin-bottom: 0px;
     line-height: 40px;
     .column-label {
@@ -209,6 +269,15 @@
     .search {
       float: right;
       margin-right: 15px;
+    }
+    .group-row{
+      .col-xs-4{
+        color:@assist;
+      }
+      .col-xs-8{
+          color:@content;
+        }
+
     }
   }
   #InDate_EmpAdd, #InDate_EmpEdit {
@@ -317,6 +386,7 @@
         height: 100%;
         overflow: hidden;
         padding: 0px !important;
+
       }
       .panel-modal {
         padding-bottom: 0px !important;
@@ -434,6 +504,9 @@
     .tab-footer {
 
     }
+  }
+  textarea{
+    height:60px;
   }
 }
 
@@ -575,7 +648,7 @@
 
   .pull-right {
     .drop-container {
-      width: 100px;
+      width: 170px;
     }
     .form-group {
       position: relative;
@@ -625,6 +698,31 @@
       .btn {
         margin: 0px !important;
       }
+    }
+  }
+}
+
+
+
+.panel{
+  &.panel-sm{
+    .max-image{
+      img {
+        width: 100px; height: 100px;
+        border: 1px solid #ddd;
+        padding: 5px;
+        background: #f0f0f0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -87px;
+        margin-left: -87px;
+        display: none;
+
+      }
+    }
+    textarea{
+      height:60px !important;
     }
   }
 }

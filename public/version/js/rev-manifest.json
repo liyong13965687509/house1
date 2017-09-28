@@ -34,7 +34,8 @@
   "report.page.js": "report.page.js?v=9e44ecb405",
   "resetpwd.page.js": "resetpwd.page.js?v=36802c79e1",
   "self.page.js": "self.page.js?v=89044c5f15",
-  "service.page.js": "service.page.js?v=1afa98883e",
+  "service.page.js": "service.page.js?v=dd3448a6fa",
+  "service1.page.js": "service1.page.js?v=6c18fae8f7",
   "system.page.js": "system.page.js?v=e34fa60bdb",
   "tools.js": "tools.js?v=9929ad962c"
 }
