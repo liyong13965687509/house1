@@ -14,7 +14,8 @@ function Service() {
     this.BTN_DETAIL = arguments['BTN_DETAIL'] ? arguments['BTN_DETAIL'] : '.btn-detail';
     this.BTN_REPLY = arguments['BTN_REPLY'] ? arguments['BTN_REPLY'] : '.btn-reply';
     this.ABOUT_IMG = arguments['ABOUT_IMG'] ? arguments['ABOUT_IMG'] : '.about-img';
-
+    this.PANEL_IMG = arguments['PANEL_IMG'] ? arguments['PANEL_IMG'] : '.panel-img';
+    this.INDEX = arguments['INDEX'] ? arguments['INDEX'] : 'INDEX';
     this.API_CONFIG = arguments['API_CONFIG'] ? arguments['API_CONFIG'] : {
         BIND_DEVICES: '/devices',
     }
@@ -33,6 +34,7 @@ Service.prototype.init = function () {
     // this.scaling();
     this.navChange();
     this.btnDetailClick();
+    this.selectObj();
     return this;
 }
 /**
@@ -83,9 +85,12 @@ Service.prototype.navChange = function () {
     this.devicesApply();
     var _this = this;
     $(document).on('click', this.TAB_BTN, function () {
-        $(_this.TAB_BTN).removeClass(_this.ACTIVE);
-        $(this).addClass(_this.ACTIVE);
-        switch ($(this).index()) {
+        _this.INDEX=$(this).index();
+        // $(_this.TAB_BTN).removeClass(_this.ACTIVE);
+        $(this).addClass(_this.ACTIVE).siblings(_this.TAB_BTN).removeClass(_this.ACTIVE);
+        $('.right-header .header-item').eq( _this.INDEX).removeClass('hide')
+            .siblings('.header-item').addClass('hide');
+        switch (_this.INDEX) {
             case 0:
                 _this.devicesApply();
                 break;
@@ -432,16 +437,63 @@ Service.prototype.btnDetailClick = function () {
     })
 
     $(document).on('click', this.ABOUT_IMG, function () {
-        mp.manualShowPanel({
-            index: 2,
-            element: '.panel-sm',
-            complete: function () {
+        $(_this.PANEL_IMG).find('.panel-content').animate({
+            marginTop: '-200px',
+        }, 400);
+        $(_this.PANEL_IMG).toggleClass('hide');
 
-            }
-        });
     })
 
 
+    $(document).on('click', this.PANEL_IMG, function () {
+        $(this).find('.panel-content').animate({
+            marginTop: '-500px',
+        }, 400);
+
+        webApp.TIMER = setTimeout(function () {
+            $(_this.PANEL_IMG).toggleClass('hide');
+        }, 350);
+
+    })
+
+    return this;
+}
+
+/**
+ * Author:LIYONG
+ * Date:2017-9-29
+ *  通知新增
+ * @returns {Service}
+ */
+Service.prototype.informAdd=function () {
+    mp.manualShowPanel({
+        index: 2,
+        element: '.panel-sm',
+        complete: function () {
+            // _this.switchShowDetail({
+            //     that: that,
+            //     index: TEMP_INDEX
+            // });
+        }
+    });
+    return this;
+}
+
+/**
+ * Author:LIYONG
+ * Date:2017-9-29
+ *  选择通知对象
+ * @returns {Service}
+ */
+Service.prototype.selectObj=function () {
+    $(document).on('click','.form-radio .radio',function () {
+        $('.form-radio .radio').toggleClass('radio-selected');
+        if($('#radio-part').hasClass('radio-selected')){
+            $('.selecte-obj').addClass('add-obj');
+        }else{
+            $('.selecte-obj').removeClass('add-obj');
+        }
+    })
 
     return this;
 }

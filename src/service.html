@@ -85,46 +85,99 @@
             <div class="right-container">
                 <div class="right-content">
                     <div class="right-header hide">
-                        <div class="form-group">
-                            <div class="drop-container hide" tabIndex="1">
-                                <div class="drop-content">
-                                    <div class="drop-header">
-                                        <span class="drop-result">花桥天琚人才公寓</span>
-                                        <i class="drop-icon icon-drop-down"></i>
+                        <div class="header-item">
+                            <div class="form-group">
+                                <div class="drop-container hide" tabIndex="1">
+                                    <div class="drop-content">
+                                        <div class="drop-header">
+                                            <span class="drop-result">花桥天琚人才公寓</span>
+                                            <i class="drop-icon icon-drop-down"></i>
+                                        </div>
+                                        <div class="drop-body">
+                                            <ul id="EquBind"></ul>
+                                        </div>
+                                        <div class="drop-footer"></div>
                                     </div>
-                                    <div class="drop-body">
-                                        <ul id="EquBind"></ul>
-                                    </div>
-                                    <div class="drop-footer"></div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="drop-container hide" tabIndex="1">
-                                <div class="drop-content">
-                                    <div class="drop-header">
-                                        <span class="drop-result">处理状态</span>
-                                        <i class="drop-icon icon-drop-down"></i>
+                            <div class="form-group">
+                                <div class="drop-container hide" tabIndex="1">
+                                    <div class="drop-content">
+                                        <div class="drop-header">
+                                            <span class="drop-result">处理状态</span>
+                                            <i class="drop-icon icon-drop-down"></i>
+                                        </div>
+                                        <div class="drop-body">
+                                            <ul id="EquBuilding" data-target="EquNumber"></ul>
+                                        </div>
+                                        <div class="drop-footer"></div>
                                     </div>
-                                    <div class="drop-body">
-                                        <ul id="EquBuilding" data-target="EquNumber"></ul>
-                                    </div>
-                                    <div class="drop-footer"></div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <input class="form-input group-date1" readonly
+                                       placeholder="预约日期"/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-input"
+                                       placeholder="房号、编号、手机"/>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn confirm" onclick="mg.exeBindDevices();">查询</button>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input class="form-input group-date1" readonly
-                                   placeholder="预约日期"/>
+                        <div class="header-item hide">
+                            <div class="form-group">
+                                <div class="drop-container hide" tabIndex="1">
+                                    <div class="drop-content">
+                                        <div class="drop-header">
+                                            <span class="drop-result">花桥天琚人才公寓</span>
+                                            <i class="drop-icon icon-drop-down"></i>
+                                        </div>
+                                        <div class="drop-body">
+                                            <ul id="EquBind"></ul>
+                                        </div>
+                                        <div class="drop-footer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="drop-container hide" tabIndex="1">
+                                    <div class="drop-content">
+                                        <div class="drop-header">
+                                            <span class="drop-result">回复状态</span>
+                                            <i class="drop-icon icon-drop-down"></i>
+                                        </div>
+                                        <div class="drop-body">
+                                            <ul  data-target="EquNumber"></ul>
+                                        </div>
+                                        <div class="drop-footer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-input group-date1" readonly
+                                       placeholder="反馈日期"/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-input"
+                                       placeholder="房号、编号、手机"/>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn confirm" onclick="mg.exeBindDevices();">查询</button>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input class="form-input"
-                                   placeholder="房号、编号、手机"/>
+                        <div class="header-item hide">
+                            <div class="form-group">
+                                <input class="form-input"
+                                       placeholder="请输入关键字"/>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn confirm pull-left" onclick="mg.exeBindDevices();">查询</button>
+                                <button class="btn confirm" onclick="sp.informAdd();">通知新增</button>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <button class="btn confirm" onclick="mg.exeBindDevices();">查询</button>
 
-                        </div>
                     </div>
                     <div class="right-body">
                         <div class="right-table">
@@ -255,16 +308,15 @@
         </div>
         <div class="panel-modal">
             <div class="panel-header">
-                <h3 class="panel-title">设备绑定</h3>
+                <h3 class="panel-title">通知新增</h3>
             </div>
-            <img src="images/max-device.png" alt="">
             <div class="panel-body">
                 <div class="form-group">
-                    <label class="form-label">楼盘</label>
+                    <label class="form-label">通知类型</label>
                     <div class="drop-container hide" tabIndex="1">
                         <div class="drop-content">
                             <div class="drop-header">
-                                <span class="drop-result reset">请选择</span>
+                                <span class="drop-result reset">系统通知</span>
                                 <i class="drop-icon icon-drop-down"></i>
                             </div>
                             <div class="drop-body">
@@ -275,34 +327,24 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">层号</label>
-                    <div class="drop-container hide" tabIndex="1">
-                        <div class="drop-content">
-                            <div class="drop-header">
-                                <span class="drop-result reset">请选择</span>
-                                <i class="drop-icon icon-drop-down"></i>
-                            </div>
-                            <div class="drop-body">
-                                <ul id="KeyEquNumber" data-target="KeyEquRoom"></ul>
-                            </div>
-                            <div class="drop-footer"></div>
+                    <label class="form-label">通知对象</label>
+                    <div class="form-radio">
+                        <div id="radio-all" class="radio radio-selected">
+                            <span>所有人</span>
+                        </div>
+                        <div id="radio-part" class="radio">
+                            <span>部分</span>
+                        </div>
+                        <div class="selecte-obj" >
+                            <span>选择</span>
                         </div>
                     </div>
+                    <textarea class="form-input form-text" placeholder="请输入通知内容"></textarea>
+
                 </div>
                 <div class="form-group">
-                    <label class="form-label">房间</label>
-                    <div class="drop-container hide" tabIndex="1">
-                        <div class="drop-content">
-                            <div class="drop-header">
-                                <span class="drop-result reset">请选择</span>
-                                <i class="drop-icon icon-drop-down"></i>
-                            </div>
-                            <div class="drop-body">
-                                <ul id="KeyEquRoom"></ul>
-                            </div>
-                            <div class="drop-footer"></div>
-                        </div>
-                    </div>
+                    <div class="form-label" for="Add_Name">通知内容</div>
+                    <textarea class="form-input form-text" placeholder="请输入通知内容"></textarea>
                 </div>
             </div>
             <div class="panel-footer">
@@ -316,11 +358,11 @@
         </div>
         <div class="panel-modal">
             <div class="panel-header">
-                <h3 class="panel-title">修改密码</h3>
+                <h3 class="panel-title">通知新增</h3>
             </div>
             <div class="panel-body">
                 <div class="form-group">
-                    <label class="form-label" for="Update_Pwd_Name">密码名称</label>
+                    <label class="form-label" for="Update_Pwd_Name">通知类型</label>
                     <input class="form-input" id="Update_Pwd_Name" readonly disabled placeholder="请输入密码名称"/>
                 </div>
                 <div class="form-group">
@@ -465,6 +507,12 @@
         </div>
     </div>
 
+</div>
+<div class="panel-max panel-img hide">
+    <div class="panel-bg-img"></div>
+    <div class="panel-content">
+        <img src="images/max-device.png" alt="">
+    </div>
 </div>
 <script type="text/javascript" src="libs/jquery-1.11.3.js"></script>
 <script type="text/javascript" src="libs/bootstrap.min.js"></script>

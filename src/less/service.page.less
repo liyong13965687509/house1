@@ -509,6 +509,30 @@
     height:60px;
   }
 }
+.panel-img{
+  .panel-bg-img{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    //background-color: rgba(0, 0, 0, 0.5);
+    -webkit-transition: all 300ms ease-out;
+    -moz-transition: all 300ms ease-out;
+    -ms-transition: all 300ms ease-out;
+    -o-transition: all 300ms ease-out;
+    transition: all 300ms ease-out;
+  }
+  .panel-content{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 10000;
+    margin-top: -500px;
+    margin-left: -300px;
+  }
+}
 
 .form-group {
   position: relative;
@@ -662,7 +686,7 @@
         z-index: 0;
         margin: 0px;
         position: absolute;
-        padding-left: 470px;
+        padding-left: 220px;
         .btn.search {
           float: left;
         }
@@ -724,5 +748,57 @@
     textarea{
       height:60px !important;
     }
+
+
+
+    .form-radio{
+      position: relative;
+      .radio{
+        &:before{
+          content: '';
+          display: inline-block;
+          width: 18px;
+          height: 18px;
+          background: url(../images/spire.png) no-repeat;
+          background-position: 0 0;
+          vertical-align: middle;
+        }
+        span{
+          color:@content;
+          padding-left: 10px;
+          vertical-align: middle;
+        }
+      }
+      .selecte-obj{
+        position: absolute;
+        bottom: 0px;
+        left: 110px;
+        &:before{
+          content: '';
+          display: inline-block;
+          width: 18px;
+          height: 18px;
+          background: url(../images/spire.png) no-repeat;
+          background-position: -68px 0;
+          vertical-align: middle;
+        }
+        span{
+          color:@content;
+          padding-left: 10px;
+          vertical-align: middle;
+        }
+      }
+    }
+    .radio-selected{
+        &:before{
+          background-position: -18px 0 !important;
+        }
+    }
+    .add-obj{
+      &:before{
+        background-position: -86px 0 !important;
+      }
+    }
+
   }
 }
