@@ -140,9 +140,9 @@
     function SelectCustomer(charId) {
         if (window.opener.document.getElementById("CustomerCharId")) {
             window.opener.document.getElementById("CustomerCharId").value = charId;
-            window.opener.document.getElementById("CustomerName_Add").innerText = $("#name_" + charId).text();
-            window.opener.document.getElementById("ContractPhone_Add").value = $("#phone_" + charId).text();
-            window.opener.document.getElementById("CardID_Add").value = $("#cardID_" + charId).text();
+            window.opener.document.getElementById("AddContract_Name").value = $("#name_" + charId).text();
+            window.opener.document.getElementById("AddContract_Phone").value = $("#phone_" + charId).text();
+            window.opener.document.getElementById("AddContract_Id").value = $("#cardID_" + charId).text();
             window.close();
 
         } else {

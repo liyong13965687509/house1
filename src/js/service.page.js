@@ -15,7 +15,11 @@ function Service() {
     this.BTN_REPLY = arguments['BTN_REPLY'] ? arguments['BTN_REPLY'] : '.btn-reply';
     this.ABOUT_IMG = arguments['ABOUT_IMG'] ? arguments['ABOUT_IMG'] : '.about-img';
     this.PANEL_IMG = arguments['PANEL_IMG'] ? arguments['PANEL_IMG'] : '.panel-img';
+    this.CHOOSED = arguments['CHOOSED'] ? arguments['CHOOSED'] : '.choosed';
+    this.CHECK_ALL = arguments['CHECK_ALL'] ? arguments['CHECK_ALL'] : '.check-all';
+    this.SEL_PEOPLE = arguments['SEL_PEOPLE'] ? arguments['SEL_PEOPLE'] : '.selected-people';
     this.INDEX = arguments['INDEX'] ? arguments['INDEX'] : 'INDEX';
+
     this.API_CONFIG = arguments['API_CONFIG'] ? arguments['API_CONFIG'] : {
         BIND_DEVICES: '/devices',
     }
@@ -31,7 +35,6 @@ function Service() {
  */
 Service.prototype.init = function () {
     ComponentsPickers.init();
-    // this.scaling();
     this.navChange();
     this.btnDetailClick();
     this.selectObj();
@@ -486,15 +489,34 @@ Service.prototype.informAdd=function () {
  * @returns {Service}
  */
 Service.prototype.selectObj=function () {
-    $(document).on('click','.form-radio .radio',function () {
-        $('.form-radio .radio').toggleClass('radio-selected');
-        if($('#radio-part').hasClass('radio-selected')){
-            $('.selecte-obj').addClass('add-obj');
-        }else{
-            $('.selecte-obj').removeClass('add-obj');
-        }
+    $(document).on('click','.form-radio input[checked="checked"]',function () {
+        $('.form-radio input[name="choose"]').removeClass('choosed');
     })
-
+    $(document).on('click','.form-radio input[name="notice"]',function () {
+        $(this).parents('.col-xs-3').next().find('input[name="choose"]').addClass('choosed');
+    })
+    $(document).on('click',this.CHOOSED,function () {
+        $('.panel-window').removeClass('hide');
+    })
+    $(document).on('click','.panel-mask',function () {
+        $('.panel-window').addClass('hide');
+    })
+    $(document).on('click','.panel-cancel',function () {
+        $('.panel-window').addClass('hide');
+    })
     return this;
 }
+/*
+ * Author:LIYONG
+ * Date:2017-10-9
+ *  选择通知对象
+ * @returns {Service}
+ */
+Service.prototype.checkObj=function () {
+    $(document).on('click',this.SEL_PEOPLE,function (){
+        // $(this).addClass('')
+    })
+    return this;
+}
+
 var sp = new Service();

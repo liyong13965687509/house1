@@ -294,7 +294,6 @@ Employee.prototype.ajaxRequestBindEmployee = function (params) {
         data: params,
         dataType: "JSON",
         success: function (data) {
-            webApp.loading($(webApp.RIGHT_CONTENT));
             if (data['succ']) {
                 var TEMP_HTML = webApp['NO_RESULT'];
                 var JSON_DATA = data['data'];
@@ -668,15 +667,6 @@ Employee.prototype.ajaxRequestBindUpdateEmployee = function (params) {
         data: params,
         dataType: "JSON",
         success: function (data) {
-            // webApp.loading($(webApp.PANEL_BODY));
-            // $(".spinner").addClass('hide').siblings().removeClass('hide');
-            if ($(webApp.PANEL_BODY).find(".spinner").length == 0) {
-                $(webApp.PANEL_BODY).append(webApp.TEMP_LOAD);
-            }
-            $(webApp.PANEL_BODY).find(".spinner").removeClass('hide').siblings().addClass('hide');
-            webApp.TIMER = setTimeout(function () {
-                $(webApp.PANEL_BODY).find(".spinner").addClass('hide').siblings().removeClass('hide');
-            }, 1000);
             if (data['succ']) {
                 var JSON_DATA = data['data'];
                 var TEMP_JSON = {
@@ -844,8 +834,7 @@ Employee.prototype.dptAddEmptyCheck = function (params) {
         CHECK_MESSAGE = "请选择上级部门！";
     } else if (regular.check(regular.DPT_NAME_REG_EXP, params['name'])) {
         CHECK_MESSAGE = "部门名称输入有误！";
-    }
-    else {
+    } else {
         CHECK_RESULT = true;
     }
     if (!CHECK_RESULT) {

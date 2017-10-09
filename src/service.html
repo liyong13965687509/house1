@@ -90,7 +90,7 @@
                                 <div class="drop-container hide" tabIndex="1">
                                     <div class="drop-content">
                                         <div class="drop-header">
-                                            <span class="drop-result">花桥天琚人才公寓</span>
+                                            <span class="drop-result">反馈类型</span>
                                             <i class="drop-icon icon-drop-down"></i>
                                         </div>
                                         <div class="drop-body">
@@ -149,7 +149,7 @@
                                             <i class="drop-icon icon-drop-down"></i>
                                         </div>
                                         <div class="drop-body">
-                                            <ul  data-target="EquNumber"></ul>
+                                            <ul data-target="EquNumber"></ul>
                                         </div>
                                         <div class="drop-footer"></div>
                                     </div>
@@ -251,6 +251,12 @@
                         <div class="form-label" for="Add_Name">维修处理进度回复</div>
                         <textarea class="form-input form-text" placeholder="请输入回复内容"></textarea>
                     </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-6">回复时间:2017-10-9</div>
+                            <div class="col-xs-6">回复人:李勇</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="panel-footer">
@@ -328,18 +334,25 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label">通知对象</label>
-                    <div class="form-radio">
-                        <div id="radio-all" class="radio radio-selected">
+                    <div class="form-radio row">
+                        <div class="col-xs-12">
+                            <input type="radio" checked="checked" name="notice"/>
                             <span>所有人</span>
                         </div>
-                        <div id="radio-part" class="radio">
-                            <span>部分</span>
-                        </div>
-                        <div class="selecte-obj" >
-                            <span>选择</span>
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <input type="radio" name="notice"/>
+                                    <span>部分</span>
+                                </div>
+                                <div class="col-xs-9">
+                                    <input type="radio" name="choose"/>
+                                    <span>选择</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <textarea class="form-input form-text" placeholder="请输入通知内容"></textarea>
+                    <textarea class="form-input form-text" placeholder="请输入通知人"></textarea>
 
                 </div>
                 <div class="form-group">
@@ -354,6 +367,74 @@
                     <button class="btn confirm" onclick="mg.exeDeviceBind();">保存</button>
                 </div>
                 <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <div class="panel-window hide">
+            <div class="panel-mask"></div>
+            <div class="panel-content">
+                <div class="panel-head">
+                    <div class="pull-left">
+                        <h3 class="panel-title">选择被通知人</h3>
+                    </div>
+                    <div class="pull-right">
+                        <div class="pull-cancel"></div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="pull-left">
+                            <button class="btn confirm">确认选择</button>
+                        </div>
+                        <div class="pull-right">
+                            <input class="form-input" placeholder="姓名、手机号码">
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-table">
+                            <div class="table-body row">
+                                <div class="table-item col-xs-12 col-sm-6 col-md-12">
+                                    <div class="row-content row">
+                                        <div class="row-header col-xs-6 col-md-12">
+                                            <div class="row-title row">
+                                                <div class="column col-xs-12 col-md-4">
+                                                    <div class="radio selected-people check-all"></div>
+                                                    <span class="all-selected">全选</span>
+                                                </div>
+                                                <div class="column col-xs-12 col-md-4">姓名</div>
+                                                <div class="column col-xs-12 col-md-4">手机号</div>
+                                            </div>
+                                        </div>
+                                        <div class="row-body col-xs-6 col-md-12">
+                                            <div class="row-item row">
+                                                <div class="column col-xs-12 col-md-4">
+                                                    <div class="radio selected-people"></div>
+                                                </div>
+                                                <div class="column col-xs-12 col-md-4">赵奕欢</div>
+                                                <div class="column col-xs-12 col-md-4">14785296325</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-item col-xs-12 col-sm-6 col-md-12">
+                                    <div class="row-content row">
+                                        <div class="column col-xs-12 col-md-4">
+                                            <div class="selected-people"></div>
+                                        </div>
+                                        <div class="column col-xs-12 col-md-4">赵奕欢</div>
+                                        <div class="column col-xs-12 col-md-4">89653274125</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="panel-footer">
+                    <div class="pagination" id="window"></div>
+                </div>
             </div>
         </div>
         <div class="panel-modal">
@@ -514,6 +595,7 @@
         <img src="images/max-device.png" alt="">
     </div>
 </div>
+
 <script type="text/javascript" src="libs/jquery-1.11.3.js"></script>
 <script type="text/javascript" src="libs/bootstrap.min.js"></script>
 <script type="text/javascript" src="libs/bootstrap-datetimepicker.min.js"></script>

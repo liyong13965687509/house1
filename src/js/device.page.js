@@ -1198,7 +1198,6 @@ Management.prototype.ajaxRequestPowerOperRecord = function (params) {
         dataType: "JSON",
         data: params,
         success: function (data) {
-            // webApp.loading($(webApp.BLOCK_BODY));
             if (data['succ']) {
                 var JSON_DATA = data['data']['op_list'];
                 _this.appendPowerOperRecordTemplate(JSON_DATA);
@@ -1302,8 +1301,7 @@ Management.prototype.appendChangePageLockPasswordTemplate = function (params) {
         var TEMP_ISMANAGE = 1 == JSON_DATA['IsManage'] ? '管理密码' : '租客';
         var TEMP_END = webApp.parseDate(JSON_DATA['PasswordEndTime'] * 1000);
         var TEMP_BEGIN = webApp.parseDate(JSON_DATA['PasswordBeginTime'] * 1000);
-        var TEMP_TIME = 1 == JSON_DATA['IsManage'] ? '永久有效'
-            : ((0==JSON_DATA['PasswordBeginTime']||0==JSON_DATA['PasswordEndTime'])? '永久有效':TEMP_BEGIN + '至' + TEMP_END);
+        var TEMP_TIME = 1 == JSON_DATA['IsManage'] ? '永久有效' : TEMP_BEGIN + '至' + TEMP_END;
         TEMP_NAME = i > 0 ? ' visible-xs visible-sm' : '';
         TEMP_HTML += '<div class="table-item col-xs-12 col-sm-6 col-md-12">'
             + '<div class="row-content row"><div class="row-header col-xs-6 col-md-12">'
