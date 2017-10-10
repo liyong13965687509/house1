@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>服务</title>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/font.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="css/service.page.css"/>
+    <link rel="stylesheet" type="text/css" href="css/datepicker.css"/>
+    <link rel="stylesheet" type="text/css" href="css/datetimepicker.css"/>
+</head>
+<body>
+<div class="header">
+    <div class="pull-left">
+        <ul class="left clearfix">
+            <li class="left-title">
+                <h1 class="hidden-xs">天琚人才公寓</h1>
+                <button class="visible-xs navbar-toggle lg-nav">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <button class="visible-xs navbar-toggle ft-bar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <button class="visible-xs navbar-toggle sm-nav">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </li>
+            <li class="left-front">
+                <a href="http://apt.2ma2.cn" target="_blank">官网</a>
+            </li>
+        </ul>
+    </div>
+    <div class="pull-right">
+        <ul class="right clearfix">
+            <li class="hidden-xs"></li>
+            <li class="right-account">
+                <p class="right-phone"></p>
+                <ul class="right-oprea">
+                    <li><a href="ownercenter.html">个人中心</a></li>
+                    <li><a href="javascript:void(0);">安全退出</a></li>
+                </ul>
+            </li>
+            <li class="right-message">
+                <a href="message.html">
+                    <img src="images/yg_icon_07.png?v=9957859eb8"/>
+                    <span class="message-nums">8</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="main">
+    <div class="service">
+        <div class="pull-left">
+            <div class="pull-container">
+                <div class="pull-content">
+                    <div class="left-header">
+                        <p><i class="icon-Service"></i><span type="role-detail">服务</span></p>
+                    </div>
+                    <div class="left-body">
+                        <ul class="tab-bar" id="EquType">
+                            <li class="active" data-value="1">维修申请</li>
+                            <li data-value="2">意见反馈</li>
+                            <li data-value="3">通知提醒</li>
+                        </ul>
+                    </div>
+                    <div class="footer"></div>
+                </div>
+            </div>
+        </div>
+        <div class="pull-right">
+            <div class="right-container">
+                <div class="right-content">
+                    <div class="right-header hide">
+                        <div class="header-item">
+                            <div class="form-group">
+                                <div class="drop-container hide" tabIndex="1">
+                                    <div class="drop-content">
+                                        <div class="drop-header">
+                                            <span class="drop-result">花桥天琚人才公寓</span>
+                                            <i class="drop-icon icon-drop-down"></i>
+                                        </div>
+                                        <div class="drop-body">
+                                            <ul id="EquBind"></ul>
+                                        </div>
+                                        <div class="drop-footer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="drop-container hide" tabIndex="1">
+                                    <div class="drop-content">
+                                        <div class="drop-header">
+                                            <span class="drop-result">处理状态</span>
+                                            <i class="drop-icon icon-drop-down"></i>
+                                        </div>
+                                        <div class="drop-body">
+                                            <ul id="EquBuilding" data-target="EquNumber"></ul>
+                                        </div>
+                                        <div class="drop-footer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-input group-date1" readonly
+                                       placeholder="预约日期"/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-input"
+                                       placeholder="房号、编号、手机"/>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn confirm" onclick="mg.exeBindDevices();">查询</button>
+                            </div>
+                        </div>
+                        <div class="header-item hide">
+                            <div class="form-group">
+                                <div class="drop-container hide" tabIndex="1">
+                                    <div class="drop-content">
+                                        <div class="drop-header">
+                                            <span class="drop-result">花桥天琚人才公寓</span>
+                                            <i class="drop-icon icon-drop-down"></i>
+                                        </div>
+                                        <div class="drop-body">
+                                            <ul id="EquBind"></ul>
+                                        </div>
+                                        <div class="drop-footer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="drop-container hide" tabIndex="1">
+                                    <div class="drop-content">
+                                        <div class="drop-header">
+                                            <span class="drop-result">回复状态</span>
+                                            <i class="drop-icon icon-drop-down"></i>
+                                        </div>
+                                        <div class="drop-body">
+                                            <ul  data-target="EquNumber"></ul>
+                                        </div>
+                                        <div class="drop-footer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-input group-date1" readonly
+                                       placeholder="反馈日期"/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-input"
+                                       placeholder="房号、编号、手机"/>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn confirm" onclick="mg.exeBindDevices();">查询</button>
+                            </div>
+                        </div>
+                        <div class="header-item hide">
+                            <div class="form-group">
+                                <input class="form-input"
+                                       placeholder="请输入关键字"/>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn confirm pull-left" onclick="mg.exeBindDevices();">查询</button>
+                                <button class="btn confirm" onclick="sp.informAdd();">通知新增</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="right-body">
+                        <div class="right-table">
+                            <div class="table-header"></div>
+                            <div class="table-body row"></div>
+                            <div class="table-footer"></div>
+                        </div>
+                    </div>
+                    <!--分页-->
+                    <div class="right-footer">
+                        <div class="pagination" id="Main"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="footer"></div>
+
+<div class="panel panel-sm hide">
+    <div class="panel-bg"></div>
+    <div class="panel-content">
+        <div class="panel-modal">
+            <div class="panel-header">
+                <h3 class="panel-title">维修详情</h3>
+            </div>
+            <div class="panel-body">
+                <div class="panel-group">
+                    <div class="group-row row">
+                        <div class="col-xs-4 col-sm-3">报修房源</div>
+                        <div class="col-xs-8 col-sm-9">花桥天琚人才公寓</div>
+                    </div>
+                    <div class="group-row row">
+                        <div class="col-xs-4 col-sm-3">租客姓名</div>
+                        <div class="col-xs-8 col-sm-9">柳岩</div>
+                    </div>
+                    <div class="group-row row">
+                        <div class="col-xs-4 col-sm-3">手机号码</div>
+                        <div class="col-xs-8 col-sm-9">18256567589</div>
+                    </div>
+                    <div class="group-row row">
+                        <div class="col-xs-4 col-sm-3">报修物品</div>
+                        <div class="col-xs-8 col-sm-9">空调</div>
+                    </div>
+                    <div class="group-row row">
+                        <div class="col-xs-4 col-sm-3">故障原因</div>
+                        <div class="col-xs-8 col-sm-9">漏水</div>
+                    </div>
+                    <div class="group-row row">
+                        <div class="col-xs-4 col-sm-3">预约时间</div>
+                        <div class="col-xs-8 col-sm-9">2017.9.28 10:00~11:00</div>
+                    </div>
+                    <div class="group-row row">
+                        <div class="col-xs-4 col-sm-3">报修时间</div>
+                        <div class="col-xs-8 col-sm-9">2017.9.28 10:00~11:00</div>
+                    </div>
+                    <div class="group-row row">
+                        <div class="col-xs-4 col-sm-3">报修编号</div>
+                        <div class="col-xs-8 col-sm-9">1223344</div>
+                    </div>
+                    <div class="group-row row row-image">
+                        <div class="col-xs-4 col-sm-3">相关照片</div>
+                        <div class="col-xs-8 col-sm-9">
+                            <a href="#" class="about-img">
+                                <img src="images/min-device.png" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-label" for="Add_Name">维修处理进度回复</div>
+                        <textarea class="form-input form-text" placeholder="请输入回复内容"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="mg.exeAddDevices();">保存</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="panel-modal">
+            <div class="panel-header">
+                <h3 class="panel-title">意见反馈详情</h3>
+            </div>
+
+            <div class="panel-body">
+                <div class="panel-group">
+                    <div class="group-row row">
+                        <div class="col-xs-4 col-sm-3">反馈类型</div>
+                        <div class="col-xs-8 col-sm-9">软件功能</div>
+                    </div>
+                    <div class="group-row row">
+                        <div class="col-xs-4 col-sm-3">反馈用户</div>
+                        <div class="col-xs-8 col-sm-9">柳岩</div>
+                    </div>
+                    <div class="group-row row">
+                        <div class="col-xs-4 col-sm-3">手机号码</div>
+                        <div class="col-xs-8 col-sm-9">18256567589</div>
+                    </div>
+                    <div class="group-row row">
+                        <div class="col-xs-4 col-sm-3">反馈时间</div>
+                        <div class="col-xs-8 col-sm-9">2017.9.28 10:00~11:00</div>
+                    </div>
+                    <div class="group-row row">
+                        <div class="col-xs-4 col-sm-3">反馈内容</div>
+                        <div class="col-xs-8 col-sm-9">空调漏水还不制冷，赶紧来修</div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-label" for="Add_Name">反馈回复</div>
+                        <textarea class="form-input form-text" placeholder="请输入回复内容"></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <div class="panel-footer">
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="mg.exeAddPassword();">保存</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="panel-modal">
+            <div class="panel-header">
+                <h3 class="panel-title">通知新增</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="form-label">通知类型</label>
+                    <div class="drop-container hide" tabIndex="1">
+                        <div class="drop-content">
+                            <div class="drop-header">
+                                <span class="drop-result reset">系统通知</span>
+                                <i class="drop-icon icon-drop-down"></i>
+                            </div>
+                            <div class="drop-body">
+                                <ul id="KeyEquBuilding" data-target="KeyEquNumber"></ul>
+                            </div>
+                            <div class="drop-footer"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">通知对象</label>
+                    <div class="form-radio">
+                        <div id="radio-all" class="radio radio-selected">
+                            <span>所有人</span>
+                        </div>
+                        <div id="radio-part" class="radio">
+                            <span>部分</span>
+                        </div>
+                        <div class="selecte-obj" >
+                            <span>选择</span>
+                        </div>
+                    </div>
+                    <textarea class="form-input form-text" placeholder="请输入通知内容"></textarea>
+
+                </div>
+                <div class="form-group">
+                    <div class="form-label" for="Add_Name">通知内容</div>
+                    <textarea class="form-input form-text" placeholder="请输入通知内容"></textarea>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="mg.exeDeviceBind();">保存</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="panel-modal">
+            <div class="panel-header">
+                <h3 class="panel-title">通知新增</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="form-label" for="Update_Pwd_Name">通知类型</label>
+                    <input class="form-input" id="Update_Pwd_Name" readonly disabled placeholder="请输入密码名称"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="Update_Pwd_Pwd">密码明文</label>
+                    <input class="form-input" id="Update_Pwd_Pwd" placeholder="请输入密码明文"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="Update_Pwd_Begin">密码开始时间（时间戳）</label>
+                    <input class="form-input dateTimePicker" readonly id="Update_Pwd_Begin" placeholder="请输入密码开始时间"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="Update_Pwd_End">密码结束时间（时间戳）</label>
+                    <input class="form-input dateTimePicker" readonly id="Update_Pwd_End" placeholder="请输入密码结束时间"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="Update_Pwd_Phone">手机号码</label>
+                    <input class="form-input" id="Update_Pwd_Phone" readonly disabled placeholder="请输入手机号码"/>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="mg.exeUpdatePassword();">保存</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="panel-modal">
+            <div class="panel-header">
+                <h3 class="panel-title">电费充值</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="form-label">充值房间</label>
+                    <span class="form-span">
+                        <span id="Charge_BuildingName"></span>
+                        <span id="Charge_RoomName"></span>室
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">租客姓名</label>
+                    <span class="form-span" id="Charge_CustomerName"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">联系方式</label>
+                    <span class="form-span" id="Charge_Phone"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">电费单价</label>
+                    <span class="form-span"><span id="Charge_EleUnitPrice"></span>元／度</span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="PowerPrice">充值金额</label>
+                    <input class="form-input" id="PowerPrice" placeholder="请输入充值金额"/>
+                    <label class="form-unit" for="PowerPrice">元</label>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="PowerAmount">充值电量</label>
+                    <input class="form-input" disabled id="PowerAmount"/>
+                    <label class="form-unit" for="PowerAmount">度</label>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">支付方式</label>
+                    <div class="drop-container hide" tabindex="1">
+                        <div class="drop-content">
+                            <div class="drop-header">
+                                <span class="drop-result" id="ChargePayMethodResult">支付宝</span>
+                                <i class="drop-icon icon-drop-down"></i>
+                            </div>
+                            <div class="drop-body">
+                                <ul id="ChargePayMethod"></ul>
+                            </div>
+                            <div class="drop-footer"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="PowerNumber">支付流水号</label>
+                    <input class="form-input" id="PowerNumber" placeholder="请输入支付流水号"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="PowerDescription">备注</label>
+                    <input class="form-input" id="PowerDescription" placeholder="请输入备注信息"/>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="mg.exeSavePowerRecharge();">保存</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="panel-modal">
+            <div class="panel-header">
+                <h3 class="panel-title">修改设备</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="form-label" for="Update_Device_Name">名称</label>
+                    <input class="form-input" id="Update_Device_Name" placeholder="请输入设备名称"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="Update_Device_Number">序列号</label>
+                    <input class="form-input" id="Update_Device_Number" placeholder="请输入设备序列号"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="Update_Device_Uuid">UUID</label>
+                    <input class="form-input" id="Update_Device_Uuid" placeholder="请输入设备UUID"/>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="mg.exeUpdateDevices();">保存</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="panel-modal">
+            <div class="panel-header">
+                <h3 class="panel-title">重置管理员密码</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="form-label" for="Reset_Password">管理员密码</label>
+                    <input class="form-input" data-keyup="number" type="password" id="Reset_Password"
+                           placeholder="请输入六位数字管理员密码" maxlength="6"/>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="mg.exeResetPassword();">保存</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="panel-max panel-img hide">
+    <div class="panel-bg-img"></div>
+    <div class="panel-content">
+        <img src="images/max-device.png" alt="">
+    </div>
+</div>
+<script type="text/javascript" src="libs/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="libs/bootstrap.min.js"></script>
+<script type="text/javascript" src="libs/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="libs/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/components-pickers.js"></script>
+<script type="text/javascript" src="js/host.js"></script>
+<script type="text/javascript" src="js/tools.js"></script>
+<script type="text/javascript" src="js/service.page.js"></script>
+</body>
+</html>
+
+

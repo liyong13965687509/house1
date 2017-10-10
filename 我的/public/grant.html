@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>系统</title>
+    <link rel="stylesheet" type="text/css" href="css/font.css?v=1128d866e1"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css?v=1e9bc98d71"/>
+    <link rel="stylesheet" type="text/css" href="css/common.css?v=df0cb7ac0f"/>
+    <link rel="stylesheet" type="text/css" href="css/grant.page.css?v=a95875df6c"/>
+</head>
+<body>
+<div class="header">
+    <div class="pull-left">
+        <ul class="left clearfix">
+            <li class="left-title">
+                <h1 class="hidden-xs">天琚人才公寓</h1>
+                <button class="visible-xs navbar-toggle lg-nav">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <button class="visible-xs navbar-toggle sm-nav">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </li>
+            <li class="left-front">
+                <a href="http://apt.2ma2.cn" target="_blank">官网</a>
+            </li>
+        </ul>
+    </div>
+    <div class="pull-right">
+        <ul class="right clearfix">
+            <li class="hidden-xs"></li>
+            <li class="right-account">
+                <p class="right-phone"></p>
+                <ul class="right-oprea">
+                    <li><a href="ownercenter.html?v=b4c69b2508">个人中心</a></li>
+                    <li><a href="javascript:void(0);">安全退出</a></li>
+                </ul>
+            </li>
+            <li class="right-message">
+                <a href="message.html?v=8d7c5ca54e">
+                    <img src="images/yg_icon_07.png?v=9957859eb8?v=9957859eb8"/>
+                    <span class="message-nums">8</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="main">
+    <div class="grant row">
+        <div class="pull-left">
+            <div class="role-content">
+                <div class="role-header">
+                    <h3 class="role-title">
+                        <i class="icon-job"></i>
+                        <span>角色</span>
+                    </h3>
+                </div>
+                <div class="role-body role-list">
+                    <ul id="roles" class="btn-hide">
+                    </ul>
+                </div>
+                <div class="role-footer">
+                    <button class="btn btn-add role_add btn-hide" data-panel="panel-sm" data-index="0">角色新增</button>
+                </div>
+            </div>
+        </div>
+        <div class="pull-right">
+            <div class="right-container">
+                <div class="right-content">
+                    <div class="right-header">
+                        <div class="form-group post-edit btn-hide">
+                            <button class="btn confirm" id="Job_Edit">职务编辑</button>
+                            <div class="form-content">
+                                <button class="btn cancel">取消</button>
+                                <button class="btn confirm left" onclick="gp.grantSave()">保存</button>
+                            </div>
+                            <div class="form-footer"></div>
+                        </div>
+                    </div>
+                    <div class="right-body">
+                        <div class="form-group post-menu">
+                            <div class="form-label form-menu">
+                                <i class="icon-menu"></i>
+                                <span>菜单</span>
+                            </div>
+                            <div class="form-content" id="menu-grant">
+
+                            </div>
+                            <div class="form-footer"></div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="form-body" id="form-body">
+                        </div>
+                    </div>
+                    <div class="right-footer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer"></div>
+
+<div class="panel panel-lg hide">
+    <div class="panel-bg"></div>
+    <div class="panel-content">
+        <div class="panel-header"></div>
+        <div class="panel-body">
+            <button class="btn btn-default save">Save</button>
+        </div>
+        <div class="panel-footer"></div>
+    </div>
+</div>
+<div class="panel panel-sm hide">
+    <div class="panel-bg"></div>
+    <div class="panel-content">
+        <div class="panel-modal panel-add">
+            <div class="panel-header">
+                <h3 class="panel-title">角色新增</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="form-label" for="role-name">角色名称<sup>*</sup></label>
+                    <input class="form-input" type="text" id="role-name" placeholder="请输入角色名称"/>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="gp.roleAdd()">保存</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="panel-modal panel-edit">
+            <div class="panel-header">
+                <h3 class="panel-title">角色编辑</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="form-label" for="role-name">角色名称<sup>*</sup></label>
+                    <input class="form-input" type="text" id="edit-name" placeholder="请输入角色名称"/>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="pull-left">
+                    <button class="btn btn-hide delete role-del" onclick="gp.roleDel()">删除</button>
+                </div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn  confirm" onclick="gp.roleEditSave()">保存</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="libs/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="libs/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/host.js?v=2112a01532"></script>
+<script type="text/javascript" src="js/tools.js?v=9929ad962c"></script>
+<script type="text/javascript" src="js/grant.page.js?v=cdfcb199d9"></script>
+</body>
+</html>
