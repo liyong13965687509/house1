@@ -10,8 +10,8 @@
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css?v=bed7cb23bb"/>
     <link rel="stylesheet" type="text/css" href="css/font.css?v=1128d866e1"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css?v=1e9bc98d71"/>
-    <link rel="stylesheet" type="text/css" href="css/common.css?v=df0cb7ac0f"/>
-    <link rel="stylesheet" type="text/css" href="css/service.page.css?v=ec4f855487"/>
+    <link rel="stylesheet" type="text/css" href="css/common.css?v=66b4d8a365"/>
+    <link rel="stylesheet" type="text/css" href="css/service.page.css?v=1d3928fbbb"/>
     <link rel="stylesheet" type="text/css" href="css/datepicker.css?v=1cbd87910b"/>
     <link rel="stylesheet" type="text/css" href="css/datetimepicker.css?v=797a04f9f5"/>
 </head>
@@ -90,11 +90,11 @@
                                 <div class="drop-container hide" tabIndex="1">
                                     <div class="drop-content">
                                         <div class="drop-header">
-                                            <span class="drop-result">花桥天琚人才公寓</span>
+                                            <span class="drop-result">物业</span>
                                             <i class="drop-icon icon-drop-down"></i>
                                         </div>
                                         <div class="drop-body">
-                                            <ul id="EquBind"></ul>
+                                            <ul id="Buildings"></ul>
                                         </div>
                                         <div class="drop-footer"></div>
                                     </div>
@@ -108,7 +108,7 @@
                                             <i class="drop-icon icon-drop-down"></i>
                                         </div>
                                         <div class="drop-body">
-                                            <ul id="EquBuilding" data-target="EquNumber"></ul>
+                                            <ul id="States" data-target="EquNumber"></ul>
                                         </div>
                                         <div class="drop-footer"></div>
                                     </div>
@@ -116,14 +116,14 @@
                             </div>
                             <div class="form-group">
                                 <input class="form-input group-date1" readonly
-                                       placeholder="预约日期"/>
+                                       placeholder="预约日期" id="applyDate"/>
                             </div>
                             <div class="form-group">
                                 <input class="form-input"
-                                       placeholder="房号、编号、手机"/>
+                                       placeholder="房号、编号、手机" id="key"/>
                             </div>
                             <div class="form-group">
-                                <button class="btn confirm" onclick="mg.exeBindDevices();">查询</button>
+                                <button class="btn confirm" onclick="sp.applyList();">查询</button>
                             </div>
                         </div>
                         <div class="header-item hide">
@@ -131,7 +131,7 @@
                                 <div class="drop-container hide" tabIndex="1">
                                     <div class="drop-content">
                                         <div class="drop-header">
-                                            <span class="drop-result">花桥天琚人才公寓</span>
+                                            <span class="drop-result">物业</span>
                                             <i class="drop-icon icon-drop-down"></i>
                                         </div>
                                         <div class="drop-body">
@@ -149,7 +149,7 @@
                                             <i class="drop-icon icon-drop-down"></i>
                                         </div>
                                         <div class="drop-body">
-                                            <ul  data-target="EquNumber"></ul>
+                                            <ul data-target="EquNumber"></ul>
                                         </div>
                                         <div class="drop-footer"></div>
                                     </div>
@@ -207,49 +207,60 @@
             </div>
             <div class="panel-body">
                 <div class="panel-group">
-                    <div class="group-row row">
+                    <div class="form-group row">
                         <div class="col-xs-4 col-sm-3">报修房源</div>
-                        <div class="col-xs-8 col-sm-9">花桥天琚人才公寓</div>
+                        <div class="col-xs-8 col-sm-9" id="RoomName">花桥天琚人才公寓</div>
                     </div>
-                    <div class="group-row row">
+                    <div class="form-group row">
                         <div class="col-xs-4 col-sm-3">租客姓名</div>
-                        <div class="col-xs-8 col-sm-9">柳岩</div>
+                        <div class="col-xs-8 col-sm-9" id="CustomerName">柳岩</div>
                     </div>
-                    <div class="group-row row">
+                    <div class="form-group row">
                         <div class="col-xs-4 col-sm-3">手机号码</div>
-                        <div class="col-xs-8 col-sm-9">18256567589</div>
+                        <div class="col-xs-8 col-sm-9" id="Phone">18256567589</div>
                     </div>
-                    <div class="group-row row">
+                    <div class="form-group row">
                         <div class="col-xs-4 col-sm-3">报修物品</div>
-                        <div class="col-xs-8 col-sm-9">空调</div>
+                        <div class="col-xs-8 col-sm-9" id="ServiceItem">空调</div>
                     </div>
-                    <div class="group-row row">
+                    <div class="form-group row">
                         <div class="col-xs-4 col-sm-3">故障原因</div>
-                        <div class="col-xs-8 col-sm-9">漏水</div>
+                        <div class="col-xs-8 col-sm-9" id="Description">漏水</div>
                     </div>
-                    <div class="group-row row">
+                    <div class="form-group row">
                         <div class="col-xs-4 col-sm-3">预约时间</div>
                         <div class="col-xs-8 col-sm-9">2017.9.28 10:00~11:00</div>
                     </div>
-                    <div class="group-row row">
+                    <div class="form-group row">
                         <div class="col-xs-4 col-sm-3">报修时间</div>
-                        <div class="col-xs-8 col-sm-9">2017.9.28 10:00~11:00</div>
+                        <div class="col-xs-8 col-sm-9" id="ServieTime">2017.9.28 10:00~11:00</div>
                     </div>
-                    <div class="group-row row">
+                    <div class="form-group row">
                         <div class="col-xs-4 col-sm-3">报修编号</div>
                         <div class="col-xs-8 col-sm-9">1223344</div>
                     </div>
-                    <div class="group-row row row-image">
+                    <div class="form-group row row-image">
                         <div class="col-xs-4 col-sm-3">相关照片</div>
+                        <!--<div class="col-xs-8 col-sm-9" id="Imgs">-->
                         <div class="col-xs-8 col-sm-9">
+                            <!--<ul id="img-list">-->
+                            <!--<li><img src="" alt=""></li>-->
+                            <!--</ul>-->
                             <a href="#" class="about-img">
                                 <img src="images/min-device.png?v=f414db1072" alt="">
+                                <!--<img src="https://api.2ma2.com:4300/Files/ServiceApply/012fbd5d-50c7-47b2-8445-3f02da74e351.jpg" alt="">-->
                             </a>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-label" for="Add_Name">维修处理进度回复</div>
-                        <textarea class="form-input form-text" placeholder="请输入回复内容"></textarea>
+                        <textarea class="form-input form-text" placeholder="请输入回复内容" id="Reply"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-5">回复人: <span id="ReplyEmployeeName"></span></div>
+                            <div class="col-xs-7">回复时间: <span id="ReplyTime"></span></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -257,7 +268,7 @@
                 <div class="pull-left"></div>
                 <div class="pull-right">
                     <button class="btn cancel">取消</button>
-                    <button class="btn confirm" onclick="mg.exeAddDevices();">保存</button>
+                    <button class="btn confirm" onclick="sp.applyReply();">保存</button>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -328,18 +339,25 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label">通知对象</label>
-                    <div class="form-radio">
-                        <div id="radio-all" class="radio radio-selected">
-                            <span>所有人</span>
+                    <div class="form-radio row">
+                        <div class="col-xs-12">
+                            <input type="radio" checked="checked" name="notice" id="all-person"/>
+                            <label for="all-person">所有人</label>
                         </div>
-                        <div id="radio-part" class="radio">
-                            <span>部分</span>
-                        </div>
-                        <div class="selecte-obj" >
-                            <span>选择</span>
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <input type="radio" name="notice" id="part"/>
+                                    <label for="part">部分</label>
+                                </div>
+                                <div class="col-xs-9">
+                                    <input type="radio" name="choose" id="choose"/>
+                                    <label for="choose">选择</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <textarea class="form-input form-text" placeholder="请输入通知内容"></textarea>
+                    <textarea class="form-input form-text" placeholder="请输入通知人"></textarea>
 
                 </div>
                 <div class="form-group">
@@ -354,6 +372,75 @@
                     <button class="btn confirm" onclick="mg.exeDeviceBind();">保存</button>
                 </div>
                 <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <div class="panel-window">
+            <div class="panel-mask  hide"></div>
+            <div class="panel-content">
+                <div class="panel-head">
+                    <div class="pull-left">
+                        <h3 class="panel-title">选择被通知人</h3>
+                    </div>
+                    <div class="pull-right">
+                        <div class="pull-cancel"></div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="pull-left">
+                            <button class="btn confirm">确认选择</button>
+                        </div>
+                        <div class="pull-right">
+                            <input class="form-input" placeholder="姓名、手机号码">
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-table">
+                            <div class="table-body row">
+                                <div class="table-item col-xs-12 col-sm-6 col-md-12">
+                                    <div class="row-content row">
+                                        <div class="row-header col-xs-6 col-md-12">
+                                            <div class="row-title row">
+                                                <div class="column col-xs-12 col-md-4">
+
+                                                    <input type="radio" class="radio check-all" id="check-all"/>
+                                                    <label for="check-all" class="all-sel">全选</label>
+                                                </div>
+                                                <div class="column col-xs-12 col-md-4">姓名</div>
+                                                <div class="column col-xs-12 col-md-4">手机号</div>
+                                            </div>
+                                        </div>
+                                        <div class="row-body col-xs-6 col-md-12">
+                                            <div class="row-item row">
+                                                <div class="column col-xs-12 col-md-4">
+                                                    <input name="radio" type="checkbox" class="radio selected-people"/>
+                                                </div>
+                                                <div class="column col-xs-12 col-md-4">赵奕欢</div>
+                                                <div class="column col-xs-12 col-md-4">14785296325</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-item col-xs-12 col-sm-6 col-md-12">
+                                    <div class="row-content row">
+                                        <div class="column col-xs-12 col-md-4">
+                                            <input name="radio" type="checkbox" class="radio selected-people"/>
+                                        </div>
+                                        <div class="column col-xs-12 col-md-4">赵奕欢</div>
+                                        <div class="column col-xs-12 col-md-4">89653274125</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="panel-footer">
+                    <div class="pagination" id="window"></div>
+                </div>
             </div>
         </div>
         <div class="panel-modal">
@@ -508,12 +595,13 @@
     </div>
 
 </div>
-<div class="panel-max panel-img hide">
-    <div class="panel-bg-img"></div>
+<div class="panel-max panel-img">
+    <div class="panel-bg-img  hide"></div>
     <div class="panel-content">
         <img src="images/max-device.png?v=6ef12af484" alt="">
     </div>
 </div>
+
 <script type="text/javascript" src="libs/jquery-1.11.3.js"></script>
 <script type="text/javascript" src="libs/bootstrap.min.js"></script>
 <script type="text/javascript" src="libs/bootstrap-datetimepicker.min.js"></script>
@@ -522,8 +610,8 @@
 <script type="text/javascript" src="js/app.js?v=4e03e56a5f"></script>
 <script type="text/javascript" src="js/components-pickers.js?v=00b12ed6a0"></script>
 <script type="text/javascript" src="js/host.js?v=2112a01532"></script>
-<script type="text/javascript" src="js/tools.js?v=9929ad962c"></script>
-<script type="text/javascript" src="js/service.page.js?v=9a7ac7ee20"></script>
+<script type="text/javascript" src="js/tools.js?v=a012f832ea"></script>
+<script type="text/javascript" src="js/service.page.js?v=f19cdefa42"></script>
 </body>
 </html>
 

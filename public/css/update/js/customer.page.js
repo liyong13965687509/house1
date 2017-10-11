@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Author:liyong
  * Date:2017-8-25
  * 构造函数
@@ -20,7 +20,6 @@ function CustomerPage() {
     this.FOLLOW_CHARID = arguments['FOLLOW_CHARID'] ? arguments['FOLLOW_CHARID'] : 'FOLLOW_CHARID';
     this.FOLLOW_DEL = arguments['FOLLOW_DEL'] ? arguments['FOLLOW_DEL'] : '.column-del';
     this.FOLLOW_REMARK = arguments['FOLLOW_REMARK'] ? arguments['FOLLOW_REMARK'] : '.follow-remark';
-    this.FOLLOW_RECORD = arguments['FOLLOW_RECORD'] ? arguments['FOLLOW_RECORD'] : '.follow-record';
 
 
     this.API_CONFIG = arguments['API_CONFIG'] ? arguments['API_CONFIGE'] : {
@@ -390,17 +389,17 @@ CustomerPage.prototype.getTemplate = function (params) {
             + '<div class="col-xs-12 col-md-5"><div class="row"><div class="column col-xs-12 col-md-2"><span>类型</span></div><div class="column col-xs-12 col-md-2"><span>等级</span></div>'
             + '<div class="column col-xs-12 col-md-2"><span>姓名</span></div><div class="column col-xs-12 col-md-4"><span>手机号码</span></div>'
             + '<div class="column col-xs-12 col-md-2"><span>来源</span></div></div></div><div class="col-xs-12 col-md-2"><div class="row"><div class="column col-xs-12 col-md-7"><span>租金(元/月)</span></div>'
-            + '<div class="column col-xs-12 col-md-5"><span>租期(月)</span></div></div></div><div class="col-xs-12 col-md-5"><div class="row"><div class="column col-xs-12 col-md-3"><span>创建</span></div>'
-            + '<div class="column col-xs-12 col-md-3"><span>预约</span></div><div class="column col-xs-12 col-md-2"><span>计划</span></div><div class="column col-xs-12 col-md-2"><span>归属人</span></div>'
-            + '<div class="column col-xs-12 col-md-2"><span>操作</span></div></div></div></div></div>'
+            + '<div class="column col-xs-12 col-md-5"><span>租期(月)</span></div></div></div><div class="col-xs-12 col-md-5"><div class="row">'
+            + '<div class="column col-xs-12 col-md-3"><span>预约</span></div><div class="column col-xs-12 col-md-3"><span>计划</span></div><div class="column col-xs-12 col-md-3"><span>归属人</span></div>'
+            + '<div class="column col-xs-12 col-md-3"><span>操作</span></div></div></div></div></div>'
             + '<div class="row-body col-xs-7 col-md-12"><div class="row-item row">'
             + '<div class="col-xs-12 col-md-5"><div class="row"><div class="column col-xs-12 col-md-2"><span>' + JSON_DATA['Type'] + '</span></div><div class="column col-xs-12 col-md-2"><span>' + JSON_DATA['LevelInValue'] + '</span></div>'
             + '<div class="column col-xs-12 col-md-2"><span>' + JSON_DATA['Name'] + '</span></div><div class="column col-xs-12 col-md-4"><span>' + JSON_DATA['Phone'] + '</span></div>'
             + '<div class="column col-xs-12 col-md-2"><span>' + JSON_DATA['SourceValue'] + '</span></div></div></div><div class="col-xs-12 col-md-2"><div class="row">'
             + '<div class="column col-xs-12 col-md-7"><span>' + JSON_DATA['RentalMin'] + '~' + JSON_DATA['RentalMax'] + '</span></div>'
-            + '<div class="column col-xs-12 col-md-5"><span>' + JSON_DATA['Month'] + '</span></div></div></div><div class="col-xs-12 col-md-5"><div class="row"><div class="column col-xs-12 col-md-3"><span>' + JSON_DATA['CreateTime'] + '</span></div>'
-            + '<div class="column col-xs-12 col-md-3"><span>' + JSON_DATA['SeeTime'] + '</span></div><div class="column col-xs-12 col-md-2"><span>' + JSON_DATA['InTime'] + '</span></div><div class="column col-xs-12 col-md-2"><span>' + JSON_DATA['EmployeeName'] + '</span></div>'
-            + '<div class="column col-xs-12 col-md-2"><span>'
+            + '<div class="column col-xs-12 col-md-5"><span>' + JSON_DATA['Month'] + '</span></div></div></div><div class="col-xs-12 col-md-5"><div class="row">'
+            + '<div class="column col-xs-12 col-md-3"><span>' + JSON_DATA['SeeTime'] + '</span></div><div class="column col-xs-12 col-md-3"><span>' + JSON_DATA['InTime'] + '</span></div><div class="column col-xs-12 col-md-3"><span>' + JSON_DATA['EmployeeName'] + '</span></div>'
+            + '<div class="column col-xs-12 col-md-3"><span>'
             + '<a data-value="' + JSON_DATA['CharId'] + '" href="javascript:void(0)" class="btn-detail">查看</a></span></div></div></div></div></div></div></div>'
     }
     return TEMP_HTML;
@@ -617,7 +616,7 @@ CustomerPage.prototype.ajaxRequestCustomerAddBind = function (params) {
                 var JSON_DATA = data['data'],
                     TEMP_DATA1 = JSON_DATA['data1'],
                     TEMP_DATA2 = JSON_DATA['data2'],
-                    TEMP_HTML = "";
+                    TEMP_HTML="";
                 for (var KEY in TEMP_DATA1) {
                     var TEMP_HTML = "", TEMP_NAME = "";
                     var TEMP_VALUE = TEMP_DATA1[KEY];
@@ -1085,20 +1084,14 @@ CustomerPage.prototype.ajaxRequestFollowBind = function (params) {
                     TEMP_HTML = '',
                     STYLE;
                 for (var i = 0; i < JSON_DATA.length; i++) {
-                    TEMP_HTML += '<div class="column col-xs-4">' + JSON_DATA[i]["CreateTime"] + '</div>'
+                    TEMP_HTML += '<div class="column col-xs-3">' + JSON_DATA[i]["CreateTime"] + '</div>'
                         + '<div class="column col-xs-2">' + JSON_DATA[i]["Value"] + '</div>'
-                        + '<div class="column col-xs-4">' + JSON_DATA[i]["Description"] + '</div>'
+                        + '<div class="column col-xs-5">' + JSON_DATA[i]["Description"] + '</div>'
                     if (webApp.grantControl($(".followDelete"), "follow_delete")) {
                         TEMP_HTML += '<div class="column col-xs-2 column-del" data-value=" ' + JSON_DATA[i]["CharId"] + '">删除</div>';
                     }
                 }
-                $(_this.FOLLOW_RECORD).html(TEMP_HTML);
-
-                if ($(_this.FOLLOW_RECORD).find('.column').length == 0) {
-                    $(_this.FOLLOW_RECORD).hide()
-                } else {
-                    $(_this.FOLLOW_RECORD).show()
-                }
+                $(".follow-record").html(TEMP_HTML);
 
                 _this.PAGINATION = new Pagination({
                     PAGINATION: '#PagPassword',

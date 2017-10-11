@@ -7,13 +7,13 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>物业</title>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css?v=bed7cb23bb"/>
     <link rel="stylesheet" type="text/css" href="css/font.css?v=1128d866e1"/>
     <link rel="stylesheet" type="text/css" href="css/plugins.css?v=2ece335f10"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css?v=1e9bc98d71"/>
     <link rel="stylesheet" type="text/css" href="css/datepicker.css?v=1cbd87910b"/>
-    <link rel="stylesheet" type="text/css" href="css/common.css?v=df0cb7ac0f"/>
-    <link rel="stylesheet" type="text/css" href="css/property.page.css?v=18cc2fd188"/>
-    <link rel="stylesheet" type="text/css" href="css/jquery.mCustomScrollbar.css?v=d3cc66edf4"/>
+    <link rel="stylesheet" type="text/css" href="css/common.css?v=66b4d8a365"/>
+    <link rel="stylesheet" type="text/css" href="css/property.page.css?v=c704d21120"/>
 </head>
 <body>
 <div class="header">
@@ -51,1111 +51,1272 @@
         </ul>
     </div>
 </div>
-<div class="container">
-    <div class="fq-nav2">
-        <div class="property-nav2-top">
-            <div class="property-list"><span>物业列表</span></div>
-            <div class="lists">
-                <dl class="property-nav2-dl" id="Buildings">
-                    <!--<dt><i class="icon iconfont icon-jichuwuye"></i><span>物业列表</span></dt>-->
-                </dl>
+<div class="main">
+    <div class="property">
+        <div class="pull-left">
+            <div class="left-header">
+                <i class="icon-Report"></i>
+                <span type="role-detail">物业列表</span>
             </div>
-
-        </div>
-        <div class="fq-nav2-bottom">
-            <div class="fq-nav2-property-bottom">
-                <ul>
-                    <li type="property-add" class="fq-btn-size-30 btn-propertyadd" dir="top">
-                        <button class="btn confirm left">物业新增</button>
-                    </li>
-                    <div class="clear"></div>
-                </ul>
+            <div class="left-body">
+                <ul id="Buildings"></ul>
             </div>
-        </div>
-    </div>
-    <div class="fq-contain">
-        <div class="fq-contain-in">
-            <div class="fq-contain-dv">
-                <div class="contain-property-wraper">
-                    <div class="property-contain-left">
-                        <ul id="property-floor-ul-id"
-                            class="fq-contain-src mCustomScrollbar mCustomScrollbarCur wyHeight">
-                            <li class="floorword" id="Floors">楼层</li>
-                        </ul>
-                    </div>
-                    <div class="property-contain-top">
-                        <div class="property-search-section" id="RoomState">
-                            <ul>
-                                <li class="cur" id="all" data-value="0"><span>全部<font id="AllCount">0</font></span>
-                                </li>
-                                <li id="Order" data-value="2">
-                                    <div class="property-search-dot"><p></p></div>
-                                    <span>预定<font id="OrderCount">0</font></span></li>
-                                <li id="Let" data-value="3">
-                                    <div class="property-search-dot"><p></p></div>
-                                    <span>已租<font id="LetCount">0</font></span></li>
-                                <li id="Vacancy" data-value="1">
-                                    <div class="property-search-dot"><p></p></div>
-                                    <span>空置<font style="color:#999;" id="VacancyCount"></font></span></li>
-                                <div class="clear"></div>
-                            </ul>
-                        </div>
-                        <div class="property-search-ip"><input type="text" id="Key" placeholder="搜索 : 房号、租客名"><span
-                                class="property-search-sp"><i class="icon-search"
-                                                              onclick="propertyPage.floorRoomBind()"></i></span>
-                        </div>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="property-content">
-                        <div class="mCustomScrollbar light _mCS_2 mCS-autoHide property-floor-wrap" id="Rooms">
-
-                            <!--<div style="overflow:auto;height: 95%;">-->
-                            <!--<div class="light _mCS_2 mCS-autoHide property-floor-wrap" id="Rooms" style="position: relative;top:0px;">-->
-                            <!--</div>-->
-                            <!--<div class="light _mCS_2 mCS-autoHide property-floor-wrap" id="Rooms">-->
-                            <!--<div class="property-floor-message property-floor1">
-                                <div class="property-floor-title">
-                                    <p>万源城二期 .<font>1</font>楼</p><span type="floor-edit" dir="top" class="btn-flooredit">编辑</span>
-                                </div>
-                                <div class="property-floor-room">
-                                    <ul>
-                                        <li><p>0101室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0102室</p><div type="room-message" dir="right" class="property-room-status room-let"><i></i><span>张希希</span></div></li>
-                                        <li><p>0103室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0104室</p><div type="room-message" dir="right" class="property-room-status room-advance"><i></i><span>洁洁</span></div></li>
-                                        <li><p>0105室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0106室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0107室</p><div type="room-message" dir="right" class="property-room-status room-let"><i></i><span>小小李</span></div></li>
-                                        <li><p>添加房间</p><div type="room-add" dir="top" class="property-room-status">+</div></li><div class="clear"></div>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="property-floor-message property-floor2">
-                                <div class="property-floor-title">
-                                    <p>万源城二期 .<font>2</font>楼</p><span type="floor-edit" dir="top" class="btn-flooredit">编辑</span>
-                                </div>
-                                <div class="property-floor-room">
-                                    <ul>
-                                        <li><p>0201室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0202室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0203室</p><div type="room-message" dir="right" class="property-room-status room-advance"><i></i><span>何厚铧</span></div></li>
-                                        <li><p>0204室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>洁洁</span></div></li>
-                                        <li><p>0205室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0206室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0207室</p><div type="room-message" dir="right" class="property-room-status room-let"><i></i><span>小小李</span></div></li>
-                                        <li><p>0206室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0205室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0206室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0207室</p><div type="room-message" dir="right" class="property-room-status room-let"><i></i><span>小小李</span></div></li>
-                                        <li><p>0208室</p><div type="room-add" dir="top" class="property-room-status">+</div></li><div class="clear"></div>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="property-floor-message property-floor3">
-                                <div class="property-floor-title">
-                                    <p>万源城二期 .<font>3</font>楼</p><span type="floor-edit" dir="top" class="btn-flooredit">编辑</span>
-                                </div>
-                                <div class="property-floor-room">
-                                    <ul>
-                                        <li><p>0201室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0202室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0203室</p><div type="room-message" dir="right" class="property-room-status room-advance"><i></i><span>何厚铧</span></div></li>
-                                        <li><p>0204室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>洁洁</span></div></li>
-                                        <li><p>0205室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0206室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0207室</p><div type="room-message" dir="right" class="property-room-status room-let"><i></i><span>小小李</span></div></li>
-                                        <li><p>0206室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0205室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0206室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0207室</p><div type="room-message" dir="right" class="property-room-status room-let"><i></i><span>小小李</span></div></li>
-                                        <li><p>0208室</p><div type="room-add" dir="top" class="property-room-status">+</div></li><div class="clear"></div>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="property-floor-message property-floor4">
-                                <div class="property-floor-title">
-                                    <p>万源城二期 .<font>4</font>楼</p><span type="floor-edit" dir="top" class="btn-flooredit">编辑</span>
-                                </div>
-                                <div class="property-floor-room">
-                                    <ul>
-                                        <li><p>0201室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0202室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0203室</p><div type="room-message" dir="right" class="property-room-status room-advance"><i></i><span>何厚铧</span></div></li>
-                                        <li><p>0204室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>洁洁</span></div></li>
-                                        <li><p>0205室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0206室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0207室</p><div type="room-message" dir="right" class="property-room-status room-let"><i></i><span>小小李</span></div></li>
-                                        <li><p>0206室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0205室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0206室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0207室</p><div type="room-message" dir="right" class="property-room-status room-let"><i></i><span>小小李</span></div></li>
-                                        <li><p>0208室</p><div type="room-add" dir="top" class="property-room-status">+</div></li><div class="clear"></div>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="property-floor-message property-floor5">
-                                <div class="property-floor-title">
-                                    <p>万源城二期 .<font>5</font>楼</p><span type="floor-edit" dir="top" class="btn-flooredit">编辑</span>
-                                </div>
-                                <div class="property-floor-room">
-                                    <ul>
-                                        <li><p>0201室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0202室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0203室</p><div type="room-message" dir="right" class="property-room-status room-advance"><i></i><span>何厚铧</span></div></li>
-                                        <li><p>0204室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>洁洁</span></div></li>
-                                        <li><p>0205室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0206室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0207室</p><div type="room-message" dir="right" class="property-room-status room-let"><i></i><span>小小李</span></div></li>
-                                        <li><p>0206室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0205室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0206室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0207室</p><div type="room-message" dir="right" class="property-room-status room-let"><i></i><span>小小李</span></div></li>
-                                        <li><p>0208室</p><div type="room-add" dir="top" class="property-room-status">+</div></li><div class="clear"></div>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="property-floor-message property-floor6">
-                                <div class="property-floor-title">
-                                    <p>万源城二期 .<font>6</font>楼</p><span type="floor-edit" dir="top" class="btn-flooredit">编辑</span>
-                                </div>
-                                <div class="property-floor-room">
-                                    <ul>
-                                        <li><p>0201室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0202室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0203室</p><div type="room-message" dir="right" class="property-room-status room-advance"><i></i><span>何厚铧</span></div></li>
-                                        <li><p>0204室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>洁洁</span></div></li>
-                                        <li><p>0205室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0206室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0207室</p><div type="room-message" dir="right" class="property-room-status room-let"><i></i><span>小小李</span></div></li>
-                                        <li><p>0206室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0205室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0206室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0207室</p><div type="room-message" dir="right" class="property-room-status room-let"><i></i><span>小小李</span></div></li>
-                                        <li><p>0208室</p><div type="room-add" dir="top" class="property-room-status">+</div></li><div class="clear"></div>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="property-floor-message property-floor7">
-                                <div class="property-floor-title">
-                                    <p>万源城二期 .<font>7</font>楼</p><span type="floor-edit" dir="top" class="btn-flooredit">编辑</span>
-                                </div>
-                                <div class="property-floor-room">
-                                    <ul>
-                                        <li><p>0201室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0202室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0203室</p><div type="room-message" dir="right" class="property-room-status room-advance"><i></i><span>何厚铧</span></div></li>
-                                        <li><p>0204室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>洁洁</span></div></li>
-                                        <li><p>0205室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0206室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0207室</p><div type="room-message" dir="right" class="property-room-status room-let"><i></i><span>小小李</span></div></li>
-                                        <li><p>0206室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0205室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0206室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0207室</p><div type="room-message" dir="right" class="property-room-status room-let"><i></i><span>小小李</span></div></li>
-                                        <li><p>0208室</p><div type="room-add" dir="top" class="property-room-status">+</div></li><div class="clear"></div>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="property-floor-message property-floor8">
-                                <div class="property-floor-title">
-                                    <p>万源城二期 .<font>8</font>楼</p><span type="floor-edit" dir="top" class="btn-flooredit">编辑</span>
-                                </div>
-                                <div class="property-floor-room">
-                                    <ul>
-                                        <li><p>0201室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0202室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0203室</p><div type="room-message" dir="right" class="property-room-status room-advance"><i></i><span>何厚铧</span></div></li>
-                                        <li><p>0204室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>洁洁</span></div></li>
-                                        <li><p>0205室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0206室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0207室</p><div type="room-message" dir="right" class="property-room-status room-let"><i></i><span>小小李</span></div></li>
-                                        <li><p>0206室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0205室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0206室</p><div type="room-message" dir="right" class="property-room-status"><i></i><span>已空置20天</span></div></li>
-                                        <li><p>0207室</p><div type="room-message" dir="right" class="property-room-status room-let"><i></i><span>小小李</span></div></li>
-                                        <li><p>0208室</p><div type="room-add" dir="top" class="property-room-status">+</div></li><div class="clear"></div>
-                                    </ul>
-                                </div>
-                            </div>-->
-                        </div>
+            <div class="left-footer">
+                <div class="btns row">
+                    <div class="col-xs-6">
+                        <button class="btn confirm" onclick="pt.showAddBuildModal();">物业新增</button>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="pull-right">
+            <div class="right-container">
+                <div class="right-content">
+                    <div class="pull-left">
+                        <div class="floor-container">
+                            <div class="floor-content">
+                                <div class="floor-header">
+                                    <h3 class="floor-title">楼层</h3>
+                                </div>
+                                <div class="floor-body">
+                                    <ul id="floors"></ul>
+                                </div>
+                                <div class="floor-footer">
+                                    <button class="btn add" onclick="pt.exeAddFloor();">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <div class="room-header">
+                            <div class="col-xs-12 col-md-7 col-lg-6">
+                                <div class="form-group">
+                                    <ul class="clearfix" id="RoomState">
+                                        <li class="col-xs-3 active" data-value="0">
+                                            <span class="state-item">
+                                                <i class="state-icon"></i>
+                                                <span class="state-txt">全部</span>
+                                                <i class="state-num">228</i>
+                                            </span>
+                                        </li>
+                                        <li class="col-xs-3" data-value="2">
+                                            <span class="state-item">
+                                                <i class="state-icon"></i>
+                                                <span class="state-txt">预定</span>
+                                                <i class="state-num">0</i>
+                                            </span>
+                                        </li>
+                                        <li class="col-xs-3" data-value="3">
+                                            <span class="state-item">
+                                                <i class="state-icon"></i>
+                                                <span class="state-txt">已租</span>
+                                                <i class="state-num">0</i>
+                                            </span>
+                                        </li>
+                                        <li class="col-xs-3" data-value="1">
+                                            <span class="state-item">
+                                                <i class="state-icon"></i>
+                                                <span class="state-txt">空置</span>
+                                                <i class="state-num">228</i>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-5 col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="keywords"></label>
+                                    <input class="form-input" id="keywords" type="text" placeholder="搜索 : 房号、租客名"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="room-body" id="Rooms"></div>
+                        <div class="room-footer"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
     </div>
-    <div class="clear"></div>
 </div>
-<div class="alert-modal-wraper">
-    <div class="modal-mask"></div>
-    <div class="right-modal fq-modal">
-        <div class="modal-con room-message">
-            <div class="fq-modal-title"><p id="RoomTitle"></p>
-                <p><i class="icon iconfont icon-shezhi"></i></p></div>
-            <div class="property-modal-menu">
-                <ul>
-                    <li class="cur"><span>房间详情</span></li>
-                    <li onclick="propertyPage.serviceInit()" class="serviceInit"><span>维修记录</span></li>
-                    <li onclick="propertyPage.readInit()" class="readInit"><span>抄表记录</span></li>
-                    <li onclick="propertyPage.ajaxRequestContract(propertyPage.getParams(propertyPage.CONTRACT))"><span>合同信息</span>
-                    </li>
-                    <div class="clear"></div>
-                </ul>
+<div class="footer"></div>
+
+<div class="panel panel-lg hide">
+    <div class="panel-bg"></div>
+    <div class="panel-content">
+        <div class="panel-modal">
+            <div class="panel-header">
+                <h3 class="panel-title">
+                    <span id="Detail_BuildingName"></span>
+                    <span id="Detail_FloorName"></span>&nbsp;楼
+                    <span id="Detail_RoomName"></span>&nbsp;室
+                </h3>
             </div>
-            <div class="property-modal-content">
-                <div class="property-room-content fq-alert-modal-dv">
-                    <div class="mCustomScrollbar">
-                        <table>
-                            <tr>
-                                <td>状态</td>
-                                <td id="RoomState_Detail"></td>
-                            </tr>
-                            <tr>
-                                <td>租金</td>
-                                <td id="Price_Detail"></td>
-                            </tr>
-                            <tr>
-                                <td>面积</td>
-                                <td id="Square_Detail"></td>
-                            </tr>
-                            <tr>
-                                <td>户型</td>
-                                <td id="Layout_Detail"></td>
-                            </tr>
-                            <tr>
-                                <td>配置</td>
-                                <td id="RoomAlloc_Detail"></td>
-                            </tr>
-                            <tr>
-                                <td>标签</td>
-                                <td id="RoomTag_Detail"></td>
-                            </tr>
-                            <tr>
-                                <td>水费单价</td>
-                                <td id="WaterUnitPrice_Detail"></td>
-                            </tr>
-                            <tr>
-                                <td>电费单价</td>
-                                <td id="EleUnitPrice_Detail"></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="property-room-bottom">
-                        <input type="hidden" id="CurRoomCharId" value=""/>
-                        <ul class="property-room-ul1">
-                            <li>
-                                <button onclick="propertyPage.roomDelete()" class="btn delete btn-roomdel">删除</button>
-                            </li>
-                            <li style="margin-right: -4px;">
-                                <button class="btn confirm" id="btn-order">预定</button>
-                            </li>
-                            <li type="room-edit" dir="top" class="btn-roomedit" >
-                                <button class="btn edit but-roomEdit"
-                                        onclick="propertyPage.ajaxRequestRoomUpdateDetail(propertyPage.getParams(propertyPage.ROOM_UPDATE_DETAIL))">
-                                    编辑
-                                </button>
-                            </li>
+            <div class="panel-body">
+                <div class="tab-block">
+                    <div class="tab-header">
+                        <ul class="tabs row">
+                            <li class="tab col-xs-3 active">房间详情</li>
+                            <li class="tab col-xs-3">维修记录</li>
+                            <li class="tab col-xs-3">抄表记录</li>
+                            <li class="tab col-xs-3">合同信息</li>
                         </ul>
-                        <ul class="property-room-ul2">
-
-                            <li>
-                                <button class="btn cancel btn-cancel">取消</button>
-                            </li>
-                            <li class="btn-contractadd" id="btn-let" type="contract-add"
-                                dir="top">
-                                <button  class="btn confirm"  onclick="propertyPage.ajaxRequestContractAddBind(propertyPage.getParams(propertyPage.CONTRACT_ADD_BIND))">
-                                    签约
-                                </button>
-                            </li>
-
-                        </ul>
-                        <div class="clear"></div>
                     </div>
-                </div>
-                <div class="property-repair-content fq-alert-modal-dv">
-                    <div>
-                        <div class="property-content-list-add"><span class="btn-repairadd" type="repair-add" dir="top"
-                                                                     onclick="propertyPage.ajaxRequestServiceAddBind(propertyPage.getParams(propertyPage.SERVICE_ADD_BIND))">维修新增</span>
-                        </div>
-                        <table id="ServiceRecords">
-                            <tr>
-                                <th>维修项目</th>
-                                <th>维修费（元）</th>
-                                <th>承担方</th>
-                                <th>日期</th>
-                                <th>操作</th>
-                            </tr>
-                            <!--<tr>
-                                <td>房门</td>
-                                <td>220.00</td>
-                                <td>物业</td>
-                                <td>2017-02-21</td>
-                                <td><span>删除</span></td>
-                            </tr>-->
-                        </table>
-
-                    </div>
-                    <div class="fy-wrap fy-wrap-service">
-                    </div>
-                </div>
-                <div class="property-checktable-content fq-alert-modal-dv">
-                    <div class="">
-                        <div class="property-content-list-add"><span class="btn-checktableadd" type="checktable-add"
-                                                                     dir="top"
-                                                                     onclick="propertyPage.ajaxRequestReadAddItem(propertyPage.getParams(propertyPage.READ_ADD_ITEM))">抄表新增</span>
-                        </div>
-                        <table id="WaterRecords">
-                            <tr>
-                                <th>日期</th>
-                                <th>水（吨）</th>
-                                <th>操作</th>
-                            </tr>
-                            <!--<tr>
-                                <td>2017-02-21</td>
-                                <td>220</td>
-                                <td><span>删除</span></td>
-                            </tr>-->
-                        </table>
-                        <div class="fy-wrap fy-wrap-water" style="position: static;float:right;margin: 20px 0;">
-                        </div>
-                        <div style="width:100%;height:1px;background-color: #e6e6e6;clear: both;margin-bottom: 20px;"></div>
-                        <table id="ElecRecords">
-                            <tr>
-                                <th>日期</th>
-                                <th>电（度）</th>
-                                <th>操作</th>
-                            </tr>
-                            <!--<tr>
-                                <td>2017-02-21</td>
-                                <td>1487</td>
-                                <td><span>删除</span></td>
-                            </tr>-->
-                        </table>
-                        <div class="fy-wrap fy-wrap-elec" style="position: static;float:right;margin: 20px 0;">
-                        </div>
-                    </div>
-                </div>
-                <div class="property-contract-content fq-alert-modal-dv">
-                    <div class="mCustomScrollbar">
-                        <div id="nocontract" style="display:none">当前无合同！</div>
-                        <div id="hascontract" style="display:none;max-height:85%;">
-                            <div class="modaldv-tabelwrap">
-                                <p>当前合同</p>
-                                <table class="modal-table table-td2">
-                                    <tr>
-                                        <td>编号</td>
-                                        <td id="Number_Detail"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>状态</td>
-                                        <td id="State_Detail1"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>租金</td>
-                                        <td id="Price_Detail1"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>押金</td>
-                                        <td id="Deposit_Detail"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>起租/退租</td>
-                                        <td id="RentDate_Detail"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>付押方式</td>
-                                        <td id="PayType_Detail"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>收租日期</td>
-                                        <td id="ReceiveDate"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>签约员工</td>
-                                        <td id="EmpName_Detail"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>签约日期</td>
-                                        <td id="BargainDate_Detail"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>备注</td>
-                                        <td id="Description_Detail"></td>
-                                    </tr>
-                                    <!--<tr>
-                                        <td>合同附件</td>
-                                        <td></td>
-                                    </tr>-->
-                                    <tr>
-                                        <td>创建</td>
-                                        <td id="CreateEmpName_Detail"></td>
-                                    </tr>
-                                </table>
+                    <div class="tab-body">
+                        <div class="block-content">
+                            <div class="block-header"></div>
+                            <div class="block-body">
+                                <div class="group-content">
+                                    <div class="group-header">
+                                        <h2 class="group-title">&nbsp;</h2>
+                                    </div>
+                                    <div class="group-body">
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">状态</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Detail_State"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">租金</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Detail_Price"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">面积</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Detail_Square"></span>&nbsp;m²
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">户型</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <div class="group-value">
+                                                    <span id="Detail_Div1"></span>房
+                                                    <span id="Detail_Div2"></span>厅
+                                                    <span id="Detail_Div3"></span>卫
+                                                    <span id="Detail_Div4"></span>阳台
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">水费单价</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Detail_WaterUnitPrice"></span>&nbsp;元/吨
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">电费单价</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Detail_EleUnitPrice"></span>&nbsp;元/度
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">配置</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Detail_Alloc"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">标签</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Detail_Tag"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group-footer"></div>
+                                </div>
+                            </div>
+                            <div class="block-footer">
+                                <div class="block-button">
+                                    <div class="pull-left">
+                                        <button class="btn delete" onclick="pt.exeDeleteRoom();">删除</button>
+                                        <button class="btn edit" onclick="pt.showUpdateRoomModal();">编辑</button>
+                                    </div>
+                                    <div class="pull-right" id="BtnFlag1"></div>
+                                    <div class="clearfix"></div>
+                                </div>
                             </div>
                         </div>
-                        <div class="modaldv-tabelwrap history-modaldv-tabelwrap">
-                            <p style="text-align:left"> 历史合同</p>
-                            <table class="modal-table table-td2 table-history" id="HistoryContractRecords">
-                                <tr>
-                                    <th>租客</th>
-                                    <th>周期</th>
-                                    <th>租金</th>
-                                    <th>退租时间</th>
-                                    <th>操作</th>
-                                </tr>
-                            </table>
-
+                        <div class="block-content hide">
+                            <div class="block-header"></div>
+                            <div class="block-body">
+                                <div class="table-header">
+                                    <div class="pull-left"></div>
+                                    <div class="pull-right">
+                                        <button class="btn confirm" onclick="pt.showAddServiceModal();">维修新增</button>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="table-body row" id="Repair_Record"></div>
+                                <div class="table-footer">
+                                    <div class="pagination" id="Repair_Pagination"></div>
+                                </div>
+                            </div>
+                            <div class="block-footer">
+                                <div class="block-button">
+                                    <div class="pull-left"></div>
+                                    <div class="pull-right">
+                                        <button class="btn cancel">取消</button>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="fy-wrap history-fy-wrap">
+                        <div class="block-content hide">
+                            <div class="block-header"></div>
+                            <div class="block-body">
+                                <div class="table-block">
+                                    <div class="table-header">
+                                        <div class="pull-left"></div>
+                                        <div class="pull-right">
+                                            <button class="btn confirm" onclick="pt.showAddRecordModal();">抄表新增</button>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="table-body row" id="Water_Record"></div>
+                                    <div class="table-footer">
+                                        <div class="pagination" id="Water_Pagination"></div>
+                                    </div>
+                                </div>
+                                <div class="table-block">
+                                    <div class="table-body row" id="Power_Record"></div>
+                                    <div class="table-footer">
+                                        <div class="pagination" id="Power_Pagination"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="block-footer">
+                                <div class="block-button">
+                                    <div class="pull-left"></div>
+                                    <div class="pull-right">
+                                        <button class="btn cancel">取消</button>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="history-button">
-                            <button class="btn confirm full hsitory-contractadd "
-                                    onclick="propertyPage.historyAdd()">
-                                历史合同新增
-                            </button>
+                        <div class="block-content hide">
+                            <div class="block-header"></div>
+                            <div class="block-body">
+                                <div class="group-content">
+                                    <div class="group-header">
+                                        <h2 class="group-title">当前合同</h2>
+                                    </div>
+                                    <div class="group-body">
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">编号</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Contract_Number"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">状态</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Contract_ContractState"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">租金</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Contract_Price"></span>/月
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">押金</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Contract_Deposit"></span>/月
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">起租/退租</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Contract_InDate"></span>~
+                                                <span class="group-value" id="Contract_OutDate"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">付押方式</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Contract_PayType1"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">收租日期</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">签约员工</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Contract_DepartmentName"></span> .
+                                                <span class="group-value" id="Contract_EmployeeName"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">签约日期</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Contract_BargainDate"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">备注</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Contract_Description"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">创建</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Contract_CreateTime"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group-footer"></div>
+                                </div>
+                                <div class="group-content">
+                                    <div class="group-header">
+                                        <h2 class="group-title">历史合同</h2>
+                                    </div>
+                                    <div class="group-body">
+                                        <div class="table-block">
+                                            <div class="table-header row">
+                                                <div class="pull-left"></div>
+                                                <div class="pull-right">
+                                                    <button class="btn confirm" onclick="pt.historyContactAdd();">
+                                                        历史合同新增
+                                                    </button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="table-body row" id="History_Record"></div>
+                                            <div class="table-footer">
+                                                <div class="pagination" id="History_Pagination"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group-footer"></div>
+                                </div>
+                            </div>
+                            <div class="block-footer">
+                                <div class="block-button">
+                                    <div class="pull-left"></div>
+                                    <div class="pull-right">
+                                        <button class="btn cancel">取消</button>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
+                    <div class="tab-footer"></div>
                 </div>
-
             </div>
+            <div class="panel-footer"></div>
         </div>
-        <div class="modal-con property-detail">
-            <div class="fq-modal-title"><p>物业明细</p>
-
-                <p><i class="icon iconfont icon-shezhi"></i></p></div>
-            <div class="property-modal-content">
-                <div class="property-detail-content">
-                    <div class="mCustomScrollbar">
-                        <table>
-                            <tr>
-                                <td>名称</td>
-                                <td id="Name_Detail"></td>
-                            </tr>
-                            <tr>
-                                <td>地址</td>
-                                <td id="BuildingAddr_Detail"></td>
-                            </tr>
-                            <tr>
-                                <td>房间</td>
-                                <td id="FloorNum_Detail"></td>
-                            </tr>
-                            <tr>
-                                <td>水费价格</td>
-                                <td id="water_price_Detail"></td>
-                            </tr>
-                            <tr>
-                                <td>电费价格</td>
-                                <td id="ele_price_Detail"></td>
-                            </tr>
-
-
-                            <tr>
-                                <td>物业配备</td>
-                                <td id="Alloc_Detail"></td>
-                            </tr>
-                            <tr>
-                                <td>物业标签</td>
-                                <td id="Tag_Detail"></td>
-                            </tr>
-                        </table>
+        <div class="panel-modal show">
+            <div class="panel-header">
+                <h3 class="panel-title">物业明细</h3>
+            </div>
+            <div class="panel-body">
+                <div class="tab-block">
+                    <div class="tab-body">
+                        <div class="block-content">
+                            <div class="block-header"></div>
+                            <div class="block-body">
+                                <div class="group-content">
+                                    <div class="group-header">
+                                        <h2 class="group-title">&nbsp;</h2>
+                                    </div>
+                                    <div class="group-body">
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">名称</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Build_Name"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">地址</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Build_Address"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">房间</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Build_Room"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">水费价格</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Build_WaterUnitPrice"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">电费价格</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Build_EleUnitPrice"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">物业配备</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Build_Alloc"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-row row">
+                                            <div class="col-xs-3 col-sm-2">
+                                                <label class="group-label">物业标签</label>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <span class="group-value" id="Build_Tag"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group-footer"></div>
+                                </div>
+                            </div>
+                            <div class="block-footer">
+                                <div class="block-button">
+                                    <div class="pull-left">
+                                        <button class="btn delete" onclick="pt.exeDeleteBuild();">删除</button>
+                                        <button class="btn edit" onclick="pt.showEditBuildModal();">编辑</button>
+                                    </div>
+                                    <div class="pull-right">
+                                        <button class="btn cancel" onclick="">取消</button>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <div class="tab-footer"></div>
                 </div>
             </div>
-            <div class="property-room-bottom">
-                <input type="hidden" id="BuildingCharId" value=""/>
-                <ul class="property-room-ul1">
-                    <li>
-                        <button onclick="propertyPage.buildingDelete()" class="btn delete building_delete">删除</button>
-                    </li>
-                </ul>
-                <ul class="property-room-ul2">
-                    <li>
-                        <button class="btn cancel btn-cancel">取消</button>
-                    </li>
-                    <li class="btn-propertyedit" type="property-edit" dir="top">
-                        <button class="btn edit buildingUpdateBind">编辑</button>
-                    </li>
-                </ul>
-                <div class="clear"></div>
-            </div>
+            <div class="panel-footer"></div>
         </div>
     </div>
-    <div class="top-modal fq-modal">
-        <!--合同新增-->
-        <div class="modal-con contract-add">
-            <div class="fq-modal-title"><p>合同新增</p>
-
-                <p><i class="icon iconfont icon-shezhi"></i></p></div>
-            <div class="mCustomScrollbar">
-                <div class="property-contract-add">
-                    <div class="modal-property-data-sec"><p>客户资料</p>
-
-                        <p onclick="propertyPage.customerSele()">从客户中选取</p>
-
-                        <div class="clear"></div>
-                    </div>
-                    <table class="modal-data-table">
-                        <tr>
-                            <td>姓名</td>
-                            <td id="CustomerName_Add"></td>
-                        </tr>
-                        <tr>
-                            <td>手机号码</td>
-                            <td><input type="text" name="" id="ContractPhone_Add" value=""></td>
-                        </tr>
-                        <tr>
-                            <td>证件号码</td>
-                            <td><input type="text" name="" id="CardID_Add" value=""></td>
-                        </tr>
-                    </table>
-                    <div class="modal-property-data-sec"><p>房间资料</p>
-
-                        <div class="clear"></div>
-                    </div>
-                    <table class="modal-data-table">
-                        <tr>
-                            <td>物业</td>
-                            <td id="BuildingName_Add"></td>
-                        </tr>
-                        <tr>
-                            <td>面积</td>
-                            <td id="Square_Add"></td>
-                        </tr>
-                        <tr>
-                            <td>户型</td>
-                            <td id="Layout_Add"></td>
-                        </tr>
-                    </table>
-                    <div class="modal-property-data-sec"><p>合同资料</p>
-
-                        <div class="clear"></div>
-                    </div>
-                    <div class="modal-dv-row">
-                        <p>编号<sup>*</sup></p>
-
-                        <div><input type="text" name="" id="ContractNumber_Add" value=""></div>
-                    </div>
-                    <div class="modal-dv-row">
-                        <p>租金<sup>*</sup></p>
-
-                        <div class="top-modal-ip-wraper"><input type="text" name="" id="Price_Add" value=""
-                                                                style="padding-right: 40px;"><span
-                                style="width: 40px;text-align: right;padding-right: 10px;">元/月</span></div>
-                    </div>
-                    <div class="modal-dv-row">
-                        <p>押金<sup>*</sup></p>
-
-                        <div class="top-modal-ip-wraper"><input type="text" name="" id="Deposit_Add" value=""
-                                                                style="padding-right: 30px;"><span
-                                style="width: 40px;text-align: right;padding-right: 10px;">元</span></div>
-                    </div>
-                    <div class="modal-dv-row">
-                        <p>付押方式<sup>*</sup></p>
-
-                        <div>
-                            <div type="click" class="fq-xiala" id="PayType">
-                                <span class="fq-xiala-sel"></span><i class="icon iconfont icon-drop-down"></i>
-                                <ul></ul>
+</div>
+<div class="panel panel-sm hide">
+    <div class="panel-bg"></div>
+    <div class="panel-content">
+        <div class="panel-modal">
+            <div class="panel-header">
+                <h3 class="panel-title">物业新增</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="form-label reqiure" for="Add_Name">物业名称</label>
+                    <input class="form-input" type="text" id="Add_Name" placeholder="请输入物业名称"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="Add_Province">所在省份</label>
+                    <div class="drop-container hide" tabindex="1">
+                        <div class="drop-content">
+                            <div class="drop-header">
+                                <span class="drop-result">选择省份</span>
+                                <i class="drop-icon icon-drop-down"></i>
                             </div>
+                            <div class="drop-body">
+                                <ul id="Add_Province"></ul>
+                            </div>
+                            <div class="drop-footer"></div>
                         </div>
                     </div>
-                    <div class="modal-dv-row" style="width: auto;">
-                        <p>起租/退租<sup>*</sup></p>
-
-                        <div class="modal-property-data-contract-dv">
-                            <div class="date-wraper" style="width: 150px;display: inline-block;"><input
-                                    class="group-date1" type="text" id="InDate" value="2017-01-20"><i
-                                    class="icon iconfont icon-gongzuotai"></i></div>
-                            <div class="date-wraper" style="width: 150px;margin-left: 10px;display: inline-block;">
-                                <input class="group-date2" type="text" id="OutDate" placeholder="退租日期"><i
-                                    class="icon iconfont icon-gongzuotai"></i></div>
-                            <span>3个月</span><span>6个月</span><span>1年</span></div>
-                    </div>
-                    <div class="modal-dv-row">
-                        <p>入住人数<sup>*</sup></p>
-
-                        <div><input type="text" name="" id="People_Add" value=""></div>
-                    </div>
-                    <!--<div class="modal-dv-row">
-                        <p>收租日期<sup>*</sup></p>
-                        <div>
-                            <div class="" style="width: 230px;float: left;">
-                                <div type="click" class="fq-xiala">
-                                    <span class="fq-xiala-sel">按固定时期收租</span><i class="icon iconfont icon-xiala"></i>
-                                    <ul>
-                                        <li class="cur">付三押一</li>
-                                        <li>无业务</li>
-                                        <li>出租方</li>
-                                        <li>承租方</li>
-                                        <li>甲方乙方</li>
-                                    </ul>
-                                </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="Add_City">所在城市</label>
+                    <div class="drop-container hide" tabindex="1">
+                        <div class="drop-content">
+                            <div class="drop-header">
+                                <span class="drop-result">选择城市</span>
+                                <i class="drop-icon icon-drop-down"></i>
                             </div>
-                            <span style="float: left;margin:5px 8px 0 18px;">每月</span>
-                            <div class="top-modal-ip-wraper" style="width: 145px;float: left;"><input type="text" name="" value="20"><span>号</span></div><div class="clear"></div>
-                        </div>
-                    </div>-->
-                    <div class="modal-dv-row">
-                        <p>签约员工</p>
-
-                        <div>
-                            <div style="width: 230px;float:left;">
-                                <div type="click" class="fq-xiala secondary-menu" id="Dpts_Add">
-                                    <span class="fq-xiala-sel">不选</span><i class="icon iconfont icon-drop-down"></i>
-                                    <ul id="simulation">
-                                        <li class="cur">不选</li>
-                                    </ul>
-                                </div>
+                            <div class="drop-body">
+                                <ul id="Add_City"></ul>
                             </div>
-                            <div style="width: 200px;float:left;">
-                                <div type="click" class="fq-xiala" id="Emps_Add">
-                                    <span class="fq-xiala-sel">不选</span><i class="icon iconfont icon-drop-down"></i>
-                                    <ul style="overflow-y: auto;max-height: 150px;">
-                                        <li class="cur">不选</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="clear"></div>
+                            <div class="drop-footer"></div>
                         </div>
                     </div>
-                    <div class="modal-dv-row">
-                        <p>签约日期<sup>*</sup></p>
-
-                        <div class="date-wraper"><input class="group-date1" type="text" id="BargainDate" value=""><i
-                                class="icon iconfont icon-gongzuotai"></i></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="Add_City">所在区域</label>
+                    <div class="drop-container hide" tabindex="1">
+                        <div class="drop-content">
+                            <div class="drop-header">
+                                <span class="drop-result">所在区域</span>
+                                <i class="drop-icon icon-drop-down"></i>
+                            </div>
+                            <div class="drop-body">
+                                <ul id="Add_Area"></ul>
+                            </div>
+                            <div class="drop-footer"></div>
+                        </div>
                     </div>
-                    <div class="modal-dv-row">
-                        <p>备注</p>
-
-                        <div><input type="text" id="ContractDescription" name=""></div>
-                    </div>
-
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="Add_Address">详细地址</label>
+                    <input class="form-input" type="text" id="Add_Address" placeholder="请输入详细地址"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="Add_Layer">总层数</label>
+                    <input class="form-input" type="text" data-keyup="number" id="Add_Layer" placeholder="请输入总层数"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="Add_Door">层户数</label>
+                    <input class="form-input" type="text" data-keyup="number" id="Add_Door" placeholder="请输入层户数"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="Add_Water">水费价格</label>
+                    <input class="form-input" type="text" id="Add_Water" placeholder="请输入水费价格"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="Add_Power">电费价格</label>
+                    <input class="form-input" type="text" id="Add_Power" placeholder="请输入电费价格"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="Add_BuildingAlloc">物业配备</label>
+                    <ul class="tags" id="Add_BuildingAlloc">
+                        <li class="tag active">地铁</li>
+                        <li class="tag">地铁</li>
+                        <li class="tag">地铁</li>
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="Add_BuildingTag">物业标签</label>
+                    <ul class="tags" id="Add_BuildingTag">
+                        <li class="tag active">地铁</li>
+                        <li class="tag">地铁</li>
+                        <li class="tag">地铁</li>
+                    </ul>
                 </div>
             </div>
-            <div class="top-modal-bottom">
-                <button class="btn cancel btn-cancel">取消</button>
-                <button class="btn confirm btn-keep" onclick="propertyPage.contractAdd()">保存</button>
+            <div class="panel-footer">
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="pt.exeAddBuild();">保存</button>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
-
-
-        <div class="modal-con room-edit">
-            <div class="fq-modal-title"><p>房间编辑</p>
-
-                <p><i class="icon iconfont icon-shezhi"></i></p></div>
-            <div class="mCustomScrollbar" style="height: 100%;">
-                <div class="top-modal-container">
-                    <div class="modal-dv-row">
-                        <p style="margin-bottom: 25px;">所在</p>
-
-                        <p style="margin-left: 15px;color:#333;" id="AtFloor"></p>
-                    </div>
-                    <div class="modal-dv-row">
-                        <p>房号<sup>*</sup></p>
-
-                        <div><input type="text" name="" id="RoomName_Update" value=""></div>
-                    </div>
-                    <div class="modal-dv-row">
-                        <p>租金<sup>*</sup></p>
-
-                        <div><input type="text" name="" id="Price_Update" value=""></div>
-                    </div>
-
-                    <div class="modal-dv-row">
-                        <p>面积<sup>*</sup></p>
-
-                        <div class="top-modal-ip-wraper"><input type="text" name="" id="Square_Update"
-                                                                value=""><span>m²</span></div>
-                    </div>
-                    <div class="modal-dv-row">
-                        <p>水费单价<sup>*</sup></p>
-
-                        <div class="top-modal-ip-wraper"><input type="text" name="" id="WaterUnitPrice_Update"
-                                                                value=""><span>元/吨</span></div>
-                    </div>
-                    <div class="modal-dv-row">
-                        <p>电费单价<sup>*</sup></p>
-
-                        <div class="top-modal-ip-wraper"><input type="text" name="" id="EleUnitPrice_Update"
-                                                                value=""><span>元/度</span></div>
-                    </div>
-                    <div class="modal-dv-row modal-dv-row-in-3">
-                        <p>户型<sup>*</sup></p>
-
-                        <div>
-                            <ul>
-                                <li>
-                                    <div class="top-modal-ip-wraper"><input type="text" name="" id="Div1"
-                                                                            value="2"><span>房</span></div>
-                                </li>
-                                <li>
-                                    <div class="top-modal-ip-wraper"><input type="text" name="" id="Div2"
-                                                                            value="2"><span>厅</span></div>
-                                </li>
-                                <li>
-                                    <div class="top-modal-ip-wraper"><input type="text" name="" id="Div3"
-                                                                            value="1"><span>卫</span></div>
-                                </li>
-                                <div class="clear"></div>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="tag-dv-wraper" id="RoomAlloc_Update">
-                        <p>配置</p>
-                        <ul class="tag-ul">
-                            <!--<li class="cur">桌椅</li>
-                            <li>洗衣机</li>
-                            <li class="cur">热水器</li>
-                            <li>冰箱</li>
-                            <li>衣柜</li>-->
-                            <div class="clear"></div>
-                        </ul>
-                    </div>
-                    <div class="tag-dv-wraper" id="RoomTag_Update">
-                        <p>标签</p>
-                        <ul class="tag-ul">
-                            <!--<li>朝南</li>
-                            <li class="cur">南北通透</li>
-                            <li>风水好</li>-->
-                            <div class="clear"></div>
-                        </ul>
-                    </div>
+        <div class="panel-modal">
+            <div class="panel-header">
+                <h3 class="panel-title">物业编辑</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="form-label reqiure" for="Edit_Name">物业名称</label>
+                    <input class="form-input" type="text" id="Edit_Name" placeholder="请输入物业名称"/>
                 </div>
-            </div>
-            <div class="top-modal-bottom">
-                <button class="btn cancel btn-cancel">取消</button>
-                <button class="btn confirm btn-keep" onclick="propertyPage.roomUpdateAdd()">保存</button>
-            </div>
-        </div>
-        <div class="modal-con checktable-add">
-            <div class="fq-modal-title"><p>抄表新增</p>
-
-                <p><i class="icon iconfont icon-shezhi"></i></p></div>
-            <div class="mCustomScrollbar">
-                <div class="top-modal-container">
-                    <div class="modal-dv-wraper">
-                        <p>抄表日期</p>
-                        <div class="modal-dv-row modal-dv-row-in-3">
-                            <div class="date-wraper"><input class="group-date1" type="text" readonly id="RecordDate"
-                                                            value="" placeholder="请选择抄表日期"><i
-                                    class="icon iconfont icon-gongzuotai"></i></div>
-                        </div>
-                    </div>
-                    <div class="modal-dv-wraper">
-                        <p>抄表项目</p>
-
-                        <div class="modal-dv-row modal-dv-row-in-2">
-                            <div>
-                                <ul>
-                                    <li>
-                                        <div type="click" class="fq-xiala" id="ReadItem">
-                                            <span class="fq-xiala-sel"></span><i
-                                                class="icon iconfont icon-drop-down"></i>
-                                            <ul></ul>
-                                        </div>
-                                    </li>
-                                    <li><input type="text" name="" id="Mark" placeholder="请输入抄表刻度"></li>
-                                    <div class="clear"></div>
-                                </ul>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="Edit_Province">所在省份</label>
+                    <div class="drop-container hide" tabindex="1">
+                        <div class="drop-content">
+                            <div class="drop-header">
+                                <span class="drop-result" id="Edit_Province_Result">选择省份</span>
+                                <i class="drop-icon icon-drop-down"></i>
                             </div>
-                        </div>
-                    </div>
-                    <div class="modal-dv-wraper">
-                        <div class="modal-dv-row">
-                            <p>备注</p>
-
-                            <div><input type="text" name="" id="RecordDescription" placeholder="请输入备注"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="top-modal-bottom">
-                <button class="btn cancel btn-cancel">取消</button>
-                <button class="btn confirm btn-keep" onclick="propertyPage.readAdd()">保存</button>
-            </div>
-        </div>
-        <div class="modal-con repair-add">
-            <div class="fq-modal-title"><p>维修新增</p>
-
-                <p><i class="icon iconfont icon-shezhi"></i></p></div>
-            <div class="mCustomScrollbar">
-                <div class="top-modal-container">
-                    <div class="modal-dv-row modal-dv-row-in-2">
-                        <p>维修项目</p>
-
-                        <div>
-                            <ul>
-                                <li>
-                                    <div type="click" class="fq-xiala" id="ServiceItem">
-                                        <span class="fq-xiala-sel"></span><i class="icon iconfont icon-drop-down"></i>
-                                        <ul></ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="top-modal-ip-wraper"><input type="text" id="ServicePrice" name=""
-                                                                            placeholder="请输入维修金额"><span>元</span></div>
-                                </li>
-                                <div class="clear"></div>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="modal-dv-row">
-                        <p>承担方</p>
-
-                        <div>
-                            <div type="click" class="fq-xiala" id="ServiceObject">
-                                <span class="fq-xiala-sel"></span><i class="icon iconfont icon-drop-down"></i>
-                                <ul></ul>
+                            <div class="drop-body">
+                                <ul id="Edit_Province"></ul>
                             </div>
+                            <div class="drop-footer"></div>
                         </div>
                     </div>
-                    <div class="modal-dv-row">
-                        <p>备注</p>
-
-                        <div><input type="text" id="ServiceDescription" name="" placeholder="请输入备注"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="Edit_City">所在城市</label>
+                    <div class="drop-container hide" tabindex="1">
+                        <div class="drop-content">
+                            <div class="drop-header">
+                                <span class="drop-result" id="Edit_City_Result">选择城市</span>
+                                <i class="drop-icon icon-drop-down"></i>
+                            </div>
+                            <div class="drop-body">
+                                <ul id="Edit_City"></ul>
+                            </div>
+                            <div class="drop-footer"></div>
+                        </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="Edit_Area">所在区域</label>
+                    <div class="drop-container hide" tabindex="1">
+                        <div class="drop-content">
+                            <div class="drop-header">
+                                <span class="drop-result" id="Edit_Area_Result">所在区域</span>
+                                <i class="drop-icon icon-drop-down"></i>
+                            </div>
+                            <div class="drop-body">
+                                <ul id="Edit_Area"></ul>
+                            </div>
+                            <div class="drop-footer"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="Edit_Address">详细地址</label>
+                    <input class="form-input" type="text" id="Edit_Address" placeholder="请输入详细地址"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="Edit_WaterUnitPrice">水费价格</label>
+                    <input class="form-input" type="text" id="Edit_WaterUnitPrice" placeholder="请输入水费价格"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="Edit_EleUnitPrice">电费价格</label>
+                    <input class="form-input" type="text" id="Edit_EleUnitPrice" placeholder="请输入电费价格"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="Edit_BuildingAlloc">物业配备</label>
+                    <ul class="tags" id="Edit_BuildingAlloc"></ul>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="Edit_BuildingTag">物业标签</label>
+                    <ul class="tags" id="Edit_BuildingTag"></ul>
+                </div>
             </div>
-            <div class="top-modal-bottom">
-                <button class="btn cancel btn-cancel">取消</button>
-                <button class="btn confirm btn-keep" onclick="propertyPage.serviceAdd()">保存</button>
+            <div class="panel-footer">
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="pt.exeUpdateBuild();">保存</button>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
-        <div class="modal-con property-add">
-            <div class="fq-modal-title"><p>物业新增</p>
-
-                <p><i class="icon iconfont icon-shezhi"></i></p></div>
-            <div class="mCustomScrollbar">
-                <div class="top-modal-container">
-                    <div class="modal-dv-row">
-                        <p>物业名称<sup>*</sup></p>
-                        <div><input property_title type="text" name="" id="BuildingName_Add1" placeholder="请输入物业名称">
-                        </div>
-                    </div>
-                    <div class="modal-dv-row modal-dv-row-in-2">
-                        <p>所在省份<sup>*</sup></p>
-
-                        <div>
-                            <ul>
-                                <li>
-                                    <div type="hov" class="fq-xiala" id="Province_Add">
-                                        <span class="fq-xiala-sel">选择省份</span><i
-                                            class="icon iconfont icon-drop-down"></i>
-                                        <ul>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <div class="clear"></div>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="modal-dv-row modal-dv-row-in-2">
-                        <p>所在城市<sup>*</sup></p>
-
-                        <div>
-                            <ul>
-                                <li>
-                                    <div type="hov" class="fq-xiala" id="City_Add">
-                                        <span class="fq-xiala-sel">选择城市</span><i
-                                            class="icon iconfont icon-drop-down"></i>
-                                        <ul></ul>
-                                    </div>
-                                </li>
-                                <div class="clear"></div>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="modal-dv-row modal-dv-row-in-2">
-                        <p>所在区域<sup>*</sup></p>
-
-                        <div>
-                            <ul>
-                                <li>
-                                    <div type="hov" class="fq-xiala" id="District_Add">
-                                        <span class="fq-xiala-sel">选择区域</span><i
-                                            class="icon iconfont icon-drop-down"></i>
-                                        <ul></ul>
-                                    </div>
-                                </li>
-                                <div class="clear"></div>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="modal-dv-row">
-                        <p>详细地址<sup>*</sup></p>
-
-                        <div><input property_address type="text" id="BuildingAddr_Add" name="" placeholder="请输入详细地址">
-                        </div>
-                    </div>
-                    <div class="modal-dv-row">
-                        <p>总层数<sup>*</sup></p>
-
-                        <div><input property_floornum type="text" id="FloorNum" name="" placeholder="请输入总层数"></div>
-                    </div>
-                    <div class="modal-dv-row">
-                        <p>层户数<sup>*</sup></p>
-
-                        <div><input property_floornum type="text" id="HouseNum" name="" placeholder="请输入层户数"></div>
-                    </div>
-
-                    <div class="modal-dv-row">
-                        <p>水费价格<sup>*</sup></p>
-
-                        <div><input type="text" name="" id="water_price" placeholder="请输入水费价格"></div>
-                    </div>
-
-                    <div class="modal-dv-row">
-                        <p>电费价格<sup>*</sup></p>
-
-                        <div><input type="text" name="" id="ele_price" placeholder="请输入电费价格"></div>
-                    </div>
-                    <div class="tag-dv-wraper" id="BuildingAlloc_Add">
-                        <p>物业配备</p>
-                        <ul class="tag-ul">
-                            <div class="clear"></div>
-                        </ul>
-                    </div>
-                    <div class="tag-dv-wraper" id="BuildingTag_Add">
-                        <p>物业标签</p>
-                        <ul class="tag-ul">
-                            <div class="clear"></div>
-                        </ul>
-                    </div>
+        <div class="panel-modal">
+            <div class="panel-header">
+                <h3 class="panel-title">楼层编辑</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="form-label" for="BuildName">当前物业</label>
+                    <input class="form-input" type="text" disabled id="BuildName" placeholder="请输入物业名称"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="FloorName">楼层</label>
+                    <input type="text" class="form-input" id="FloorName" placeholder="请输入楼层"
+                           data-keyup="number"/>
                 </div>
             </div>
-            <div class="top-modal-bottom">
-                <button class="btn cancel btn-cancel">取消</button>
-                <button class="btn confirm btn-keep" onclick="propertyPage.buildingAdd()">保存</button>
-            </div>
-        </div>
-        <div class="modal-con property-edit">
-            <div class="fq-modal-title"><p>物业编辑</p>
-
-                <p><i class="icon iconfont icon-shezhi"></i></p></div>
-            <div class="mCustomScrollbar">
-                <div class="top-modal-container">
-                    <div class="modal-dv-row">
-                        <p>物业名称<sup>*</sup></p>
-
-                        <div><input property_title type="text" name="" id="BuildingName_Edit" placeholder="请输入物业名称">
-                        </div>
-                    </div>
-                    <div class="modal-dv-row modal-dv-row-in-2">
-                        <p>所在省份<sup>*</sup></p>
-
-                        <div>
-                            <ul>
-                                <li>
-                                    <div type="hov" class="fq-xiala" id="Province_Edit">
-                                        <span class="fq-xiala-sel">选择省份</span><i
-                                            class="icon iconfont icon-drop-down"></i>
-                                        <ul></ul>
-                                    </div>
-                                </li>
-                                <div class="clear"></div>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="modal-dv-row modal-dv-row-in-2">
-                        <p>所在城市<sup>*</sup></p>
-
-                        <div>
-                            <ul>
-                                <li>
-                                    <div type="hov" class="fq-xiala" id="City_Edit">
-                                        <span class="fq-xiala-sel">选择城市</span><i
-                                            class="icon iconfont icon-drop-down"></i>
-                                        <ul></ul>
-                                    </div>
-                                </li>
-                                <div class="clear"></div>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="modal-dv-row modal-dv-row-in-2">
-                        <p>所在区域<sup>*</sup></p>
-
-                        <div>
-                            <ul>
-                                <li>
-                                    <div type="hov" class="fq-xiala" id="District_Edit">
-                                        <span class="fq-xiala-sel">选择区域</span><i
-                                            class="icon iconfont icon-drop-down"></i>
-                                        <ul></ul>
-                                    </div>
-                                </li>
-                                <div class="clear"></div>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="modal-dv-row">
-                        <p>详细地址<sup>*</sup></p>
-
-                        <div><input property_address type="text" id="BuildingAddr_Edit" name="" placeholder="请输入详细地址">
-                        </div>
-                    </div>
-                    <div class="modal-dv-row">
-                        <p>水费价格<sup>*</sup></p>
-
-                        <div><input type="text" name="" id="water_price_edit" placeholder="请输入水费价格"></div>
-                    </div>
-
-                    <div class="modal-dv-row">
-                        <p>电费价格<sup>*</sup></p>
-
-                        <div><input type="text" name="" id="ele_price_edit" placeholder="请输入电费价格"></div>
-                    </div>
-                    <div class="tag-dv-wraper" id="BuildingAlloc_Update">
-                        <p>物业配备</p>
-                        <ul class="tag-ul">
-                            <div class="clear"></div>
-                        </ul>
-                    </div>
-                    <div class="tag-dv-wraper" id="BuildingTag_Update">
-                        <p>物业标签</p>
-                        <ul class="tag-ul">
-                            <div class="clear"></div>
-                        </ul>
-                    </div>
-
-                </div>
-            </div>
-            <div class="top-modal-bottom">
-                <button class="btn cancel btn-cancel">取消</button>
-                <button class="btn confirm btn-keep" onclick="propertyPage.buildingUpdateAdd()">保存</button>
-            </div>
-        </div>
-        <div class="modal-con floor-edit">
-            <div class="fq-modal-title"><p>楼层编辑</p>
-                <p><i class="icon iconfont icon-shezhi"></i></p></div>
-            <div style="margin-top:80px;">
-                <div class="top-modal-container">
-                    <div class="modal-dv-row">
-                        <p style="margin-bottom: 25px;">当前物业</p>
-                        <p style="margin-left: 15px;color:#333;" id="CurBuildingName"></p>
-                        <input type="hidden" id="CurFloorCharId" value=""/>
-                    </div>
-                    <div class="modal-dv-row">
-                        <p>楼层<sup>*</sup></p>
-
-                        <div class="top-modal-ip-wraper"><input type="text" name="" id="CurFloorName"
-                                                                value=""><span>楼</span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="top-modal-bottom">
+            <div class="panel-footer">
                 <div class="pull-left">
-                    <botton class="btn delete" onclick="propertyPage.floorDelete()">删除</botton>
+                    <button class="btn delete" onclick="pt.exeDeleteFloor();">删除</button>
                 </div>
                 <div class="pull-right">
-                    <button class="btn cancel btn-cancel">取消</button>
-                    <button class="btn confirm btn-keep" onclick=propertyPage.floorUpdate()>保存</button>
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="pt.exeUpdateFloor();">保存</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="panel-modal">
+            <div class="panel-header">
+                <h3 class="panel-title">房间编辑</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="form-label" for="UpdateName">所在</label>
+                    <input class="form-input" type="text" disabled id="UpdateName"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="UpdateRoomName">房号</label>
+                    <input type="text" class="form-input" id="UpdateRoomName" placeholder="请输入房号"
+                           data-keyup="number"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="UpdatePrice">租金</label>
+                    <input type="text" class="form-input" id="UpdatePrice" placeholder="请输入租金"
+                           data-keyup="number"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="UpdateSquare">面积</label>
+                    <input type="text" class="form-input" id="UpdateSquare" placeholder="请输入面积"
+                           data-keyup="number"/>
+                    <label class="form-label form-unit" for="UpdateSquare">m²</label>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="UpdateWaterUnitPrice">水费</label>
+                    <input type="text" class="form-input" id="UpdateWaterUnitPrice" placeholder="请输入水费"
+                           data-keyup="number"/>
+                    <label class="form-label form-unit" for="UpdateWaterUnitPrice">元/吨</label>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="UpdateEleUnitPrice">电费</label>
+                    <input type="text" class="form-input" id="UpdateEleUnitPrice" placeholder="请输入电费"
+                           data-keyup="number"/>
+                    <label class="form-label form-unit" for="UpdateEleUnitPrice">元/度</label>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure">户型</label>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="form-group">
+                                <label for="UpdateDiv1" class="form-label form-unit">房</label>
+                                <input type="text" class="form-input" id="UpdateDiv1" data-keyup="number"/>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="form-group">
+                                <label for="UpdateDiv2" class="form-label form-unit">厅</label>
+                                <input type="text" class="form-input" id="UpdateDiv2" data-keyup="number"/>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="form-group">
+                                <label for="UpdateDiv3" class="form-label form-unit">卫</label>
+                                <input type="text" class="form-input" id="UpdateDiv3" data-keyup="number"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="UpdateRoomAlloc">配置</label>
+                    <ul class="tags" id="UpdateRoomAlloc"></ul>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="UpdateRoomTag">标签</label>
+                    <ul class="tags" id="UpdateRoomTag"></ul>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="pt.exeUpdateRoom();">保存</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="panel-modal">
+            <div class="panel-header">
+                <h3 class="panel-title">维修新增</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="form-label reqiure">维修项目</label>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="form-group">
+                                <div class="drop-container hide" tabindex="1">
+                                    <div class="drop-content">
+                                        <div class="drop-header">
+                                            <span class="drop-result">门窗</span>
+                                            <i class="drop-icon icon-drop-down"></i>
+                                        </div>
+                                        <div class="drop-body">
+                                            <ul id="AddServiceItem"></ul>
+                                        </div>
+                                        <div class="drop-footer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="form-group">
+                                <label for="AddPrice" class="form-label form-unit">元</label>
+                                <input type="text" class="form-input" id="AddPrice" data-keyup="number"
+                                       placeholder="请输入维修金额"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure">承担方</label>
+                    <div class="drop-container hide" tabindex="1">
+                        <div class="drop-content">
+                            <div class="drop-header">
+                                <span class="drop-result">物业</span>
+                                <i class="drop-icon icon-drop-down"></i>
+                            </div>
+                            <div class="drop-body">
+                                <ul id="AddServiceObject"></ul>
+                            </div>
+                            <div class="drop-footer"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="AddServiceDescription">备注</label>
+                    <input type="text" class="form-input" id="AddServiceDescription" placeholder="请输入备注"/>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="pt.exeAddService();">保存</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="panel-modal">
+            <div class="panel-header">
+                <h3 class="panel-title">抄表新增</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="form-label reqiure" for="RecordDate">抄表日期</label>
+                    <input class="form-input group-date1" readonly="" id="RecordDate" placeholder="请选择抄表日期"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure">抄表项目</label>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="form-group">
+                                <div class="drop-container hide" tabindex="1">
+                                    <div class="drop-content">
+                                        <div class="drop-header">
+                                            <span class="drop-result">水</span>
+                                            <i class="drop-icon icon-drop-down"></i>
+                                        </div>
+                                        <div class="drop-body">
+                                            <ul id="RecordProject"></ul>
+                                        </div>
+                                        <div class="drop-footer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="form-group">
+                                <label for="RecordMark" class="form-label form-unit"></label>
+                                <input type="text" class="form-input" id="RecordMark" data-keyup="number"
+                                       placeholder="请输入抄表刻度"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label reqiure" for="RecordDescription">备注</label>
+                    <input type="text" class="form-input" id="RecordDescription" placeholder="请输入备注"/>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="pt.exeAddRecord();">保存</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="panel-modal">
+            <div class="panel-header">
+                <h3 class="panel-title">合同资料</h3>
+            </div>
+            <div class="panel-body">
+                <div class="group-row row">
+                    <div class="col-xs-3 col-sm-2">
+                        <label class="group-label">编号</label>
+                    </div>
+                    <div class="col-xs-9 col-sm-10">
+                        <span class="group-value" id="History_Number"></span>
+                    </div>
+                </div>
+                <div class="group-row row">
+                    <div class="col-xs-3 col-sm-2">
+                        <label class="group-label">状态</label>
+                    </div>
+                    <div class="col-xs-9 col-sm-10">
+                        <span class="group-value" id="History_ContractState"></span>
+                    </div>
+                </div>
+                <div class="group-row row">
+                    <div class="col-xs-3 col-sm-2">
+                        <label class="group-label">租金</label>
+                    </div>
+                    <div class="col-xs-9 col-sm-10">
+                        <span class="group-value" id="History_Price"></span>/月
+                    </div>
+                </div>
+                <div class="group-row row">
+                    <div class="col-xs-3 col-sm-2">
+                        <label class="group-label">押金</label>
+                    </div>
+                    <div class="col-xs-9 col-sm-10">
+                        <span class="group-value" id="History_Deposit"></span>/月
+                    </div>
+                </div>
+                <div class="group-row row">
+                    <div class="col-xs-3 col-sm-2">
+                        <label class="group-label">起租/退租</label>
+                    </div>
+                    <div class="col-xs-9 col-sm-10">
+                        <span class="group-value" id="History_InDate"></span>~
+                        <span class="group-value" id="History_OutDate"></span>
+                    </div>
+                </div>
+                <div class="group-row row">
+                    <div class="col-xs-3 col-sm-2">
+                        <label class="group-label">付押方式</label>
+                    </div>
+                    <div class="col-xs-9 col-sm-10">
+                        <span class="group-value" id="History_PayType1"></span>
+                    </div>
+                </div>
+                <div class="group-row row">
+                    <div class="col-xs-3 col-sm-2">
+                        <label class="group-label">签约员工</label>
+                    </div>
+                    <div class="col-xs-9 col-sm-10">
+                        <span class="group-value" id="History_DepartmentName"></span> .
+                        <span class="group-value" id="History_EmployeeName"></span>
+                    </div>
+                </div>
+                <div class="group-row row">
+                    <div class="col-xs-3 col-sm-2">
+                        <label class="group-label">签约日期</label>
+                    </div>
+                    <div class="col-xs-9 col-sm-10">
+                        <span class="group-value" id="History_BargainDate"></span>
+                    </div>
+                </div>
+                <div class="group-row row">
+                    <div class="col-xs-3 col-sm-2">
+                        <label class="group-label">备注</label>
+                    </div>
+                    <div class="col-xs-9 col-sm-10">
+                        <span class="group-value" id="History_Description"></span>
+                    </div>
+                </div>
+                <div class="group-row row">
+                    <div class="col-xs-3 col-sm-2">
+                        <label class="group-label">创建</label>
+                    </div>
+                    <div class="col-xs-9 col-sm-10">
+                        <span class="group-value" id="History_CreateTime"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="panel-modal">
+            <div class="panel-header">
+                <h3 class="panel-title">合同新增</h3>
+            </div>
+            <div class="panel-body">
+                <div class="group-content">
+                    <div class="group-header">
+                        <h2 class="group-title row">客户资料</h2>
+                        <a class="add-contract" onclick="pt.customerSele();">从客户中选取</a>
+                    </div>
+                    <div class="group-body">
+                        <div class="form-group">
+                            <label class="form-label reqiure" for="AddContract_Name">姓名</label>
+                            <input class="form-input" readonly type="text" id="AddContract_Name" placeholder="请输入客户姓名"/>
+                            <input class="form-input" type="hidden" id="CustomerCharId"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label reqiure" for="AddContract_Phone">手机号码</label>
+                            <input class="form-input" readonly type="text" id="AddContract_Phone"
+                                   placeholder="请输入手机号码"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label reqiure" for="AddContract_Id">证件号码</label>
+                            <input class="form-input" readonly type="text" id="AddContract_Id" placeholder="请输入证件号码"/>
+                        </div>
+                    </div>
+                    <div class="group-footer"></div>
+                </div>
+                <div class="group-content">
+                    <div class="group-header">
+                        <h2 class="group-title row">房间资料</h2>
+                    </div>
+                    <div class="group-body">
+                        <div class="form-group">
+                            <label class="form-label reqiure" for="AddContract_BuildingName">物业</label>
+                            <input class="form-input" type="text" disabled id="AddContract_BuildingName"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label reqiure" for="AddContract_Square">面积</label>
+                            <input class="form-input" type="text" disabled id="AddContract_Square"/>
+                            <label class="form-label form-unit">㎡</label>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label reqiure" for="AddContract_Layout">户型</label>
+                            <input class="form-input" type="text" disabled id="AddContract_Layout"/>
+                        </div>
+                    </div>
+                    <div class="group-footer"></div>
+                </div>
+                <div class="group-content">
+                    <div class="group-header">
+                        <h2 class="group-title row">合同资料</h2>
+                    </div>
+                    <div class="group-body">
+                        <div class="form-group">
+                            <label class="form-label reqiure" for="AddContract_Number">编号</label>
+                            <input class="form-input" readonly type="text" id="AddContract_Number"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label reqiure" for="AddContract_Price">租金</label>
+                            <input class="form-input" type="text" id="AddContract_Price"/>
+                            <label class="form-label form-unit" for="AddContract_Price">元/月</label>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label reqiure" for="AddContract_Deposit">押金</label>
+                            <input class="form-input" type="text" id="AddContract_Deposit"/>
+                            <label class="form-label form-unit" for="AddContract_Deposit">元</label>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label reqiure">付押方式</label>
+                            <div class="drop-container hide" tabindex="1">
+                                <div class="drop-content">
+                                    <div class="drop-header">
+                                        <span class="drop-result" id="AddContract_PaymentResult">请选择</span>
+                                        <i class="drop-icon icon-drop-down"></i>
+                                    </div>
+                                    <div class="drop-body">
+                                        <ul id="AddContract_Payment"></ul>
+                                    </div>
+                                    <div class="drop-footer"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label reqiure">起租/退租</label>
+                            <div class="form-group">
+                                <input class="form-input group-date1" readonly="" id="AddContract_InDate"
+                                       placeholder="请选择起租日期"/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-input group-date1" readonly="" id="AddContract_OutDate"
+                                       placeholder="请选择退租日期"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label reqiure" for="AddContract_Persons">入住人数</label>
+                            <input class="form-input" data-keyup="number" type="text" id="AddContract_Persons"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label reqiure">签约员工</label>
+                            <div class="form-group">
+                                <div class="form-select hide" tabindex="1">
+                                    <i class="icon-drop-down"></i>
+                                    <div class="select-result" id="AddContract_Dpts_Result">请选择部门</div>
+                                    <div class="select-option">
+                                        <div class="tree-container">
+                                            <div class="tree-content">
+                                                <div class="tree-header"></div>
+                                                <div class="tree-body">
+                                                    <div class="tree-menu" id="AddContract_Dpts"></div>
+                                                </div>
+                                                <div class="tree-footer"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="drop-container hide" tabindex="1">
+                                    <div class="drop-content">
+                                        <div class="drop-header">
+                                            <span class="drop-result" id="AddContract_EmpResult">请选择员工</span>
+                                            <i class="drop-icon icon-drop-down"></i>
+                                        </div>
+                                        <div class="drop-body">
+                                            <ul id="AddContract_Employee"></ul>
+                                        </div>
+                                        <div class="drop-footer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label reqiure">签约日期</label>
+                            <input class="form-input group-date1" readonly="" id="BargainDate" placeholder="请选择签约日期"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="AddContract_Description">备注</label>
+                            <input class="form-input" type="text" id="AddContract_Description"/>
+                        </div>
+                    </div>
+                    <div class="group-footer"></div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="pt.exeAddContract();">保存</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="panel-modal">
+            <div class="panel-header">
+                <h3 class="panel-title">查看历史合同</h3>
+            </div>
+            <div class="panel-body">
+                <div class="group-content">
+                    <div class="group-header">
+                        <h2 class="group-title row">合同资料</h2>
+                    </div>
+                    <div class="group-body">
+                        <div class="group-row row">
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="group-label">编号</label>
+                            </div>
+                            <div class="col-xs-8 col-sm-9">
+                                <span class="group-value" id="Number_Detail"></span>
+                            </div>
+                        </div>
+                        <div class="group-row row">
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="group-label">状态</label>
+                            </div>
+                            <div class="col-xs-8 col-sm-9">
+                                <span class="group-value" id="State_Detail"></span>
+                            </div>
+                        </div>
+                        <div class="group-row row">
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="group-label">租金</label>
+                            </div>
+                            <div class="col-xs-8 col-sm-9">
+                                <span class="group-value" id="Price_Detail"></span>元/月
+                            </div>
+                        </div>
+                        <div class="group-row row">
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="group-label">押金</label>
+                            </div>
+                            <div class="col-xs-8 col-sm-9">
+                                <span class="group-value" id="Deposit_Detail"></span>元/月
+                            </div>
+                        </div>
+                        <div class="group-row row">
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="group-label">起租/退租</label>
+                            </div>
+                            <div class="col-xs-8 col-sm-9">
+                                <span class="group-value" id="InDate_Detail"></span>~
+                                <span class="group-value" id="OutDate_Detail"></span>
+                            </div>
+                        </div>
+                        <div class="group-row row">
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="group-label">付押方式</label>
+                            </div>
+                            <div class="col-xs-8 col-sm-9">
+                                <span class="group-value" id="PayType1_Detail"></span>
+                            </div>
+                        </div>
+                        <div class="group-row row">
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="group-label">签约员工</label>
+                            </div>
+                            <div class="col-xs-8 col-sm-9">
+                                <span class="group-value" id="DepartmentName_Detail"></span>&nbsp;.&nbsp;
+                                <span class="group-value" id="CustomerName_Detail"></span>
+                            </div>
+                        </div>
+                        <div class="group-row row">
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="group-label">签约日期</label>
+                            </div>
+                            <div class="col-xs-8 col-sm-9">
+                                <span class="group-value" id="BargainDate_Detail"></span>
+                            </div>
+                        </div>
+                        <div class="group-row row">
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="group-label">退租日期</label>
+                            </div>
+                            <div class="col-xs-8 col-sm-9">
+                                <span class="group-value" id="EndDate_Detail"></span>
+                            </div>
+                        </div>
+                        <div class="group-row row">
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="group-label">备注</label>
+                            </div>
+                            <div class="col-xs-8 col-sm-9">
+                                <span class="group-value" id="Description_Detail"></span>
+                            </div>
+                        </div>
+                        <div class="group-row row">
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="group-label">创建</label>
+                            </div>
+                            <div class="col-xs-8 col-sm-9">
+                                <span class="group-value" id="CreateTime_Detail"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-footer"></div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
                 </div>
                 <div class="clearfix"></div>
             </div>
         </div>
     </div>
-    <div><input type="hidden" id="CustomerCharId" value=""/></div>
 </div>
 <script type="text/javascript" src="libs/jquery-1.11.3.js"></script>
 <script type="text/javascript" src="libs/bootstrap.min.js"></script>
@@ -1163,8 +1324,7 @@
 <script type="text/javascript" src="js/app.js?v=4e03e56a5f"></script>
 <script type="text/javascript" src="js/components-pickers.js?v=00b12ed6a0"></script>
 <script type="text/javascript" src="js/host.js?v=2112a01532"></script>
-<script type="text/javascript" src="js/tools.js?v=9929ad962c"></script>
-<script type="text/javascript" src="js/property.page.js?v=57b295da9e"></script>
-<script type="text/javascript" src="libs/jquery.mCustomScrollbar.concat.min.js"></script>
+<script type="text/javascript" src="js/tools.js?v=a012f832ea"></script>
+<script type="text/javascript" src="js/property.page.js?v=8c35b9ed7e"></script>
 </body>
 </html>

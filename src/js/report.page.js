@@ -16,7 +16,7 @@ function ReportPage() {
     this.REPORT_BASIC = arguments['REPORT_BASIC'] ? arguments['REPORT_BASIC'] : 'REPORT_BASIC';
     this.API_CONFIG = arguments['API_CONFIG'] ? arguments['API_CONFIG'] :
         {
-            REPORT_BASIC: '/statistic/reportbasic',
+            REPORT_BASIC:'/statistic/reportbasic',
             MONTH: '/statistic/reportbymonthbybuilding',
             QUARTER: '/statistic/reportbyquarterbybuilding',
             HALF: '/statistic/reportbyhalfyearbybuilding',
@@ -32,8 +32,9 @@ ReportPage.prototype.init = function () {
     this.listCheck();
     this.dateSelect();
     this.dateSelects();
+    DropdownInit();
 
-    var params = this.getParams(this.REPORT_BASIC);
+    var params=this.getParams(this.REPORT_BASIC);
     this.ajaxRequestReportBasic(params);
 
     return this;
@@ -47,37 +48,37 @@ ReportPage.prototype.getParams = function (name) {
     var params = null;
     switch (name) {
         case this.REPORT_BASIC:
-            params = {
+            params={
                 requestKey: localStorage.getItem("requestKey")
             };
             break;
         case this.MRT:
             params = {
-                buildingCharId: $("#Buildings .active").length > 0 ? $("#Buildings .active").attr("data-value") : "",
-                month: $("#Months .active").length > 0 ? $("#Months .active").attr("data-value") : 6,
+                buildingCharId:$("#Buildings .active").length > 0 ? $("#Buildings .active").attr("data-value") : "",
+                month:$("#Months .active").length > 0 ? $("#Months .active").attr("data-value") : 6,
                 requestKey: localStorage.getItem("requestKey"),
                 year: $("#Years .active").length > 0 ? $("#Years .active").attr("data-value") : 2017
             };
             break;
         case this.QRT:
             params = {
-                buildingCharId: $("#Buildings .active").length > 0 ? $("#Buildings .active").attr("data-value") : "",
+                buildingCharId:$("#Buildings .active").length > 0 ? $("#Buildings .active").attr("data-value") : "",
                 requestKey: localStorage.getItem("requestKey"),
-                year: $("#Years .active").length > 0 ? $("#Years .active").attr("data-value") : 2017,
+                year:$("#Years .active").length > 0 ? $("#Years .active").attr("data-value") : 2017,
                 quarter: $("#quarter-lists .active").attr("data-quarter")
             };
             break;
         case this.HRT:
             params = {
-                buildingCharId: $("#Buildings .active").length > 0 ? $("#Buildings .active").attr("data-value") : "",
+                buildingCharId:$("#Buildings .active").length > 0 ? $("#Buildings .active").attr("data-value") : "",
                 requestKey: localStorage.getItem("requestKey"),
-                year: $("#Years .active").length > 0 ? $("#Years .active").attr("data-value") : 2017,
+                year:$("#Years .active").length > 0 ? $("#Years .active").attr("data-value") : 2017,
                 halfyear: $("#half-lists .active").attr("data-half")
             };
             break;
         case this.YRT:
             params = {
-                buildingCharId: $("#Buildings .active").length > 0 ? $("#Buildings .active").attr("data-value") : "",
+                buildingCharId:$("#Buildings .active").length > 0 ? $("#Buildings .active").attr("data-value") : "",
                 requestKey: localStorage.getItem("requestKey"),
                 year: $("#Years .active").length > 0 ? $("#Years .active").attr("data-value") : 2017,
             };
@@ -210,8 +211,7 @@ ReportPage.prototype.ajaxRequestReportBasic = function (params) {
                 var OBJECT_DATA = JSON_DATA[TEMP_DATA[i]]
                 TEMP_HTML = "";
                 for (var j = 0; j < OBJECT_DATA.length; j++) {
-                    TEMP_HTML += "<li data-value='" + OBJECT_DATA[j]['Key']
-                        + "' class='drop-option'>" + OBJECT_DATA[j]['Value'] + "</li>";
+                    TEMP_HTML += "<li data-value='" + OBJECT_DATA[j]['Key'] + "' class='drop-option'>" + OBJECT_DATA[j]['Value'] + "</li>";
                 }
 
                 $("#" + TEMP_DATA[i] + " li").remove();
@@ -225,8 +225,5 @@ ReportPage.prototype.ajaxRequestReportBasic = function (params) {
     })
     return this;
 }
-/**
- *
- * @type {ReportPage}
- */
+
 var report = new ReportPage();

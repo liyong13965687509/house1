@@ -871,6 +871,7 @@ WebApp.prototype.customerGrantControl = function () {
     return this;
 
 }
+
 /**
  * Author:LIYONG
  * Date:2017-9-12
@@ -892,6 +893,7 @@ WebApp.prototype.contractGrantControl = function () {
     this.grantControl($(".contract-renewal"), "contract_add");
     return this;
 }
+
 /**
  * 员工固定按钮权限
  * @returns {WebApp}

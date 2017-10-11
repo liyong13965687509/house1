@@ -496,8 +496,30 @@ function WebApp() {
     this.TEMPLATE = arguments['TEMPLATE'] ? arguments['TEMPLATE'] : "<div class='app-bg'></div>";
     this.DROP_CONTAINER = arguments['DROP_CONTAINER'] ? arguments['DROP_CONTAINER'] : ".drop-container";
     this.DATE_TIME_PICKER = arguments['DATE_TIME_PICKER'] ? arguments['DATE_TIME_PICKER'] : ".dateTimePicker";
+
+    this.RIGHT_CONTENT = arguments['RIGHT_CONTENT'] ? arguments['RIGHT_CONTENT'] : ".main  .right-content";
+    this.BLOCK_BODY = arguments['BLOCK_BODY'] ? arguments['BLOCK_BODY'] : ".panel-lg .block-body";
+    this.PANEL_BODY = arguments['PANEL_BODY'] ? arguments['PANEL_BODY'] : ".panel-sm .panel-modal .panel-body";
+    this.PAGINATION_CODE = arguments['PAGINATION_CODE'] ? arguments['PAGINATION_CODE'] : ".main .right-content .pagination-box .pagination-code";
+    this.PAGINATION_PREV = arguments['PAGINATION_PREV'] ? arguments['PAGINATION_PREV'] : ".main .right-content .pagination-box .pagination-prev";
+    this.PAGINATION_NEXT = arguments['PAGINATION_NEXT'] ? arguments['PAGINATION_NEXT'] : ".main .right-content .pagination-box .pagination-next";
+    this.LEFT_FULL = arguments['LEFT_FULL'] ? arguments['LEFT_FULL'] : ".main .pull-left .full";
+    this.TAB_CHECK = arguments['TAB_CHECK'] ? arguments['TAB_CHECK'] : ".main .right-table a";
+    this.TABS_LI = arguments['TABS_LI'] ? arguments['TABS_LI'] : ".tab-header>.tabs>li";
+    this.LG_BUTTON = arguments['LG_BUTTON'] ? arguments['LG_BUTTON'] : ".panel-lg .block-footer button";
+    this.LG_PANEL = arguments['LG_PANEL'] ? arguments['LG_PANEL'] : ".panel-lg .panel-footer button";
+    this.LG_BILLADD = arguments['LG_BILLADD'] ? arguments['LG_BILLADD'] : ".panel-lg .bill-add";
+    this.LG_A = arguments['LG_A'] ? arguments['LG_A'] : ".panel-lg a";
+    this.LG_CODE = arguments['LG_CODE'] ? arguments['LG_CODE'] : ".panel-lg .pagination-code";
+    this.LG_PREV = arguments['LG_PREV'] ? arguments['LG_PREV'] : ".panel-lg .pagination-prev";
+    this.LG_NEXT = arguments['LG_NEXT'] ? arguments['LG_NEXT'] : ".panel-lg .pagination-next";
+    this.LG_PASSWORD = arguments['LG_PASSWORD'] ? arguments['LG_PASSWORD'] : ".panel-lg .btn-password";
+    this.SM_BUTTON  = arguments['SM_BUTTON'] ? arguments['SM_BUTTON'] : ".panel-sm .panel-footer button";
+
     this.NO_RESULT = arguments['NO_RESULT'] ? arguments['NO_RESULT'] :
         "<div class='no-result'><img src='images/no_result.png' /><p>抱歉~，暂无数据</p></div>";
+    this.TEMP_LOAD = arguments['TEMP_LOAD'] ? arguments['TEMP_LOAD'] :
+        '<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>';
 
     this.API_CONFOG = arguments['API_CONFOG'] ? arguments['API_CONFOG'] : {
         LOGIN_OUT: "/identity/logout",
@@ -526,6 +548,7 @@ WebApp.prototype.init = function () {
     this.customerGrantControl();
     this.contractGrantControl();
     this.employeeGrantControl();
+    this.checkLoading();
     return this;
 }
 /**
@@ -1059,6 +1082,124 @@ WebApp.prototype.textLength = function (str) {
         else realLength += 2;
     }
     return realLength;
+}
+/**
+ * Author:LIYONG
+ * Date:2017-9-21
+ * 加载中
+ * @returns {WebApp}
+ */
+
+WebApp.prototype.loading = function (element) {
+    var _this = this;
+    if (element['selector'] == _this.RIGHT_CONTENT||element['selector']==_this.BLOCK_BODY) {
+        element.find(".spinner").removeClass('hide').siblings().addClass('hide');
+    } else {
+        $(".spinner").addClass('hide').siblings().removeClass('hide');
+    }
+    // ajax加载前
+    $(document).ajaxSend(function () {
+        $(".spinner").addClass('hide').siblings().removeClass('hide');
+        if (element.find(".spinner").length == 0){
+            element.append(_this.TEMP_LOAD);
+        }
+        element.find(".spinner").removeClass('hide').siblings().addClass('hide');
+    });
+    //ajax加载完成后
+    $(document).ajaxComplete(function () {
+        _this.TIMER = setTimeout(function () {
+            element.find(".spinner").addClass('hide').siblings().removeClass('hide');
+        }, 1000);
+    });
+}
+
+/**
+ * Author:LIYONG
+ * Date:2017-9-21
+ * panel加载中 调用
+ * @returns {WebApp}
+ */
+
+WebApp.prototype.checkLoading = function () {
+    var _this = this;
+    //第一层
+    _this.loading($(_this.RIGHT_CONTENT));
+    $(document).on('click', _this.LEFT_FULL, function () {
+        _this.loading($(_this.RIGHT_CONTENT));
+    })
+
+    $(document).on('click', _this.PAGINATION_CODE, function () {
+        _this.loading($(_this.RIGHT_CONTENT));
+    })
+
+    $(document).on('click', _this.PAGINATION_PREV, function () {
+        var TEMP_ACTIVE = $(this).next('.pagination-item').find('.active').html();
+        if (1 != TEMP_ACTIVE) {
+            _this.loading($(_this.RIGHT_CONTENT));
+        }
+    })
+
+    $(document).on('click', _this.PAGINATION_NEXT, function () {
+        var LENGTH =Math.ceil($(this).next('.pagination-total').html().replace(/[^0-9]/ig,"")/10);
+        var TEMP_ACTIVE = $(this).prev('.pagination-item').find('.active').html();
+        if (LENGTH !=TEMP_ACTIVE) {
+            _this.loading($(_this.RIGHT_CONTENT));
+        }
+    })
+    //第二层
+    $(document).on('click', _this.TAB_CHECK, function () {
+        _this.loading($(_this.BLOCK_BODY));
+    })
+
+    $(document).on('click', _this.TABS_LI, function () {
+        _this.loading($(_this.BLOCK_BODY));
+    })
+
+    $(document).on('click', _this.LG_CODE, function () {
+        _this.loading($(_this.BLOCK_BODY));
+    })
+
+    $(document).on('click', _this.LG_PREV, function () {
+        var TEMP_ACTIVE = $(this).next('.pagination-item').find('.active').html();
+        if (1 != TEMP_ACTIVE) {
+            _this.loading($(_this.BLOCK_BODY));
+        }
+    })
+
+    $(document).on('click', _this.LG_NEXT, function () {
+        var LENGTH =Math.ceil($(this).next('.pagination-total').html().replace(/[^0-9]/ig,"")/10);
+        var TEMP_ACTIVE = $(this).prev('.pagination-item').find('.active').html();
+        if (LENGTH !=TEMP_ACTIVE) {
+            _this.loading($(_this.BLOCK_BODY));
+        }
+    })
+    // 第三层
+    $(document).on('click', _this.LG_BUTTON, function () {
+        _this.loading($(_this.PANEL_BODY));
+    })
+
+    $(document).on('click', _this.LG_PANEL, function () {
+        _this.loading($(_this.PANEL_BODY));
+    })
+
+    $(document).on('click', _this.LG_BILLADD, function () {
+        _this.loading($(_this.PANEL_BODY));
+    })
+
+    $(document).on('click',_this.LG_A, function () {
+        _this.loading($(_this.PANEL_BODY));
+    })
+
+    $(document).on('click', _this.LG_PASSWORD, function () {
+        _this.loading($(_this.SM_BUTTON).find('a'));
+    })
+
+    //第四层
+    $(document).on('click', _this.SM_BUTTON, function () {
+        _this.loading($(_this.SM_BUTTON).find('a'));
+    })
+
+
 }
 /**
  *

@@ -1,2348 +1,2936 @@
-panel_tab5($('.btn-propertyadd,.btn-repairadd,.btn-checktableadd,.btn-contractadd,.btn-roomedit,.btn-propertyedit'), $('.modal-mask,.btn-cancel'), $('.alert-modal-wraper'));
-var pageSize = 10;
-var pageSize_Reocrd = 3;
-
-
 /**
- * 构造函数
+ *
  * @constructor
  */
 function PropertyPage() {
-    arguments = arguments.length != 0 ? arguments[0] : arguments;
-    // 楼层添加
-    this.FLOORLIORDERFOO = arguments['FLOORLIORDERFOO'] ? arguments['FLOORLIORDERFOO'] : 'FLOORLIORDERFOO';
-    // 房间
-    this.ROOMS = arguments['ROOMS'] ? arguments['ROOMS'] : 'ROOMS';
-    // 物业列表
-    this.BUILDINGS = arguments['BUILDINGS'] ? arguments['BUILDINGS'] : 'BUILDINGS';
-    // 楼层列表
-    this.FLOORS = arguments['FLOORS'] ? arguments['FLOORS'] : 'FLOORS';
-    //物业新增基础信息
-    this.BUILDINGADDBIND = arguments['BUILDINGADDBIND'] ? arguments['BUILDINGADDBIND'] : 'BUILDINGADDBIND';
-    // 城市基础信息
-    this.CITYBIND = arguments['CITYBIND'] ? arguments['CITYBIND'] : 'CITYBIND';
-    // 区域基础信息
-    this.DISTRICTBIND = arguments['DISTRICTBIND'] ? arguments['DISTRICTBIND'] : 'DISTRICTBIND';
-    // 城市信息编辑
-    this.CITYUPTBIND = arguments['CITYUPTBIND'] ? arguments['CITYUPTBIND'] : 'CITYUPTBIND';
-    // 区域信息编辑
-    this.DISTRICTUPTBIND = arguments['DISTRICTUPTBIND'] ? arguments['DISTRICTUPTBIND'] : 'DISTRICTUPTBIND';
-    // 物业新增（保存）
-    this.BUILDINGADDSAVE = arguments['BUILDINGADDSAVE'] ? arguments['BUILDINGADDSAVE'] : 'BUILDINGADDSAVE';
-    // 物业编辑（保存）
-    this.BUILDINGUPDATEBIND = arguments['BUILDINGUPDATEBIND'] ? arguments['BUILDINGUPDATEBIND'] : 'BUILDINGUPDATEBIND';
-    // 物业编辑保存
-    this.BUILDINGUPDATESAVE = arguments['BUILDINGUPDATESAVE'] ? arguments['BUILDINGUPDATESAVE'] : 'BUILDINGUPDATESAVE';
-    // 物业明细
-    this.BUILDINGDETAIL = arguments['BUILDINGDETAIL'] ? arguments['BUILDINGDETAIL'] : 'BUILDINGDETAIL';
-    // 物业删除
-    this.BUILDINGDELETE = arguments['BUILDINGDELETE'] ? arguments['BUILDINGDELETE'] : 'BUILDINGDELETE';
-    // 楼层编辑（保存）
-    this.FLOOR_UPDATE = arguments['FLOOR_UPDATE'] ? arguments['FLOOR_UPDATE'] : 'FLOOR_UPDATE';
-    //楼层删除
-    this.FLOOR_DELETE = arguments['FLOOR_DELETE'] ? arguments['FLOOR_DELETE'] : 'FLOOR_DELETE';
-    // 房间详情
-    this.ROOM_DETAIL = arguments['ROOM_DETAIL'] ? arguments['ROOM_DETAIL'] : 'ROOM_DETAIL';
-    // 房间新增
-    this.ROOM_ADD = arguments['ROOM_ADD'] ? arguments['ROOM_ADD'] : 'ROOM_ADD';
-    //房间编辑页面获取
-    this.ROOM_UPDATE_DETAIL = arguments['ROOM_UPDATE_DETAIL'] ? arguments['ROOM_UPDATE_DETAIL'] : 'ROOM_UPDATE_DETAIL';
-    //房间信息保存
-    this.ROOM_UPDATE = arguments['ROOM_UPDATE'] ? arguments['ROOM_UPDATE'] : 'ROOM_UPDATE';
-    // 房间删除
-    this.ROOM_DELETE = arguments['ROOM_DELETE'] ? arguments['ROOM_DELETE'] : 'ROOM_DELETE';
-    //房间签约基础信息获取
-    this.CONTRACT_ADD_BIND = arguments['CONTRACT_ADD_BIND'] ? arguments['CONTRACT_ADD_BIND'] : 'CONTRACT_ADD_BIND';
-    //房间签约(合同新增[保存])
-    this.CONTRACT_ADD = arguments['CONTRACT_ADD'] ? arguments['CONTRACT_ADD'] : 'CONTRACT_ADD';
-    //维修分页初始化
-    this.SERVICE_PAGE_INIT = arguments['SERVICE_PAGE_INIT'] ? arguments['SERVICE_PAGE_INIT'] : 'SERVICE_PAGE_INIT';
-    //维修记录列表
-    this.SERVICE_RECORDS = arguments['SERVICE_RECORDS'] ? arguments['SERVICE_RECORDS'] : 'SERVICE_RECORDS';
-    // 维修新增基础信息获取
-    this.SERVICE_ADD_BIND = arguments['SERVICE_ADD_BIND'] ? arguments['SERVICE_ADD_BIND'] : 'SERVICE_ADD_BIND';
-    //维修新增[保存]SERVICE_ADD
-    this.SERVICE_ADD = arguments['SERVICE_ADD'] ? arguments['SERVICE_ADD'] : 'SERVICE_ADD';
-    //维修删除
-    this.SERVICE_DELETE = arguments['SERVICE_DELETE'] ? arguments['SERVICE_DELETE'] : 'SERVICE_DELETE';
-    //合同详情
-    this.CONTRACT = arguments['CONTRACT'] ? arguments['CONTRACT'] : 'CONTRACT';
-    //历史合同列表分页初始化
-    this.HISTORY_CONTRACT_INIT = arguments['HISTORY_CONTRACT_INIT'] ? arguments['HISTORY_CONTRACT_INIT'] : 'HISTORY_CONTRACT_INIT';
-    //历史合同列表
-    this.HISTORY_CONTRACT_RECORDS = arguments['HISTORY_CONTRACT_RECORDS'] ? arguments['HISTORY_CONTRACT_RECORDS'] : 'HISTORY_CONTRACT_RECORDS';
-    //水抄表记录分页初始化
-    this.WATER_PAGE_INIT = arguments['WATER_PAGE_INIT'] ? arguments['WATER_PAGE_INIT'] : 'WATER_PAGE_INIT';
-    //水抄表记录列表
+    var arguments = arguments.length != 0 ? arguments[0] : arguments;
+    this.ACTIVE = arguments['ACTIVE'] ? arguments['ACTIVE'] : ' active';
+    this.SELECTOR = arguments['SELECTOR'] ? arguments['SELECTOR'] : '';
+    this.PAGE_SIZE = arguments['PAGE_SIZE'] ? arguments['PAGE_SIZE'] : 10;
+    this.PAGE_INDEX = arguments['PAGE_INDEX'] ? arguments['PAGE_INDEX'] : 1;
+    this.DATA_VALUE = arguments['DATA_VALUE'] ? arguments['DATA_VALUE'] : '';
+    this.COMM_VALUE = arguments['COMM_VALUE'] ? arguments['COMM_VALUE'] : '';
+    this.PAGINATION = arguments['PAGINATION'] ? arguments['PAGINATION'] : null;
+    this.BTN_BUILD = arguments['BTN_BUILD'] ? arguments['BTN_BUILD'] : '.btn-build';
+    this.HOUSE_ADD = arguments['HOUSE_ADD'] ? arguments['HOUSE_ADD'] : '.house-add';
+    this.tabComponent = arguments['tabComponent'] ? arguments['tabComponent'] : null;
+    this.HOUSE_EDIT = arguments['HOUSE_EDIT'] ? arguments['HOUSE_EDIT'] : '.house-edit';
+    this.BUILD_ITEM = arguments['BUILD_ITEM'] ? arguments['BUILD_ITEM'] : '.build-item>a';
+    this.UPDATE_ROOM = arguments['UPDATE_ROOM'] ? arguments['UPDATE_ROOM'] : 'UPDATE_ROOM';
+    this.HOUSE_BLOCK = arguments['HOUSE_BLOCK'] ? arguments['HOUSE_BLOCK'] : '.house-block';
+    this.ADD_RECORD = arguments['ADD_RECORD'] ? arguments['ADD_RECORD'] : 'ADD_RECORD';
+    this.BIND_RECORD = arguments['BIND_RECORD'] ? arguments['BIND_RECORD'] : 'BIND_RECORD';
+    this.ADD_SERVICE = arguments['ADD_SERVICE'] ? arguments['ADD_SERVICE'] : 'ADD_SERVICE';
+    this.BIND_SERVICE = arguments['BIND_SERVICE'] ? arguments['BIND_SERVICE'] : 'BIND_SERVICE';
+    this.KEYWORDS = arguments['KEYWORDS'] ? arguments['KEYWORDS'] : $('#keywords').val().trim();
+    this.FILTER_STATE = arguments['FILTER_STATE'] ? arguments['FILTER_STATE'] : '#RoomState>li';
     this.WATER_RECORDS = arguments['WATER_RECORDS'] ? arguments['WATER_RECORDS'] : 'WATER_RECORDS';
-    //电抄表记录分页初始化
-    this.ELEC_PAGE_INIT = arguments['ELEC_PAGE_INIT'] ? arguments['ELEC_PAGE_INIT'] : 'ELEC_PAGE_INIT';
-    //电抄表记录列表
-    this.ELEC_RECORDS = arguments['ELEC_RECORDS'] ? arguments['ELEC_RECORDS'] : 'ELEC_RECORDS';
-    //抄表记录新增基础信息获取
-    this.READ_ADD_ITEM = arguments['READ_ADD_ITEM'] ? arguments['READ_ADD_ITEM'] : 'READ_ADD_ITEM';
-    //抄表新增[保存]
-    this.READ_ADD = arguments['READ_ADD'] ? arguments['READ_ADD'] : 'READ_ADD';
-    //抄表删除
-    this.READ_DELETE = arguments['READ_DELETE'] ? arguments['READ_DELETE'] : 'READ_DELETE';
-    //绑定员工下拉列表
-    this.EMPLOYEE_BIND = arguments['EMPLOYEE_BIND'] ? arguments['EMPLOYEE_BIND'] : 'EMPLOYEE_BIND';
-    // 物业初始化
+    this.POWER_RECORDS = arguments['POWER_RECORDS'] ? arguments['POWER_RECORDS'] : 'POWER_RECORDS';
+    this.BIND_EDITROOM = arguments['BIND_EDITROOM'] ? arguments['BIND_EDITROOM'] : 'BIND_EDITROOM';
+    this.ADD_CONTRACT = arguments['ADD_CONTRACT'] ? arguments['ADD_CONTRACT'] : 'ADD_CONTRACT';
+    this.BIND_CONTRACT = arguments['BIND_CONTRACT'] ? arguments['BIND_CONTRACT'] : 'BIND_CONTRACT';
+    this.DELETE_RECORD = arguments['DELETE_RECORD'] ? arguments['DELETE_RECORD'] : '.delete-record';
+    this.DELETE_SERVICE = arguments['DELETE_SERVICE'] ? arguments['DELETE_SERVICE'] : '.delete-service';
+    this.CHECK_CONTRACT = arguments['CHECK_CONTRACT'] ? arguments['CHECK_CONTRACT'] : '.check-contract';
+    this.STATE = arguments['STATE'] ? arguments['STATE'] : $('#RoomState .active').attr('data-value').trim();
+
+    this.API_CONFIG = arguments['API_CONFIG'] ? arguments['API_CONFIG'] : {
+        BIND_BUILDING: '/building/buildings',
+        BUILDING_DETAIL: '/building',
+        ADD_BUILDING: '/building/add',
+        DELETE_BUILDING: '/building/delete',
+        UPDATE_BUILDING: '/building/update',
+        BIND_PROVINCE: '/building/province',
+        BIND_CITY: '/building/city',
+        BIND_DISTRICT: '/building/district',
+        EDIT_BUILDING: '/building/Update',
+        BIND_FLOORS: '/building/floors',
+        ADD_FLOOR: '/building/floor/add',
+        DELETE_FLOOR: '/building/floor/delete',
+        UPDATE_FLOOR: '/building/floor/update',
+        BIND_ROOMS: '/building/rooms',
+        ADD_ROOM: '/building/room/add',
+        DELETE_ROOM: '/building/room/delete',
+        UPDATE_ROOM: '/building/room/update',
+        ROOM_DETAIL: '/building/room',
+        SERVICE_RECORDS: '/building/servicerecords',
+        READ_RECORDS: '/building/readrecords',
+        ROOM_STATE: '/building/room/state',
+        HISTORY_CONTRACTS: '/contract/historycontracts',
+        ADD_SERVICE: '/building/servicerecord/add',
+        DELETE_SERVICE: '/building/servicerecord/delete',
+        ADD_RECORD: '/building/readrecord/add',
+        DELETE_RECORD: '/building/readrecord/delete',
+        CHECK_CONTRACT: '/contract',
+        ADD_CONTRACT: '/contract/add',
+        BIND_EMPLOYEE: '/employee/employees'
+    };
+
     this.init();
 }
-
-// 参数列表
 /**
  *
- * @param params参数
  * @returns {PropertyPage}
+ */
+PropertyPage.prototype.init = function () {
+    var _this = this;
+    ComponentsPickers.init();
+    App.init();
+
+    this.startMove();
+    this.tabChange();
+    this.selectTag();
+    this.exeAddRoom();
+    this.filterRooms();
+    this.buildItemClick();
+    this.exeBindBuilding();
+    this.exeBindProvince();
+    this.selectDropOption();
+    this.clickBtnBuildDetail();
+    this.showHouseBlockModal();
+    this.showFloorEditModal();
+    this.exeDeleteService();
+    this.exeDeleteRecord();
+    this.showCheckContractModal();
+
+    tm.customerClickTreeItem(function () {
+        _this.exeBindEmployee();
+    });
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.startMove = function () {
+    $(document).on('click', '#floors>li', function () {
+        var index = $(this).index();
+        var iHeight = $('.room-header').outerHeight() + 25;
+        var scrollTop = $('.house-group').eq(index).position().top - iHeight;
+        var totalScrollTop = scrollTop + $('#Rooms').scrollTop();
+        $('#Rooms').animate({
+            scrollTop: totalScrollTop
+        });
+    });
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.filterRooms = function () {
+    var _this = this;
+    $(document).on('click', this.FILTER_STATE, function () {
+        $(_this.FILTER_STATE).removeClass(_this.ACTIVE.trim());
+        $(this).addClass(_this.ACTIVE.trim());
+        _this.STATE = $(this).attr('data-value').trim();
+        _this.exeBindRooms();
+    });
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.buildItemClick = function () {
+    var _this = this;
+    $(document).on('click', this.BUILD_ITEM, function () {
+        var TEMP_PARENT = '.' + $(this).parent().attr('class');
+        $(TEMP_PARENT).removeClass(_this.ACTIVE);
+        $(this).parent().addClass(_this.ACTIVE);
+        _this.DATA_VALUE = $(this).attr('data-value');
+        _this.exeBindFloors();
+        _this.exeBindRooms();
+    });
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.showFloorEditModal = function () {
+    var _this = this;
+    $(document).on('click', this.HOUSE_EDIT, function () {
+        var that = this;
+        _this.DATA_VALUE = $(this).attr('data-value');
+        mp.manualShowPanel({
+            index: 2,
+            element: '.panel-sm',
+            complete: function () {
+                $('#BuildName').val($(that).attr('data-build'));
+                $('#FloorName').val($(that).attr('data-floor'));
+            }
+        });
+    });
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.showAddBuildModal = function () {
+    mp.manualShowPanel({
+        index: 0,
+        element: '.panel-sm',
+        complete: function () {
+
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.showEditBuildModal = function () {
+    var _this = this;
+    mp.manualShowPanel({
+        index: 1,
+        element: '.panel-sm',
+        complete: function () {
+            _this.exeEditBuilding();
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.showHouseBlockModal = function () {
+    var _this = this;
+    $(document).on('click', this.HOUSE_BLOCK, function () {
+        var that = this;
+        mp.manualShowPanel({
+            index: 0,
+            element: '.panel-lg',
+            complete: function () {
+                _this.DATA_VALUE = $(that).attr('data-value');
+                _this.tabComponent.tabReset();
+            }
+        });
+    });
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.showUpdateRoomModal = function () {
+    var _this = this;
+    mp.manualShowPanel({
+        index: 3,
+        element: '.panel-sm',
+        complete: function () {
+            _this.exeBindEditRoom();
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.showAddServiceModal = function () {
+    var _this = this;
+    mp.manualShowPanel({
+        index: 4,
+        element: '.panel-sm',
+        complete: function () {
+            _this.exeBindService();
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.showAddRecordModal = function () {
+    var _this = this;
+    mp.manualShowPanel({
+        index: 5,
+        element: '.panel-sm',
+        complete: function () {
+            _this.exeBindRecord();
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.showAddContractModal = function () {
+    var _this = this;
+    mp.manualShowPanel({
+        index: 7,
+        element: '.panel-sm',
+        complete: function () {
+            _this.exeBindContract();
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.customerSele = function () {
+    var TEMP_STYLE = 'width=500,height=600,top=50,left=300, scrollbars=no,' +
+        ' status=no,toolbar=no,menubar=no,location=no,resizable=no,titlebar=no';
+    window.open("customersel.html", '', TEMP_STYLE);
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.historyContactAdd = function () {
+    var TEMP_STYLE = 'width=500,height=600,top=50,left=300, scrollbars=no,' +
+        ' status=no,toolbar=no,menubar=no,location=no,resizable=no,titlebar=no';
+    window.open("historyAdd.html?curRoomCharId=" + this.DATA_VALUE, '', TEMP_STYLE);
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.showCheckContractModal = function () {
+    var _this = this;
+    $(document).on('click', this.CHECK_CONTRACT, function () {
+        _this.COMM_VALUE = $(this).attr('data-value').trim();
+        mp.manualShowPanel({
+            index: 8,
+            element: '.panel-sm',
+            complete: function () {
+                _this.exeCheckContract();
+            }
+        });
+    });
+    return this;
+}
+/**
+ *
+ * @returns {boolean}
+ */
+PropertyPage.prototype.addContractNotEmpty = function () {
+    var CHECK_MESSAGE = "";
+    var CHECK_RESULT = false;
+    if ('' == $('#AddContract_Name').val().trim()) {
+        CHECK_MESSAGE = "请选择客户！";
+    } else if ('' == $('#AddContract_Price').val().trim()) {
+        CHECK_MESSAGE = "请输入租金！";
+    } else if ('' == $('#AddContract_Deposit').val().trim()) {
+        CHECK_MESSAGE = "请输入押金！";
+    } else if ('' == $('#AddContract_InDate').val().trim()) {
+        CHECK_MESSAGE = "请选择起租日期！";
+    } else if ('' == $('#AddContract_OutDate').val().trim()) {
+        CHECK_MESSAGE = "请选择退租日期！";
+    } else if ('' == $('#AddContract_Persons').val().trim()) {
+        CHECK_MESSAGE = "请输入入住人数！";
+    } else if (undefined == $('#AddContract_Dpts .active')[0]) {
+        CHECK_MESSAGE = "请选择签约部门！";
+    } else if (undefined == $('#AddContract_Employee .active')[0]) {
+        CHECK_MESSAGE = "请选择签约员工！";
+    } else if ('' == $('#BargainDate').val().trim()) {
+        CHECK_MESSAGE = "请选择签约日期！";
+    } else {
+        CHECK_RESULT = true;
+    }
+    if (!CHECK_RESULT) {
+        messageBox.show("提示", CHECK_MESSAGE, MessageBoxButtons.OK, MessageBoxIcons.infomation);
+    }
+    return CHECK_RESULT;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestAddContract = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'POST',
+        url: host + _this.API_CONFIG.ADD_CONTRACT,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                mp.hideSmPanel();
+                _this.exeBindBuilding();
+                _this.exeBindRooms();
+                messageBox.show("提示", '合同新增成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.exeAddContract = function () {
+    if (this.addContractNotEmpty()) {
+        var params = this.getParams(this.ADD_CONTRACT);
+        this.ajaxRequestAddContract(params);
+    }
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestBindEmployee = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.BIND_EMPLOYEE,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                _this.appendHtmlBindEmployee(data);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param data
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.appendHtmlBindEmployee = function (data) {
+    var TEMP_HTML = '';
+    var TEMP_DATA = null;
+    var JSON_DATA = data['data'];
+    for (var i = 0; i < JSON_DATA.length; i++) {
+        TEMP_DATA = JSON_DATA[i];
+        TEMP_HTML += '<li class="drop-option" data-value="'
+            + TEMP_DATA['CharId'] + '">' + TEMP_DATA['Name'] + '</li>';
+    }
+    $('#AddContract_Employee').html(TEMP_HTML);
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.exeBindEmployee = function () {
+    this.COMM_VALUE = $('#AddContract_Dpts .active').attr('data-value').trim();
+    var params = this.getParams(this.API_CONFIG.BIND_EMPLOYEE);
+    this.ajaxRequestBindEmployee(params);
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestBindContract = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.ADD_CONTRACT,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                _this.appendHtmlBindContract(data);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.exeBindContract = function () {
+    var params = this.getParams(this.BIND_CONTRACT);
+    this.ajaxRequestBindContract(params);
+    return this;
+}
+/**
+ *
+ * @param data
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.appendHtmlBindContract = function (data) {
+    var TEMP_DATA = null;
+    var JSON_DATA = data['data'];
+    var TEMP_HTML = '', TEMP_NAME = '';
+    $('#AddContract_Number').val(JSON_DATA['ContractNum']);
+    for (var i = 0; i < JSON_DATA['PayType'].length; i++) {
+        TEMP_DATA = JSON_DATA['PayType'][i];
+        TEMP_NAME = i == 0 ? this.ACTIVE : '';
+        TEMP_HTML += '<li class="drop-option' + TEMP_NAME + '" data-value="'
+            + TEMP_DATA['Key'] + '">' + TEMP_DATA['Value'] + '</li>';
+    }
+    $('#AddContract_Payment').html(TEMP_HTML);
+    $('#AddContract_PaymentResult').text($('#AddContract_Payment .active').text().trim());
+
+    JSON_DATA = data['data']['Dpts'];
+    TEMP_HTML = tm.customerGetTemplate(JSON_DATA);
+    $(".tree-menu").html(TEMP_HTML);
+
+    JSON_DATA = data['data']['Room'];
+    var TEMP_BUILD = JSON_DATA['BuildingName']
+        + JSON_DATA['FloorName'] + '楼'
+        + JSON_DATA['RoomName'] + '室';
+    var TEMP_LAYOUT = JSON_DATA['Div1'] + '室'
+        + JSON_DATA['Div2'] + '厅'
+        + JSON_DATA['Div3'] + '卫';
+    $('#AddContract_BuildingName').val(TEMP_BUILD);
+    $('#AddContract_Layout').val(TEMP_LAYOUT);
+    $('#AddContract_Square').val(JSON_DATA['Square']);
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.exeCheckContract = function () {
+    var params = this.getParams(this.API_CONFIG.CHECK_CONTRACT);
+    this.ajaxRequestCheckContract(params);
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestCheckContract = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.CHECK_CONTRACT,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                _this.appendHtmlContractDetail(data);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.appendHtmlContractDetail = function (data) {
+    var JSON_DATA = data['data'];
+    for (var Key in JSON_DATA) {
+        $('#' + Key + '_Detail').text(JSON_DATA[Key]);
+    }
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.exeDeleteRecord = function () {
+    var _this = this;
+    $(document).on('click', this.DELETE_RECORD, function () {
+        _this.COMM_VALUE = $(this).attr('data-value').trim();
+        messageBox.show('确认', '确认删除当前抄表记录？', MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
+        messageBox.confirm(function () {
+            var params = _this.getParams(_this.API_CONFIG.DELETE_RECORD);
+            _this.ajaxRequestDeleteRecord(params);
+        });
+    });
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestDeleteRecord = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'POST',
+        url: host + _this.API_CONFIG.DELETE_RECORD,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                _this.exeWaterReadRecords();
+                _this.exePowerReadRecords();
+                messageBox.show("提示", '抄表记录删除成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.exeAddRecord = function () {
+    var params = this.getParams(this.ADD_RECORD);
+    this.ajaxRequestAddRecord(params);
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestAddRecord = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'POST',
+        url: host + _this.API_CONFIG.ADD_RECORD,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                mp.hideSmPanel();
+                _this.exeWaterReadRecords();
+                _this.exePowerReadRecords();
+                messageBox.show("提示", '抄表记录新增成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.exeBindRecord = function () {
+    var params = this.getParams(this.BIND_RECORD);
+    this.ajaxRequestBindRecord(params);
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestBindRecord = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.ADD_RECORD,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                _this.appendHtmlBindRecord(data);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param data
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.appendHtmlBindRecord = function (data) {
+    var TEMP_DATA = null;
+    var JSON_DATA = data['data'];
+    var TEMP_HTML = '', TEMP_NAME = '';
+    for (var i = 0; i < JSON_DATA.length; i++) {
+        TEMP_DATA = JSON_DATA[i];
+        TEMP_NAME = i == 0 ? this.ACTIVE : '';
+        TEMP_HTML += '<li class="drop-option' + TEMP_NAME + '" data-value="'
+            + TEMP_DATA['Key'] + '">' + TEMP_DATA['Value'] + '</li>';
+    }
+    $('#RecordProject').html(TEMP_HTML);
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.exeDeleteService = function () {
+    var _this = this;
+    $(document).on('click', this.DELETE_SERVICE, function () {
+        _this.COMM_VALUE = $(this).attr('data-value').trim();
+        messageBox.show('确认', '确认删除当前维修记录？', MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
+        messageBox.confirm(function () {
+            var params = _this.getParams(_this.API_CONFIG.DELETE_SERVICE);
+            _this.ajaxRequestDeleteService(params);
+        });
+    });
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestDeleteService = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'POST',
+        url: host + _this.API_CONFIG.DELETE_SERVICE,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                _this.exeServiceRecords();
+                messageBox.show("提示", '维修记录删除成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.exeAddService = function () {
+    var params = this.getParams(this.ADD_SERVICE);
+    this.ajaxRequestAddService(params);
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestAddService = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'POST',
+        url: host + _this.API_CONFIG.ADD_SERVICE,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                mp.hideSmPanel();
+                _this.exeServiceRecords();
+                messageBox.show("提示", '维修新增成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.exeBindService = function () {
+    var params = this.getParams(this.BIND_SERVICE);
+    this.ajaxRequestBindService(params);
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestBindService = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.ADD_SERVICE,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                _this.appendHtmlBindService(data);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.appendHtmlBindService = function (data) {
+    var TEMP_DATA = null;
+    var JSON_DATA = data['data'];
+    var TEMP_HTML = '', TEMP_NAME = '';
+    for (var Key in JSON_DATA) {
+        for (var i = 0; i < JSON_DATA[Key].length; i++) {
+            TEMP_DATA = JSON_DATA[Key][i];
+            TEMP_NAME = i == 0 ? this.ACTIVE : '';
+            TEMP_HTML += '<li class="drop-option' + TEMP_NAME + '" data-value="'
+                + TEMP_DATA['Key'] + '">' + TEMP_DATA['Value'] + '</li>';
+        }
+        $('#Add' + Key).html(TEMP_HTML);
+        TEMP_HTML = '';
+    }
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.exeAddRoom = function () {
+    var _this = this;
+    $(document).on('click', this.HOUSE_ADD, function () {
+        _this.DATA_VALUE = $(this).attr('data-value').trim();
+        var params = _this.getParams(_this.API_CONFIG.ADD_ROOM);
+        _this.ajaxRequestAddRoom(params);
+    });
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestAddRoom = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'POST',
+        url: host + _this.API_CONFIG.ADD_ROOM,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                _this.appendHtmlAddRoom(data);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param data
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.appendHtmlAddRoom = function (data) {
+    var JSON_DATA = data['data'];
+    var TEMP_SELECTOR = '.house-add[data-value="' + this.DATA_VALUE + '"]';
+    var TEMP_HTML = '<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 house-item state1">'
+        + '<h4 class="house-number">' + JSON_DATA['roomName'] + '室</h4>'
+        + '<div class="house-block" data-value="' + JSON_DATA['charId'] + '">'
+        + '<span>' + JSON_DATA['state'] + '</span></div></div>';
+
+    $(TEMP_SELECTOR).parents('.house-item').before(TEMP_HTML);
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.exeUpdateRoom = function () {
+    var params = this.getParams(this.UPDATE_ROOM);
+    this.ajaxRequestUpdateRoom(params);
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestUpdateRoom = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'POST',
+        url: host + _this.API_CONFIG.UPDATE_ROOM,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                mp.hideSmPanel();
+                _this.exeRoomDetail();
+                messageBox.show("提示", '房间信息更新成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestBindEditRoom = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.UPDATE_ROOM,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                _this.appendHtmlBindEditRoom(data);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param data
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.appendHtmlBindEditRoom = function (data) {
+    var TEMP_HTML = '';
+    var TEMP_DATA = null;
+    var JSON_DATA = data['data'];
+    JSON_DATA['Name'] = JSON_DATA['BuildingName']
+        + JSON_DATA['FloorName'] + '层';
+    for (var Key in JSON_DATA) {
+        $('#Update' + Key).val(JSON_DATA[Key]);
+    }
+
+    JSON_DATA = data['exted'];
+    for (var Key in JSON_DATA) {
+        for (var i = 0; i < JSON_DATA[Key].length; i++) {
+            TEMP_DATA = JSON_DATA[Key][i];
+            TEMP_HTML += '<li class="tag" data-value="'
+                + TEMP_DATA['Key'] + '">' + TEMP_DATA['Value'] + '</li>';
+        }
+        $('#Update' + Key).html(TEMP_HTML);
+        TEMP_HTML = '';
+    }
+
+    JSON_DATA = data['data'];
+    TEMP_DATA = JSON_DATA['Alloc'].split('|');
+    for (var i = 0; i < TEMP_DATA.length; i++) {
+        var TEMP_SELECTOR = '#UpdateRoomAlloc li[data-value="' + TEMP_DATA[i] + '"]';
+        $(TEMP_SELECTOR).addClass(this.ACTIVE);
+    }
+
+    TEMP_DATA = JSON_DATA['Tag'].split('|');
+    for (var i = 0; i < TEMP_DATA.length; i++) {
+        var TEMP_SELECTOR = '#UpdateRoomTag li[data-value="' + TEMP_DATA[i] + '"]';
+        $(TEMP_SELECTOR).addClass(this.ACTIVE);
+    }
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.exeBindEditRoom = function () {
+    var params = this.getParams(this.BIND_EDITROOM);
+    this.ajaxRequestBindEditRoom(params);
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestDeleteRoom = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'POST',
+        url: host + _this.API_CONFIG.DELETE_ROOM,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                mp.hideLgPanel();
+                _this.exeBindBuilding();
+                messageBox.show("提示", '房间删除成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.exeDeleteRoom = function () {
+    var _this = this;
+    messageBox.show('确认', '确认删除当前房间吗？', MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
+    messageBox.confirm(function () {
+        var params = _this.getParams(_this.API_CONFIG.DELETE_ROOM);
+        _this.ajaxRequestDeleteRoom(params);
+    });
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestHistoryContracts = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.HISTORY_CONTRACTS,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                var JSON_DATA = data['data'];
+                _this.appendHtmlHistoryContracts(JSON_DATA);
+                _this.PAGINATION = new Pagination({
+                    PAGINATION: '#History_Pagination',
+                    PAGE_SIZE: _this.PAGE_SIZE,
+                    DATA_NUMS: data['exted']['totalNum'],
+                    CHANGE_PAGE: function (pageCode) {
+                        _this.PAGE_INDEX = pageCode;
+                        params = _this.getParams(_this.API_CONFIG.HISTORY_CONTRACTS);
+                        _this.ajaxRequestChangePageHistoryContracts(params);
+                    }
+                });
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.exeHistoryContracts = function () {
+    var params = this.getParams(this.API_CONFIG.HISTORY_CONTRACTS);
+    this.ajaxRequestHistoryContracts(params);
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.appendHtmlHistoryContracts = function (params) {
+    var JSON_DATA = null;
+    var TEMP_HTML = '', TEMP_NAME = '';
+    for (var i = 0; i < params.length; i++) {
+        JSON_DATA = params[i];
+        TEMP_NAME = i > 0 ? ' visible-xs visible-sm' : '';
+        TEMP_HTML += '<div class="table-item col-xs-12 col-sm-6 col-md-12">'
+            + '<div class="row-content row"><div class="row-header col-xs-6 col-md-12">'
+            + '<div class="row-title ' + TEMP_NAME + ' row">'
+            + '<div class="column col-xs-12 col-md-2">租客</div>'
+            + '<div class="column col-xs-12 col-md-3">周期</div>'
+            + '<div class="column col-xs-12 col-md-2">租金</div>'
+            + '<div class="column col-xs-12 col-md-3">退租时间</div>'
+            + '<div class="column col-xs-12 col-md-2">操作</div></div></div>'
+            + '<div class="row-body col-xs-6 col-md-12"><div class="row-item row">'
+            + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['CustomerName'] + '</div>'
+            + '<div class="column col-xs-12 col-md-3">' + JSON_DATA['InDate'] + '~' + JSON_DATA['OutDate'] + '</div>'
+            + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['Price'] + '</div>'
+            + '<div class="column col-xs-12 col-md-3">' + JSON_DATA['EndDate'] + '</div>'
+            + '<div class="column col-xs-12 col-md-2">'
+            + '<a href="javascript:void(0);" class="check-contract" data-value="'
+            + JSON_DATA['CharId'] + '">查看</a></div></div></div></div></div>';
+    }
+    $('#History_Record').html(TEMP_HTML);
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestChangePageHistoryContracts = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.HISTORY_CONTRACTS,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                var JSON_DATA = data['data'];
+                _this.appendHtmlHistoryContracts(JSON_DATA);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestRoomState = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.ROOM_STATE,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                var JSON_DATA = data['data'];
+                for (var Key in JSON_DATA) {
+                    $('#Contract_' + Key).text(JSON_DATA[Key]);
+                }
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.exeRoomState = function () {
+    var params = this.getParams(this.API_CONFIG.ROOM_STATE);
+    this.ajaxRequestRoomState(params);
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestWaterReadRecords = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.READ_RECORDS,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                var JSON_DATA = data['data'];
+                _this.appendHtmlWaterReadRecords(JSON_DATA);
+                _this.PAGINATION = new Pagination({
+                    PAGINATION: '#Water_Pagination',
+                    PAGE_SIZE: _this.PAGE_SIZE,
+                    DATA_NUMS: data['exted']['totalNum'],
+                    CHANGE_PAGE: function (pageCode) {
+                        _this.PAGE_INDEX = pageCode;
+                        params = _this.getParams(_this.WATER_RECORDS);
+                        _this.ajaxRequestChangePageWaterReadRecords(params);
+                    }
+                });
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestChangePageWaterReadRecords = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.READ_RECORDS,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                var JSON_DATA = data['data'];
+                _this.appendHtmlWaterReadRecords(JSON_DATA);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param data
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.appendHtmlWaterReadRecords = function (params) {
+    var JSON_DATA = null;
+    var TEMP_HTML = '', TEMP_NAME = '';
+    for (var i = 0; i < params.length; i++) {
+        JSON_DATA = params[i];
+        TEMP_NAME = i > 0 ? ' visible-xs visible-sm' : '';
+        TEMP_HTML += '<div class="table-item col-xs-12 col-sm-6 col-md-12">'
+            + '<div class="row-content row"><div class="row-header col-xs-6 col-md-12">'
+            + '<div class="row-title ' + TEMP_NAME + ' row">'
+            + '<div class="column col-xs-12 col-md-4">日期</div>'
+            + '<div class="column col-xs-12 col-md-4">水（吨）</div>'
+            + '<div class="column col-xs-12 col-md-4">操作</div></div></div>'
+            + '<div class="row-body col-xs-6 col-md-12"><div class="row-item row">'
+            + '<div class="column col-xs-12 col-md-4">' + JSON_DATA['RecordDate'] + '</div>'
+            + '<div class="column col-xs-12 col-md-4">' + JSON_DATA['Mark'] + '</div>'
+            + '<div class="column col-xs-12 col-md-4">'
+            + '<a href="javascript:void(0);" class="delete-record" data-value="'
+            + JSON_DATA['CharId'] + '">删除</a></div></div></div></div></div>';
+    }
+    $('#Water_Record').html(TEMP_HTML);
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.exeWaterReadRecords = function () {
+    var params = this.getParams(this.WATER_RECORDS);
+    this.ajaxRequestWaterReadRecords(params);
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestPowerReadRecords = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.READ_RECORDS,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                var JSON_DATA = data['data'];
+                _this.appendHtmlPowerReadRecords(JSON_DATA);
+                _this.PAGINATION = new Pagination({
+                    PAGINATION: '#Power_Pagination',
+                    PAGE_SIZE: _this.PAGE_SIZE,
+                    DATA_NUMS: data['exted']['totalNum'],
+                    CHANGE_PAGE: function (pageCode) {
+                        _this.PAGE_INDEX = pageCode;
+                        params = _this.getParams(_this.POWER_RECORDS);
+                        _this.ajaxRequestChangePagePowerReadRecords(params);
+                    }
+                });
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestChangePagePowerReadRecords = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.READ_RECORDS,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                var JSON_DATA = data['data'];
+                _this.appendHtmlPowerReadRecords(JSON_DATA);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param data
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.appendHtmlPowerReadRecords = function (params) {
+    var JSON_DATA = null;
+    var TEMP_HTML = '', TEMP_NAME = '';
+    for (var i = 0; i < params.length; i++) {
+        JSON_DATA = params[i];
+        TEMP_NAME = i > 0 ? ' visible-xs visible-sm' : '';
+        TEMP_HTML += '<div class="table-item col-xs-12 col-sm-6 col-md-12">'
+            + '<div class="row-content row"><div class="row-header col-xs-6 col-md-12">'
+            + '<div class="row-title ' + TEMP_NAME + ' row">'
+            + '<div class="column col-xs-12 col-md-4">日期</div>'
+            + '<div class="column col-xs-12 col-md-4">电（度）</div>'
+            + '<div class="column col-xs-12 col-md-4">操作</div></div></div>'
+            + '<div class="row-body col-xs-6 col-md-12"><div class="row-item row">'
+            + '<div class="column col-xs-12 col-md-4">' + JSON_DATA['RecordDate'] + '</div>'
+            + '<div class="column col-xs-12 col-md-4">' + JSON_DATA['Mark'] + '</div>'
+            + '<div class="column col-xs-12 col-md-4">'
+            + '<a href="javascript:void(0);" class="delete-record" data-value="'
+            + JSON_DATA['CharId'] + '">删除</a></div></div></div></div></div>';
+    }
+    $('#Power_Record').html(TEMP_HTML);
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.exePowerReadRecords = function () {
+    var params = this.getParams(this.POWER_RECORDS);
+    this.ajaxRequestPowerReadRecords(params);
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestServiceRecords = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.SERVICE_RECORDS,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                var JSON_DATA = data['data'];
+                _this.appendHtmlServiceRecords(JSON_DATA);
+                _this.PAGINATION = new Pagination({
+                    PAGINATION: '#Repair_Pagination',
+                    PAGE_SIZE: _this.PAGE_SIZE,
+                    DATA_NUMS: parseInt(data['exted']['totalNum']),
+                    CHANGE_PAGE: function (pageCode) {
+                        _this.PAGE_INDEX = pageCode;
+                        params = _this.getParams(_this.API_CONFIG.SERVICE_RECORDS);
+                        _this.ajaxRequestChangePageServiceRecords(params);
+                    }
+                });
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestChangePageServiceRecords = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.SERVICE_RECORDS,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                var JSON_DATA = data['data'];
+                _this.appendHtmlServiceRecords(JSON_DATA);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param data
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.appendHtmlServiceRecords = function (params) {
+    var JSON_DATA = null;
+    var TEMP_HTML = '', TEMP_NAME = '';
+    for (var i = 0; i < params.length; i++) {
+        JSON_DATA = params[i];
+        TEMP_NAME = i > 0 ? ' visible-xs visible-sm' : '';
+        TEMP_HTML += '<div class="table-item col-xs-12 col-sm-6 col-md-12">'
+            + '<div class="row-content row"><div class="row-header col-xs-6 col-md-12">'
+            + '<div class="row-title ' + TEMP_NAME + ' row">'
+            + '<div class="column col-xs-12 col-md-3">维修项目</div>'
+            + '<div class="column col-xs-12 col-md-2">维修费（元）</div>'
+            + '<div class="column col-xs-12 col-md-2">承担方</div>'
+            + '<div class="column col-xs-12 col-md-3">日期</div>'
+            + '<div class="column col-xs-12 col-md-2">操作</div></div></div>'
+            + '<div class="row-body col-xs-6 col-md-12"><div class="row-item row">'
+            + '<div class="column col-xs-12 col-md-3">' + JSON_DATA['ServiceValue'] + '</div>'
+            + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['Price'] + '</div>'
+            + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['Object'] + '</div>'
+            + '<div class="column col-xs-12 col-md-3">' + JSON_DATA['CreateTime'] + '</div>'
+            + '<div class="column col-xs-12 col-md-2">'
+            + '<a href="javascript:void(0);" class="delete-service" data-value="'
+            + JSON_DATA['CharId'] + '">删除</a></div></div></div></div></div>';
+    }
+    $('#Repair_Record').html(TEMP_HTML);
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.exeServiceRecords = function () {
+    var params = this.getParams(this.API_CONFIG.SERVICE_RECORDS);
+    this.ajaxRequestServiceRecords(params);
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestDeleteFloor = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'POST',
+        url: host + _this.API_CONFIG.DELETE_FLOOR,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                mp.hideSmPanel();
+                _this.exeBindBuilding();
+                messageBox.show("提示", '楼层删除成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestUpdateFloor = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'POST',
+        url: host + _this.API_CONFIG.UPDATE_FLOOR,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                mp.hideSmPanel();
+                _this.exeBindBuilding();
+                messageBox.show("提示", '楼层更新成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ * BEGIN 执行绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param data 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.exeUpdateFloor = function () {
+    var params = this.getParams(this.API_CONFIG.UPDATE_FLOOR);
+    this.ajaxRequestUpdateFloor(params);
+    return this;
+}
+/**
+ * BEGIN 执行绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param data 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.exeDeleteFloor = function () {
+    var _this = this;
+    messageBox.show('确认', '确认删除当前楼层吗？', MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
+    messageBox.confirm(function () {
+        var params = _this.getParams(_this.API_CONFIG.DELETE_FLOOR);
+        _this.ajaxRequestDeleteFloor(params);
+    });
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestBindFloors = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.BIND_FLOORS,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                _this.appendHtmlBindFloors(data);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestBindRooms = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.BIND_ROOMS,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                _this.appendHtmlBindRooms(data);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.ajaxRequestRoomDetail = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.ROOM_DETAIL,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                _this.appendHtmlRoomDetail(data);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param data
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.appendHtmlRoomDetail = function (data) {
+    var JSON_DATA = data['data'];
+    var TEMP_HTML = '<button class="btn cancel">取消</button>';
+    TEMP_HTML += '已租' == JSON_DATA['State'] ?
+        '' : '<button class="btn confirm" onclick="pt.showAddContractModal();">签约</button>';
+    for (var Key in JSON_DATA) {
+        $('#Detail_' + Key).text(JSON_DATA[Key]);
+    }
+
+    $('#BtnFlag1').html(TEMP_HTML);
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.exeRoomDetail = function () {
+    var params = this.getParams(this.API_CONFIG.ROOM_DETAIL);
+    this.ajaxRequestRoomDetail(params);
+    return this;
+}
+/**
+ * BEGIN 执行绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param data 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.exeBindRooms = function () {
+    var params = this.getParams(this.API_CONFIG.BIND_ROOMS);
+    this.ajaxRequestBindRooms(params);
+    return this;
+}
+/**
+ * BEGIN 渲染物业列表模板
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param data 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.appendHtmlBindRooms = function (data) {
+    var TEMP_HTML = '';
+    var JSON_DATA = data['data'];
+    var BUILD_NAME = data['exted']['BuildingName'];
+    var TEMP_FLOOR = null, TEMP_ROOM = null, TEMP_ROOMS = null;
+    for (var i = 0; i < JSON_DATA.length; i++) {
+        TEMP_FLOOR = JSON_DATA[i];
+        TEMP_HTML += '<div class="house-group"><div class="house-header">'
+            + '<h3 class="house-title">' + BUILD_NAME + ' .<span>' + TEMP_FLOOR['floorName'] + '</span>楼</h3>'
+            + '<a href="javascript:void(0);" class="house-edit" data-value="' + TEMP_FLOOR['floorCharId']
+            + '" data-floor="' + TEMP_FLOOR['floorName'] + '" data-build="' + BUILD_NAME + '">编辑</a>'
+            + '</div><div class="house-body"><div class="row house-row">';
+
+        TEMP_ROOMS = JSON_DATA[i]['rooms'];
+        for (var j = 0; j < TEMP_ROOMS.length; j++) {
+            TEMP_ROOM = TEMP_ROOMS[j];
+            TEMP_HTML += '<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 house-item state' + TEMP_ROOM['State'] + '">'
+                + '<h4 class="house-number">' + TEMP_ROOM['Name'] + '室</h4>'
+                + '<div class="house-block" data-value="' + TEMP_ROOM['CharId'] + '">'
+                + '<span>' + TEMP_ROOM['Text'] + '</span></div></div>';
+        }
+        TEMP_HTML += '<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 house-item">'
+            + '<h4 class="house-number">添加房间</h4><div class="house-add" data-value="'
+            + TEMP_FLOOR['floorCharId'] + '"><span>+</span></div></div></div></div>'
+            + '<div class="house-footer"></div></div>';
+    }
+    $('#Rooms').html(TEMP_HTML);
+    return this;
+}
+/**
+ * BEGIN 渲染物业列表模板
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param data 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.appendHtmlBindFloors = function (data) {
+    var TEMP_HTML = '';
+    var JSON_DATA = data['data'];
+    var TEMP_VALUE = $('#Buildings .active a').attr('data-value');
+    for (var i = 0; i < JSON_DATA.length; i++) {
+        TEMP_HTML += '<li class="floor" data-value="'
+            + JSON_DATA[i]['CharId'] + '">' + JSON_DATA[i]['Name'] + '</li>';
+    }
+    $('#floors').html(TEMP_HTML);
+    TEMP_HTML = '<button class="btn add" data-value="'
+        + TEMP_VALUE + '" onclick="pt.exeAddFloor();">+</button>';
+    $('.floor-footer').html(TEMP_HTML);
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestBindBuilding = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.BIND_BUILDING,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                var SELECTOR = '.build-item.active a';
+                _this.appendHtmlBindBuilding(data);
+                _this.DATA_VALUE = $(SELECTOR).attr('data-value').trim();
+                _this.exeBindFloors();
+                _this.exeBindRooms();
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (XMLHttpRequest, txtStatus, errorThrown) {
+            var isAlert = localStorage.getItem("isAlert");
+            if (!isAlert) localStorage.setItem("isAlert", true);
+            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
+        }
+    });
+    return this;
+}
+/**
+ * BEGIN 绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param params 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.ajaxRequestAddFloor = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'POST',
+        url: host + _this.API_CONFIG.ADD_FLOOR,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                _this.exeBindFloors();
+                _this.exeBindRooms();
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ * BEGIN 执行绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param data 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.exeAddFloor = function () {
+    this.DATA_VALUE = $('.btn.add').attr('data-value').trim();
+    var params = this.getParams(this.API_CONFIG.ADD_FLOOR);
+    this.ajaxRequestAddFloor(params);
+    return this;
+}
+/**
+ * BEGIN 执行绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param data 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.exeBindFloors = function () {
+    var params = this.getParams(this.API_CONFIG.BIND_FLOORS);
+    this.ajaxRequestBindFloors(params);
+    return this;
+}
+/**
+ * BEGIN 渲染物业列表模板
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param data 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.appendHtmlBindBuilding = function (data) {
+    var TEMP_DATA = null;
+    var JSON_DATA = data['data'];
+    var TEMP_HTML = '', TEMP_NAME = '';
+    for (var i = 0; i < JSON_DATA['Buildings'].length; i++) {
+        TEMP_DATA = JSON_DATA['Buildings'][i];
+        TEMP_NAME = i == 0 ? this.ACTIVE : '';
+        TEMP_HTML += '<li class="build-item' + TEMP_NAME + '">'
+            + '<a data-value="' + TEMP_DATA['CharId'] + '">' + TEMP_DATA['Name'] + '（<span>'
+            + TEMP_DATA['Number'] + '</span>）</a><i class="icon-Param btn-build"></i> </li>';
+    }
+    $("#Buildings").html(TEMP_HTML);
+    return this;
+}
+/**
+ * BEGIN 执行绑定物业列表
+ * Author:PengLunJian
+ * Date:2017-07-18
+ * @param data 对象形参
+ * @returns {PropertyPage} 返回当前对象实现连缀调用
+ */
+PropertyPage.prototype.exeBindBuilding = function () {
+    var params = this.getParams(this.API_CONFIG.BIND_BUILDING);
+    this.ajaxRequestBindBuilding(params);
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.clickBtnBuildDetail = function () {
+    var _this = this;
+    $(document).on('click', this.BTN_BUILD, function () {
+        _this.DATA_VALUE = $(this).prev().attr('data-value').trim();
+        mp.manualShowPanel({
+            index: 1,
+            element: '.panel-lg',
+            complete: function () {
+                _this.exeBindBuildDetail();
+            }
+        });
+    });
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.ajaxRequestBuildDetail = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.BUILDING_DETAIL,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                var JSON_DATA = data['data'];
+                var TEMP_ROOM = data['exted']['RoomNum'];
+                var TEMP_FLOOR = data['exted']['FloorNum'];
+                JSON_DATA['Room'] = TEMP_ROOM + '间（共' + TEMP_FLOOR + '层）';
+                for (var KEY in JSON_DATA) {
+                    $('#Build_' + KEY).text(JSON_DATA[KEY]);
+                }
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.exeBindBuildDetail = function () {
+    var params = this.getParams(this.API_CONFIG.BUILDING_DETAIL);
+    this.ajaxRequestBuildDetail(params);
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.ajaxRequestDeleteBuild = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'POST',
+        url: host + _this.API_CONFIG.DELETE_BUILDING,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                mp.hideLgPanel();
+                _this.exeBindBuilding();
+                messageBox.show("提示", '物业删除成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.ajaxRequestAddBuild = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'POST',
+        url: host + _this.API_CONFIG.ADD_BUILDING,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                mp.hideSmPanel();
+                _this.exeBindBuilding();
+                messageBox.show("提示", '物业新增成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.ajaxRequestUpdateBuild = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'POST',
+        url: host + _this.API_CONFIG.UPDATE_BUILDING,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                mp.hideSmPanel();
+                _this.exeBindBuilding();
+                _this.exeBindBuildDetail();
+                messageBox.show("提示", '物业修改成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.ajaxRequestBindProvince = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.BIND_PROVINCE,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                _this.appendHtmlBindTags(data);
+                _this.appendHtmlBindProvince(data);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param data
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.appendHtmlBindProvince = function (data) {
+    var TEMP_HTML = '';
+    var TEMP_DATA = null;
+    var JSON_DATA = data['data']['data2'];
+    for (var i = 0; i < JSON_DATA.length; i++) {
+        TEMP_DATA = JSON_DATA[i];
+        TEMP_HTML += '<li class="drop-option" data-value="'
+            + TEMP_DATA['Key'] + '">' + TEMP_DATA['Value'] + '</li>';
+    }
+    $("#Add_Province").html(TEMP_HTML);
+    $("#Edit_Province").html(TEMP_HTML);
+    return this;
+}
+/**
+ *
+ * @param data
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.appendHtmlBindTags = function (data) {
+    var TEMP_HTML = '';
+    var TEMP_DATA = null;
+    var JSON_DATA = data['data']['data1'];
+    for (var Key in JSON_DATA) {
+        for (var i = 0; i < JSON_DATA[Key].length; i++) {
+            TEMP_DATA = JSON_DATA[Key][i];
+            TEMP_HTML += '<li class="tag" data-value="'
+                + TEMP_DATA['Key'] + '">' + TEMP_DATA['Value'] + '</li>';
+        }
+        $("#Add_" + Key).html(TEMP_HTML);
+        $("#Edit_" + Key).html(TEMP_HTML);
+        TEMP_HTML = '';
+    }
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.ajaxRequestBindCity = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.BIND_CITY,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                _this.appendHtmlBindCity(data);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param data
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.appendHtmlBindCity = function (data) {
+    var TEMP_HTML = '';
+    var TEMP_DATA = null;
+    var JSON_DATA = data['data'];
+    for (var i = 0; i < JSON_DATA.length; i++) {
+        TEMP_DATA = JSON_DATA[i];
+        TEMP_HTML += '<li class="drop-option" data-value="'
+            + TEMP_DATA['Key'] + '">' + TEMP_DATA['Value'] + '</li>';
+    }
+    $(this.SELECTOR).html(TEMP_HTML);
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.ajaxRequestBindDistrict = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.BIND_DISTRICT,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                _this.appendHtmlBindDistrict(data);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param params
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.ajaxRequestEditBuilding = function (params) {
+    var _this = this;
+    $.ajax({
+        type: 'GET',
+        url: host + _this.API_CONFIG.EDIT_BUILDING,
+        data: params,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data['succ']) {
+                _this.appendHtmlEditBuilding(data);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param data
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.appendHtmlEditBuilding = function (data) {
+    var TEMP_RESULT = null, DROP_DATA = null;
+    var JSON_DATA = data['data']['building'];
+    for (var Key in JSON_DATA) {
+        $('#Edit_' + Key).val(JSON_DATA[Key]);
+    }
+
+    DROP_DATA = data['data']['provinces'];
+    TEMP_RESULT = webApp.dropItemBind(DROP_DATA, JSON_DATA['ProvinceCharId']);
+    $('#Edit_Province').html(TEMP_RESULT['template']);
+    $('#Edit_Province_Result').text(TEMP_RESULT['result']);
+
+    DROP_DATA = data['data']['citys'];
+    TEMP_RESULT = webApp.dropItemBind(DROP_DATA, JSON_DATA['CityCharId']);
+    $('#Edit_City').html(TEMP_RESULT['template']);
+    $('#Edit_City_Result').text(TEMP_RESULT['result']);
+
+    DROP_DATA = data['data']['districts'];
+    TEMP_RESULT = webApp.dropItemBind(DROP_DATA, JSON_DATA['DistrictCharId']);
+    $('#Edit_Area').html(TEMP_RESULT['template']);
+    $('#Edit_Area_Result').text(TEMP_RESULT['result']);
+
+    TEMP_RESULT = JSON_DATA['Alloc'].split('|');
+    for (var i = 0; i < TEMP_RESULT.length; i++) {
+        var TEMP_SELECTOR = '#Edit_BuildingAlloc li[data-value="' + TEMP_RESULT[i] + '"]';
+        $(TEMP_SELECTOR).addClass(this.ACTIVE);
+    }
+
+    TEMP_RESULT = JSON_DATA['Tag'].split('|');
+    for (var i = 0; i < TEMP_RESULT.length; i++) {
+        var TEMP_SELECTOR = '#Edit_BuildingTag li[data-value="' + TEMP_RESULT[i] + '"]';
+        $(TEMP_SELECTOR).addClass(this.ACTIVE);
+    }
+    return this;
+}
+/**
+ *
+ * @param data
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.appendHtmlBindDistrict = function (data) {
+    var TEMP_HTML = '';
+    var TEMP_DATA = null;
+    var JSON_DATA = data['data'];
+    for (var i = 0; i < JSON_DATA.length; i++) {
+        TEMP_DATA = JSON_DATA[i];
+        TEMP_HTML += '<li class="drop-option" data-value="'
+            + TEMP_DATA['Key'] + '">' + TEMP_DATA['Value'] + '</li>';
+    }
+    $(this.SELECTOR).html(TEMP_HTML);
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.selectDropOption = function () {
+    var _this = this;
+    webApp.selectDropOption(function (that) {
+        var parent = $(that).parent().attr('id').trim();
+        var TEMP_SELECTOR = '#' + parent + ' .active';
+        _this.COMM_VALUE = $(TEMP_SELECTOR).attr('data-value').trim();
+        switch (parent) {
+            case 'Add_Province':
+                _this.SELECTOR = '#Add_City';
+                _this.exeBindCity();
+                break;
+            case 'Add_City':
+                _this.SELECTOR = '#Add_Area';
+                _this.exeBindDistrict();
+                break;
+            case 'Edit_Province':
+                _this.SELECTOR = '#Edit_City';
+                _this.exeBindCity();
+                break;
+            case 'Edit_City':
+                _this.SELECTOR = '#Edit_Area';
+                _this.exeBindDistrict();
+                break;
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.exeBindCity = function () {
+    var params = this.getParams(this.API_CONFIG.BIND_CITY);
+    this.ajaxRequestBindCity(params);
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.exeBindDistrict = function () {
+    var params = this.getParams(this.API_CONFIG.BIND_DISTRICT);
+    this.ajaxRequestBindDistrict(params);
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.exeEditBuilding = function () {
+    var params = this.getParams(this.API_CONFIG.EDIT_BUILDING);
+    this.ajaxRequestEditBuilding(params);
+    return this;
+}
+/**
+ *
+ * @returns {boolean}
+ */
+PropertyPage.prototype.addBuildNotEmpty = function () {
+    var message = '';
+    var result = false;
+    if (!$('#Add_Name').val().trim()) {
+        message = '请输入物业名称！';
+    } else if (!$('#Add_Province .active')[0]) {
+        message = '请选择所在省份！';
+    } else if (!$('#Add_City .active')[0]) {
+        message = '请选择所在城市！';
+    } else if (!$('#Add_Area .active')[0]) {
+        message = '请选择所在区域！';
+    } else if (!$('#Add_Address').val().trim()) {
+        message = '请输入详细地址！';
+    } else if (!$('#Add_Layer').val().trim()) {
+        message = '请输入总层数！';
+    } else if (!$('#Add_Door').val().trim()) {
+        message = '请输入层户数！';
+    } else if (!$('#Add_Water').val().trim()) {
+        message = '请输入水费价格！';
+    } else if (!$('#Add_Power').val().trim()) {
+        message = '请输入电费价格！';
+    } else {
+        result = true;
+    }
+    if (!result) {
+        messageBox.show('提示', message, MessageBoxButtons.OK, MessageBoxIcons.infomation);
+    }
+    return result;
+}
+/**
+ *
+ * @returns {boolean}
+ */
+PropertyPage.prototype.updateBuildNotEmpty = function () {
+    var message = '';
+    var result = false;
+    if (!$('#Edit_Name').val().trim()) {
+        message = '请输入物业名称！';
+    } else if (!$('#Edit_Province .active')[0]) {
+        message = '请选择所在省份！';
+    } else if (!$('#Edit_City .active')[0]) {
+        message = '请选择所在城市！';
+    } else if (!$('#Edit_Area .active')[0]) {
+        message = '请选择所在区域！';
+    } else if (!$('#Edit_Address').val().trim()) {
+        message = '请输入详细地址！';
+    } else if (!$('#Edit_WaterUnitPrice').val().trim()) {
+        message = '请输入水费价格！';
+    } else if (!$('#Edit_EleUnitPrice').val().trim()) {
+        message = '请输入电费价格！';
+    } else {
+        result = true;
+    }
+    if (!result) {
+        messageBox.show('提示', message, MessageBoxButtons.OK, MessageBoxIcons.infomation);
+    }
+    return result;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.exeAddBuild = function () {
+    if (this.addBuildNotEmpty()) {
+        var params = this.getParams(this.API_CONFIG.ADD_BUILDING);
+        this.ajaxRequestAddBuild(params);
+    }
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.exeDeleteBuild = function () {
+    var _this = this;
+    messageBox.show('确认', '确认删除当前物业吗？', MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
+    messageBox.confirm(function () {
+        var params = _this.getParams(_this.API_CONFIG.DELETE_BUILDING);
+        _this.ajaxRequestDeleteBuild(params);
+    });
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.exeUpdateBuild = function () {
+    if (this.updateBuildNotEmpty()) {
+        var params = this.getParams(this.API_CONFIG.UPDATE_BUILDING);
+        this.ajaxRequestUpdateBuild(params);
+    }
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.exeBindProvince = function () {
+    var params = this.getParams(this.API_CONFIG.BIND_PROVINCE);
+    this.ajaxRequestBindProvince(params);
+    return this;
+}
+/**
+ *
+ * @returns {Management}
+ */
+PropertyPage.prototype.tabChange = function () {
+    var _this = this;
+    /**
+     *
+     * @type {TabComponent}
+     */
+    this.tabComponent = new TabComponent({
+        index: 0,
+        target: '.panel-modal.show .block-content',
+        changeEnd: function () {
+            $(this.target).addClass('hide');
+            $(this.target).eq(this.index).removeClass('hide');
+            switch (this.index) {
+                case 0:
+                    _this.exeRoomDetail();
+                    break;
+                case 1:
+                    _this.exeServiceRecords();
+                    break;
+                case 2:
+                    _this.exeWaterReadRecords();
+                    _this.exePowerReadRecords();
+                    break;
+                case 3:
+                    _this.exeRoomState();
+                    _this.exeHistoryContracts();
+                    break;
+            }
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @returns {PropertyPage}
+ */
+PropertyPage.prototype.selectTag = function () {
+    var _this = this;
+    $(document).on('click', '.tag', function () {
+        if ($(this).hasClass(_this.ACTIVE.trim())) {
+            $(this).removeClass(_this.ACTIVE.trim());
+        } else {
+            $(this).addClass(_this.ACTIVE.trim());
+        }
+    });
+    return this;
+}
+/**
+ *
+ * @param parent
+ * @returns {string}
+ */
+PropertyPage.prototype.getResult = function (parent) {
+    var result = '';
+    var SELECTOR = parent + ' .tag.active';
+    for (var i = 0; i < $(SELECTOR).length; i++) {
+        var splitLine = i > 0 ? '|' : '';
+        result += splitLine + $(SELECTOR).eq(i).attr('data-value').trim();
+    }
+    return result;
+}
+/**
+ *
+ * @param name
+ * @returns {*}
  */
 PropertyPage.prototype.getParams = function (name) {
     var _this = this;
     var params = null;
     switch (name) {
-        // 楼层添加参数
-        case this.FLOORLIORDERFOO:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                buildingCharId: $("#Buildings dd[class='cur'] span").attr("data-value")
-                    ? $("#Buildings dd[class='cur'] span").attr("data-value") : ''
-            };
-            break;
-
-        // 房间列表参数
-        case this.ROOMS:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                state: $("#RoomState li[class='cur']").attr("data-value"),
-                key: $("#Key").val(),
-                buildingCharId: $("#Buildings dd[class='cur'] span").attr("data-value")
-                    ? $("#Buildings dd[class='cur'] span").attr("data-value") : ''
-
-            };
-            break;
-
-        // 物业列表参数
-        case this.BUILDINGS:
+        case this.API_CONFIG.BIND_BUILDING:
             params = {
                 requestKey: localStorage.getItem("requestKey")
-            };
+            }
             break;
-
-        // 楼层列表参数
-        case this.FLOORS:
+        case this.API_CONFIG.BUILDING_DETAIL:
             params = {
-                requestKey: localStorage.getItem("requestKey"),
-                buildingCharId: $("#Buildings dd[class='cur'] span").attr("data-value")
-                    ? $("#Buildings dd[class='cur'] span").attr("data-value") : ''
-            };
+                buildingCharId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
             break;
-
-        //物业新增基础信息参数（省份信息和标签信息）
-        case this.BUILDINGADDBIND:
+        case this.API_CONFIG.DELETE_BUILDING:
             params = {
-                requestKey: localStorage.getItem("requestKey"),
-                buildingCharId: $("#Buildings dd[class='cur'] span").attr("data-value")
-                    ? $("#Buildings dd[class='cur'] span").attr("data-value") : ''
-            };
+                charId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
             break;
-
-        // 城市信息参数
-        case this.CITYBIND:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                provinceCharId: $("#Province_Add li[class='cur']").attr("data-value")
-            };
-            break;
-
-        // 区域信息参数
-        case this.DISTRICTBIND:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                cityCharId: $("#City_Add li[class='cur']").attr("data-value")
-            };
-            break;
-
-        // 城市信息编辑参数
-        case this.CITYUPTBIND:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                provinceCharId: $("#Province_Edit li[class='cur']").attr("data-value")
-            };
-            break;
-
-        // 区域信息编辑
-        case this.DISTRICTUPTBIND:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                cityCharId: $("#City_Edit li[class='cur']").attr("data-value")
-            };
-            break;
-
-        // 物业新增（保存）
-        case this.BUILDINGADDSAVE:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                name: $("#BuildingName_Add1").val().trim(),
-                cityCharId: $("#City_Add li[class='cur']").attr("data-value"),
-                districtCharId: $("#District_Add li[class='cur']").attr("data-value"),
-                provinceCharId: $("#Province_Add li[class='cur']").attr("data-value"),
-                address: $("#BuildingAddr_Add").val().trim(),
-                floorCount: parseInt($("#FloorNum").val().trim()),
-                roomCount: parseInt($("#HouseNum").val().trim()),
-                alloc: _this.BUILDINGADDSAVEALLOCS,
-                tag: _this.BUILDINGADDSAVETAGS,
-                waterUnitPrice: parseFloat($("#water_price").val().trim()),
-                eleUnitPrice: parseFloat($("#ele_price").val().trim())
-            };
-            break;
-
-        // 物业编辑基础数据
-        case this.BUILDINGUPDATEBIND:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                buildingCharId: $("#BuildingCharId").val()
-            };
-            break;
-
-        // 物业编辑保存
-        case this.BUILDINGUPDATESAVE:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                charId: $("#BuildingCharId").val(),
-                name: $("#BuildingName_Edit").val().trim(),
-                cityCharId: $("#City_Edit li[class='cur']").attr("data-value"),
-                districtCharId: $("#District_Edit li[class='cur']").attr("data-value"),
-                provinceCharId: $("#Province_Edit li[class='cur']").attr("data-value"),
-                address: $("#BuildingAddr_Edit").val().trim(),
-                waterUnitPrice: parseFloat($("#water_price_edit").val().trim()),
-                eleUnitPrice: parseFloat($("#ele_price_edit").val().trim()),
-                alloc: _this.BUILDINGUPDATEALLOC,
-                tag: _this.BUILDINGUPDATETAGS
-            };
-            break;
-
-        // 物业明细
-        case this.BUILDINGDETAIL:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                buildingCharId: _this.PROPERTYDETAIL_CHARID
-            };
-            break;
-
-        // 物业删除
-        case this.BUILDINGDELETE:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                charId: $("#BuildingCharId").val()
-            };
-            break;
-
-        //     楼层编辑保存
-        case this.FLOOR_UPDATE:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                charId: $("#CurFloorCharId").val(),
-                name: $("#CurFloorName").val()
-            };
-            break;
-
-        // 楼层删除
-        case this.FLOOR_DELETE:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                charId: $("#CurFloorCharId").val()
-            };
-            break;
-
-        // 房间详情
-        case this.ROOM_DETAIL:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                buildingRoomCharId: _this.RoomDetail_CHARID
-            };
-            break;
-
-        // 房间新增
-        case this.ROOM_ADD:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                buildingFloorCharId: _this.RoomAdd_CHARID
-            };
-            break;
-
-        //房间编辑页面获取
-        case this.ROOM_UPDATE_DETAIL:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                buildingRoomCharId: $("#CurRoomCharId").val()
-                // EleUnitPrice:$("#EleUnitPrice_Detail").text(),
-                // WaterUnitPrice:$("#WaterUnitPrice_Detail").text()
-            };
-            break;
-
-        // 房间信息保存
-        case this.ROOM_UPDATE:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                charId: $("#CurRoomCharId").val(),
-                name: $("#RoomName_Update").val(),
-                price: parseFloat($("#Price_Update").val()),
-                square: parseFloat($("#Square_Update").val()),
-                div1: parseInt($("#Div1").val()),
-                div2: parseInt($("#Div2").val()),
-                div3: parseInt($("#Div3").val()),
-                alloc: _this.ROOM_UPDATE_ALLOCS,
-                tag: _this.ROOM_UPDATE_TAGS,
-                eleUnitPrice:$('#EleUnitPrice_Update').val().trim(),
-                waterUnitPrice:$('#WaterUnitPrice_Update').val().trim()
-            };
-            break;
-
-        //房间签约基础信息获取
-        case this.CONTRACT_ADD_BIND:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                buildingRoomCharId: $("#CurRoomCharId").val()
-            };
-            break;
-
-        //房间签约(合同新增[保存])
-        case this.CONTRACT_ADD:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                number: $("#ContractNumber_Add").val().trim(),
-                phone: $("#ContractPhone_Add").val().trim(),
-                cardID: $("#CardID_Add").val().trim(),
-                buildingRoomCharId: $("#CurRoomCharId").val().trim(),
-                customerCharId: $("#CustomerCharId").val().trim(),
-                price: parseFloat($("#Price_Add").val().trim()),
-                deposit: parseFloat($("#Deposit_Add").val().trim()),
-                payType: parseInt($("#PayType li[class='cur']").attr("data-value")),
-                inDate: $("#InDate").val().trim(),
-                outDate: $("#OutDate").val().trim(),
-                total: parseInt($("#People_Add").val().trim()),
-                bargainDate: $("#BargainDate").val().trim(),
-                ownerDepartmentCharId: $("#Dpts_Add li.cur").attr("data-value"),
-                ownerEmployeeCharId: $("#Emps_Add li.cur").attr("data-value"),
-                description: $("#ContractDescription").val().trim()
-            };
-            break;
-
-        // 房间删除
-        case this.ROOM_DELETE:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                charId: $("#CurRoomCharId").val()
-            };
-            break;
-
-        //维修分页初始化
-        case this.SERVICE_PAGE_INIT:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                buildingRoomCharId: $("#CurRoomCharId").val(),
-                pageIndex: 1,
-                pageSize: pageSize
-            };
-            break;
-
-        //维修记录列表
-        case this.SERVICE_RECORDS:
-            params = {
-                requestKey: localStorage.getItem("requestKey"),
-                buildingRoomCharId: $("#CurRoomCharId").val(),
-                pageIndex: _this.ServiceRecord_arugments,
-                pageSize: pageSize
-            };
-            break;
-
-        //维修新增基础信息获取
-        case this.SERVICE_ADD_BIND:
+        case this.API_CONFIG.BIND_PROVINCE:
             params = {
                 requestKey: localStorage.getItem("requestKey")
-            };
+            }
             break;
-
-        //维修新增[保存]
-        case this.SERVICE_ADD:
+        case this.API_CONFIG.ADD_BUILDING:
             params = {
+                address: $('#Add_Address').val().trim(),
+                alloc: _this.getResult('#Add_BuildingAlloc'),
+                cityCharId: $('#Add_City .active').attr('data-value'),
+                districtCharId: $('#Add_Area .active').attr('data-value'),
+                eleUnitPrice: $('#Add_Power').val().trim(),
+                floorCount: $('#Add_Layer').val().trim(),
+                name: $('#Add_Name').val().trim(),
+                provinceCharId: $('#Add_Province .active').attr('data-value'),
                 requestKey: localStorage.getItem("requestKey"),
-                buildingRoomCharId: $("#CurRoomCharId").val(),
-                serviceParameterCharId: $("#ServiceItem li[class='cur']").attr("data-value"),
-                obj: parseInt($("#ServiceObject li[class='cur']").attr("data-value")),
-                price: $("#ServicePrice").val(),
-                description: $("#ServiceDescription").val()
-            };
+                roomCount: $('#Add_Door').val().trim(),
+                tag: _this.getResult('#Add_BuildingTag'),
+                waterUnitPrice: $('#Add_Water').val().trim()
+            }
             break;
-
-        // 维修删除
-        case this.SERVICE_DELETE:
+        case this.API_CONFIG.UPDATE_BUILDING:
             params = {
+                address: $('#Edit_Address').val().trim(),
+                alloc: _this.getResult('#Edit_BuildingAlloc'),
+                charId: _this.DATA_VALUE,
+                cityCharId: $('#Edit_City .active').attr('data-value'),
+                districtCharId: $('#Edit_Area .active').attr('data-value'),
+                eleUnitPrice: $('#Edit_EleUnitPrice').val().trim(),
+                name: $('#Edit_Name').val().trim(),
+                provinceCharId: $('#Edit_Province .active').attr('data-value'),
                 requestKey: localStorage.getItem("requestKey"),
-                charId: _this.ServiceDelete_CHARID
-            };
+                tag: _this.getResult('#Edit_BuildingTag'),
+                waterUnitPrice: $('#Edit_WaterUnitPrice').val().trim()
+            }
             break;
-
-        //合同详情
-        case this.CONTRACT:
+        case this.API_CONFIG.BIND_CITY:
             params = {
-                requestKey: localStorage.getItem("requestKey"),
-                roomCharId: $("#CurRoomCharId").val()
-            };
+                provinceCharId: _this.COMM_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
             break;
-
-        // 历史合同列表分页初始化
-        case this.HISTORY_CONTRACT_INIT:
+        case this.API_CONFIG.BIND_DISTRICT:
             params = {
-                requestKey: localStorage.getItem("requestKey"),
-                buildingRoomCharId: $("#CurRoomCharId").val(),
-                pageIndex: 1,
-                pageSize: 1
-            };
+                cityCharId: _this.COMM_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
             break;
-
-        // 历史合同列表
-        case this.HISTORY_CONTRACT_RECORDS:
+        case this.API_CONFIG.EDIT_BUILDING:
             params = {
-                requestKey: localStorage.getItem("requestKey"),
-                buildingRoomCharId: $("#CurRoomCharId").val(),
-                pageIndex: _this.HistoryContractRecords_arguments,
-                // pageIndex:1,
-                pageSize: 5
-            };
-
+                buildingCharId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
             break;
-
-        //水抄表记录分页初始化
-        case this.WATER_PAGE_INIT:
+        case this.API_CONFIG.BIND_FLOORS:
             params = {
-                requestKey: localStorage.getItem("requestKey"),
-                buildingRoomCharId: $("#CurRoomCharId").val(),
-                pageIndex: 1,
-                pageSize: 1,
-                Source: 1
-            };
+                buildingCharId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
             break;
-
-        //水抄表记录列表
+        case this.API_CONFIG.ADD_FLOOR:
+            params = {
+                buildingCharId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
+            break;
+        case this.API_CONFIG.DELETE_FLOOR:
+            params = {
+                charId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
+            break;
+        case this.API_CONFIG.UPDATE_FLOOR:
+            params = {
+                charId: _this.DATA_VALUE,
+                name: $('#FloorName').val().trim(),
+                requestKey: localStorage.getItem("requestKey")
+            }
+            break;
+        case this.API_CONFIG.BIND_ROOMS:
+            params = {
+                state: _this.STATE,
+                key: _this.KEYWORDS,
+                buildingCharId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
+            break;
+        case this.API_CONFIG.ROOM_DETAIL:
+            params = {
+                buildingRoomCharId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
+            break;
+        case this.API_CONFIG.SERVICE_RECORDS:
+            params = {
+                pageSize: _this.PAGE_SIZE,
+                pageIndex: _this.PAGE_INDEX,
+                buildingRoomCharId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
+            break;
         case this.WATER_RECORDS:
             params = {
-                requestKey: localStorage.getItem("requestKey"),
-                buildingRoomCharId: $("#CurRoomCharId").val(),
-                pageIndex: _this.WaterRecords_arguments,
-                pageSize: pageSize_Reocrd,
-                Source: 1
-            };
+                Source: '1',
+                pageSize: _this.PAGE_SIZE,
+                pageIndex: _this.PAGE_INDEX,
+                buildingRoomCharId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
             break;
-
-        //电抄表记录分页初始化
-        case this.ELEC_PAGE_INIT:
+        case this.POWER_RECORDS:
             params = {
-                requestKey: localStorage.getItem("requestKey"),
-                buildingRoomCharId: $("#CurRoomCharId").val(),
-                pageIndex: 1,
-                pageSize: 1,
-                Source: 2
-            };
+                Source: '2',
+                pageSize: _this.PAGE_SIZE,
+                pageIndex: _this.PAGE_INDEX,
+                buildingRoomCharId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
             break;
-
-        // 电抄表记录列表
-        case this.ELEC_RECORDS:
+        case this.API_CONFIG.ROOM_STATE:
             params = {
-                requestKey: localStorage.getItem("requestKey"),
-                buildingRoomCharId: $("#CurRoomCharId").val(),
-                pageIndex: _this.ElecRecords_arguments,
-                pageSize: pageSize_Reocrd,
-                Source: 2
-            };
+                roomCharId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
             break;
-
-        // 抄表记录新增基础信息获取
-        case this.READ_ADD:
+        case this.API_CONFIG.HISTORY_CONTRACTS:
             params = {
-                requestKey: localStorage.getItem("requestKey"),
-                buildingRoomCharId: $("#CurRoomCharId").val(),
-                source: $("#ReadItem li[class='cur']").attr("data-value"),
-                mark: $("#Mark").val(),
-                recordDate: $("#RecordDate").val(),
-                description: $("#RecordDescription").val()
-            };
+                pageSize: _this.PAGE_SIZE,
+                pageIndex: _this.PAGE_INDEX,
+                buildingRoomCharId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
             break;
-
-        //抄表新增[保存]
-        case this.READ_ADD_ITEM:
+        case this.API_CONFIG.DELETE_ROOM:
+            params = {
+                charId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
+            break;
+        case this.BIND_EDITROOM:
+            params = {
+                buildingRoomCharId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
+            break;
+        case this.UPDATE_ROOM:
+            params = {
+                alloc: _this.getResult('#UpdateRoomAlloc'),
+                charId: _this.DATA_VALUE,
+                div1: parseInt($('#UpdateDiv1').val().trim()),
+                div2: parseInt($('#UpdateDiv2').val().trim()),
+                div3: parseInt($('#UpdateDiv3').val().trim()),
+                eleUnitPrice: parseInt($('#UpdateEleUnitPrice').val().trim()),
+                name: $('#UpdateRoomName').val().trim(),
+                price: parseInt($('#UpdatePrice').val().trim()),
+                requestKey: localStorage.getItem("requestKey"),
+                square: parseInt($('#UpdateSquare').val().trim()),
+                tag: _this.getResult('#UpdateRoomTag'),
+                waterUnitPrice: parseInt($('#UpdateWaterUnitPrice').val().trim())
+            }
+            break;
+        case this.API_CONFIG.ADD_ROOM:
+            params = {
+                buildingFloorCharId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey")
+            }
+            break;
+        case this.BIND_SERVICE:
             params = {
                 requestKey: localStorage.getItem("requestKey")
-            };
+            }
             break;
-
-        // 抄表删除
-        case this.READ_DELETE:
+        case this.ADD_SERVICE:
             params = {
+                price: $('#AddPrice').val().trim(),
+                buildingRoomCharId: _this.DATA_VALUE,
                 requestKey: localStorage.getItem("requestKey"),
-                charId: _this.ReadDelete_CHARID
-            };
+                description: $('#AddServiceDescription').val().trim(),
+                obj: $('#AddServiceObject .active').attr('data-value').trim(),
+                serviceParameterCharId: $('#AddServiceItem .active').attr('data-value').trim(),
+            }
             break;
-
-        //绑定员工下拉列表
-        case this.EMPLOYEE_BIND:
+        case this.API_CONFIG.DELETE_SERVICE:
             params = {
+                charId: _this.COMM_VALUE,
                 requestKey: localStorage.getItem("requestKey"),
-                departmentCharId: $("#Dpts_Add li.cur").attr("data-value")
-            };
+            }
+            break;
+        case this.BIND_RECORD:
+            params = {
+                requestKey: localStorage.getItem("requestKey")
+            }
+            break;
+        case this.ADD_RECORD:
+            params = {
+                buildingRoomCharId: _this.DATA_VALUE,
+                description: $('#RecordDescription').val().trim(),
+                mark: $('#RecordMark').val().trim(),
+                recordDate: $('#RecordDate').val().trim(),
+                requestKey: localStorage.getItem("requestKey"),
+                source: $('#RecordProject .active').attr('data-value').trim()
+            }
+            break;
+        case this.API_CONFIG.DELETE_RECORD:
+            params = {
+                charId: _this.COMM_VALUE,
+                requestKey: localStorage.getItem("requestKey"),
+            }
+            break;
+        case this.API_CONFIG.CHECK_CONTRACT:
+            params = {
+                charId: _this.COMM_VALUE,
+                requestKey: localStorage.getItem("requestKey"),
+            }
+            break;
+        case this.ADD_CONTRACT:
+            params = {
+                bargainDate: $('#BargainDate').val().trim(),
+                buildingRoomCharId: _this.DATA_VALUE,
+                cardID: $('#AddContract_Id').val().trim(),
+                customerCharId: $('#CustomerCharId').val().trim(),
+                deposit: $('#AddContract_Deposit').val().trim(),
+                description: $('#AddContract_Description').val().trim(),
+                inDate: $('#AddContract_InDate').val().trim(),
+                number: $('#AddContract_Number').val().trim(),
+                outDate: $('#AddContract_OutDate').val().trim(),
+                ownerDepartmentCharId: $('#AddContract_Dpts .active').attr('data-value').trim(),
+                ownerEmployeeCharId: $('#AddContract_Employee .active').attr('data-value').trim(),
+                payType: $('#AddContract_Payment .active').attr('data-value').trim(),
+                phone: $('#AddContract_Phone').val().trim(),
+                price: $('#AddContract_Price').val().trim(),
+                total: $('#AddContract_Persons').val().trim(),
+                requestKey: localStorage.getItem("requestKey"),
+            }
+            break;
+        case this.BIND_CONTRACT:
+            params = {
+                buildingRoomCharId: _this.DATA_VALUE,
+                requestKey: localStorage.getItem("requestKey"),
+            }
+            break;
+        case this.API_CONFIG.BIND_EMPLOYEE:
+            params = {
+                departmentCharId: _this.COMM_VALUE,
+                requestKey: localStorage.getItem("requestKey"),
+            }
             break;
     }
     return params;
 }
-
 /**
- *构造函数的原型方法
- * @returns {PropertyPage}
+ *
+ * @type {PropertyPage}
  */
-// 物业初始化
-PropertyPage.prototype.init = function () {
-    // 选中物业
-    this.propertySelected();
-    // 物业新增
-    this.propertyAdds();
-    // 选中预定
-    this.propertyOptions();
-    // 物业编辑
-    this.buildingUpdates();
-    //部门(签约）下拉切换员工列表
-    this.employeeBinds();
-    // 配置添加
-    this.allocation();
-    // 客户选中
-    this.customerSelected();
-    // 选择客户
-    this.customerSel();
-    // 房间新增
-    this.roomAdds();
-    // 物业初始化
-    $(function () {
-        propertyPage.propertyDrawing();
-    });
-    // 暂无权限
-    if (!webApp.grantControl($(".fq-contain-dv"), "building_select")) {
-        webApp.noGrant();
-    }
-    ;
-    webApp.grantControl($(".btn-propertyadd"), "building_add");
-}
-
-// 物业渲染
-PropertyPage.prototype.propertyDrawing = function () {
-    App.init();
-    ComponentsPickers.init();
-    // 物业列表初始化渲染
-    propertyPage.ajaxRequestBuildings(propertyPage.getParams(propertyPage.BUILDINGS));
-    // 绑定用户名称,是否认证信息
-}
-
-
-// 物业新增
-PropertyPage.prototype.buildingAddParams = function () {
-    var params = {
-        BN_VAL: $("#BuildingName_Add1").val().trim(),
-        PA_VAL: $("#Province_Add li[class='cur']"),
-        CA_VAL: $("#City_Add li[class='cur']"),
-        DA_VAL: $("#District_Add li[class='cur']"),
-        BR_VAL: $("#BuildingAddr_Add").val().trim(),
-        FN_VAL: $("#FloorNum").val().trim(),
-        HN_VAL: $("#HouseNum").val().trim(),
-        WP_VAL: $("#water_price").val().trim(),
-        EP_VAL: $("#ele_price").val().trim()
-    }
-    return params;
-}
-PropertyPage.prototype.buildingAdd = function () {
-    var _this = this;
-    var propertyMessage = "";
-    var result = false;
-    var propertyStr = $("#Buildings>dd>span").text();
-    var params = _this.buildingAddParams();
-    if (params['BN_VAL'] == "") {
-        propertyMessage = "物业名称不能为空！";
-    } else if (propertyStr.indexOf(params['BN_VAL']) != -1) {
-        propertyMessage = "物业名称不能重复！";
-    } else if (params['PA_VAL'].length == 0) {
-        propertyMessage = "请选择省份！";
-    } else if (params['CA_VAL'].length == 0) {
-        propertyMessage = "请选择城市！";
-    } else if (params['DA_VAL'].length == 0) {
-        propertyMessage = "请选择区域！";
-    } else if (params['BR_VAL'] == "") {
-        propertyMessage = "地址不能为空！";
-    } else if (regular.check(regular.FLOORCOUNT_REG_EXP, params['FN_VAL'])) {
-        propertyMessage = "请输入正确层数！";
-    } else if (regular.check(regular.ROOMCOUNT_REG_EXP, params['HN_VAL'])) {
-        propertyMessage = "请输入正确层户数！";
-    } else if (regular.check(regular.MONEY_REG_EXP, params['WP_VAL'])) {
-        propertyMessage = "请输入正确水费价格！";
-    } else if (regular.check(regular.MONEY_REG_EXP, params['EP_VAL'])) {
-        propertyMessage = "请输入正确电费价格！";
-    } else {
-        result = true;
-    }
-    if (result) {
-        var allocs = new Array();
-        $("#BuildingAlloc_Add li").each(function () {
-            if ($(this).hasClass("tagli-sel")) {
-                allocs.push($(this).attr("data-value"));
-            }
-        });
-        _this.BUILDINGADDSAVEALLOCS = allocs.join("|");
-        var tags = new Array();
-        $("#BuildingTag_Add li").each(function () {
-            if ($(this).hasClass("tagli-sel")) {
-                tags.push($(this).attr("data-value"));
-            }
-        });
-        _this.BUILDINGADDSAVETAGS = tags.join("|");
-        _this.ajaxRequestBuildingAddSave(_this.getParams(_this.BUILDINGADDSAVE));
-    } else {
-        messageBox.show('提示', propertyMessage, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-    }
-    return this;
-}
-
-// 物业编辑保存
-PropertyPage.prototype.buildingUpdateAdd = function () {
-    var _this = this;
-    var params = {
-        buildName: $("#BuildingName_Edit").val().trim(),
-        provinceEdit: $("#Province_Edit li[class='cur']"),
-        cityEdit: $("#City_Edit li[class='cur']"),
-        districtEdit: $("#District_Edit li[class='cur']"),
-        buildingAddrEdit: $("#BuildingAddr_Edit").val().trim(),
-        waterUnitPrice: parseFloat($("#water_price_edit").val().trim()),
-        eleUnitPrice: parseFloat($("#ele_price_edit").val().trim())
-    }
-    if (params.buildName == "") {
-        messageBox.show("警告", "物业名称不能为空！", MessageBoxButtons.OK, MessageBoxIcons.warning);
-        return false;
-    }
-    //选择区域
-    if (params.provinceEdit.length == 0 || params.cityEdit.length == 0 || params.districtEdit.length == 0) {
-        messageBox.show("警告", "请选择物业区域！", MessageBoxButtons.OK, MessageBoxIcons.warning);
-    } else if (params.buildingAddrEdit == "") {
-        messageBox.show("警告", "地址不能为空！", MessageBoxButtons.OK, MessageBoxIcons.warning);
-    } else if (regular.check(regular.MONEY_REG_EXP, params['waterUnitPrice'])) {
-        messageBox.show("警告", "请输入正确水费价格！", MessageBoxButtons.OK, MessageBoxIcons.warning);
-    } else if (regular.check(regular.MONEY_REG_EXP, params['eleUnitPrice'])) {
-        messageBox.show("警告", "请输入正确电费价格！", MessageBoxButtons.OK, MessageBoxIcons.warning);
-    }
-    else {
-        var allocs = new Array();
-        $("#BuildingAlloc_Update li").each(function () {
-            if ($(this).hasClass("tagli-sel")) {
-                allocs.push($(this).attr("data-value"));
-            }
-        });
-        _this.BUILDINGUPDATEALLOC = allocs.join("|");
-
-        var tags = new Array();
-        $("#BuildingTag_Update li").each(function () {
-            if ($(this).hasClass("tagli-sel")) {
-                tags.push($(this).attr("data-value"));
-            }
-        });
-        _this.BUILDINGUPDATETAGS = tags.join("|");
-        _this.ajaxRequestBuildingUpdateSave(_this.getParams(_this.BUILDINGUPDATESAVE));
-    }
-}
-
-// 物业删除
-PropertyPage.prototype.buildingDelete = function () {
-    var _this = this;
-    var params = this.getParams(this.BUILDINGDELETE);
-    // mp.hideSmPanel();
-    messageBox.show("确认", "确定删除物业？", MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
-    messageBox.confirm(function () {
-        _this.ajaxRequestBuildingDel(params);
-    })
-    return this;
-}
-
-//楼层编辑基础信息获取
-PropertyPage.prototype.floorBinds = function () {
-    var _this = this;
-    $("#Rooms").on("click", ".btn-flooredit", function () {
-        _this.FLOOR_NAME = $(this).attr("data-floorName").trim();
-        _this.FLOOR_CHARID = $(this).attr("data-floorCharId").trim();
-        $("#CurFloorName").val(_this.FLOOR_NAME);
-        $("#CurFloorCharId").val(_this.FLOOR_CHARID);
-    })
-}
-
-//绑定楼层和房间
-PropertyPage.prototype.floorRoomBind = function () {
-    this.ajaxRequestFloors(this.getParams(this.FLOORS));
-}
-
-//楼层编辑
-PropertyPage.prototype.floorUpdate = function () {
-    var _this = this;
-    if ($("#CurFloorName").val() == 0) {
-        messageBox.show("提示", "请输入正确的楼层", MessageBoxButtons.OK, MessageBoxIcons.infomation);
-    } else {
-        _this.ajaxRequestFloorUpdate(_this.getParams(_this.FLOOR_UPDATE));
-    }
-}
-
-// 点击添加楼层
-PropertyPage.prototype.floorAdd = function () {
-    this.ajaxRequestFloorliorderfoo(this.getParams(this.FLOORLIORDERFOO));
-}
-
-// 修改楼层锚点
-PropertyPage.prototype.floorCheck = function () {
-    $('#property-floor-ul-id li').not('.floorword,.btn-flooradd').unbind('click').bind('click', function () {
-        // 获取索引值
-        var index = $('#property-floor-ul-id li').not('.floorword,.btn-flooradd').index($(this));
-        var animateTop = $('.property-floor-message').eq(index).offset().top - 115;
-        // $(".property-floor-wrap").animate({top: '-=' + animateTop + "px"}, 300, function () {
-        $(".property-floor-wrap .mCSB_container").animate({top: '-=' + animateTop + "px"}, 300, function () {
-        });
-    });
-}
-
-// 楼层删除
-PropertyPage.prototype.floorDelete = function () {
-    var _this = this;
-    var params = this.getParams(this.FLOOR_DELETE);
-    messageBox.show("确认", "确定删除楼层？", MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
-    messageBox.confirm(function () {
-        _this.ajaxRequestFloorDelete(params);
-    })
-    return this;
-}
-PropertyPage.prototype.roomUpdateAddParams = function () {
-    var params = {
-        PU_VAL: $("#Price_Update").val(),
-        SU_VAL: $("#Square_Update").val(),
-        DV_VAL: $("#Div1").val(),
-        DT_VAL: $("#Div2").val(),
-        DS_VAL: $("#Div3").val()
-    }
-    return params;
-}
-// 房间信息保存
-PropertyPage.prototype.roomUpdateAdd = function () {
-    var _this = this;
-    var customerMessage = "";
-    var result = false;
-    var params = _this.roomUpdateAddParams();
-    if (regular.moneyRegExpCheck(params.PU_VAL)) {
-        customerMessage = "租金输入有误！";
-    } else if (regular.areaRegExpCheck(params.SU_VAL)) {
-        customerMessage = "面积输入有误！";
-    } else if (regular.roomLayoutRegExpCheck(params.DV_VAL) || regular.roomLayoutRegExpCheck(params.DT_VAL) || regular.roomLayoutRegExpCheck(params.DS_VAL)) {
-        customerMessage = "房型输入有误！";
-    } else {
-        result = true;
-    }
-    if (result) {
-        var allocs = new Array();
-        $("#RoomAlloc_Update li").each(function () {
-            if ($(this).hasClass("tagli-sel")) {
-                allocs.push($(this).attr("data-value"));
-            }
-        });
-        _this.ROOM_UPDATE_ALLOCS = allocs.join("|");
-        var tags = new Array();
-        $("#RoomTag_Update li").each(function () {
-            if ($(this).hasClass("tagli-sel")) {
-                tags.push($(this).attr("data-value"));
-            }
-        });
-        _this.ROOM_UPDATE_TAGS = tags.join("|");
-        _this.ajaxRequestRoomUpdate(_this.getParams(_this.ROOM_UPDATE));
-    } else {
-        messageBox.show('提示', customerMessage, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-    }
-
-}
-
-// 房间删除
-PropertyPage.prototype.roomDelete = function () {
-    var _this = this;
-    var params = this.getParams(this.ROOM_DELETE);
-    messageBox.show("确认", "确定删除房间？", MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
-    messageBox.confirm(function () {
-        _this.ajaxRequestRoomDelete(params);
-    })
-    return this;
-}
-
-PropertyPage.prototype.contractAddParams = function () {
-    var params = {
-        CCD_VAL: $("#CustomerCharId").val().trim(),
-        CP_VAL: $("#ContractPhone_Add").val().trim(),
-        CD_VAL: $("#CardID_Add").val().trim(),
-        PAD_VAL: $("#Price_Add").val().trim(),
-        DT_VAL: $("#Deposit_Add").val().trim(),
-        ID_VAL: $("#InDate").val(),
-        OD_VAL: $("#OutDate").val(),
-        PE_VAL: ($("#People_Add").val()),
-        DS_VAL: $("#Dpts_Add li[class='cur']").attr("data-value"),
-        ES_VAL: $("#Emps_Add li[class='cur']").attr("data-value"),
-        BD_VAL: $("#BargainDate").val()
-    }
-    return params;
-}
-
-// 房间签约(合同新增[保存])
-PropertyPage.prototype.contractAdd = function () {
-    var _this = this;
-    var propertMessage = "";
-    var result = false;
-    var params = _this.contractAddParams();
-    if (params['CCD_VAL'] == "") {
-        propertMessage = "请选择签约客户！";
-    } else if (regular.check(regular.PHONE_REG_EXP, params['CP_VAL'])) {
-        propertMessage = "手机号码不正确！";
-    } else if (params['CD_VAL'] == "") {
-        propertMessage = "证件信息不能为空！";
-    } else if (regular.check(regular.MONEY_REG_EXP, params['PAD_VAL'])) {
-        propertMessage = "租金输入不正确！";
-    } else if (regular.check(regular.MONEY_REG_EXP, params['DT_VAL'])) {
-        propertMessage = "押金输入不正确！";
-    } else if (params['ID_VAL'] == "") {
-        propertMessage = "请填写起租日期！";
-    } else if (params['OD_VAL'] == "") {
-        propertMessage = "请填写退租日期！";
-    } else if (regular.check(regular.CUSTOMER_REG_EXP, params['PE_VAL'])) {
-        propertMessage = "入住人数输入有误！";
-    } else if (params['DS_VAL'] == "" || params['ES_VAL'] == "") {
-        propertMessage = "请选择所属员工！";
-    } else if (params['BD_VAL'] == "") {
-        propertMessage = "请填写签约日期！";
-    } else {
-        result = true;
-    }
-    if (result) {
-        _this.ajaxRequestContractAdd(_this.getParams(_this.CONTRACT_ADD));
-    } else {
-        messageBox.show('提示', propertMessage, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-    }
-}
-
-//维修列表页面初始化
-PropertyPage.prototype.serviceInit = function () {
-    this.ajaxRequestServicePageInit(this.getParams(this.SERVICE_PAGE_INIT));
-    this.serviceRecords();
-}
-// 维修记录分页
-PropertyPage.prototype.serviceRecords = function () {
-    this.ServiceRecord_arugments = arguments.length != 0 ? arguments[0] : 1;
-    this.ajaxRequestServiceRecords(this.getParams(this.SERVICE_RECORDS));
-}
-
-//维修新增[保存]
-PropertyPage.prototype.serviceAdd = function () {
-    var _this = this;
-    var params = {
-        servicePrice: $("#ServicePrice").val()
-    }
-    if (regular.check(regular.MONEY_REG_EXP, params.servicePrice)) {
-        messageBox.show("警告", "维修金额输入错误！", MessageBoxButtons.OK, MessageBoxIcons.warning);
-    } else {
-        _this.ajaxRequestServiceAdd(_this.getParams(_this.SERVICE_ADD));
-    }
-}
-
-// 维修删除
-PropertyPage.prototype.serviceDelete = function () {
-    var _this = this;
-    $("#ServiceRecords").on("click", ".serviceDelete", function () {
-        _this.ServiceDelete_CHARID = $(this).attr("data-ServiceDelete").trim();
-        var params = _this.getParams(_this.SERVICE_DELETE);
-        messageBox.show("确认", "确定删除维修？", MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
-        messageBox.confirm(function () {
-            _this.ajaxRequestServiceDelete(params);
-        })
-    });
-    return this;
-}
-
-//初始化抄表记录页面
-PropertyPage.prototype.readInit = function () {
-    this.waterInit();
-    this.elecInit();
-    return this;
-}
-
-//抄表记录初始化:水
-PropertyPage.prototype.waterInit = function () {
-    this.ajaxRequestWaterPageInit(this.getParams(this.WATER_PAGE_INIT));
-    this.waterRecords();
-    return this;
-}
-
-// 水抄表记录分页
-PropertyPage.prototype.waterRecords = function () {
-    this.WaterRecords_arguments = arguments.length != 0 ? arguments[0] : 1;
-    this.ajaxRequestWaterRecords(this.getParams(this.WATER_RECORDS));
-    return this;
-}
-
-//抄表记录初始化:电
-PropertyPage.prototype.elecInit = function () {
-    this.ajaxRequestElecPageInit(this.getParams(this.ELEC_PAGE_INIT));
-    this.elecRecords();
-    return this;
-}
-
-// 电水抄表记录分页
-PropertyPage.prototype.elecRecords = function () {
-    this.ElecRecords_arguments = arguments.length != 0 ? arguments[0] : 1;
-    this.ajaxRequestElecRecords(this.getParams(this.ELEC_RECORDS));
-    return this;
-}
-
-//抄表新增[保存]
-PropertyPage.prototype.readAdd = function () {
-    var _this = this;
-    var params = {
-        mark: $("#Mark").val()
-    }
-    if (regular.check(regular.DEGREE_REG_EXP, params.mark)) {
-        messageBox.show("警告", "请输入正确的度数！", MessageBoxButtons.OK, MessageBoxIcons.warning);
-    } else {
-        _this.ajaxRequestReadAdd(_this.getParams(_this.READ_ADD));
-    }
-    return this;
-}
-
-// 抄表删除
-PropertyPage.prototype.readDelete = function () {
-    var _this = this;
-    $("#WaterRecords,#ElecRecords").on("click", ".readDelete", function () {
-        _this.ReadDelete_CHARID = $(this).attr("data-read-delete").trim();
-        var params = _this.getParams(_this.READ_DELETE);
-        messageBox.show("确认", "确定删除记录？", MessageBoxButtons.OKCANCEL, MessageBoxIcons.question);
-        messageBox.confirm(function () {
-            _this.ajaxRequestReadDelete(params);
-        })
-    });
-    return this;
-}
-
-//绑定员工下拉列表
-PropertyPage.prototype.employeeBind = function () {
-    var _this = this;
-    if ($("#Dpts_Add li.cur").attr("data-value") != "") {
-        _this.ajaxRequestEmployeeBind(_this.getParams(_this.EMPLOYEE_BIND));
-    }
-    else {
-        var html = "";
-        html += "<li data-value=\"\" class=\"cur\">不选</li>";
-        $("#Emps_Add > ul").html(html);
-        $("#Emps_Add > span").text("不选");
-        DropdownInit();
-    }
-}
-
-//初始化历史合同列表
-PropertyPage.prototype.historyContractPageInit = function () {
-    this.ajaxRequestHistoryContractInit(this.getParams(this.HISTORY_CONTRACT_INIT));
-    this.historyContractRecords();
-}
-
-// 历史合同记录
-PropertyPage.prototype.historyContractRecords = function () {
-    this.HistoryContractRecords_arguments = arguments.length != 0 ? arguments[0] : 1;
-    this.ajaxRequestHistoryContractRecords(this.getParams(this.HISTORY_CONTRACT_RECORDS));
-}
-
-// 点击物业选中
-PropertyPage.prototype.propertySelected = function () {
-    $('.property-nav2-dl').on('click', 'dd', function (e) {
-        $(this).addClass('cur').siblings('dd').removeClass('cur');
-        propertyPage.floorRoomBind();
-    });
-}
-
-// 点击物业新增
-PropertyPage.prototype.propertyAdds = function () {
-    $('.btn-propertyadd').click(function () {
-        // 物业新增基础信息获取
-        propertyPage.ajaxRequestBuildingAddBind(propertyPage.getParams(propertyPage.BUILDINGADDBIND));
-    })
-}
-
-// 物业编辑
-PropertyPage.prototype.buildingUpdates = function () {
-    $(".buildingUpdateBind").click(function () {
-        propertyPage.ajaxRequestBuildingUpdateBind(propertyPage.getParams(propertyPage.BUILDINGUPDATEBIND));
-    })
-}
-
-//部门(签约）下拉切换员工列表
-PropertyPage.prototype.employeeBinds = function () {
-    $("#Dpts_Add").on("click", "li", function () {
-        propertyPage.employeeBind();
-    });
-}
-
-// 配置选择
-PropertyPage.prototype.allocation = function () {
-    $('.tag-ul').on('click', 'li', function () {
-        if ($(this).hasClass('tagli-sel') == true) {
-            $(this).removeClass('tagli-sel');
-        } else {
-            $(this).addClass('tagli-sel');
-        }
-    })
-}
-
-// 客户选中
-PropertyPage.prototype.customerSelected = function () {
-    $('.btn-customerselect').click(function () {
-        var obj = $(this).attr('type');
-        $('.single-modal').show().animate({top: '0'}, 300);
-    });
-}
-
-// 选择客户
-PropertyPage.prototype.customerSel = function () {
-    $('.customer-select .btn-keep2').click(function () {
-        $('.single-modal').animate({top: '-200%'}, 300, function () {
-            $(this).hide();
-        });
-    })
-}
-
-// 房间新增
-PropertyPage.prototype.roomAdds = function () {
-    $("#Rooms").on("click", ".roomAdd", function () {
-        propertyPage.RoomAdd_CHARID = $(this).attr("data-RoomAdd").trim();
-        propertyPage.ajaxRequestRoomAdd(propertyPage.getParams(propertyPage.ROOM_ADD));
-    });
-}
-
-// 从客户中选取
-PropertyPage.prototype.customerSele = function () {
-    window.open("customersel.html", '', 'width=500,height=600,top=50,left=300, scrollbars=no, status=no,toolbar=no,menubar=no,location=no,resizable=no,titlebar=no');
-}
-
-// 历史合同新增
-PropertyPage.prototype.historyAdd = function () {
-    window.open("historyAdd.html?curRoomCharId=" + $("#CurRoomCharId").val(), '', 'width=500,height=600,top=50,left=300, scrollbars=no, status=no,toolbar=no,menubar=no,location=no,resizable=no,titlebar=no');
-}
-
-// 历史合同查看
-PropertyPage.prototype.historyLooks = function () {
-    var _this = this;
-    $('#HistoryContractRecords').on('click', '.historyLook', function () {
-        _this.HISTORY_CHARID = $(this).attr("data-history").trim();
-        window.open("historyLook.html?contractCharId=" + _this.HISTORY_CHARID, '', 'width=500,height=600,top=50,left=300, scrollbars=no, status=no,toolbar=no,menubar=no,location=no,resizable=no,titlebar=no');
-    })
-}
-
-// 全部，预定选中
-PropertyPage.prototype.propertyOptions = function () {
-    $('.property-search-section ul li').click(function () {
-        $(this).addClass('cur').siblings('li').removeClass('cur');
-        propertyPage.floorRoomBind();
-    });
-}
-
-/**
- * @ajax
- * @returns {PropertyPage}
- */
-// 楼层添加
-PropertyPage.prototype.ajaxRequestFloorliorderfoo = function (params) {
-    var _this = this;
-    $.ajax({
-        type: "POST",
-        url: host + "/building/floor/add",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            if (data['succ']) {
-                var floornum = parseInt($(".btn-flooradd").prev().html()) + 1;
-                var liorderstr = '<li>' + floornum + '</li>';
-                $(".btn-flooradd").before(liorderstr);//楼层呈现添加
-                //房间列表数据重新绑定
-                _this.ajaxRequestRooms(_this.getParams(_this.ROOMS));
-                _this.floorCheck();
-            }
-            else {
-                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-    return this;
-}
-
-// 房间列表
-PropertyPage.prototype.ajaxRequestRooms = function (params) {
-    var _this = this;
-    $("#Rooms").on("click", ".roomDetail", function () {
-        _this.RoomDetail_CHARID = $(this).attr("data-RoomDetail").trim();
-        _this.ajaxRequestRoomDetail(_this.getParams(_this.ROOM_DETAIL));
-    });
-    $.ajax({
-        type: "GET",
-        url: host + "/building/rooms",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            if (data['succ']) {
-                var TEMP_DATA = data['exted'];
-                var JSON_DATA = data['data'];
-                var TEMP_HTML = "";
-                for (var i = 0; i < JSON_DATA.length; i++) {
-                    TEMP_HTML += "<div class=\"property-floor-message property-floor" + (i + 1) + "\">";
-                    TEMP_HTML += "	<div class=\"property-floor-title\">";
-                    if (webApp.grantControl($(".btn-flooredit"), "floor_update")) {
-                        TEMP_HTML += "		<p>" + TEMP_DATA.BuildingName + " .<font>" + JSON_DATA[i].floorName + "</font>楼</p><span type=\"floor-edit\" dir=\"top\" class=\"btn-flooredit\" data-floorName='" + JSON_DATA[i].floorName + "'  data-floorCharId='" + JSON_DATA[i].floorCharId + "' onclick='propertyPage.floorBinds()'>编辑</span>";
-                    } else {
-                        TEMP_HTML += "		<p>" + TEMP_DATA.BuildingName + " .<font>" + JSON_DATA[i].floorName + "</font>楼</p>";
-                    }
-                    TEMP_HTML += "	</div>";
-                    TEMP_HTML += "	<div class=\"property-floor-room\">";
-                    TEMP_HTML += "	<ul>";
-                    for (var j = 0; j < JSON_DATA[i].rooms.length; j++) {
-                        var style = "";
-                        if (JSON_DATA[i].rooms[j].State == 3) {
-                            style = "room-let";
-                        }
-                        else if (JSON_DATA[i].rooms[j].State == 2) {
-                            style = "room-advance";
-                        }
-                        TEMP_HTML += "		<li class='roomDetail' data-RoomDetail='" + JSON_DATA[i].rooms[j].CharId + "'><p>" + JSON_DATA[i].rooms[j].Name + "室</p><div type=\"room-message\" dir=\"right\" class=\"property-room-status " + style + "\"><i></i><span>" + JSON_DATA[i].rooms[j].Text + "</span></div></li>";
-
-                    }
-                    if (webApp.grantControl($(".btn-flooredit"), "room_add")) {
-                        TEMP_HTML += "		<li  id=\"roomli_" + JSON_DATA[i].floorCharId + "\"><p>添加房间</p><div type=\"room-add\" dir=\"top\" class=\"property-room-status1 roomAdd\" data-RoomAdd='" + JSON_DATA[i].floorCharId + "'>+</div></li><div class=\"clear\"></div>";
-                    } else {
-                        TEMP_HTML += "		<li id=\"roomli_" + JSON_DATA[i].floorCharId + "\"><p></p></li><div class=\"clear\"></div>";
-                    }
-                    TEMP_HTML += "	</ul>";
-                    TEMP_HTML += "</div>";
-                    TEMP_HTML += "</div>";
-                }
-                $("#Rooms").find('>div').find('>div').eq(0).html("");
-                $("#Rooms").find('>div').find('>div').eq(0).append(TEMP_HTML);
-
-                $("#CurBuildingName").text(TEMP_DATA.BuildingName);
-                $("#AllCount").text(TEMP_DATA.AllCount);
-                $("#VacancyCount").text(TEMP_DATA.VacancyCount);
-                $("#OrderCount").text(TEMP_DATA.OrderCount);
-                $("#LetCount").text(TEMP_DATA.LetCount);
-
-                panel_tab5($('.btn-flooredit,.property-room-status'), $('.modal-mask,.btn-cancel'), $('.alert-modal-wraper'));
-            }
-            else {
-                messageBox.show("警告", JSON_DATA.msg, MessageBoxButtons.OK, MessageBoxIcons.warning);
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-
-}
-
-//物业列表
-PropertyPage.prototype.ajaxRequestBuildings = function (params) {
-    var _this = this;
-    $("#Buildings").on("click", ".btn-propertydetail", function (event) {
-        _this.PROPERTYDETAIL_CHARID = $(this).attr("data-click").trim();
-        _this.ajaxRequestBuildingDetail(_this.getParams(_this.BUILDINGDETAIL));
-        event.stopPropagation();
-    });
-    $.ajax({
-        type: "GET",
-        url: host + "/building/buildings",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            if (data['succ']) {
-                var TEMP_HTML = "";
-                var TEMP_DATA = null;
-                var JSON_DATA = data['data'];
-                for (var i = 0; i < JSON_DATA['Buildings'].length; i++) {
-                    var style = "";
-                    if (i == 0) {
-                        style = "cur";
-                    }
-                    TEMP_HTML += "<dd class=\"" + style + "\" >";
-                    TEMP_HTML += " <span data-value=\"" + JSON_DATA['Buildings'][i].CharId + "\">" + JSON_DATA['Buildings'][i]['Name'] + "（<font>" + JSON_DATA['Buildings'][i].Number + "</font>）</span>";
-                    // 楼盘（物业）编辑
-                    if (webApp.grantControl($(".btn-propertydetail"), "building_update")) {
-                        TEMP_DATA = JSON_DATA['Buildings'][i];
-                        TEMP_HTML += "<i type=\"property-detail\" dir=\"right\" class=\"icon-Param btn-propertydetail\" data-click='" + TEMP_DATA.CharId + "')></i>";
-                    }
-                    TEMP_HTML += "</dd>";
-                }
-                $("#Buildings dd").remove();
-                $("#Buildings").append(TEMP_HTML);//绑定物业列表
-
-                if ($("#Buildings dd").length != 0) {
-                    TEMP_HTML = "";
-                    for (var i = 0; i < JSON_DATA['Floors'].length; i++) {
-                        TEMP_HTML += "<li data-value='" + JSON_DATA['Floors'][i].CharId + "' index='" + JSON_DATA['Floors'][i].SystemIndex + "'>" + JSON_DATA['Floors'][i].Name + "</li>";
-                    }
-                    if (webApp.grantControl($(".btn-flooradd"), "floor_add")) {
-                        TEMP_HTML += "<li class=\"btn-flooradd\" onclick='propertyPage.floorAdd()'>+</li>";
-                    }
-                    $("#Floors").nextAll().remove();
-                    $("#Floors").after(TEMP_HTML);//绑定楼层信息
-                    if (webApp.grantControl($(".fq-contain-dv"), "building_select")) _this.ajaxRequestRooms(_this.getParams(_this.ROOMS));//绑定房间信息
-                }
-
-
-                propertyPage.floorCheck();//绑定楼层锚点切换事件
-                panel_tab5($('.btn-propertydetail'), $('.modal-mask,.btn-cancel'), $('.alert-modal-wraper'));
-            }
-            else {
-                messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            // 添加本地缓存
-            $("#iFrmMain").load(function () {
-                if (localStorage.getItem("isAlert")) {
-                } else {
-                    messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-                    // 添加本地缓存
-                    localStorage.setItem("isAlert", true);
-                }
-            });
-        }
-    });
-    return this;
-}
-
-// 楼层
-PropertyPage.prototype.ajaxRequestFloors = function (params) {
-    var _this = this;
-    $.ajax({
-        type: "GET",
-        url: host + "/building/floors",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            if (data['succ']) {
-                var TEMP_HTML = "";
-                var JSON_DATA = data['data'];
-                for (var i = 0; i < JSON_DATA.length; i++) {
-                    TEMP_HTML += "<li data-value='" + JSON_DATA[i].CharId + "' index='" + JSON_DATA[i].SystemIndex + "'>" + JSON_DATA[i].Name + "</li>";
-                }
-                TEMP_HTML += "<li class=\"btn-flooradd\" onclick='propertyPage.floorAdd()'>+</li>";
-                $("#Floors").nextAll().remove();
-                $("#Floors").after(TEMP_HTML);//绑定楼层信息
-                // Rooms(0);//绑定房间信息
-                _this.ajaxRequestRooms(_this.getParams(_this.ROOMS));
-                propertyPage.floorCheck();//绑定楼层锚点切换事件
-            }
-            else {
-                messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-    return this;
-}
-
-//物业新增基础信息获取（省份信息和标签信息）
-PropertyPage.prototype.ajaxRequestBuildingAddBind = function (params) {
-    $.ajax({
-        type: "GET",
-        url: host + "/building/province",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            //绑定省份信息
-            var TEMP_HTML = "",
-                JSON_DATA = data['data'],
-                TEMP_DATA1=JSON_DATA['data1'],
-                TEMP_DATA2=JSON_DATA['data2'];
-            for (var i = 0; i < TEMP_DATA2.length; i++) {
-                TEMP_HTML += "<li data-value=\"" + TEMP_DATA2[i]['Key'] + "\">" + TEMP_DATA2[i]['Value'] + "</li>";
-            }
-            $("#Province_Add ul").html(TEMP_HTML);
-            $("#Province_Add span").text("选择省份");
-            DropdownInit();
-            //绑定配置、标签
-            for (var KEY in TEMP_DATA1) {
-                TEMP_HTML = "";
-                for (var i = 0; i < TEMP_DATA1[KEY].length; i++) {
-                    var KEY_DATA = TEMP_DATA1[KEY][i];
-                    TEMP_HTML += "<li data-value=\"" + KEY_DATA['Key'] + "\">" + KEY_DATA['Value'] + "</li>";
-                }
-                TEMP_HTML += "<div class=\"clear\"></div>";
-                $("#" + KEY + "_Add>ul").html(TEMP_HTML);
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-    return this;
-}
-
-//绑定城市信息
-PropertyPage.prototype.ajaxRequestCityBind = function (params) {
-    $.ajax({
-        type: "GET",
-        url: host + "/building/city",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            var TEMP_HTML = "";
-            var JSON_DATA = data['data'];
-            for (var i = 0; i < JSON_DATA.length; i++) {
-                TEMP_HTML += "<li data-value=\"" + JSON_DATA[i]['Key'] + "\" >" + JSON_DATA[i]['Value'] + "</li>";
-            }
-            $("#City_Add ul").html(TEMP_HTML);
-            $("#City_Add span").text("选择城市");
-
-            $("#District_Add ul").html("");
-            $("#District_Add span").text("选择区域");
-            DropdownInit();
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-    return this;
-}
-
-//绑定区域信息
-PropertyPage.prototype.ajaxRequestDistrictBind = function (params) {
-    $.ajax({
-        type: "GET",
-        url: host + "/building/district",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            var TEMP_HTML = "";
-            var JSON_DATA = data['data'];
-            for (var i = 0; i < JSON_DATA.length; i++) {
-                TEMP_HTML += "<li data-value=\"" + JSON_DATA[i]['Key'] + "\">" + JSON_DATA[i]['Value'] + "</li>";
-            }
-            $("#District_Add ul").html(TEMP_HTML);
-            $("#District_Add span").text("选择区域");
-            DropdownInit();
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-    return this;
-}
-
-// 编辑城市信息
-PropertyPage.prototype.ajaxRequestUptCityBind = function (params) {
-    $.ajax({
-        type: "GET",
-        url: host + "/building/city",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            var TEMP_HTML = "";
-            var JSON_DATA = data['data'];
-            for (var i = 0; i < JSON_DATA.length; i++) {
-                TEMP_HTML += "<li data-value=\"" + JSON_DATA[i].Key + "\" >" + JSON_DATA[i]['Value'] + "</li>";
-            }
-            $("#City_Edit ul").html(TEMP_HTML);
-            $("#City_Edit span").text("选择城市");
-
-            $("#District_Edit ul").html("");
-            $("#District_Edit span").text("选择区域");
-            DropdownInit();
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-    return this;
-}
-
-// 编辑区域信息
-PropertyPage.prototype.ajaxRequestDistrictUptBind = function (params) {
-    $.ajax({
-        type: "GET",
-        url: host + "/building/district",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            var TEMP_HTML = "";
-            var JSON_DATA = data['data'];
-            for (var i = 0; i < JSON_DATA.length; i++) {
-                TEMP_HTML += "<li data-value=\"" + JSON_DATA[i]['Key'] + "\">" + JSON_DATA[i]['Value'] + "</li>";
-            }
-            $("#District_Edit ul").html(TEMP_HTML);
-            $("#District_Edit span").text("选择区域");
-            DropdownInit();
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-    return this;
-}
-
-// 物业新增保存
-PropertyPage.prototype.ajaxRequestBuildingAddSave = function (params) {
-    var _this = this;
-    $.ajax({
-        type: "POST",
-        url: host + "/building/add",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            if (data['succ']) {
-                _this.ajaxRequestBuildings(_this.getParams(_this.BUILDINGS));
-                messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-                baocun();
-                // 物业新增初始化
-                $("#BuildingName_Add1").val("");
-                $("#Province_Add>span").html("选择省份");
-                $("#City_Add>span").html("选择城市");
-                $("#District_Add>span").html("选择区域");
-                $("#BuildingAddr_Add").val("");
-                $("#FloorNum").val("");
-                $("#HouseNum").val("");
-                $("#water_price").val("");
-                $("#ele_price").val("");
-                $(".tag-ul>li").removeClass("tagli-sel");
-
-
-            } else {
-                messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            }
-
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-    return this;
-}
-
-//物业编辑基础页面获取
-PropertyPage.prototype.ajaxRequestBuildingUpdateBind = function (params) {
-    $.ajax({
-        type: "GET",
-        url: host + "/building/Update",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            //绑定基础信息
-            var TEMP_HTML = "",
-                TEMP_DATA = data['exted'],
-                JSON_DATA = data['data'];
-            $("#BuildingName_Edit").val(JSON_DATA['building']['Name']);
-            $("#BuildingAddr_Edit").val(JSON_DATA['building']['Address']);
-            $("#water_price_edit").val(JSON_DATA['building']['WaterUnitPrice']);
-            $("#ele_price_edit").val(JSON_DATA['building']['EleUnitPrice']);
-            //绑定标签
-            for (var KEY in TEMP_DATA) {
-                TEMP_HTML = "";
-                for (var i = 0; i < TEMP_DATA[KEY].length; i++) {
-                    var KEY_DATA = TEMP_DATA[KEY][i];
-                    TEMP_HTML += "<li data-value=\"" + KEY_DATA['Key'] + "\">" + KEY_DATA['Value'] + "</li>";
-                }
-                TEMP_HTML += "<div class=\"clear\"></div>";
-                $("#" + KEY + "_Update>ul").html(TEMP_HTML);
-            }
-
-
-            var allocs = JSON_DATA['building']['Alloc'] ? JSON_DATA['building']['Alloc'].split('|') : "";
-            for (var i = 0; i < allocs.length; i++) {
-                $("#BuildingAlloc_Update li[data-value='" + allocs[i] + "']").addClass("tagli-sel");
-            }
-
-
-            var tags = JSON_DATA['building']['Tag'] ? JSON_DATA['building']['Tag'].split('|') : "";
-            for (var i = 0; i < tags.length; i++) {
-                $("#BuildingTag_Update li[data-value='" + tags[i] + "']").addClass("tagli-sel");
-            }
-            //绑定下拉信息
-            var TEMP_HTML = "";
-            for (var i = 0; i < JSON_DATA['provinces'].length; i++) {
-                TEMP_HTML += "<li data-value=\"" + JSON_DATA['provinces'][i]['Key'] + "\" >" + JSON_DATA['provinces'][i]['Value'] + "</li>";
-            }
-
-            $("#Province_Edit ul").html(TEMP_HTML);
-            $("#Province_Edit li[data-value='" + JSON_DATA['building']['ProvinceCharId'] + "']").addClass("cur");
-            $("#Province_Edit span").text($("#Province_Edit li[class='cur']").text());
-
-            TEMP_HTML = "";
-            for (var i = 0; i < JSON_DATA['citys'].length; i++) {
-                TEMP_HTML += "<li data-value=\"" + JSON_DATA['citys'][i]['Key'] + "\" >" + JSON_DATA['citys'][i]['Value'] + "</li>";
-            }
-            $("#City_Edit ul").html(TEMP_HTML);
-            $("#City_Edit li[data-value='" + JSON_DATA['building']['CityCharId'] + "']").addClass("cur");
-            $("#City_Edit span").text($("#City_Edit li[class='cur']").text());
-
-            TEMP_HTML = "";
-            for (var i = 0; i < JSON_DATA['districts'].length; i++) {
-                TEMP_HTML += "<li data-value=\"" + JSON_DATA['districts'][i]['Key'] + "\" >" + JSON_DATA['districts'][i]['Value'] + "</li>";
-            }
-            $("#District_Edit ul").html(TEMP_HTML);
-            $("#District_Edit li[data-value='" + JSON_DATA['building']['DistrictCharId'] + "']").addClass("cur");
-            $("#District_Edit span").text($("#District_Edit li[class='cur']").text());
-
-            DropdownInit();
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-    return this;
-}
-
-//物业编辑保存
-PropertyPage.prototype.ajaxRequestBuildingUpdateSave = function (params) {
-    var _this = this;
-    $.ajax({
-        type: "POST",
-        url: host + "/building/update",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            $("#Buildings dd[class='cur']>span").html($("#BuildingName_Edit").val() + "（<font>" + $("#Buildings dd[class='cur']>span>font").text() + "</font>）");
-            // Rooms();
-            _this.ajaxRequestRooms(_this.getParams(_this.ROOMS));
-            messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            baocun();
-            _this.ajaxRequestBuildingDetail(_this.getParams(_this.BUILDINGDETAIL));
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-    return this;
-}
-
-// 物业明细
-PropertyPage.prototype.ajaxRequestBuildingDetail = function (params) {
-    var _this = this;
-    $.ajax({
-        type: "GET",
-        url: host + "/building",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            if (data['succ']) {
-                var JSON_DATA = data.data;
-                var TEMP_DATA = data.exted;
-                $("#Name_Detail").text(JSON_DATA['Name']);
-                $("#BuildingAddr_Detail").text(JSON_DATA['Address']);
-                $("#FloorNum_Detail").text(TEMP_DATA['RoomNum'] + "间（共" + TEMP_DATA['FloorNum'] + "层）");
-                $("#Alloc_Detail").text(JSON_DATA['Alloc']);
-                $("#Tag_Detail").text(JSON_DATA['Tag']);
-                $("#water_price_Detail").text(JSON_DATA['WaterUnitPrice']);
-                $("#ele_price_Detail").text(JSON_DATA['EleUnitPrice']);
-                $("#BuildingCharId").val(_this.PROPERTYDETAIL_CHARID);
-            }
-            else {
-                messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-// 物业删除
-PropertyPage.prototype.ajaxRequestBuildingDel = function (params) {
-    $.ajax({
-        type: "POST",
-        url: host + "/building/delete",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            if (data['succ']) {
-                messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-                location.reload();
-            }
-            else {
-                messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-// 楼层编辑保存
-PropertyPage.prototype.ajaxRequestFloorUpdate = function (params) {
-    var _this = this;
-    $.ajax({
-        type: "POST",
-        url: host + "/building/floor/update",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            if (data['succ']) {
-                // Floors();
-                _this.ajaxRequestFloors(_this.getParams(_this.FLOORS));
-                // Rooms();
-                _this.ajaxRequestRooms(_this.getParams(_this.ROOMS));
-                messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-                baocun();
-            }
-            else {
-                messageBox.show("警告", data.msg, MessageBoxButtons.OK, MessageBoxIcons.warning);
-            }
-
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-// 楼层删除
-PropertyPage.prototype.ajaxRequestFloorDelete = function (params) {
-    var _this = this;
-    $.ajax({
-        type: "POST",
-        url: host + "/building/floor/delete",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            _this.ajaxRequestFloors(_this.getParams(_this.FLOORS));
-            _this.ajaxRequestRooms(_this.getParams(_this.ROOMS));
-            messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            baocun();
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-// 房间详情
-PropertyPage.prototype.ajaxRequestRoomDetail = function (params) {
-    var _this = this;
-    $.ajax({
-        type: "GET",
-        url: host + "/building/room",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            var JSON_DATA = data['data'];
-            if (JSON_DATA['State'] != "已租") {
-                $("#btn-let").show();
-                $("#RoomState_Detail").text(JSON_DATA.State + "（" + JSON_DATA.DateDiff + "天）");
-            }
-            else {
-                $("#btn-order").hide();
-                $("#btn-let").hide();
-                $("#RoomState_Detail").text(JSON_DATA.State);
-            }
-            //绑定基础信息
-            $("#RoomTitle").text(JSON_DATA.BuildingName + "    " + JSON_DATA.FloorName + "  楼  " + JSON_DATA.RoomName + "  室");
-            $("#Price_Detail").text(JSON_DATA.Price + "元/月");
-            $("#Square_Detail").text(JSON_DATA.Square + "㎡");
-            $("#Layout_Detail").text(JSON_DATA.Div1 + "室" + JSON_DATA.Div2 + "厅" + JSON_DATA.Div3 + "卫" + JSON_DATA.Div4 + "阳台");
-            $("#RoomAlloc_Detail").text(JSON_DATA.Alloc);
-            $("#RoomTag_Detail").text(JSON_DATA.Tag);
-            $("#WaterUnitPrice_Detail").text(JSON_DATA['WaterUnitPrice']);
-            $("#EleUnitPrice_Detail").text(JSON_DATA['EleUnitPrice']);
-            $("#CurRoomCharId").val(_this.RoomDetail_CHARID);
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-// 房间新增
-PropertyPage.prototype.ajaxRequestRoomAdd = function (params) {
-    var _this = this;
-    $.ajax({
-        type: "POST",
-        url: host + "/building/room/add",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            if (data['succ']) {
-                // _this.ajaxRequestRooms(_this.getParams(_this.ROOMS));
-                propertyPage.ajaxRequestRooms(propertyPage.getParams(propertyPage.ROOMS));
-            }
-            else {
-                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-//房间编辑页面获取
-PropertyPage.prototype.ajaxRequestRoomUpdateDetail = function (params) {
-    $(this).css("opcity", 0);
-    $.ajax({
-        type: "GET",
-        url: host + "/building/room/update",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            var TEMP_HTML = "";
-            var TEMP_DATA = data['exted'];
-            // 绑定配置、标签信息
-            for (var KEY in TEMP_DATA) {
-                TEMP_HTML = "";
-                for (var i = 0; i < TEMP_DATA[KEY].length; i++) {
-                    var KEY_DATA = TEMP_DATA[KEY][i];
-                    TEMP_HTML += "<li data-value=\"" + KEY_DATA['Key'] + "\">" + KEY_DATA['Value'] + "</li>";
-                }
-                TEMP_HTML += "<div class=\"clear\"></div>";
-                $("#" + KEY + "_Update>ul").html(TEMP_HTML);
-            }
-
-            var JSON_DATA = data['data'];
-            $("#RoomName_Update").val(JSON_DATA.RoomName);
-            $("#Price_Update").val(JSON_DATA.Price);
-            $("#Square_Update").val(JSON_DATA.Square);
-            $("#WaterUnitPrice_Update").val(JSON_DATA['WaterUnitPrice']);
-            $("#EleUnitPrice_Update").val(JSON_DATA['EleUnitPrice']);
-            $("#Div1").val(JSON_DATA.Div1);
-            $("#Div2").val(JSON_DATA.Div2);
-            $("#Div3").val(JSON_DATA.Div3);
-            $("#AtFloor").text(JSON_DATA.BuildingName + "  " + JSON_DATA.FloorName + "层");
-
-            var allocs = JSON_DATA.Alloc.split('|');
-            for (var i = 0; i < allocs.length; i++) {
-                $("#RoomAlloc_Update li[data-value='" + allocs[i] + "']").addClass("tagli-sel");
-            }
-
-            var tags = JSON_DATA.Tag.split('|');
-            for (var i = 0; i < tags.length; i++) {
-                $("#RoomTag_Update li[data-value='" + tags[i] + "']").addClass("tagli-sel");
-            }
-
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-// 房间信息保存
-PropertyPage.prototype.ajaxRequestRoomUpdate = function (params) {
-    var _this = this;
-    $.ajax({
-        type: "POST",
-        url: host + "/building/room/update",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            // RoomDetail($("#CurRoomCharId").val());
-            _this.ajaxRequestRoomDetail(_this.getParams(_this.ROOM_DETAIL));
-            // Rooms();
-            _this.ajaxRequestRooms(_this.getParams(_this.ROOMS));
-            messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            baocun();
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-//房间签约基础信息获取
-PropertyPage.prototype.ajaxRequestContractAddBind = function (params) {
-    $('#CustomerName_Add').html('');
-    $('#ContractPhone_Add').val('');
-    $('#CardID_Add').val('');
-    $.ajax({
-        type: "GET",
-        url: host + "/contract/add",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            if (data['succ']) {
-                var TEMP_HTML = "";
-                var JSON_DATA = data['data'];
-                $("#BuildingName_Add").text(JSON_DATA.Room.BuildingName + JSON_DATA.Room.FloorName + " 楼 " + JSON_DATA.Room.RoomName + "室");
-                $("#Square_Add").text(JSON_DATA.Room.Square + "㎡");
-                $("#Layout_Add").text(JSON_DATA.Room.Div1 + "室" + JSON_DATA.Room.Div2 + "厅" + JSON_DATA.Room.Div3 + "卫");
-                $("#ContractNumber_Add").val(JSON_DATA.ContractNum);
-                for (var i = 0; i < JSON_DATA.PayType.length; i++) {
-                    var style = "";
-                    if (i == 0) {
-                        style = "cur";
-                    }
-                    TEMP_HTML += "<li data-value=\"" + JSON_DATA.PayType[i].Key + "\" class='" + style + "'>" + JSON_DATA.PayType[i].Value + "</li>";
-                }
-                $("#PayType ul").html(TEMP_HTML);
-                $("#PayType span").text($("#PayType li[class='cur']").text());
-
-                TEMP_HTML = "";
-                TEMP_HTML += "<li data-value=\"\" class=\"cur\">不选</li>";
-                for (var j = 0; j < JSON_DATA.Dpts.length; j++) {
-                    TEMP_HTML += "<li  data-value=\"" + JSON_DATA.Dpts[j].CharId + "\"  class=\"fq-menu\"><b class=\"icon icon-right-triangle\"></b><span>" + JSON_DATA.Dpts[j].Name + "</span>";
-                    for (var k = 0; k < JSON_DATA.Dpts[j].ChildDpts.length; k++) {
-                        if (k == 0) {
-                            TEMP_HTML += "<ul>";
-                        }
-                        TEMP_HTML += "<li id=\"" + JSON_DATA.Dpts[j].ChildDpts[k].CharId + "\"   data-value=\"" + JSON_DATA.Dpts[j].ChildDpts[k].CharId + "\" class='menuChildren'><span>" + JSON_DATA.Dpts[j].ChildDpts[k].Name + "</span></li>";
-                        if (k == JSON_DATA.Dpts[j].ChildDpts.length - 1) {
-                            TEMP_HTML += "</ul>";
-                        }
-                    }
-                    TEMP_HTML += "</li>";
-                }
-                $("#Dpts_Add>ul").html(TEMP_HTML);
-                $("#Dpts_Add>span").text($("#Dpts_Add>ul>li[class=\"cur\"]").text());
-                DropdownInit();
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-
-    });
-}
-
-// 房间签约(合同新增[保存])
-PropertyPage.prototype.ajaxRequestContractAdd = function (params) {
-    var _this = this;
-    $.ajax({
-        type: "POST",
-        url: host + "/contract/add",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            if (data['succ']) {
-                // Rooms();
-                _this.ajaxRequestRooms(_this.getParams(_this.ROOMS));
-                // RoomDetail($("#CurRoomCharId").val());
-                _this.ajaxRequestRoomDetail(_this.getParams(_this.ROOM_DETAIL));
-                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
-                baocun();
-                //表单清空
-                $("#ContractNumber_Add").val("");
-                $("#ContractPhone_Add").val("");
-                $("#CardID_Add").val("");
-                $("#CustomerCharId").val("");
-                $("#CustomerName_Add").text("");
-                $("#Price_Add").val("");
-                $("#Deposit_Add").val("");
-                // $("#InDate").val("");
-                $("#OutDate").val("");
-                $("#People_Add").val("");
-                $("#BargainDate").val("");
-                $("#ContractDescription").val("");
-                $("#Emps_Add>span").text("不选");
-                $("#Emps_Add li").remove();
-                $("#Emps_Add ul").html("<li class=\"cur\">不选</li>");
-            }
-            else {
-                messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-// 房间删除
-PropertyPage.prototype.ajaxRequestRoomDelete = function (params) {
-    var _this = this;
-    $.ajax({
-        type: "POST",
-        url: host + "/building/room/delete",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            // Rooms();
-            _this.ajaxRequestRooms(_this.getParams(_this.ROOMS));
-            messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            baocun();
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-// 维修分页初始化
-PropertyPage.prototype.ajaxRequestServicePageInit = function (params) {
-    var _this = this;
-    $.ajax({
-        type: "GET",
-        url: host + "/building/servicerecords",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            if (data['succ']) {
-                //清空分页控件
-                $(".fy-wrap-service").html("");
-                //绑定分页控件
-                var pageinit = new fyfoo2(pageSize, data.exted.totalNum, function (num) {
-                    _this.serviceRecords(num);
-                }, $(".fy-wrap-service"));
-            }
-            else {
-                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-//维修记录列表
-PropertyPage.prototype.ajaxRequestServiceRecords = function (params) {
-    $.ajax({
-        type: "GET",
-        url: host + "/building/servicerecords",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            //绑定列表
-            if (data['succ']) {
-                var JSON_DATA = data['data'];
-                var TEMP_HTML = "";
-                for (var i = 0; i < JSON_DATA.length; i++) {
-                    TEMP_HTML += "<tr>";
-                    TEMP_HTML += "<td>" + JSON_DATA[i].ServiceValue + "</td>";
-                    TEMP_HTML += "<td>" + JSON_DATA[i].Price + "</td>";
-                    TEMP_HTML += "<td>" + JSON_DATA[i].Object + "</td>";
-                    TEMP_HTML += "<td>" + JSON_DATA[i].CreateTime + "</td>";
-                    if (webApp.grantControl($(".servicerecord_del"), "servicerecord_delete")) {
-                        // TEMP_HTML += "<td><span onclick=\"ServiceDelete('" + JSON_DATA[i].CharId + "')\" class='servicerecord_del'>删除</span></td>";
-                        TEMP_HTML += "<td><span data-ServiceDelete='" + JSON_DATA[i].CharId + "'  class='servicerecord_del serviceDelete' onclick='propertyPage.serviceDelete()'>删除</span></td>";
-                    }
-                    TEMP_HTML += "</tr>";
-                }
-                $("#ServiceRecords tr:first").nextAll().remove();
-                $("#ServiceRecords").append(TEMP_HTML);
-            }
-            else {
-                messageBox.show("提示", JSON_DATA['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-//维修新增基础信息获取
-PropertyPage.prototype.ajaxRequestServiceAddBind = function (params) {
-    $.ajax({
-        type: "GET",
-        url: host + "/building/servicerecord/add",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            if (data['succ']) {
-                var JSON_DATA = data['data'];
-                //1、维修类别下拉列表
-                for (var KEY in JSON_DATA) {
-                    var TEMP_HTML = "";
-                    for (var i = 0; i < JSON_DATA[KEY].length; i++) {
-                        var KEY_DATA = JSON_DATA[KEY][i];
-                        TEMP_CLASS = i == 0 ? 'cur' : '';
-                        TEMP_HTML += "<li data-value=\"" + KEY_DATA['Key'] + "\" class='" + TEMP_CLASS + "'>" + KEY_DATA['Value'] + "</li>";
-                    }
-                    TEMP_HTML += "<div class=\"clear\"></div>";
-                    $("#" + KEY + " ul").html(TEMP_HTML);
-                    $("#" + KEY + " span").text($("#" + KEY + " .cur").text());
-
-                }
-                DropdownInit();
-
-                // 维修列表初始化
-                $("#ServicePrice").val("");
-                $("#ServiceDescription").val("");
-            }
-            else {
-                messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-//维修新增[保存]
-PropertyPage.prototype.ajaxRequestServiceAdd = function (params) {
-    var _this = this;
-    $.ajax({
-        type: "POST",
-        url: host + "/building/servicerecord/add",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            _this.serviceInit();
-            baocun();
-            messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-// 维修删除
-PropertyPage.prototype.ajaxRequestServiceDelete = function (params) {
-    var _this = this;
-    $.ajax({
-        type: "POST",
-        url: host + "/building/servicerecord/delete",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            _this.serviceInit();
-            messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-//合同详情
-PropertyPage.prototype.ajaxRequestContract = function (params) {
-    this.historyContractPageInit();
-    $("#hascontract").hide();
-    $.ajax({
-        type: "GET",
-        url: host + "/building/room/state",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            //绑定明细页面
-            if (data['succ']) {
-                var JSON_DATA = data['data'];
-                if (JSON_DATA.RoomState != 3) {
-                    $("#nocontract").show();
-                    $("#hascontract").hide();
-                }
-                else {
-                    $("#CustomerName_Detail").text(JSON_DATA.CustomerName);
-                    $("#Phone_Detail").text(JSON_DATA.Phone);
-                    $("#CardId_Detail").text(JSON_DATA.CardID);
-                    $("#BuildingName_Detail").text(JSON_DATA.BuildingName + JSON_DATA.FloorName + "层");
-                    $("#RoomName_Detail").text(JSON_DATA.RoomName + "室");
-                    $("#Number_Detail").text(JSON_DATA.Number);
-                    $("#State_Detail1").text(JSON_DATA.ContractState);
-                    $("#Price_Detail1").text(JSON_DATA.Price + "元/月");
-                    $("#Deposit_Detail").text(JSON_DATA.Deposit + "元/月");
-                    $("#RentDate_Detail").text(JSON_DATA.InDate + "~" + JSON_DATA.OutDate);
-                    $("#PayType_Detail").text(JSON_DATA.PayType1);
-                    $("#ReceiveDate").text();
-                    $("#EmpName_Detail").text(JSON_DATA.DepartmentName + "." + JSON_DATA.EmployeeName);
-                    $("#BargainDate_Detail").text(JSON_DATA.BargainDate);
-                    $("#Description_Detail").text(JSON_DATA.Description);
-                    $("#CreateEmpName_Detail").text(JSON_DATA.CreateTime);
-                    $("#CurContractCharId").val($("#CurRoomCharId").val());
-                    $("#hascontract").show();
-                    $("#nocontract").hide();
-                }
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-// 历史合同列表分页初始化
-PropertyPage.prototype.ajaxRequestHistoryContractInit = function (params) {
-    var _this = this;
-    $.ajax({
-        type: "GET",
-        url: host + "/contract/historycontracts",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            if (data['succ']) {
-                //清空分页控件history-fy-wrap
-                $(".history-fy-wrap").html("");
-                //绑定分页控件
-                var pageinit = new fyfoo2(5, data.exted.totalNum, function (num) {
-                    _this.historyContractRecords(num);
-                }, $(".history-fy-wrap"));
-            }
-            else {
-                messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-// 历史合同列表分页
-PropertyPage.prototype.ajaxRequestHistoryContractRecords = function (params) {
-    $.ajax({
-        type: "GET",
-        url: host + "/contract/historycontracts",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            if (data['succ']) {
-                var JSON_DATA = data['data'];
-                var TEMP_HTML = "";
-                for (var i = 0; i < JSON_DATA.length; i++) {
-                    TEMP_HTML += "<tr>";
-                    TEMP_HTML += "<td>" + JSON_DATA[i].CustomerName + "</td>";
-                    TEMP_HTML += "<td>" + JSON_DATA[i].InDate + "-" + JSON_DATA[i].OutDate + "</td>";
-                    TEMP_HTML += "<td>" + JSON_DATA[i].Price + "</td>";
-                    TEMP_HTML += "<td>" + JSON_DATA[i].EndDate + "</td>";
-                    // TEMP_HTML += "<td><span onclick=\"HistoryLook('" + JSON_DATA[i].CharId + "')\">查看</span></td>";
-                    TEMP_HTML += "<td><span data-history='" + JSON_DATA[i].CharId + "' class='historyLook' onclick='propertyPage.historyLooks()'>查看</span></td>";
-                    TEMP_HTML += "</tr>";
-                }
-                $("#HistoryContractRecords tr:first").nextAll().remove();
-                $("#HistoryContractRecords").append(TEMP_HTML);
-            }
-            else {
-                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-//水抄表记录分页初始化
-PropertyPage.prototype.ajaxRequestWaterPageInit = function (params) {
-    var _this = this;
-    $.ajax({
-        type: "GET",
-        url: host + "/building/readrecords",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            if (data['succ']) {
-                //清空分页控件
-                $(".fy-wrap-water").html("");
-                //绑定分页控件
-                var pageinit = new fyfoo2(pageSize_Reocrd, data.exted.totalNum, function (num) {
-                    _this.waterRecords(num);
-                }, $(".fy-wrap-water"));
-            }
-            else {
-                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-//水抄表记录列表
-PropertyPage.prototype.ajaxRequestWaterRecords = function (params) {
-    $.ajax({
-        type: "GET",
-        url: host + "/building/readrecords",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            if (data['succ']) {
-                var JSON_DATA = data['data'];
-                var TEMP_HTML = "";
-                for (var i = 0; i < JSON_DATA.length; i++) {
-                    TEMP_HTML += "<tr>";
-                    TEMP_HTML += "<td>" + JSON_DATA[i].RecordDate + "</td>";
-                    TEMP_HTML += "<td>" + JSON_DATA[i].Mark + "</td>";
-                    if (webApp.grantControl($(".readDelete_del"), "readrecord_delete")) {
-                        TEMP_HTML += "<td><span data-read-delete='" + JSON_DATA[i].CharId + "' class='readDelete_del readDelete'  onclick='propertyPage.readDelete()'>删除</span></td>";
-                    }
-                    TEMP_HTML += "</tr>";
-                }
-                $("#WaterRecords tr:first").nextAll().remove();
-                $("#WaterRecords").append(TEMP_HTML);
-            }
-            else {
-                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-//电抄表记录分页初始化
-PropertyPage.prototype.ajaxRequestElecPageInit = function (params) {
-    var _this = this;
-    $.ajax({
-        type: "GET",
-        url: host + "/building/readrecords",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            if (data['succ']) {
-                //清空分页控件
-                $(".fy-wrap-elec").html("");
-                //绑定分页控件
-                var pageinit = new fyfoo2(pageSize_Reocrd, data.exted.totalNum, function (num) {
-                    _this.elecRecords(num);
-                }, $(".fy-wrap-elec"));
-            }
-            else {
-                messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-// 电抄表记录列表
-PropertyPage.prototype.ajaxRequestElecRecords = function (params) {
-    $.ajax({
-        type: "GET",
-        url: host + "/building/readrecords",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            if (data['succ']) {
-                var JSON_DATA = data['data'];
-                var TEMP_HTML = "";
-                for (var i = 0; i < JSON_DATA.length; i++) {
-                    TEMP_HTML += "<tr>";
-                    TEMP_HTML += "<td>" + JSON_DATA[i].RecordDate + "</td>";
-                    TEMP_HTML += "<td>" + JSON_DATA[i].Mark + "</td>";
-                    TEMP_HTML += "<td><span data-read-delete='" + JSON_DATA[i].CharId + "' class='readDelete_del readDelete'  onclick='propertyPage.readDelete()'>删除</span></td>";
-                    TEMP_HTML += "</tr>";
-                }
-                $("#ElecRecords tr:first").nextAll().remove();
-                $("#ElecRecords").append(TEMP_HTML);
-            }
-            else {
-                messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-// 抄表记录新增基础信息获取
-PropertyPage.prototype.ajaxRequestReadAddItem = function (params) {
-    $.ajax({
-        type: "GET",
-        url: host + "/building/readrecord/add",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            if (data['succ']) {
-                var TEMP_HTML = "";
-
-                var JSON_DATA = data['data'];
-                for (var i = 0; i < JSON_DATA.length; i++) {
-                    var style = i == 0 ? "cur" : "";
-                    TEMP_HTML += "<li class=\"" + style + "\" data-value=\"" + JSON_DATA[i].Key + "\">" + JSON_DATA[i].Value + "<li>";
-                }
-                $("#ReadItem ul").html(TEMP_HTML);
-                $("#ReadItem span").text($("#ReadItem li[class='cur']").text());
-                DropdownInit();
-            }
-            else {
-                messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-//抄表新增[保存]
-PropertyPage.prototype.ajaxRequestReadAdd = function (params) {
-    var _this = this;
-    $.ajax({
-        type: "POST",
-        url: host + "/building/readrecord/add",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            _this.readInit();
-            messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            baocun();
-            // 初始化
-            $("#RecordDate").val("");
-            $("#Mark").val("");
-            $("#RecordDescription").val("");
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-// 抄表删除
-PropertyPage.prototype.ajaxRequestReadDelete = function (params) {
-    var _this = this;
-    $.ajax({
-        type: "POST",
-        url: host + "/building/readrecord/delete",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            _this.readInit();
-            messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-//绑定员工下拉列表
-PropertyPage.prototype.ajaxRequestEmployeeBind = function (params) {
-    $.ajax({
-        type: "GET",
-        url: host + "/employee/employees",
-        data: params,
-        dataType: "JSON",
-        success: function (data) {
-            if (data['succ']) {
-                var JSON_DATA = data['data'];
-                var TEMP_HTML = "";
-                TEMP_HTML += "<li value=\"\" class=\"cur\">不选</li>";
-                for (var i = 0; i < JSON_DATA.length; i++) {
-                    TEMP_HTML += "<li data-value=\"" + JSON_DATA[i].CharId + "\" >" + JSON_DATA[i].Name + "</li>";
-                }
-                $("#Emps_Add > ul").html(TEMP_HTML);
-                $("#Emps_Add > span").text($("#Emps_Add>ul>li[class='cur']").text());
-                DropdownInit();
-            }
-            else {
-                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
-            }
-        },
-        error: function (XMLHttpRequest, txtStatus, errorThrown) {
-            messageBox.show("错误", txtStatus, MessageBoxButtons.OK, MessageBoxIcons.error);
-        }
-    });
-}
-
-var propertyPage = new PropertyPage();
+var pt = new PropertyPage();

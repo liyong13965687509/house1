@@ -90,11 +90,11 @@
                                 <div class="drop-container hide" tabIndex="1">
                                     <div class="drop-content">
                                         <div class="drop-header">
-                                            <span class="drop-result">反馈类型</span>
+                                            <span class="drop-result">物业</span>
                                             <i class="drop-icon icon-drop-down"></i>
                                         </div>
                                         <div class="drop-body">
-                                            <ul id="EquBind"></ul>
+                                            <ul id="Buildings"></ul>
                                         </div>
                                         <div class="drop-footer"></div>
                                     </div>
@@ -108,7 +108,7 @@
                                             <i class="drop-icon icon-drop-down"></i>
                                         </div>
                                         <div class="drop-body">
-                                            <ul id="EquBuilding" data-target="EquNumber"></ul>
+                                            <ul id="States" data-target="EquNumber"></ul>
                                         </div>
                                         <div class="drop-footer"></div>
                                     </div>
@@ -116,14 +116,14 @@
                             </div>
                             <div class="form-group">
                                 <input class="form-input group-date1" readonly
-                                       placeholder="预约日期"/>
+                                       placeholder="预约日期" id="applyDate"/>
                             </div>
                             <div class="form-group">
                                 <input class="form-input"
-                                       placeholder="房号、编号、手机"/>
+                                       placeholder="房号、编号、手机" id="key"/>
                             </div>
                             <div class="form-group">
-                                <button class="btn confirm" onclick="mg.exeBindDevices();">查询</button>
+                                <button class="btn confirm" onclick="sp.applyList();">查询</button>
                             </div>
                         </div>
                         <div class="header-item hide">
@@ -131,7 +131,7 @@
                                 <div class="drop-container hide" tabIndex="1">
                                     <div class="drop-content">
                                         <div class="drop-header">
-                                            <span class="drop-result">花桥天琚人才公寓</span>
+                                            <span class="drop-result">物业</span>
                                             <i class="drop-icon icon-drop-down"></i>
                                         </div>
                                         <div class="drop-body">
@@ -207,54 +207,59 @@
             </div>
             <div class="panel-body">
                 <div class="panel-group">
-                    <div class="group-row row">
+                    <div class="form-group row">
                         <div class="col-xs-4 col-sm-3">报修房源</div>
-                        <div class="col-xs-8 col-sm-9">花桥天琚人才公寓</div>
+                        <div class="col-xs-8 col-sm-9" id="RoomName">花桥天琚人才公寓</div>
                     </div>
-                    <div class="group-row row">
+                    <div class="form-group row">
                         <div class="col-xs-4 col-sm-3">租客姓名</div>
-                        <div class="col-xs-8 col-sm-9">柳岩</div>
+                        <div class="col-xs-8 col-sm-9" id="CustomerName">柳岩</div>
                     </div>
-                    <div class="group-row row">
+                    <div class="form-group row">
                         <div class="col-xs-4 col-sm-3">手机号码</div>
-                        <div class="col-xs-8 col-sm-9">18256567589</div>
+                        <div class="col-xs-8 col-sm-9" id="Phone">18256567589</div>
                     </div>
-                    <div class="group-row row">
+                    <div class="form-group row">
                         <div class="col-xs-4 col-sm-3">报修物品</div>
-                        <div class="col-xs-8 col-sm-9">空调</div>
+                        <div class="col-xs-8 col-sm-9" id="ServiceItem">空调</div>
                     </div>
-                    <div class="group-row row">
+                    <div class="form-group row">
                         <div class="col-xs-4 col-sm-3">故障原因</div>
-                        <div class="col-xs-8 col-sm-9">漏水</div>
+                        <div class="col-xs-8 col-sm-9" id="Description">漏水</div>
                     </div>
-                    <div class="group-row row">
+                    <div class="form-group row">
                         <div class="col-xs-4 col-sm-3">预约时间</div>
                         <div class="col-xs-8 col-sm-9">2017.9.28 10:00~11:00</div>
                     </div>
-                    <div class="group-row row">
+                    <div class="form-group row">
                         <div class="col-xs-4 col-sm-3">报修时间</div>
-                        <div class="col-xs-8 col-sm-9">2017.9.28 10:00~11:00</div>
+                        <div class="col-xs-8 col-sm-9" id="ServieTime">2017.9.28 10:00~11:00</div>
                     </div>
-                    <div class="group-row row">
+                    <div class="form-group row">
                         <div class="col-xs-4 col-sm-3">报修编号</div>
                         <div class="col-xs-8 col-sm-9">1223344</div>
                     </div>
-                    <div class="group-row row row-image">
+                    <div class="form-group row row-image">
                         <div class="col-xs-4 col-sm-3">相关照片</div>
+                        <!--<div class="col-xs-8 col-sm-9" id="Imgs">-->
                         <div class="col-xs-8 col-sm-9">
+                            <!--<ul id="img-list">-->
+                            <!--<li><img src="" alt=""></li>-->
+                            <!--</ul>-->
                             <a href="#" class="about-img">
                                 <img src="images/min-device.png" alt="">
+                                <!--<img src="https://api.2ma2.com:4300/Files/ServiceApply/012fbd5d-50c7-47b2-8445-3f02da74e351.jpg" alt="">-->
                             </a>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-label" for="Add_Name">维修处理进度回复</div>
-                        <textarea class="form-input form-text" placeholder="请输入回复内容"></textarea>
+                        <textarea class="form-input form-text" placeholder="请输入回复内容" id="Reply"></textarea>
                     </div>
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-xs-6">回复时间:2017-10-9</div>
-                            <div class="col-xs-6">回复人:李勇</div>
+                            <div class="col-xs-5">回复人: <span id="ReplyEmployeeName"></span></div>
+                            <div class="col-xs-7">回复时间: <span id="ReplyTime"></span></div>
                         </div>
                     </div>
                 </div>
@@ -263,7 +268,7 @@
                 <div class="pull-left"></div>
                 <div class="pull-right">
                     <button class="btn cancel">取消</button>
-                    <button class="btn confirm" onclick="mg.exeAddDevices();">保存</button>
+                    <button class="btn confirm" onclick="sp.applyReply();">保存</button>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -336,18 +341,18 @@
                     <label class="form-label">通知对象</label>
                     <div class="form-radio row">
                         <div class="col-xs-12">
-                            <input type="radio" checked="checked" name="notice"/>
-                            <span>所有人</span>
+                            <input type="radio" checked="checked" name="notice" id="all-person"/>
+                            <label for="all-person">所有人</label>
                         </div>
                         <div class="col-xs-12">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <input type="radio" name="notice"/>
-                                    <span>部分</span>
+                                    <input type="radio" name="notice" id="part"/>
+                                    <label for="part">部分</label>
                                 </div>
                                 <div class="col-xs-9">
-                                    <input type="radio" name="choose"/>
-                                    <span>选择</span>
+                                    <input type="radio" name="choose" id="choose"/>
+                                    <label for="choose">选择</label>
                                 </div>
                             </div>
                         </div>
@@ -370,8 +375,8 @@
             </div>
         </div>
 
-        <div class="panel-window hide">
-            <div class="panel-mask"></div>
+        <div class="panel-window">
+            <div class="panel-mask  hide"></div>
             <div class="panel-content">
                 <div class="panel-head">
                     <div class="pull-left">
@@ -399,8 +404,9 @@
                                         <div class="row-header col-xs-6 col-md-12">
                                             <div class="row-title row">
                                                 <div class="column col-xs-12 col-md-4">
-                                                    <div class="radio selected-people check-all"></div>
-                                                    <span class="all-selected">全选</span>
+
+                                                    <input type="radio" class="radio check-all" id="check-all"/>
+                                                    <label for="check-all" class="all-sel">全选</label>
                                                 </div>
                                                 <div class="column col-xs-12 col-md-4">姓名</div>
                                                 <div class="column col-xs-12 col-md-4">手机号</div>
@@ -409,7 +415,7 @@
                                         <div class="row-body col-xs-6 col-md-12">
                                             <div class="row-item row">
                                                 <div class="column col-xs-12 col-md-4">
-                                                    <div class="radio selected-people"></div>
+                                                    <input name="radio" type="checkbox" class="radio selected-people"/>
                                                 </div>
                                                 <div class="column col-xs-12 col-md-4">赵奕欢</div>
                                                 <div class="column col-xs-12 col-md-4">14785296325</div>
@@ -420,7 +426,7 @@
                                 <div class="table-item col-xs-12 col-sm-6 col-md-12">
                                     <div class="row-content row">
                                         <div class="column col-xs-12 col-md-4">
-                                            <div class="selected-people"></div>
+                                            <input name="radio" type="checkbox" class="radio selected-people"/>
                                         </div>
                                         <div class="column col-xs-12 col-md-4">赵奕欢</div>
                                         <div class="column col-xs-12 col-md-4">89653274125</div>
@@ -589,8 +595,8 @@
     </div>
 
 </div>
-<div class="panel-max panel-img hide">
-    <div class="panel-bg-img"></div>
+<div class="panel-max panel-img">
+    <div class="panel-bg-img  hide"></div>
     <div class="panel-content">
         <img src="images/max-device.png" alt="">
     </div>

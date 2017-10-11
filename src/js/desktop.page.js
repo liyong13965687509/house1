@@ -14,13 +14,13 @@ function DesktopPage() {
     this.PAGE_INIT = arguments['PAGE_INIT'] ? arguments['PAGE_INIT'] : "PAGE_INIT";
     this.DELETE_NOTE = arguments['DELETE_NOTE'] ? arguments['DELETE_NOTE'] : "DELETE_NOTE";
     this.UPDATE_NOTE = arguments['UPDATE_NOTE'] ? arguments['UPDATE_NOTE'] : "UPDATE_NOTE";
-    this.API_CONFIG = arguments['API_CONFIG'] ? arguments['API_CONFIG'] : {
-        UPDATE_NOTE: '/note/state',
-        LOAD_NOTE: "/note/notes",
-        ADD_NOTE: "/note/add",
-        ADD_TAG: "/note/dates",
-        DEL_NOTE: "/note/delete"
-    }
+this.API_CONFIG=arguments['API_CONFIG']?arguments['API_CONFIG']:{
+    UPDATE_NOTE: '/note/state',
+    LOAD_NOTE:  "/note/notes",
+    ADD_NOTE: "/note/add",
+    ADD_TAG:"/note/dates",
+    DEL_NOTE: "/note/delete"
+}
     this.init(this.getParams(this.PAGE_INIT));
 }
 /**
@@ -36,7 +36,7 @@ DesktopPage.prototype.init = function (params) {
     this.ajaxRequestAddTag(this.getParams(this.ADD_TAG)).openEditModal();
     this.tabSelect(params).dateComponentItem(params).backToToday(params);
     this.dateComponentNext(params).dateComponentPrev(params);
-    ComponentsPickers.init();
+        ComponentsPickers.init();
     App.init();
 
     new Tools({
@@ -256,7 +256,7 @@ DesktopPage.prototype.initDate = function (params) {
     var month = date.getMonth();
     var year = date.getFullYear();
     day = parseInt(day) <= 9 ? "0" + day : day;
-    month = parseInt(month + 1) <= 9 ? "0" + (month + 1) : (month + 1);
+    month = parseInt(month + 1) <= 9 ? "0" + (month + 1) : month;
     var TEMP_HTML = '<font>' + year + '</font>.<font>'
         + month + '</font>.<font>' + day + '</font>';
     $(params['dateTime']).html(TEMP_HTML);
@@ -273,7 +273,7 @@ DesktopPage.prototype.initDate = function (params) {
 DesktopPage.prototype.ajaxRequestLoadNote = function (params) {
     $.ajax({
         type: "GET",
-        url: host + this.API_CONFIG['LOAD_NOTE'],
+        url: host +this.API_CONFIG['LOAD_NOTE'],
         data: params,
         dataType: "JSON",
         success: function (data) {
@@ -401,7 +401,7 @@ DesktopPage.prototype.ajaxRequestDisposeNote = function (params) {
     var _this = this;
     $.ajax({
         type: "POST",
-        url: host + _this.API_CONFIG['UPDATE_NOTE'],
+        url: host +_this.API_CONFIG['UPDATE_NOTE'],
         data: params,
         dataType: "JSON",
         success: function (data) {
