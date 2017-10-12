@@ -840,7 +840,7 @@ WebApp.prototype.propertyGrantControl = function () {
     // 物业查看
     this.grantControl($("#Buildings"), "building_select");
     // 物业新增
-    this.grantControl($(".building_add"), "building_add");
+    this.grantControl($(".fq-nav2-bottom"), "building_add");
     // 物业删除
     this.grantControl($(".building_delete"), "building_delete");
     // 楼层删除
@@ -1355,7 +1355,6 @@ Pagination.prototype.codeButtonPress = function () {
     });
     return this;
 }
-
 /**
  * BEGIN 点击分页插件上一页功能
  * Author:PengLunJian
@@ -1366,7 +1365,6 @@ Pagination.prototype.prevButtonPress = function () {
     var _this = this;
     $(this.PAGINATION_PREV).on("click", function () {
         _this.PAGE_CODE--;
-        _this.MIN_PAGE = _this.PAGE_CODE;
         _this.PAGE_CODE = _this.PAGE_CODE <= 1 ? 1 : _this.PAGE_CODE;
         var FIRST_TEXT = parseInt($(_this.PAGINATION_CODE).eq(0).text().trim());
         if (FIRST_TEXT != 1) {
@@ -1375,7 +1373,7 @@ Pagination.prototype.prevButtonPress = function () {
             });
         }
         _this.bindStatus(this);
-        if ("function" == typeof _this.CHANGE_PAGE && _this.MIN_PAGE != 0) _this.CHANGE_PAGE(_this.PAGE_CODE);
+        if ("function" == typeof _this.CHANGE_PAGE) _this.CHANGE_PAGE(_this.PAGE_CODE);
     });
     return this;
 }
@@ -1389,7 +1387,6 @@ Pagination.prototype.nextButtonPress = function () {
     var _this = this;
     $(this.PAGINATION_NEXT).on("click", function () {
         _this.PAGE_CODE++;
-        _this.MAX_PAGE = _this.PAGE_CODE;
         _this.PAGE_CODE = _this.PAGE_CODE >= _this.TOTAL_PAGES ? _this.TOTAL_PAGES : _this.PAGE_CODE;
         var FIRST_TEXT = parseInt($(_this.PAGINATION_CODE).eq(0).text().trim());
         var PARAMS_VALUE = _this.TOTAL_PAGES - $(_this.PAGINATION_CODE).length + 1;
@@ -1399,11 +1396,10 @@ Pagination.prototype.nextButtonPress = function () {
             });
         }
         _this.bindStatus(this);
-        if ("function" == typeof _this.CHANGE_PAGE && _this.MAX_PAGE <= _this.TOTAL_PAGES) _this.CHANGE_PAGE(_this.PAGE_CODE);
+        if ("function" == typeof _this.CHANGE_PAGE) _this.CHANGE_PAGE(_this.PAGE_CODE);
     });
     return this;
 }
-
 /**
  * BEGIN 绑定当前页码状态
  * Author:PengLunJian
@@ -1797,11 +1793,3 @@ $('.fq-xiala').on('click', 'b', function (event) {
         event.stopPropagation();
     }
 })
-
-// #################################
-
-
-
-
-
-

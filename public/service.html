@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="css/font.css?v=1128d866e1"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css?v=1e9bc98d71"/>
     <link rel="stylesheet" type="text/css" href="css/common.css?v=66b4d8a365"/>
-    <link rel="stylesheet" type="text/css" href="css/service.page.css?v=1d3928fbbb"/>
+    <link rel="stylesheet" type="text/css" href="css/service.page.css?v=43660095c1"/>
     <link rel="stylesheet" type="text/css" href="css/datepicker.css?v=1cbd87910b"/>
     <link rel="stylesheet" type="text/css" href="css/datetimepicker.css?v=797a04f9f5"/>
 </head>
@@ -357,7 +357,7 @@
                             </div>
                         </div>
                     </div>
-                    <textarea class="form-input form-text" placeholder="请输入通知人"></textarea>
+                    <textarea class="form-input form-text" placeholder="请选择通知人" readonly id="information"></textarea>
 
                 </div>
                 <div class="form-group">
@@ -374,7 +374,6 @@
                 <div class="clearfix"></div>
             </div>
         </div>
-
         <div class="panel-window">
             <div class="panel-mask  hide"></div>
             <div class="panel-content">
@@ -389,7 +388,7 @@
                 <div class="panel-body">
                     <div class="form-group">
                         <div class="pull-left">
-                            <button class="btn confirm">确认选择</button>
+                            <button class="btn confirm" onclick="sp.confirmSelect();" id="confirm-select">确认选择</button>
                         </div>
                         <div class="pull-right">
                             <input class="form-input" placeholder="姓名、手机号码">
@@ -417,19 +416,19 @@
                                                 <div class="column col-xs-12 col-md-4">
                                                     <input name="radio" type="checkbox" class="radio selected-people"/>
                                                 </div>
-                                                <div class="column col-xs-12 col-md-4">赵奕欢</div>
-                                                <div class="column col-xs-12 col-md-4">14785296325</div>
+                                                <div class="column col-xs-12 col-md-4 column-name">赵奕欢</div>
+                                                <div class="column col-xs-12 col-md-4 column-phone">14785296325</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="table-item col-xs-12 col-sm-6 col-md-12">
-                                    <div class="row-content row">
+                                    <div class="row-content row-item row">
                                         <div class="column col-xs-12 col-md-4">
                                             <input name="radio" type="checkbox" class="radio selected-people"/>
                                         </div>
-                                        <div class="column col-xs-12 col-md-4">赵奕欢</div>
-                                        <div class="column col-xs-12 col-md-4">89653274125</div>
+                                        <div class="column col-xs-12 col-md-4 column-name">赵欢欢</div>
+                                        <div class="column col-xs-12 col-md-4 column-phone">89653274125</div>
                                     </div>
                                 </div>
                             </div>
@@ -598,7 +597,13 @@
 <div class="panel-max panel-img">
     <div class="panel-bg-img  hide"></div>
     <div class="panel-content">
-        <img src="images/max-device.png?v=6ef12af484" alt="">
+        <div class="panel-modal">
+            <div class="panel-head"></div>
+            <div class="panel-body">
+                <img src="images/max-device.png?v=6ef12af484" alt="">
+            </div>
+            <div class="panel-footer"></div>
+        </div>
     </div>
 </div>
 
@@ -610,8 +615,8 @@
 <script type="text/javascript" src="js/app.js?v=4e03e56a5f"></script>
 <script type="text/javascript" src="js/components-pickers.js?v=00b12ed6a0"></script>
 <script type="text/javascript" src="js/host.js?v=2112a01532"></script>
-<script type="text/javascript" src="js/tools.js?v=a012f832ea"></script>
-<script type="text/javascript" src="js/service.page.js?v=f19cdefa42"></script>
+<script type="text/javascript" src="js/tools.js?v=fee5ffee82"></script>
+<script type="text/javascript" src="js/service.page.js?v=0841b19a63"></script>
 </body>
 </html>
 

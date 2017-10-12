@@ -19,6 +19,8 @@ function Service() {
     this.CHOOSED = arguments['CHOOSED'] ? arguments['CHOOSED'] : '.choosed';
     this.CHECK_ALL = arguments['CHECK_ALL'] ? arguments['CHECK_ALL'] : '.check-all';
     this.SEL_PEOPLE = arguments['SEL_PEOPLE'] ? arguments['SEL_PEOPLE'] : '.selected-people';
+    this.SELECTED = arguments['SELECTED'] ? arguments['SELECTED'] : '.selected-people.selected';
+    this.PANEL_MASK = arguments['PANEL_MASK'] ? arguments['PANEL_MASK'] : '.panel-mask';
     this.INDEX = arguments['INDEX'] ? arguments['INDEX'] : 'INDEX';
 
     this.API_CONFIG = arguments['API_CONFIG'] ? arguments['API_CONFIG'] : {
@@ -201,7 +203,6 @@ Service.prototype.ajaxRequestApplyList = function (params) {
         success: function (data) {
             if (data['succ']) {
                 var JSON_DATA = data['data'], TEMP_HTML;
-                console.log(data);
                 _this.PAGINATION = new Pagination({
                     PAGINATION: '#Main',
                     PAGE_SIZE: _this.PAGE_SIZE,
@@ -303,17 +304,13 @@ Service.prototype.ajaxRequestApplyDetail = function (params) {
         success: function (data) {
             if (data['succ']) {
                 var JSON_DATA = data['data'],TEMP_HTML='';
-                console.log(JSON_DATA);
                 for (KEY in JSON_DATA) {
                     $('#' + KEY).html(JSON_DATA[KEY]);
                     $('#' + KEY).val(JSON_DATA[KEY]);
                 }
                 var IMGS=JSON_DATA['Imgs'];
-                console.log(IMGS);
                 for(var i=0;i<IMGS.length;i++){
-                    console.log(IMGS[i]);
                     TEMP_HTML+='<li><img src="'+IMGS[i]+'" alt=""></li>';
-                    console.log(TEMP_HTML);
                 }
                 $('#img-list').html(TEMP_HTML);
 
@@ -594,7 +591,6 @@ Service.prototype.devicesApplyTemplate = function (params) {
 
 
     return TEMP_HTML;
-    console.log(TEMP_HTML);
 }
 
 /**
@@ -650,14 +646,14 @@ Service.prototype.informWarmTemplate = function (params) {
         TEMP_HTML += '<div class="table-item col-xs-12 col-sm-6 col-md-12"><div class="row-content row">'
             + '<div class="row-header col-xs-6 col-md-12"><div class="row-title' + TEMP_CLASS + ' row">'
             + '<div class="column col-xs-12 col-md-2">类型</div><div class="column col-xs-12 col-md-2">内容</div>'
-            + '<div class="column col-xs-12 col-md-2">对象</div><div class="column col-xs-12 col-md-2">时间</div>'
-            + '<div class="column col-xs-12 col-md-2">创建人</div><div class="column col-xs-12 col-md-2">操作</div>'
+            + '<div class="column col-xs-12 col-md-2">对象</div><div class="column col-xs-12 col-md-3">时间</div>'
+            + '<div class="column col-xs-12 col-md-2">创建人</div><div class="column col-xs-12 col-md-1">操作</div>'
             + '</div></div><div class="row-body col-xs-6 col-md-12"><div class="row-item row">'
             + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['Type'] + '</div>'
             + '<div class="column col-xs-12 col-md-2 column-fault">' + TEMP_FAULT + '</div>'
             + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['Object'] + '</div>'
-            + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['Time'] + '</div>'
-            + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['Name'] + '</div><div class="column col-xs-12 col-md-2">'
+            + '<div class="column col-xs-12 col-md-3">' + JSON_DATA['Time'] + '</div>'
+            + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['Name'] + '</div><div class="column col-xs-12 col-md-1">'
             + '<a data-uuid="' + JSON_DATA['UUID'] + '" data-value="' + JSON_DATA['CharId'] + '" href="javascript:void(0)" class="btn-delete">删除</a>'
             + '</div></div></div></div></div>';
     }
@@ -722,6 +718,28 @@ Service.prototype.informAdd = function () {
 /**
  * Author:LIYONG
  * Date:2017-10-11
+ *  选择通知对象
+ * @returns {Service}
+ */
+Service.prototype.selectObj = function () {
+    var _this=this;
+    $(document).on('click', '.form-radio input[checked="checked"]', function () {
+        $('.form-radio input[name="choose"]').removeClass('choosed');
+    })
+    $(document).on('click', '.form-radio input[name="notice"]', function () {
+        $(this).parents('.col-xs-3').next().find('input[name="choose"]').addClass('choosed');
+    })
+    $(document).on('click', this.CHOOSED, function () {
+        $('.panel-window .panel-content').css('margin-left','-220px');
+        $('.panel-window .panel-content').css('opacity','1');
+        $(_this.PANEL_MASK).removeClass('hide');
+    })
+
+    return this;
+}
+/**
+ * Author:LIYONG
+ * Date:2017-10-11
  *  选择被通知人
  * @returns {Service}
  */
@@ -735,53 +753,36 @@ Service.prototype.informPeople=function(){
 
     $(document).on('click',this.SEL_PEOPLE,function () {
         $(this).toggleClass('selected');
-       if( $('.selected').length-1!= $(_this.SEL_PEOPLE).length) $(_this.CHECK_ALL).removeClass('selected');
 
+       if( $('.selected').length-1!= $(_this.SEL_PEOPLE).length) $(_this.CHECK_ALL).removeClass('selected');
        if( $('.selected').length== $(_this.SEL_PEOPLE).length) $(_this.CHECK_ALL).addClass('selected');
     })
+
+    $(document).on('click', '.panel-mask,.pull-cancel,#confirm-select', function () {
+        $('.panel-window .panel-content').css('margin-left','-760px');
+        $('.panel-window .panel-content').css('opacity','0');
+        $(_this.PANEL_MASK).addClass('hide');
+    })
+
     return this;
 }
 
-/**
- * Author:LIYONG
- * Date:2017-9-29
- *  选择通知对象
- * @returns {Service}
- */
-Service.prototype.selectObj = function () {
-    $(document).on('click', '.form-radio input[checked="checked"]', function () {
-        $('.form-radio input[name="choose"]').removeClass('choosed');
-    })
-    $(document).on('click', '.form-radio input[name="notice"]', function () {
-        $(this).parents('.col-xs-3').next().find('input[name="choose"]').addClass('choosed');
-    })
-    $(document).on('click', this.CHOOSED, function () {
-        $('.panel-window .panel-content').css('margin-top','190px');
-        $('.panel-window .panel-content').css('opacity','1');
-        $('.panel-mask').removeClass('hide');
-    })
-    $(document).on('click', '.panel-mask', function () {
-        $('.panel-window .panel-content').css('margin-top','-200px');
-        $('.panel-window .panel-content').css('opacity','0');
-        $('.panel-mask').addClass('hide');
-    })
-    $(document).on('click', '.pull-cancel', function () {
-        $('.panel-window .panel-content').css('margin-top','-200px');
-        $('.panel-window .panel-content').css('opacity','0');
-        $('.panel-mask').addClass('hide');
-    })
-    return this;
-}
+
 /*
  * Author:LIYONG
- * Date:2017-10-9
- *  选择通知对象
+ * Date:2017-10-12
+ *  确认选择
  * @returns {Service}
  */
-Service.prototype.checkObj = function () {
-    $(document).on('click', this.SEL_PEOPLE, function () {
-        // $(this).addClass('')
-    })
+Service.prototype.confirmSelect = function () {
+    var TEMP_HTML='';
+    var LENGTH=$(this.SELECTED).length;
+    for(var i=0;i<LENGTH;i++){
+       var name= $(this.SELECTED).eq(i).parents('.row-item').find('.column-name').html();
+        var phone=$(this.SELECTED).eq(i).parents('.row-item').find('.column-phone').html();
+        TEMP_HTML+=(i<LENGTH-1)?name+  '<'+ phone+ '>'+'、':name+  '<'+ phone+ '>';
+    }
+    $('#information').val(TEMP_HTML);
     return this;
 }
 

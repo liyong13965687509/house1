@@ -34,10 +34,12 @@
   "report.page.js": "report.page.js?v=9e44ecb405",
   "resetpwd.page.js": "resetpwd.page.js?v=36802c79e1",
   "self.page.js": "self.page.js?v=89044c5f15",
-  "service.page.js": "service.page.js?v=f19cdefa42",
+  "service.page.js": "service.page.js?v=0841b19a63",
   "service1.page.js": "service1.page.js?v=6c18fae8f7",
   "system.page.js": "system.page.js?v=e34fa60bdb",
-  "tools.js": "tools.js?v=a012f832ea",
+  "tools.js": "tools.js?v=fee5ffee82",
   "tools11.js": "tools11.js?v=4937fd20c9",
-  "tools12.js": "tools12.js?v=4cf48e50f5"
+  "tools12.js": "tools12.js?v=4cf48e50f5",
+  "tools6.js": "tools6.js?v=60e14cd395",
+  "tools77.js": "tools77.js?v=0f712bc02f"
 }
