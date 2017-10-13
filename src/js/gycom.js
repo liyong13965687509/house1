@@ -67,7 +67,7 @@ Grant.prototype.grantCheck = function () {
 if (objData) {
     new Grant({
         result: false,
-        config: "desktop.html,property.html," +
+        config: "desktop.html,property1.html," +
         "customer.html,contract.html,bill.html," +
         "count.html,power.html,employee.html," +
         "setup.html,dailyrecord.html"

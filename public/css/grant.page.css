@@ -147,7 +147,7 @@
   -webkit-overflow-scrolling: touch;
 }
 .grant > .pull-right .right-content {
-  padding: 30px;
+  padding: 15px;
   min-height: 100%;
   background-color: #ffffff;
   position: relative;
@@ -168,7 +168,7 @@
   font-size: 0px;
   text-align: right;
   position: relative;
-  padding: 15px 0px 30px;
+  padding: 15px;
 }
 .grant > .pull-right .right-header .post-edit .form-label {
   position: absolute;

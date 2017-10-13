@@ -14,6 +14,7 @@ function Management() {
     this.BTN_DETAIL = arguments['BTN_DETAIL'] ? arguments['BTN_DETAIL'] : '.btn-detail';
     this.BTN_UPDATE = arguments['BTN_UPDATE'] ? arguments['BTN_UPDATE'] : '.btn-update';
     this.BTN_CHARGE = arguments['BTN_CHARGE'] ? arguments['BTN_CHARGE'] : '.btn-charge';
+    this.TAB_COMPONENT = arguments['TAB_COMPONENT'] ? arguments['TAB_COMPONENT'] : null;
     this.PASSWORD_ID = arguments['PASSWORD_ID'] ? arguments['PASSWORD_ID'] : 'PASSWORD_ID';
     this.POWER_STATUS = arguments['POWER_STATUS'] ? arguments['POWER_STATUS'] : '#PowerStatus';
 
@@ -149,7 +150,7 @@ Management.prototype.tabChange = function () {
      *
      * @type {TabComponent}
      */
-    var tabComponent = new TabComponent({
+    this.TAB_COMPONENT = new TabComponent({
         changeEnd: function (obj) {
             var NAV_INDEX = parseInt($('.tab-bar .active').index());
             var TEMP_SELECTOR = '.panel-lg .panel-modal:eq(' + NAV_INDEX + ') .tab.active';
@@ -345,8 +346,8 @@ Management.prototype.addPasswordNotEmpty = function () {
     var BEGIN_TIME = webApp.parseTime($('#Pwd_Begin').val().trim()) * 1000;
     if (!$('#Pwd_Name').val().trim()) {
         message = '请输入密码名称！';
-    } else if (!$('#Pwd_Pwd').val().trim()) {
-        message = '请输入密码明文！';
+    } else if ($('#Pwd_Pwd').val().trim().length != 6) {
+        message = '请输入6位数字密码！';
     } else if (!$('#Pwd_Begin').val().trim()) {
         message = '请输入密码开始时间！';
     } else if (!$('#Pwd_End').val().trim()) {
@@ -428,6 +429,9 @@ Management.prototype.btnDetailClick = function () {
             index: TEMP_INDEX,
             element: '.panel-lg',
             complete: function () {
+                $('.group-value').each(function () {
+                    $(this).text('');
+                });
                 _this.switchShowDetail({
                     that: that,
                     index: TEMP_INDEX
@@ -1198,7 +1202,6 @@ Management.prototype.ajaxRequestPowerOperRecord = function (params) {
         dataType: "JSON",
         data: params,
         success: function (data) {
-            // webApp.loading($(webApp.BLOCK_BODY));
             if (data['succ']) {
                 var JSON_DATA = data['data']['op_list'];
                 _this.appendPowerOperRecordTemplate(JSON_DATA);
@@ -1302,8 +1305,7 @@ Management.prototype.appendChangePageLockPasswordTemplate = function (params) {
         var TEMP_ISMANAGE = 1 == JSON_DATA['IsManage'] ? '管理密码' : '租客';
         var TEMP_END = webApp.parseDate(JSON_DATA['PasswordEndTime'] * 1000);
         var TEMP_BEGIN = webApp.parseDate(JSON_DATA['PasswordBeginTime'] * 1000);
-        var TEMP_TIME = 1 == JSON_DATA['IsManage'] ? '永久有效'
-            : ((0==JSON_DATA['PasswordBeginTime']||0==JSON_DATA['PasswordEndTime'])? '永久有效':TEMP_BEGIN + '至' + TEMP_END);
+        var TEMP_TIME = 1 == JSON_DATA['IsManage'] ? '永久有效' : TEMP_BEGIN + '至' + TEMP_END;
         TEMP_NAME = i > 0 ? ' visible-xs visible-sm' : '';
         TEMP_HTML += '<div class="table-item col-xs-12 col-sm-6 col-md-12">'
             + '<div class="row-content row"><div class="row-header col-xs-6 col-md-12">'
@@ -1560,7 +1562,7 @@ Management.prototype.ajaxRequestAddPassword = function (params) {
                 mp.hideSmPanel();
                 _this.exeLockPassword();
                 $('.panel-sm .show input').val('');
-                messageBox.show("提示", '密码新增成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
+                messageBox.show("提示", '操作成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }

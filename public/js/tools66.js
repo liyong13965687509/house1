@@ -839,25 +839,23 @@ WebApp.prototype.propertyGrantControl = function () {
     // 物业查看
     this.grantControl($("#Buildings"), "building_select");
     // 物业新增
-    this.grantControl($(".building_add"), "building_add");
+    this.grantControl($(".fq-nav2-bottom"), "building_add");
     // 物业删除
     this.grantControl($(".building_delete"), "building_delete");
-    // 物业
-    this.grantControl($(".building_update"), "building_update");
     // 楼层删除
-    this.grantControl($(".floor_delete"), "floor_delete");
+    this.grantControl($(".sp11"), "floor_delete");
     // 房间编辑
-    this.grantControl($(".room_update"), "room_update");
+    this.grantControl($(".but-roomEdit"), "room_update");
     // 房间删除
-    this.grantControl($(".room_delete"), "room_delete");
+    this.grantControl($(".btn-roomdel"), "room_delete");
     //维修记录查看
-    this.grantControl($(".servicerecord_select"), "servicerecord_select");
+    this.grantControl($(".serviceInit"), "servicerecord_select");
     //维修记录新增
-    this.grantControl($(".servicerecord_add"), "servicerecord_add");
+    this.grantControl($(".btn-repairadd"), "servicerecord_add");
     //抄表记录查看
-    this.grantControl($(".readrecord_select"), "readrecord_select");
+    this.grantControl($(".readInit"), "readrecord_select");
     //抄表记录新增
-    this.grantControl($(".readrecord_add"), "readrecord_add");
+    this.grantControl($(".btn-checktableadd"), "readrecord_add");
     // 部门新增
     this.grantControl($(".department_add"), "department_add");
     // 部门编辑
@@ -1657,3 +1655,144 @@ RegularExpress.prototype.labelRegExpCheck = function (params) {
  * @type {RegularExpress}
  */
 var regular = new RegularExpress();
+//
+// function DropdownInit() {
+//     var xiala;
+//     xiala = new fq.xiala(null, $('.fq-xiala'));
+//     xiala.init();
+// }
+// //下拉初始
+// window.fq = {};
+// //param
+// //数据 类型
+// fq.xiala = function (data, obj) {
+//     o = this;
+//     this.type = obj.attr('type');
+//     this.clickflag = false;
+//     this.xialaclickflag = false;
+//     this.init = function () {
+//         obj.not(".secondary-menu").hover(function () {
+//             // 展开
+//             if ($(this).attr('type') == 'hov') {
+//                 obj.find('ul:eq(0)').hide();
+//                 //小三角
+//                 $(this).find('i').removeClass('icon-xiala').addClass('icon-zhankai');
+//                 //下拉框样式
+//                 $(this).addClass('xiala-cur').find('.fq-xiala-sel').css({
+//                     'border-bottom': '0px',
+//                     'border-radius': '4px 4px 0px 0px'
+//                 });
+//                 //下拉
+//                 $(this).find('ul:eq(0)').slideDown(100);
+//             }
+//             // 隐藏
+//         }, function () {
+//             obj.removeClass('xiala-cur').find('ul:eq(0)').slideUp(100, function () {
+//                 $(this).parent().find('.fq-xiala-sel').css({
+//                     'border-bottom': '1px solid #e6e6e6',
+//                     'border-radius': '4px'
+//                 });
+//             });
+//             obj.find('i').removeClass('icon-zhankai').addClass('icon-xiala');
+//             // delete o.xiala;
+//         });
+//         // li悬停和点击添加到span  .fq-xiala是  div
+//         $('.fq-xiala ul li').not(".fq-menu").hover(function () {
+//             $(this).addClass('hov');
+//         }, function () {
+//             $(this).removeClass('hov');
+//             // unbind清除选中元素
+//         }).unbind().click(function () {
+//             if ($(this).parent("ul").children(".menuChildren")[0] == undefined) {
+//                 $(this).parent("ul").find(".cur").removeClass("cur");
+//             } else {
+//                 $(this).parents("ul").find(".cur").removeClass("cur");
+//             }
+//             $(this).addClass('cur').parents('.fq-xiala').find('.fq-xiala-sel').html($(this).html());
+//             obj.removeClass('xiala-cur').find('ul:eq(0)').slideUp(100, function () {
+//                 $(this).parent().find('.fq-xiala-sel').css({
+//                     'border-bottom': '1px solid #e6e6e6',
+//                     'border-radius': '4px'
+//                 });
+//             });
+//             obj.find('i').removeClass('icon-zhankai').addClass('icon-xiala');
+//             //部门启用、关闭切换事件
+//             if ($(this).parent().parent().attr('id') == "DptEnable") {
+//                 DptBind($(this).attr("data-value"));
+//             }
+//             //省份、城市、区域三级联动新增页面
+//             if ($(this).parent().parent().attr('id') == "Province_Add") {
+//                 // CityBind($(this).attr("data-value"));
+//                 var params = propertyPage.getParams(propertyPage.CITYBIND);
+//                 propertyPage.ajaxRequestCityBind(params);
+//             }
+//
+//             if ($(this).parent().parent().attr('id') == "City_Add") {
+//                 // DistrictBind($(this).attr("data-value"));
+//                 var params = propertyPage.getParams(propertyPage.DISTRICTBIND);
+//                 propertyPage.ajaxRequestDistrictBind(params);
+//             }
+//             //省份、城市、区域三级联动编辑页面
+//             if ($(this).parent().parent().attr('id') == "Province_Edit") {
+//                 // CityUptBind($(this).attr("data-value"));
+//                 var params = propertyPage.getParams(propertyPage.CITYUPTBIND);
+//                 propertyPage.ajaxRequestUptCityBind(params);
+//             }
+//             if ($(this).parent().parent().attr('id') == "City_Edit") {
+//                 // DistrictUptBind($(this).attr("data-value"));
+//                 var params = propertyPage.getParams(propertyPage.DISTRICTUPTBIND);
+//                 propertyPage.ajaxRequestDistrictUptBind(params);
+//             }
+//         });
+//
+//
+//         // 点击二级菜单
+//         $('.fq-menu>span').click(function () {
+//             $(this).parents("ul").find('.cur').removeClass('cur');
+//             $(this).parent().addClass('cur').parents('.fq-xiala').find('.fq-xiala-sel').html($(this).html());
+//             obj.removeClass('xiala-cur').find('ul:eq(0)').slideUp(100, function () {
+//                 $(this).parents().find('.fq-xiala-sel').css({
+//                     'border-bottom': '1px solid #e6e6e6',
+//                     'border-radius': '4px'
+//                 });
+//             });
+//             obj.find('i').removeClass('icon-zhankai').addClass('icon-xiala');
+//         });
+//         //点击span 出现下拉框fq-xiala-sel
+//         obj.find('span.fq-xiala-sel').unbind().click(function () {
+//             if ($(this).parent().attr('type') == 'click') {
+//                 o.clickflag = !o.clickflag;
+//                 o.xiala = $(this).parent();
+//                 o.xiala.find('i').removeClass('icon-xiala').addClass('icon-zhankai');
+//                 o.xiala.addClass('xiala-cur').find('.fq-xiala-sel').css({
+//                     'border-bottom': '0px',
+//                     'border-radius': '4px 4px 0px 0px'
+//                 });
+//                 o.xiala.find('ul:eq(0)').slideDown(100);
+//             }
+//         });
+//         addListener(document.body, "click", function () {
+//         });
+//
+//
+//     }
+//
+// }
+// // ly二级菜单下拉
+// $(".fq-xiala").click(function () {
+//     var li = $(this).children("ul").find("li");
+//     li.each(function () {
+//         if ($(this).children("ul")[0] == undefined) {
+//             $(this).children("b").hide();
+//         }
+//     })
+// })
+// $('.fq-xiala').on('click', 'b', function (event) {
+//     if ($(this).parent('li').children("ul")[0]) {
+//         $(this).parent('li').siblings('li').children('b').removeClass('icon-shangsanjiaoxing-copy');
+//         $(this).parent('li').siblings('li').children('ul').slideUp();
+//         $(this).parent().children('ul').slideToggle();
+//         $(this).toggleClass('icon-shangsanjiaoxing-copy');
+//         event.stopPropagation();
+//     }
+// })

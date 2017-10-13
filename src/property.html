@@ -20,7 +20,7 @@
     <div class="pull-left">
         <ul class="left clearfix">
             <li class="left-title">
-                <h1 class="hidden-xs">天琚人才公寓</h1>
+                <h1 class="hidden-xs"></h1>
                 <button class="visible-xs navbar-toggle lg-nav">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -64,7 +64,7 @@
             <div class="left-footer">
                 <div class="btns row">
                     <div class="col-xs-6">
-                        <button class="btn confirm" onclick="pt.showAddBuildModal();">物业新增</button>
+                        <button class="btn confirm btn-hide building_add" onclick="pt.showAddBuildModal();">物业新增</button>
                     </div>
                 </div>
             </div>
@@ -81,9 +81,7 @@
                                 <div class="floor-body">
                                     <ul id="floors"></ul>
                                 </div>
-                                <div class="floor-footer">
-                                    <button class="btn add" onclick="pt.exeAddFloor();">+</button>
-                                </div>
+                                <div class="floor-footer"></div>
                             </div>
                         </div>
                     </div>
@@ -96,28 +94,28 @@
                                             <span class="state-item">
                                                 <i class="state-icon"></i>
                                                 <span class="state-txt">全部</span>
-                                                <i class="state-num">228</i>
+                                                <i class="state-num" id="State_AllCount">0</i>
                                             </span>
                                         </li>
                                         <li class="col-xs-3" data-value="2">
                                             <span class="state-item">
                                                 <i class="state-icon"></i>
                                                 <span class="state-txt">预定</span>
-                                                <i class="state-num">0</i>
+                                                <i class="state-num" id="State_OrderCount">0</i>
                                             </span>
                                         </li>
                                         <li class="col-xs-3" data-value="3">
                                             <span class="state-item">
                                                 <i class="state-icon"></i>
                                                 <span class="state-txt">已租</span>
-                                                <i class="state-num">0</i>
+                                                <i class="state-num" id="State_LetCount">0</i>
                                             </span>
                                         </li>
                                         <li class="col-xs-3" data-value="1">
                                             <span class="state-item">
                                                 <i class="state-icon"></i>
                                                 <span class="state-txt">空置</span>
-                                                <i class="state-num">228</i>
+                                                <i class="state-num" id="State_VacancyCount">0</i>
                                             </span>
                                         </li>
                                     </ul>
@@ -158,8 +156,8 @@
                     <div class="tab-header">
                         <ul class="tabs row">
                             <li class="tab col-xs-3 active">房间详情</li>
-                            <li class="tab col-xs-3">维修记录</li>
-                            <li class="tab col-xs-3">抄表记录</li>
+                            <li class="tab col-xs-3 btn-hide servicerecord_select">维修记录</li>
+                            <li class="tab col-xs-3 btn-hide readrecord_select">抄表记录</li>
                             <li class="tab col-xs-3">合同信息</li>
                         </ul>
                     </div>
@@ -248,8 +246,8 @@
                             <div class="block-footer">
                                 <div class="block-button">
                                     <div class="pull-left">
-                                        <button class="btn delete" onclick="pt.exeDeleteRoom();">删除</button>
-                                        <button class="btn edit" onclick="pt.showUpdateRoomModal();">编辑</button>
+                                        <button class="btn delete btn-hide room_delete" onclick="pt.exeDeleteRoom();">删除</button>
+                                        <button class="btn edit btn-hide room_update" onclick="pt.showUpdateRoomModal();">编辑</button>
                                     </div>
                                     <div class="pull-right" id="BtnFlag1"></div>
                                     <div class="clearfix"></div>
@@ -262,7 +260,7 @@
                                 <div class="table-header">
                                     <div class="pull-left"></div>
                                     <div class="pull-right">
-                                        <button class="btn confirm" onclick="pt.showAddServiceModal();">维修新增</button>
+                                        <button class="btn confirm btn-hide servicerecord_add" onclick="pt.showAddServiceModal();">维修新增</button>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -288,7 +286,7 @@
                                     <div class="table-header">
                                         <div class="pull-left"></div>
                                         <div class="pull-right">
-                                            <button class="btn confirm" onclick="pt.showAddRecordModal();">抄表新增</button>
+                                            <button class="btn confirm btn-hide readrecord_add" onclick="pt.showAddRecordModal();">抄表新增</button>
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
@@ -533,8 +531,8 @@
                             <div class="block-footer">
                                 <div class="block-button">
                                     <div class="pull-left">
-                                        <button class="btn delete" onclick="pt.exeDeleteBuild();">删除</button>
-                                        <button class="btn edit" onclick="pt.showEditBuildModal();">编辑</button>
+                                        <button class="btn delete btn-hide building_delete" onclick="pt.exeDeleteBuild();">删除</button>
+                                        <button class="btn edit btn-hide building_update" onclick="pt.showEditBuildModal();">编辑</button>
                                     </div>
                                     <div class="pull-right">
                                         <button class="btn cancel" onclick="">取消</button>
@@ -622,11 +620,13 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label reqiure" for="Add_Water">水费价格</label>
-                    <input class="form-input" type="text" id="Add_Water" placeholder="请输入水费价格"/>
+                    <input class="form-input" type="text" data-keyup="number" id="Add_Water" placeholder="请输入水费价格"/>
+                    <label class="form-unit" for="Add_Water">元/吨</label>
                 </div>
                 <div class="form-group">
                     <label class="form-label reqiure" for="Add_Power">电费价格</label>
-                    <input class="form-input" type="text" id="Add_Power" placeholder="请输入电费价格"/>
+                    <input class="form-input" type="text" data-keyup="number" id="Add_Power" placeholder="请输入电费价格"/>
+                    <label class="form-unit" for="Add_Power">元/度</label>
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="Add_BuildingAlloc">物业配备</label>
@@ -755,7 +755,7 @@
             </div>
             <div class="panel-footer">
                 <div class="pull-left">
-                    <button class="btn delete" onclick="pt.exeDeleteFloor();">删除</button>
+                    <button class="btn delete btn-hide floor_delete" onclick="pt.exeDeleteFloor();">删除</button>
                 </div>
                 <div class="pull-right">
                     <button class="btn cancel">取消</button>

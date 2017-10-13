@@ -181,7 +181,7 @@ TabComponent.prototype.tabClick = function () {
  * @returns {TabComponent}
  */
 TabComponent.prototype.tabReset = function () {
-    $(this.element).eq(0).click();
+    $(this.element).first().click();
     return this;
 }
 /**
@@ -496,7 +496,7 @@ function WebApp() {
     this.TEMPLATE = arguments['TEMPLATE'] ? arguments['TEMPLATE'] : "<div class='app-bg'></div>";
     this.DROP_CONTAINER = arguments['DROP_CONTAINER'] ? arguments['DROP_CONTAINER'] : ".drop-container";
     this.DATE_TIME_PICKER = arguments['DATE_TIME_PICKER'] ? arguments['DATE_TIME_PICKER'] : ".dateTimePicker";
-
+    /**code with liyong*/
     this.RIGHT_CONTENT = arguments['RIGHT_CONTENT'] ? arguments['RIGHT_CONTENT'] : ".main  .right-content";
     this.BLOCK_BODY = arguments['BLOCK_BODY'] ? arguments['BLOCK_BODY'] : ".panel-lg .block-body";
     this.PANEL_BODY = arguments['PANEL_BODY'] ? arguments['PANEL_BODY'] : ".panel-sm .panel-modal .panel-body";
@@ -514,13 +514,12 @@ function WebApp() {
     this.LG_PREV = arguments['LG_PREV'] ? arguments['LG_PREV'] : ".panel-lg .pagination-prev";
     this.LG_NEXT = arguments['LG_NEXT'] ? arguments['LG_NEXT'] : ".panel-lg .pagination-next";
     this.LG_PASSWORD = arguments['LG_PASSWORD'] ? arguments['LG_PASSWORD'] : ".panel-lg .btn-password";
-    this.SM_BUTTON  = arguments['SM_BUTTON'] ? arguments['SM_BUTTON'] : ".panel-sm .panel-footer button";
-
-    this.NO_RESULT = arguments['NO_RESULT'] ? arguments['NO_RESULT'] :
-        "<div class='no-result'><img src='images/no_result.png' /><p>抱歉~，暂无数据</p></div>";
+    this.SM_BUTTON = arguments['SM_BUTTON'] ? arguments['SM_BUTTON'] : ".panel-sm .panel-footer button";
     this.TEMP_LOAD = arguments['TEMP_LOAD'] ? arguments['TEMP_LOAD'] :
         '<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>';
 
+    this.NO_RESULT = arguments['NO_RESULT'] ? arguments['NO_RESULT'] :
+        "<div class='no-result'><img src='images/no_result.png' /><p>抱歉~，暂无数据</p></div>";
     this.API_CONFOG = arguments['API_CONFOG'] ? arguments['API_CONFOG'] : {
         LOGIN_OUT: "/identity/logout",
         BIND_COMPANY: "/param/company"
@@ -840,23 +839,25 @@ WebApp.prototype.propertyGrantControl = function () {
     // 物业查看
     this.grantControl($("#Buildings"), "building_select");
     // 物业新增
-    this.grantControl($(".fq-nav2-bottom"), "building_add");
+    this.grantControl($(".building_add"), "building_add");
     // 物业删除
     this.grantControl($(".building_delete"), "building_delete");
+    // 物业
+    this.grantControl($(".building_update"), "building_update");
     // 楼层删除
-    this.grantControl($(".sp11"), "floor_delete");
+    this.grantControl($(".floor_delete"), "floor_delete");
     // 房间编辑
-    this.grantControl($(".but-roomEdit"), "room_update");
+    this.grantControl($(".room_update"), "room_update");
     // 房间删除
-    this.grantControl($(".btn-roomdel"), "room_delete");
+    this.grantControl($(".room_delete"), "room_delete");
     //维修记录查看
-    this.grantControl($(".serviceInit"), "servicerecord_select");
+    this.grantControl($(".servicerecord_select"), "servicerecord_select");
     //维修记录新增
-    this.grantControl($(".btn-repairadd"), "servicerecord_add");
+    this.grantControl($(".servicerecord_add"), "servicerecord_add");
     //抄表记录查看
-    this.grantControl($(".readInit"), "readrecord_select");
+    this.grantControl($(".readrecord_select"), "readrecord_select");
     //抄表记录新增
-    this.grantControl($(".btn-checktableadd"), "readrecord_add");
+    this.grantControl($(".readrecord_add"), "readrecord_add");
     // 部门新增
     this.grantControl($(".department_add"), "department_add");
     // 部门编辑
@@ -928,11 +929,11 @@ WebApp.prototype.contractGrantControl = function () {
 WebApp.prototype.employeeGrantControl = function () {
     // 部门新增
     this.grantControl($(".btn-departmentadd"), "department_add");
-// 部门编辑
+    // 部门编辑
     this.grantControl($(".btn-departmentedit"), "department_update");
-// 部门删除
+    // 部门删除
     this.grantControl($(".fq-btn-ul1"), "department_delete");
-// 部门编辑 部门新增的父级
+   // 部门编辑 部门新增的父级
     if (this.grantControl($(".fq-nav2-bottom"), "department_add") || this.grantControl($(".fq-nav2-bottom"), "department_update")) {
         $(".fq-nav2-bottom").show();
     }
@@ -1365,6 +1366,7 @@ Pagination.prototype.prevButtonPress = function () {
     var _this = this;
     $(this.PAGINATION_PREV).on("click", function () {
         _this.PAGE_CODE--;
+        _this.MIN_PAGE = _this.PAGE_CODE;
         _this.PAGE_CODE = _this.PAGE_CODE <= 1 ? 1 : _this.PAGE_CODE;
         var FIRST_TEXT = parseInt($(_this.PAGINATION_CODE).eq(0).text().trim());
         if (FIRST_TEXT != 1) {
@@ -1373,7 +1375,7 @@ Pagination.prototype.prevButtonPress = function () {
             });
         }
         _this.bindStatus(this);
-        if ("function" == typeof _this.CHANGE_PAGE) _this.CHANGE_PAGE(_this.PAGE_CODE);
+        if ("function" == typeof _this.CHANGE_PAGE && _this.MIN_PAGE != 0) _this.CHANGE_PAGE(_this.PAGE_CODE);
     });
     return this;
 }
@@ -1387,6 +1389,7 @@ Pagination.prototype.nextButtonPress = function () {
     var _this = this;
     $(this.PAGINATION_NEXT).on("click", function () {
         _this.PAGE_CODE++;
+        _this.MAX_PAGE = _this.PAGE_CODE;
         _this.PAGE_CODE = _this.PAGE_CODE >= _this.TOTAL_PAGES ? _this.TOTAL_PAGES : _this.PAGE_CODE;
         var FIRST_TEXT = parseInt($(_this.PAGINATION_CODE).eq(0).text().trim());
         var PARAMS_VALUE = _this.TOTAL_PAGES - $(_this.PAGINATION_CODE).length + 1;
@@ -1396,7 +1399,7 @@ Pagination.prototype.nextButtonPress = function () {
             });
         }
         _this.bindStatus(this);
-        if ("function" == typeof _this.CHANGE_PAGE) _this.CHANGE_PAGE(_this.PAGE_CODE);
+        if ("function" == typeof _this.CHANGE_PAGE && _this.MAX_PAGE <= _this.TOTAL_PAGES) _this.CHANGE_PAGE(_this.PAGE_CODE);
     });
     return this;
 }
@@ -1654,144 +1657,3 @@ RegularExpress.prototype.labelRegExpCheck = function (params) {
  * @type {RegularExpress}
  */
 var regular = new RegularExpress();
-
-function DropdownInit() {
-    var xiala;
-    xiala = new fq.xiala(null, $('.fq-xiala'));
-    xiala.init();
-}
-//下拉初始
-window.fq = {};
-//param
-//数据 类型
-fq.xiala = function (data, obj) {
-    o = this;
-    this.type = obj.attr('type');
-    this.clickflag = false;
-    this.xialaclickflag = false;
-    this.init = function () {
-        obj.not(".secondary-menu").hover(function () {
-            // 展开
-            if ($(this).attr('type') == 'hov') {
-                obj.find('ul:eq(0)').hide();
-                //小三角
-                $(this).find('i').removeClass('icon-xiala').addClass('icon-zhankai');
-                //下拉框样式
-                $(this).addClass('xiala-cur').find('.fq-xiala-sel').css({
-                    'border-bottom': '0px',
-                    'border-radius': '4px 4px 0px 0px'
-                });
-                //下拉
-                $(this).find('ul:eq(0)').slideDown(100);
-            }
-            // 隐藏
-        }, function () {
-            obj.removeClass('xiala-cur').find('ul:eq(0)').slideUp(100, function () {
-                $(this).parent().find('.fq-xiala-sel').css({
-                    'border-bottom': '1px solid #e6e6e6',
-                    'border-radius': '4px'
-                });
-            });
-            obj.find('i').removeClass('icon-zhankai').addClass('icon-xiala');
-            // delete o.xiala;
-        });
-        // li悬停和点击添加到span  .fq-xiala是  div
-        $('.fq-xiala ul li').not(".fq-menu").hover(function () {
-            $(this).addClass('hov');
-        }, function () {
-            $(this).removeClass('hov');
-            // unbind清除选中元素
-        }).unbind().click(function () {
-            if ($(this).parent("ul").children(".menuChildren")[0] == undefined) {
-                $(this).parent("ul").find(".cur").removeClass("cur");
-            } else {
-                $(this).parents("ul").find(".cur").removeClass("cur");
-            }
-            $(this).addClass('cur').parents('.fq-xiala').find('.fq-xiala-sel').html($(this).html());
-            obj.removeClass('xiala-cur').find('ul:eq(0)').slideUp(100, function () {
-                $(this).parent().find('.fq-xiala-sel').css({
-                    'border-bottom': '1px solid #e6e6e6',
-                    'border-radius': '4px'
-                });
-            });
-            obj.find('i').removeClass('icon-zhankai').addClass('icon-xiala');
-            //部门启用、关闭切换事件
-            if ($(this).parent().parent().attr('id') == "DptEnable") {
-                DptBind($(this).attr("data-value"));
-            }
-            //省份、城市、区域三级联动新增页面
-            if ($(this).parent().parent().attr('id') == "Province_Add") {
-                // CityBind($(this).attr("data-value"));
-                var params = propertyPage.getParams(propertyPage.CITYBIND);
-                propertyPage.ajaxRequestCityBind(params);
-            }
-
-            if ($(this).parent().parent().attr('id') == "City_Add") {
-                // DistrictBind($(this).attr("data-value"));
-                var params = propertyPage.getParams(propertyPage.DISTRICTBIND);
-                propertyPage.ajaxRequestDistrictBind(params);
-            }
-            //省份、城市、区域三级联动编辑页面
-            if ($(this).parent().parent().attr('id') == "Province_Edit") {
-                // CityUptBind($(this).attr("data-value"));
-                var params = propertyPage.getParams(propertyPage.CITYUPTBIND);
-                propertyPage.ajaxRequestUptCityBind(params);
-            }
-            if ($(this).parent().parent().attr('id') == "City_Edit") {
-                // DistrictUptBind($(this).attr("data-value"));
-                var params = propertyPage.getParams(propertyPage.DISTRICTUPTBIND);
-                propertyPage.ajaxRequestDistrictUptBind(params);
-            }
-        });
-
-
-        // 点击二级菜单
-        $('.fq-menu>span').click(function () {
-            $(this).parents("ul").find('.cur').removeClass('cur');
-            $(this).parent().addClass('cur').parents('.fq-xiala').find('.fq-xiala-sel').html($(this).html());
-            obj.removeClass('xiala-cur').find('ul:eq(0)').slideUp(100, function () {
-                $(this).parents().find('.fq-xiala-sel').css({
-                    'border-bottom': '1px solid #e6e6e6',
-                    'border-radius': '4px'
-                });
-            });
-            obj.find('i').removeClass('icon-zhankai').addClass('icon-xiala');
-        });
-        //点击span 出现下拉框fq-xiala-sel
-        obj.find('span.fq-xiala-sel').unbind().click(function () {
-            if ($(this).parent().attr('type') == 'click') {
-                o.clickflag = !o.clickflag;
-                o.xiala = $(this).parent();
-                o.xiala.find('i').removeClass('icon-xiala').addClass('icon-zhankai');
-                o.xiala.addClass('xiala-cur').find('.fq-xiala-sel').css({
-                    'border-bottom': '0px',
-                    'border-radius': '4px 4px 0px 0px'
-                });
-                o.xiala.find('ul:eq(0)').slideDown(100);
-            }
-        });
-        addListener(document.body, "click", function () {
-        });
-
-
-    }
-
-}
-// ly二级菜单下拉
-$(".fq-xiala").click(function () {
-    var li = $(this).children("ul").find("li");
-    li.each(function () {
-        if ($(this).children("ul")[0] == undefined) {
-            $(this).children("b").hide();
-        }
-    })
-})
-$('.fq-xiala').on('click', 'b', function (event) {
-    if ($(this).parent('li').children("ul")[0]) {
-        $(this).parent('li').siblings('li').children('b').removeClass('icon-shangsanjiaoxing-copy');
-        $(this).parent('li').siblings('li').children('ul').slideUp();
-        $(this).parent().children('ul').slideToggle();
-        $(this).toggleClass('icon-shangsanjiaoxing-copy');
-        event.stopPropagation();
-    }
-})

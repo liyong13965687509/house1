@@ -10,10 +10,11 @@ function Service() {
     this.PAGE_SIZE = arguments['PAGE_SIZE'] ? arguments['PAGE_SIZE'] : 10;
     this.PAGE_INDEX = arguments['PAGE_INDEX'] ? arguments['PAGE_INDEX'] : 1;
     this.DATA_VALUE = arguments['DATA_VALUE'] ? arguments['DATA_VALUE'] : '';
+    this.DATA_REPLY = arguments['DATA_REPLY'] ? arguments['DATA_REPLY'] : '';
     this.TAB_BTN = arguments['TAB_BTN'] ? arguments['TAB_BTN'] : '.tab-bar li';
     this.BTN_DETAIL = arguments['BTN_DETAIL'] ? arguments['BTN_DETAIL'] : '.btn-detail';
     this.BTN_REPLY = arguments['BTN_REPLY'] ? arguments['BTN_REPLY'] : '.btn-reply';
-    this.ABOUT_IMG = arguments['ABOUT_IMG'] ? arguments['ABOUT_IMG'] : '.about-img';
+    this.ABOUT_IMG = arguments['ABOUT_IMG'] ? arguments['ABOUT_IMG'] : '#img-list .about-img';
     this.PANEL_IMG = arguments['PANEL_IMG'] ? arguments['PANEL_IMG'] : '.panel-img';
     this.BG_IMG = arguments['BG_IMG'] ? arguments['BG_IMG'] : '.panel-bg-img';
     this.CHOOSED = arguments['CHOOSED'] ? arguments['CHOOSED'] : '.choosed';
@@ -28,7 +29,11 @@ function Service() {
         APPLY_BASE: '/service-apply/base',
         APPLY_LIST: '/service-apply/list',
         APPLY_DETAIL: '/service-apply',
-        APPLY_REPLY:'/service-apply/reply',
+        APPLY_REPLY: '/service-apply/reply',
+        SUGGESTION_BASE: '/suggestion/base',
+        SUGGESTION_LIST: '/suggestion/list',
+        SUGGESTION_DETAIL: '/suggestion',
+        SUGGESTION_REPLY:'/suggestion/reply',
 
     }
 
@@ -50,6 +55,8 @@ Service.prototype.init = function () {
     this.applyList();
     this.applyDetail();
     this.informPeople();
+    this.suggestionBase();
+    this.suggestionDetail();
     return this;
 }
 /**
@@ -70,12 +77,12 @@ Service.prototype.getParams = function (name) {
         case this.API_CONFIG['APPLY_LIST']:
             params = {
                 requestKey: localStorage.getItem("requestKey"),
-                applyDate: $('#applyDate').val(),
+                applyDate: $('#applyDate').val().trim(),
                 pageIndex: this.PAGE_INDEX,
                 pageSize: this.PAGE_SIZE,
                 buildingCharId: $("#Buildings .active").length > 0 ? $("#Buildings .active").attr("data-value") : "",
                 state: $("#States .active").length > 0 ? $("#States .active").attr("data-value") : 0,
-                key: $('#key').val(),
+                key: $('#key').val().trim(),
             };
             break;
         case this.API_CONFIG['APPLY_DETAIL']:
@@ -87,11 +94,42 @@ Service.prototype.getParams = function (name) {
         case this.API_CONFIG['APPLY_REPLY']:
             params = {
                 requestKey: localStorage.getItem("requestKey"),
-                serviceApplyCharId:this.DATA_VALUE,
+                serviceApplyCharId: this.DATA_VALUE,
                 replyEmployeeCharId: localStorage.getItem("employeeCharId"),
                 reply: $('#Reply').val().trim()
             };
             break;
+        case this.API_CONFIG['SUGGESTION_BASE']:
+            params = {
+                requestKey: localStorage.getItem("requestKey")
+            };
+            break;
+        case this.API_CONFIG['SUGGESTION_LIST']:
+            params = {
+                requestKey: localStorage.getItem("requestKey"),
+                suggestDate: $('#suggestDate').val().trim(),
+                pageIndex: this.PAGE_INDEX,
+                pageSize: this.PAGE_SIZE,
+                type: $("#Types .active").length > 0 ? $("#Types .active").attr("data-value") : 0,
+                state: $(".States .active").length > 0 ? $(".States .active").attr("data-value") : 0,
+                key: $('.key').val().trim()
+            };
+            break;
+        case this.API_CONFIG['SUGGESTION_DETAIL']:
+            params = {
+                requestKey: localStorage.getItem("requestKey"),
+                suggestionCharId: this.DATA_REPLY,
+            };
+            break;
+        case this.API_CONFIG['SUGGESTION_REPLY']:
+            params={
+                requestKey: localStorage.getItem("requestKey"),
+                suggestionCharId: this.DATA_REPLY,
+                replyEmployeeCharId:localStorage.getItem("employeeCharId"),
+                reply:$('#Reply_detail').val().trim()
+            };
+            break;
+
     }
     return params;
 }
@@ -116,7 +154,7 @@ Service.prototype.navChange = function () {
                 _this.applyList();
                 break;
             case 1:
-                _this.feedback();
+                _this.suggestionList();
                 break;
             case 2:
                 _this.informWarm();
@@ -175,6 +213,57 @@ Service.prototype.ajaxRequestApplyBase = function (params) {
     });
     return this;
 }
+
+/**
+ * Author:LIYONG
+ * Date:2017-10-13
+ *意见反馈基础数据绑定
+ * @returns {Service}
+ */
+Service.prototype.suggestionBase = function () {
+    var params = this.getParams(this.API_CONFIG['SUGGESTION_BASE']);
+    this.ajaxRequestSuggestionBase(params);
+    return this;
+}
+/**
+ * Author:LIYONG
+ * Date:2017-10-13
+ *意见反馈基础数据绑定ajax
+ * @returns {Service}
+ */
+Service.prototype.ajaxRequestSuggestionBase = function (params) {
+    var _this = this;
+    $.ajax({
+        url: host + _this.API_CONFIG['SUGGESTION_BASE'],
+        type: "GET",
+        dataType: "JSON",
+        data: params,
+        success: function (data) {
+            if (data['succ']) {
+                var JSON_DATA = data['data'], TEMP_HTML;
+                for (KEY in JSON_DATA) {
+                    TEMP_HTML = '';
+                    for (var i = 0; i < JSON_DATA[KEY].length; i++) {
+                        TEMP_HTML += "<li data-value='" + JSON_DATA[KEY][i]['Key'] + "' class='drop-option'>" + JSON_DATA[KEY][i]['Value'] + "</li>";
+                    }
+                    $("#" + KEY).html(TEMP_HTML);
+                    $("." + KEY).html(TEMP_HTML);
+                }
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+
 /**
  * Author:LIYONG
  * Date:2017-10-10
@@ -264,6 +353,94 @@ Service.prototype.ajaxRequestApplyLists = function (params) {
     });
     return this;
 }
+/**
+ * Author:LIYONG
+ * Date:2017-10-13
+ *意见反馈列表
+ * @returns {Service}
+ */
+Service.prototype.suggestionList = function () {
+    var params = this.getParams(this.API_CONFIG['SUGGESTION_LIST']);
+    this.ajaxRequestSuggestionList(params);
+    return this;
+}
+/**
+ * Author:LIYONG
+ * Date:2017-10-13
+ *意见反馈列表ajax
+ * @returns {Service}
+ */
+Service.prototype.ajaxRequestSuggestionList = function (params) {
+    var _this = this;
+    $.ajax({
+        url: host + _this.API_CONFIG['SUGGESTION_LIST'],
+        type: "GET",
+        dataType: "JSON",
+        data: params,
+        success: function (data) {
+            if (data['succ']) {
+                var JSON_DATA = data['data'], TEMP_HTML;
+                _this.PAGINATION = new Pagination({
+                    PAGINATION: '#Main',
+                    PAGE_SIZE: _this.PAGE_SIZE,
+                    DATA_NUMS: data['exted']['totalNum'],
+                    CHANGE_PAGE: function (pageCode) {
+                        params = _this.getParams(_this.API_CONFIG['SUGGESTION_LIST']);
+                        params['pageIndex'] = pageCode;
+                        _this.ajaxRequestSuggestionLists(params);
+                    }
+                });
+                TEMP_HTML = JSON_DATA.length != 0 ? _this.suggestionTemplate(JSON_DATA) : webApp['NO_RESULT'];
+                $(".main .table-body").html(TEMP_HTML);
+
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+
+/**
+ * Author:LIYONG
+ * Date:2017-10-13
+ *意见反馈列表ajaxs
+ * @returns {Service}
+ */
+Service.prototype.ajaxRequestSuggestionLists = function (params) {
+    var _this = this;
+    $.ajax({
+        url: host + _this.API_CONFIG['SUGGESTION_LIST'],
+        type: "GET",
+        dataType: "JSON",
+        data: params,
+        success: function (data) {
+            if (data['succ']) {
+                var JSON_DATA = data['data'], TEMP_HTML;
+                TEMP_HTML = JSON_DATA.length != 0 ? _this.suggestionTemplate(JSON_DATA) : webApp['NO_RESULT'];
+                $(".main .table-body").html(TEMP_HTML);
+
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
 
 /**
  * Author:LIYONG
@@ -303,16 +480,26 @@ Service.prototype.ajaxRequestApplyDetail = function (params) {
         data: params,
         success: function (data) {
             if (data['succ']) {
-                var JSON_DATA = data['data'],TEMP_HTML='';
+                var JSON_DATA = data['data'], TEMP_HTML = '';
                 for (KEY in JSON_DATA) {
                     $('#' + KEY).html(JSON_DATA[KEY]);
                     $('#' + KEY).val(JSON_DATA[KEY]);
                 }
-                var IMGS=JSON_DATA['Imgs'];
-                for(var i=0;i<IMGS.length;i++){
-                    TEMP_HTML+='<li><img src="'+IMGS[i]+'" alt=""></li>';
+                JSON_DATA['Imgs'].push('images/max-device.png');
+                if (JSON_DATA['ReplyEmployeeName']) {
+                    $('.row-reply').removeClass('hide')
+                } else {
+                    $('.row-reply').addClass('hide')
                 }
+
+
+                var IMGS = JSON_DATA['Imgs'];
+                for (var i = 0; i < IMGS.length; i++) {
+                    TEMP_HTML += '<li class="about-img"><img src="' + IMGS[i] + '" alt=""></li>';
+                }
+
                 $('#img-list').html(TEMP_HTML);
+                $('#max-img').html(TEMP_HTML);
 
 
             } else {
@@ -330,6 +517,63 @@ Service.prototype.ajaxRequestApplyDetail = function (params) {
     return this;
 }
 
+/**
+ * Author:LIYONG
+ * Date:2017-10-13
+ *意见反馈详情
+ * @returns {Service}
+ */
+Service.prototype.suggestionDetail = function () {
+    var _this = this;
+    $(document).on('click', this.BTN_REPLY, function () {
+        _this.DATA_REPLY = $(this).attr('data-value').trim();
+        mp.manualShowPanel({
+            index: 1,
+            element: '.panel-sm',
+            complete: function () {
+                var params = _this.getParams(_this.API_CONFIG['SUGGESTION_DETAIL']);
+                _this.ajaxRequestSuggestionDetail(params);
+            }
+        });
+    });
+
+    return this;
+}
+
+/**
+ * Author:LIYONG
+ * Date:2017-10-13
+ *意见反馈详情ajax
+ * @returns {Service}
+ */
+Service.prototype.ajaxRequestSuggestionDetail = function (params) {
+    var _this = this;
+    $.ajax({
+        url: host + _this.API_CONFIG['SUGGESTION_DETAIL'],
+        type: "GET",
+        dataType: "JSON",
+        data: params,
+        success: function (data) {
+            if (data['succ']) {
+                var JSON_DATA = data['data'], TEMP_HTML = '';
+                for (KEY in JSON_DATA) {
+                    $('#' + KEY + '_detail').html(JSON_DATA[KEY]);
+                    $('#' + KEY + '_detail').val(JSON_DATA[KEY]);
+                }
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
 /**
  * Author:LIYONG
  * Date:2017-10-11
@@ -374,9 +618,50 @@ Service.prototype.ajaxRequestApplyReply = function (params) {
     });
     return this;
 }
+/**
+ * Author:LIYONG
+ * Date:2017-10-13
+ *意见反馈回复
+ * @returns {Service}
+ */
+Service.prototype.suggestionReply = function () {
+    var params = this.getParams(this.API_CONFIG['SUGGESTION_REPLY']);
+    this.ajaxRequestSuggestionReply(params);
+    return this;
+}
 
+/**
+ * Author:LIYONG
+ * Date:2017-10-13
+ *意见反馈回复AJAX
+ * @returns {Service}
+ */
 
-
+Service.prototype.ajaxRequestSuggestionReply= function (params) {
+    var _this = this;
+    $.ajax({
+        url: host + _this.API_CONFIG['SUGGESTION_REPLY'],
+        type: "POST",
+        dataType: "JSON",
+        data: params,
+        success: function (data) {
+            if (data['succ']) {
+                mp.hideSmPanel();
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
 
 /**
  * * Author:LIYONG
@@ -574,16 +859,16 @@ Service.prototype.devicesApplyTemplate = function (params) {
         TEMP_HTML += '<div class="table-item col-xs-12 col-sm-6 col-md-12"><div class="row-content row">'
             + '<div class="row-header col-xs-6 col-md-12"><div class="row-title' + TEMP_CLASS + ' row">'
             + '<div class="column col-xs-12 col-md-1">处理状态</div><div class="column col-xs-12 col-md-1">维修设备</div>'
-            + '<div class="column col-xs-12 col-md-1">故障原因</div><div class="column col-xs-12 col-md-1">物业房号</div>'
-            + '<div class="column col-xs-12 col-md-1">姓名</div><div class="column col-xs-12 col-md-3">手机号</div>'
+            + '<div class="column col-xs-12 col-md-2">故障原因</div><div class="column col-xs-12 col-md-1">物业房号</div>'
+            + '<div class="column col-xs-12 col-md-1">姓名</div><div class="column col-xs-12 col-md-2">手机号</div>'
             + '<div class="column col-xs-12 col-md-3">维修日期</div><div class="column col-xs-12 col-md-1">操作</div>'
             + '</div></div><div class="row-body col-xs-6 col-md-12"><div class="row-item row">'
             + '<div class="column col-xs-12 col-md-1">' + JSON_DATA['State'] + '</div>'
             + '<div class="column col-xs-12 col-md-1">' + JSON_DATA['ServiceItem'] + '</div>'
-            + '<div class="column col-xs-12 col-md-1 column-fault">' + TEMP_FAULT + '</div>'
+            + '<div class="column col-xs-12 col-md-2 column-fault">' + TEMP_FAULT + '</div>'
             + '<div class="column col-xs-12 col-md-1">' + JSON_DATA['RoomName'] + '</div>'
             + '<div class="column col-xs-12 col-md-1">' + JSON_DATA['CustomerName'] + '</div>'
-            + '<div class="column col-xs-12 col-md-3">' + JSON_DATA['Phone'] + '</div>'
+            + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['Phone'] + '</div>'
             + '<div class="column col-xs-12 col-md-3">' + JSON_DATA['Time'] + '</div><div class="column col-xs-12 col-md-1">'
             + '<a  data-value="' + JSON_DATA['CharId'] + '" href="javascript:void(0)" class="btn-detail">查看</a>'
             + '</div></div></div></div></div>';
@@ -600,13 +885,17 @@ Service.prototype.devicesApplyTemplate = function (params) {
  * @param params
  * @returns {string}
  */
-Service.prototype.feedBackTemplate = function (params) {
+Service.prototype.suggestionTemplate = function (params) {
     var JSON_DATA = null;
     var TEMP_HTML = '', TEMP_CLASS = '';
     for (var i = 0; i < params.length; i++) {
         JSON_DATA = params[i];
         var TEMP_CAUSE = '<p class="column-content">' + JSON_DATA['Content'] + '</p><div class="column-float">' + JSON_DATA['Content'] + '</div>';
-        var TEMP_FAULT = JSON_DATA['Content'].length >= 10 ? TEMP_CAUSE : JSON_DATA['Content'];
+        if (JSON_DATA['Content']) {
+            var TEMP_FAULT = JSON_DATA['Content'].length >= 10 ? TEMP_CAUSE : JSON_DATA['Content'];
+        } else {
+            var TEMP_FAULT = JSON_DATA['Content'];
+        }
         TEMP_CLASS = i >= 1 ? " visible-xs visible-sm" : "";
         TEMP_HTML += '<div class="table-item col-xs-12 col-sm-6 col-md-12"><div class="row-content row">'
             + '<div class="row-header col-xs-6 col-md-12"><div class="row-title' + TEMP_CLASS + ' row">'
@@ -615,16 +904,15 @@ Service.prototype.feedBackTemplate = function (params) {
             + '<div class="column col-xs-12 col-md-1">姓名</div><div class="column col-xs-12 col-md-3">手机号</div>'
             + '<div class="column col-xs-12 col-md-3">反馈时间</div><div class="column col-xs-12 col-md-1">操作</div>'
             + '</div></div><div class="row-body col-xs-6 col-md-12"><div class="row-item row">'
-            + '<div class="column col-xs-12 col-md-1">' + JSON_DATA['State'] + '</div>'
+            + '<div class="column col-xs-12 col-md-1">' + JSON_DATA['IsReply'] + '</div>'
             + '<div class="column col-xs-12 col-md-1">' + JSON_DATA['Type'] + '</div>'
             + '<div class="column col-xs-12 col-md-2 column-fault">' + TEMP_FAULT + '</div>'
-            + '<div class="column col-xs-12 col-md-1">' + JSON_DATA['Name'] + '</div>'
+            + '<div class="column col-xs-12 col-md-1">' + JSON_DATA['CustomerName'] + '</div>'
             + '<div class="column col-xs-12 col-md-3">' + JSON_DATA['Phone'] + '</div>'
-            + '<div class="column col-xs-12 col-md-3">' + JSON_DATA['Date'] + '</div><div class="column col-xs-12 col-md-1">'
-            + '<a data-uuid="' + JSON_DATA['UUID'] + '" data-value="' + JSON_DATA['CharId'] + '" href="javascript:void(0)" class="btn-reply">回复</a>'
+            + '<div class="column col-xs-12 col-md-3">' + JSON_DATA['CreateTime'] + '</div><div class="column col-xs-12 col-md-1">'
+            + '<a data-value="' + JSON_DATA['CharId'] + '" href="javascript:void(0)" class="btn-reply">回复</a>'
             + '</div></div></div></div></div>';
     }
-
     return TEMP_HTML;
 }
 
@@ -654,7 +942,7 @@ Service.prototype.informWarmTemplate = function (params) {
             + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['Object'] + '</div>'
             + '<div class="column col-xs-12 col-md-3">' + JSON_DATA['Time'] + '</div>'
             + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['Name'] + '</div><div class="column col-xs-12 col-md-1">'
-            + '<a data-uuid="' + JSON_DATA['UUID'] + '" data-value="' + JSON_DATA['CharId'] + '" href="javascript:void(0)" class="btn-delete">删除</a>'
+            + '<a data-value="' + JSON_DATA['CharId'] + '" href="javascript:void(0)" class="btn-delete">删除</a>'
             + '</div></div></div></div></div>';
     }
     return TEMP_HTML;
@@ -669,27 +957,21 @@ Service.prototype.informWarmTemplate = function (params) {
  */
 Service.prototype.btnDetailClick = function () {
     var _this = this;
-    $(document).on('click', this.BTN_REPLY, function () {
-        mp.manualShowPanel({
-            index: 1,
-            element: '.panel-sm',
-            complete: function () {
-
-            }
-        });
-    })
 
     $(document).on('click', this.ABOUT_IMG, function () {
-        $(_this.PANEL_IMG).find('.panel-content').css('transform','scale(1.0)');
-        $(_this.PANEL_IMG).find('.panel-content').css('opacity','1.0');
+        var INDEX = $(this).index();
+        $(_this.PANEL_IMG).find('.panel-content').css('transform', 'scale(1.0)');
+        $(_this.PANEL_IMG).find('.panel-content').css('opacity', '1.0');
         $(_this.BG_IMG).removeClass('hide');
+        $('#max-img .about-img').eq(INDEX).show()
+            .siblings().hide();
 
     })
 
 
     $(document).on('click', this.PANEL_IMG, function () {
-        $(this).find('.panel-content').css('transform','scale(0.0)');
-        $(this).find('.panel-content').css('opacity','0.0');
+        $(this).find('.panel-content').css('transform', 'scale(0.0)');
+        $(this).find('.panel-content').css('opacity', '0.0');
         $(_this.BG_IMG).addClass('hide');
     })
 
@@ -722,7 +1004,7 @@ Service.prototype.informAdd = function () {
  * @returns {Service}
  */
 Service.prototype.selectObj = function () {
-    var _this=this;
+    var _this = this;
     $(document).on('click', '.form-radio input[checked="checked"]', function () {
         $('.form-radio input[name="choose"]').removeClass('choosed');
     })
@@ -730,8 +1012,8 @@ Service.prototype.selectObj = function () {
         $(this).parents('.col-xs-3').next().find('input[name="choose"]').addClass('choosed');
     })
     $(document).on('click', this.CHOOSED, function () {
-        $('.panel-window .panel-content').css('margin-left','-220px');
-        $('.panel-window .panel-content').css('opacity','1');
+        $('.panel-window .panel-content').css('margin-left', '-220px');
+        $('.panel-window .panel-content').css('opacity', '1');
         $(_this.PANEL_MASK).removeClass('hide');
     })
 
@@ -743,24 +1025,24 @@ Service.prototype.selectObj = function () {
  *  选择被通知人
  * @returns {Service}
  */
-Service.prototype.informPeople=function(){
-    var _this=this;
-    $(document).on('click',this.CHECK_ALL,function () {
+Service.prototype.informPeople = function () {
+    var _this = this;
+    $(document).on('click', this.CHECK_ALL, function () {
         $(_this.SEL_PEOPLE).addClass('selected');
         $(this).addClass('selected');
     })
 
 
-    $(document).on('click',this.SEL_PEOPLE,function () {
+    $(document).on('click', this.SEL_PEOPLE, function () {
         $(this).toggleClass('selected');
 
-       if( $('.selected').length-1!= $(_this.SEL_PEOPLE).length) $(_this.CHECK_ALL).removeClass('selected');
-       if( $('.selected').length== $(_this.SEL_PEOPLE).length) $(_this.CHECK_ALL).addClass('selected');
+        if ($('.selected').length - 1 != $(_this.SEL_PEOPLE).length) $(_this.CHECK_ALL).removeClass('selected');
+        if ($('.selected').length == $(_this.SEL_PEOPLE).length) $(_this.CHECK_ALL).addClass('selected');
     })
 
     $(document).on('click', '.panel-mask,.pull-cancel,#confirm-select', function () {
-        $('.panel-window .panel-content').css('margin-left','-760px');
-        $('.panel-window .panel-content').css('opacity','0');
+        $('.panel-window .panel-content').css('margin-left', '-760px');
+        $('.panel-window .panel-content').css('opacity', '0');
         $(_this.PANEL_MASK).addClass('hide');
     })
 
@@ -775,12 +1057,12 @@ Service.prototype.informPeople=function(){
  * @returns {Service}
  */
 Service.prototype.confirmSelect = function () {
-    var TEMP_HTML='';
-    var LENGTH=$(this.SELECTED).length;
-    for(var i=0;i<LENGTH;i++){
-       var name= $(this.SELECTED).eq(i).parents('.row-item').find('.column-name').html();
-        var phone=$(this.SELECTED).eq(i).parents('.row-item').find('.column-phone').html();
-        TEMP_HTML+=(i<LENGTH-1)?name+  '<'+ phone+ '>'+'、':name+  '<'+ phone+ '>';
+    var TEMP_HTML = '';
+    var LENGTH = $(this.SELECTED).length;
+    for (var i = 0; i < LENGTH; i++) {
+        var name = $(this.SELECTED).eq(i).parents('.row-item').find('.column-name').html();
+        var phone = $(this.SELECTED).eq(i).parents('.row-item').find('.column-phone').html();
+        TEMP_HTML += (i < LENGTH - 1) ? name + '<' + phone + '>' + '、' : name + '<' + phone + '>';
     }
     $('#information').val(TEMP_HTML);
     return this;

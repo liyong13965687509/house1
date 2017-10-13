@@ -115,6 +115,7 @@
    */
 }
 .right-container .right-content {
+  padding: 15px;
   background-color: #ffffff;
   width: 100%;
   min-height: 100%;
@@ -123,7 +124,6 @@
 .right-container .right-content .right-body {
   width: 100%;
   height: 100%;
-  padding: 20px 20px;
   position: relative;
 }
 .right-container .selected-date {
@@ -245,9 +245,6 @@
   }
   .report .pull-right {
     padding-left: 214px !important;
-  }
-  .report .pull-right .right-content {
-    padding: 10px;
   }
   .report .pull-right .row-empty {
     width: 80% !important;

@@ -121,6 +121,7 @@ PropertyPage.prototype.startMove = function () {
 PropertyPage.prototype.filterRooms = function () {
     var _this = this;
     $(document).on('click', this.FILTER_STATE, function () {
+        _this.DATA_VALUE = $('#Buildings .active a').attr('data-value').trim();
         $(_this.FILTER_STATE).removeClass(_this.ACTIVE.trim());
         $(this).addClass(_this.ACTIVE.trim());
         _this.STATE = $(this).attr('data-value').trim();
@@ -964,7 +965,6 @@ PropertyPage.prototype.appendHtmlAddRoom = function (data) {
         + '<h4 class="house-number">' + JSON_DATA['roomName'] + '室</h4>'
         + '<div class="house-block" data-value="' + JSON_DATA['charId'] + '">'
         + '<span>' + JSON_DATA['state'] + '</span></div></div>';
-
     $(TEMP_SELECTOR).parents('.house-item').before(TEMP_HTML);
     return this;
 }
@@ -1382,10 +1382,11 @@ PropertyPage.prototype.ajaxRequestChangePageWaterReadRecords = function (params)
  */
 PropertyPage.prototype.appendHtmlWaterReadRecords = function (params) {
     var JSON_DATA = null;
-    var TEMP_HTML = '', TEMP_NAME = '';
+    var TEMP_HTML = '', TEMP_NAME = '',TEMP_DEL;
     for (var i = 0; i < params.length; i++) {
         JSON_DATA = params[i];
         TEMP_NAME = i > 0 ? ' visible-xs visible-sm' : '';
+        TEMP_DEL=webApp.grantControl($(".readrecord_delete"), "readrecord_delete")?'删除':'';
         TEMP_HTML += '<div class="table-item col-xs-12 col-sm-6 col-md-12">'
             + '<div class="row-content row"><div class="row-header col-xs-6 col-md-12">'
             + '<div class="row-title ' + TEMP_NAME + ' row">'
@@ -1397,7 +1398,7 @@ PropertyPage.prototype.appendHtmlWaterReadRecords = function (params) {
             + '<div class="column col-xs-12 col-md-4">' + JSON_DATA['Mark'] + '</div>'
             + '<div class="column col-xs-12 col-md-4">'
             + '<a href="javascript:void(0);" class="delete-record" data-value="'
-            + JSON_DATA['CharId'] + '">删除</a></div></div></div></div></div>';
+            + JSON_DATA['CharId'] + '">'+TEMP_DEL+'</a></div></div></div></div></div>';
     }
     $('#Water_Record').html(TEMP_HTML);
     return this;
@@ -1492,10 +1493,11 @@ PropertyPage.prototype.ajaxRequestChangePagePowerReadRecords = function (params)
  */
 PropertyPage.prototype.appendHtmlPowerReadRecords = function (params) {
     var JSON_DATA = null;
-    var TEMP_HTML = '', TEMP_NAME = '';
+    var TEMP_HTML = '', TEMP_NAME = '',TEMP_DEL;
     for (var i = 0; i < params.length; i++) {
         JSON_DATA = params[i];
         TEMP_NAME = i > 0 ? ' visible-xs visible-sm' : '';
+        TEMP_DEL=webApp.grantControl($(".readrecord_delete"), "readrecord_delete")?'删除':'';
         TEMP_HTML += '<div class="table-item col-xs-12 col-sm-6 col-md-12">'
             + '<div class="row-content row"><div class="row-header col-xs-6 col-md-12">'
             + '<div class="row-title ' + TEMP_NAME + ' row">'
@@ -1507,7 +1509,7 @@ PropertyPage.prototype.appendHtmlPowerReadRecords = function (params) {
             + '<div class="column col-xs-12 col-md-4">' + JSON_DATA['Mark'] + '</div>'
             + '<div class="column col-xs-12 col-md-4">'
             + '<a href="javascript:void(0);" class="delete-record" data-value="'
-            + JSON_DATA['CharId'] + '">删除</a></div></div></div></div></div>';
+            + JSON_DATA['CharId'] + '">'+TEMP_DEL+'</a></div></div></div></div></div>';
     }
     $('#Power_Record').html(TEMP_HTML);
     return this;
@@ -1602,9 +1604,10 @@ PropertyPage.prototype.ajaxRequestChangePageServiceRecords = function (params) {
  */
 PropertyPage.prototype.appendHtmlServiceRecords = function (params) {
     var JSON_DATA = null;
-    var TEMP_HTML = '', TEMP_NAME = '';
+    var TEMP_HTML = '', TEMP_NAME = '', TEMP_DEL;
     for (var i = 0; i < params.length; i++) {
         JSON_DATA = params[i];
+        TEMP_DEL = webApp.grantControl($(".servicerecord_delete"), "servicerecord_delete") ? '删除' : '';
         TEMP_NAME = i > 0 ? ' visible-xs visible-sm' : '';
         TEMP_HTML += '<div class="table-item col-xs-12 col-sm-6 col-md-12">'
             + '<div class="row-content row"><div class="row-header col-xs-6 col-md-12">'
@@ -1621,7 +1624,7 @@ PropertyPage.prototype.appendHtmlServiceRecords = function (params) {
             + '<div class="column col-xs-12 col-md-3">' + JSON_DATA['CreateTime'] + '</div>'
             + '<div class="column col-xs-12 col-md-2">'
             + '<a href="javascript:void(0);" class="delete-service" data-value="'
-            + JSON_DATA['CharId'] + '">删除</a></div></div></div></div></div>';
+            + JSON_DATA['CharId'] + '">'+TEMP_DEL+'</a></div></div></div></div></div>';
     }
     $('#Repair_Record').html(TEMP_HTML);
     return this;
@@ -1869,13 +1872,16 @@ PropertyPage.prototype.appendHtmlBindRooms = function (data) {
     var TEMP_HTML = '';
     var JSON_DATA = data['data'];
     var BUILD_NAME = data['exted']['BuildingName'];
-    var TEMP_FLOOR = null, TEMP_ROOM = null, TEMP_ROOMS = null;
+    var TEMP_FLOOR = null, TEMP_ROOM = null, TEMP_ROOMS = null, TEMP_EDIT = '';
     for (var i = 0; i < JSON_DATA.length; i++) {
         TEMP_FLOOR = JSON_DATA[i];
+        TEMP_EDIT = webApp.grantControl($(".floor_update"), "floor_update") ?
+            '<a href="javascript:void(0);" class="house-edit" data-value="' + TEMP_FLOOR['floorCharId']
+            + '" data-floor="' + TEMP_FLOOR['floorName'] + '" data-build="' + BUILD_NAME + '">编辑</a>' : '';
+
         TEMP_HTML += '<div class="house-group"><div class="house-header">'
             + '<h3 class="house-title">' + BUILD_NAME + ' .<span>' + TEMP_FLOOR['floorName'] + '</span>楼</h3>'
-            + '<a href="javascript:void(0);" class="house-edit" data-value="' + TEMP_FLOOR['floorCharId']
-            + '" data-floor="' + TEMP_FLOOR['floorName'] + '" data-build="' + BUILD_NAME + '">编辑</a>'
+            + TEMP_EDIT
             + '</div><div class="house-body"><div class="row house-row">';
 
         TEMP_ROOMS = JSON_DATA[i]['rooms'];
@@ -1886,12 +1892,20 @@ PropertyPage.prototype.appendHtmlBindRooms = function (data) {
                 + '<div class="house-block" data-value="' + TEMP_ROOM['CharId'] + '">'
                 + '<span>' + TEMP_ROOM['Text'] + '</span></div></div>';
         }
-        TEMP_HTML += '<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 house-item">'
-            + '<h4 class="house-number">添加房间</h4><div class="house-add" data-value="'
-            + TEMP_FLOOR['floorCharId'] + '"><span>+</span></div></div></div></div>'
-            + '<div class="house-footer"></div></div>';
+        if (webApp.grantControl($(".room_add"), "room_add"))
+            TEMP_HTML += '<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 house-item">'
+                + '<h4 class="house-number">添加房间</h4><div class="house-add" data-value="'
+                + TEMP_FLOOR['floorCharId'] + '"><span>+</span></div></div>';
+
+        TEMP_HTML += '</div></div><div class="house-footer"></div></div>';
     }
+
     $('#Rooms').html(TEMP_HTML);
+
+    JSON_DATA = data['exted'];
+    for (var Key in JSON_DATA) {
+        $('#State_' + Key).text(JSON_DATA[Key]);
+    }
     return this;
 }
 /**
@@ -1912,7 +1926,8 @@ PropertyPage.prototype.appendHtmlBindFloors = function (data) {
     $('#floors').html(TEMP_HTML);
     TEMP_HTML = '<button class="btn add" data-value="'
         + TEMP_VALUE + '" onclick="pt.exeAddFloor();">+</button>';
-    $('.floor-footer').html(TEMP_HTML);
+    if (webApp.grantControl($(".floor_add"), "floor_add")) $('.floor-footer').html(TEMP_HTML);
+
     return this;
 }
 /**

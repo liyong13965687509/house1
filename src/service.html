@@ -131,11 +131,11 @@
                                 <div class="drop-container hide" tabIndex="1">
                                     <div class="drop-content">
                                         <div class="drop-header">
-                                            <span class="drop-result">物业</span>
+                                            <span class="drop-result">反馈类型</span>
                                             <i class="drop-icon icon-drop-down"></i>
                                         </div>
                                         <div class="drop-body">
-                                            <ul id="EquBind"></ul>
+                                            <ul id="Types"></ul>
                                         </div>
                                         <div class="drop-footer"></div>
                                     </div>
@@ -149,7 +149,7 @@
                                             <i class="drop-icon icon-drop-down"></i>
                                         </div>
                                         <div class="drop-body">
-                                            <ul data-target="EquNumber"></ul>
+                                            <ul class="States"></ul>
                                         </div>
                                         <div class="drop-footer"></div>
                                     </div>
@@ -157,14 +157,14 @@
                             </div>
                             <div class="form-group">
                                 <input class="form-input group-date1" readonly
-                                       placeholder="反馈日期"/>
+                                       placeholder="反馈日期" id="suggestDate"/>
                             </div>
                             <div class="form-group">
-                                <input class="form-input"
+                                <input class="form-input key"
                                        placeholder="房号、编号、手机"/>
                             </div>
                             <div class="form-group">
-                                <button class="btn confirm" onclick="mg.exeBindDevices();">查询</button>
+                                <button class="btn confirm" onclick="sp.suggestionList();">查询</button>
                             </div>
                         </div>
                         <div class="header-item hide">
@@ -241,15 +241,9 @@
                     </div>
                     <div class="form-group row row-image">
                         <div class="col-xs-4 col-sm-3">相关照片</div>
-                        <!--<div class="col-xs-8 col-sm-9" id="Imgs">-->
                         <div class="col-xs-8 col-sm-9">
-                            <!--<ul id="img-list">-->
-                            <!--<li><img src="" alt=""></li>-->
-                            <!--</ul>-->
-                            <a href="#" class="about-img">
-                                <img src="images/min-device.png" alt="">
-                                <!--<img src="https://api.2ma2.com:4300/Files/ServiceApply/012fbd5d-50c7-47b2-8445-3f02da74e351.jpg" alt="">-->
-                            </a>
+                            <ul id="img-list">
+                            </ul>
                         </div>
                     </div>
                     <div class="form-group">
@@ -257,7 +251,7 @@
                         <textarea class="form-input form-text" placeholder="请输入回复内容" id="Reply"></textarea>
                     </div>
                     <div class="form-group">
-                        <div class="row">
+                        <div class="row row-reply hide">
                             <div class="col-xs-5">回复人: <span id="ReplyEmployeeName"></span></div>
                             <div class="col-xs-7">回复时间: <span id="ReplyTime"></span></div>
                         </div>
@@ -282,28 +276,28 @@
                 <div class="panel-group">
                     <div class="group-row row">
                         <div class="col-xs-4 col-sm-3">反馈类型</div>
-                        <div class="col-xs-8 col-sm-9">软件功能</div>
+                        <div class="col-xs-8 col-sm-9 " id="Type_detail">软件功能</div>
                     </div>
                     <div class="group-row row">
                         <div class="col-xs-4 col-sm-3">反馈用户</div>
-                        <div class="col-xs-8 col-sm-9">柳岩</div>
+                        <div class="col-xs-8 col-sm-9" id="CustomerName_detail">柳岩</div>
                     </div>
                     <div class="group-row row">
                         <div class="col-xs-4 col-sm-3">手机号码</div>
-                        <div class="col-xs-8 col-sm-9">18256567589</div>
+                        <div class="col-xs-8 col-sm-9" id="Phone_detail">18256567589</div>
                     </div>
                     <div class="group-row row">
                         <div class="col-xs-4 col-sm-3">反馈时间</div>
-                        <div class="col-xs-8 col-sm-9">2017.9.28 10:00~11:00</div>
+                        <div class="col-xs-8 col-sm-9" id="CreateTime_detail">2017.9.28 10:00~11:00</div>
                     </div>
                     <div class="group-row row">
                         <div class="col-xs-4 col-sm-3">反馈内容</div>
-                        <div class="col-xs-8 col-sm-9">空调漏水还不制冷，赶紧来修</div>
+                        <div class="col-xs-8 col-sm-9" id="Content_detail">空调漏水还不制冷，赶紧来修</div>
                     </div>
 
                     <div class="form-group">
                         <div class="form-label" for="Add_Name">反馈回复</div>
-                        <textarea class="form-input form-text" placeholder="请输入回复内容"></textarea>
+                        <textarea class="form-input form-text" placeholder="请输入回复内容" id="Reply_detail"></textarea>
                     </div>
                 </div>
 
@@ -312,7 +306,7 @@
                 <div class="pull-left"></div>
                 <div class="pull-right">
                     <button class="btn cancel">取消</button>
-                    <button class="btn confirm" onclick="mg.exeAddPassword();">保存</button>
+                    <button class="btn confirm" onclick="sp.suggestionReply();">保存</button>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -357,7 +351,7 @@
                             </div>
                         </div>
                     </div>
-                    <textarea class="form-input form-text" placeholder="请输入通知人"></textarea>
+                    <textarea class="form-input form-text" placeholder="请选择通知人" readonly id="information"></textarea>
 
                 </div>
                 <div class="form-group">
@@ -374,7 +368,6 @@
                 <div class="clearfix"></div>
             </div>
         </div>
-
         <div class="panel-window">
             <div class="panel-mask  hide"></div>
             <div class="panel-content">
@@ -389,7 +382,7 @@
                 <div class="panel-body">
                     <div class="form-group">
                         <div class="pull-left">
-                            <button class="btn confirm">确认选择</button>
+                            <button class="btn confirm" onclick="sp.confirmSelect();" id="confirm-select">确认选择</button>
                         </div>
                         <div class="pull-right">
                             <input class="form-input" placeholder="姓名、手机号码">
@@ -417,19 +410,19 @@
                                                 <div class="column col-xs-12 col-md-4">
                                                     <input name="radio" type="checkbox" class="radio selected-people"/>
                                                 </div>
-                                                <div class="column col-xs-12 col-md-4">赵奕欢</div>
-                                                <div class="column col-xs-12 col-md-4">14785296325</div>
+                                                <div class="column col-xs-12 col-md-4 column-name">赵奕欢</div>
+                                                <div class="column col-xs-12 col-md-4 column-phone">14785296325</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="table-item col-xs-12 col-sm-6 col-md-12">
-                                    <div class="row-content row">
+                                    <div class="row-content row-item row">
                                         <div class="column col-xs-12 col-md-4">
                                             <input name="radio" type="checkbox" class="radio selected-people"/>
                                         </div>
-                                        <div class="column col-xs-12 col-md-4">赵奕欢</div>
-                                        <div class="column col-xs-12 col-md-4">89653274125</div>
+                                        <div class="column col-xs-12 col-md-4 column-name">赵欢欢</div>
+                                        <div class="column col-xs-12 col-md-4 column-phone">89653274125</div>
                                     </div>
                                 </div>
                             </div>
@@ -598,7 +591,13 @@
 <div class="panel-max panel-img">
     <div class="panel-bg-img  hide"></div>
     <div class="panel-content">
-        <img src="images/max-device.png" alt="">
+        <div class="panel-modal">
+            <div class="panel-head"></div>
+            <div class="panel-body">
+                <ul id="max-img"></ul>
+            </div>
+            <div class="panel-footer"></div>
+        </div>
     </div>
 </div>
 

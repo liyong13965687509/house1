@@ -75,19 +75,12 @@ LoginPage.prototype.ajaxRequestCheck = function (params) {
         type: "POST",
         dataType: "JSON",
         data: params,
-        beforeSend: function () {
-            var TEMP_HTML='正在登录 ...'
-            $('.full').html(TEMP_HTML);
-        },
         success: function (data) {
             if (data != null) {
                 try {
                     if (data['succ']) {
-                        webApp.TIMER = setTimeout(function () {
-                            _this.saveLoginAccount(params);
-                            _this.localStorageSaveData(data, params);
-                        }, 1000);
-
+                        _this.saveLoginAccount(params);
+                        _this.localStorageSaveData(data, params);
                     } else {
                         messageBox.show("错误", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.error);
                     }
@@ -106,7 +99,6 @@ LoginPage.prototype.ajaxRequestCheck = function (params) {
     });
     return this;
 }
-
 /**
  * BEGIN 使用本地存储保存登录用户信息
  * Author:PengLunJian
