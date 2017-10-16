@@ -19,7 +19,6 @@
   "data/power_data.js": "data/power_data.js?v=7f894a55f9",
   "data/property_data.js": "data/property_data.js?v=7f24b267b0",
   "desktop.page.js": "desktop.page.js?v=4b238ecd68",
-  "device.page - 副本.js": "device.page - 副本.js?v=801b0c9808",
   "device.page.js": "device.page.js?v=d0686389dd",
   "employee.page.js": "employee.page.js?v=c4eaa01153",
   "grant.page.js": "grant.page.js?v=cdfcb199d9",
@@ -34,14 +33,8 @@
   "report.page.js": "report.page.js?v=846ff900cd",
   "resetpwd.page.js": "resetpwd.page.js?v=36802c79e1",
   "self.page.js": "self.page.js?v=89044c5f15",
-  "service.page.js": "service.page.js?v=cb1891b6c5",
-  "service1.page.js": "service1.page.js?v=6c18fae8f7",
+  "service.page.js": "service.page.js?v=da081317e6",
   "system.page.js": "system.page.js?v=e34fa60bdb",
   "tools.js": "tools.js?v=a830b13965",
-  "tools11.js": "tools11.js?v=4937fd20c9",
-  "tools12.js": "tools12.js?v=4cf48e50f5",
-  "tools6.js": "tools6.js?v=60e14cd395",
-  "tools66.js": "tools66.js?v=7a2fc7846e",
-  "tools663.js": "tools663.js?v=3c9318b3d0",
-  "tools77.js": "tools77.js?v=0f712bc02f"
+  "tools663.js": "tools663.js?v=3c9318b3d0"
 }

@@ -58,7 +58,7 @@
   content: '';
   width: 18px;
   height: 16px;
-  background: url("../images/service.png");
+  background: url("../images/services.png");
 }
 .service > .pull-left .left-header p span {
   padding-left: 16px;
@@ -195,6 +195,9 @@
   bottom: -6px;
   box-shadow-bottom: -2px -2px 4px #e6e6e6;
   box-shadow-right: -2px -2px 4px #e6e6e6;
+}
+.service > .pull-right .right-container .right-content .table-body .isReply {
+  color: #ff7f66;
 }
 .service > .pull-right .right-container .right-footer {
   position: fixed;
