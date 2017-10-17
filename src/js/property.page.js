@@ -1688,7 +1688,10 @@ PropertyPage.prototype.ajaxRequestUpdateFloor = function (params) {
         success: function (data) {
             if (data['succ']) {
                 mp.hideSmPanel();
-                _this.exeBindBuilding();
+                var floorNum = $('#FloorName').val().trim();
+                var SELECTOR = '*[data-value="' + _this.DATA_VALUE + '"]';
+                $(SELECTOR).attr('data-floor', floorNum);
+                $(SELECTOR).not('.house-edit,.house-add').text(floorNum);
                 messageBox.show("提示", '楼层更新成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -1880,7 +1883,8 @@ PropertyPage.prototype.appendHtmlBindRooms = function (data) {
             + '" data-floor="' + TEMP_FLOOR['floorName'] + '" data-build="' + BUILD_NAME + '">编辑</a>' : '';
 
         TEMP_HTML += '<div class="house-group"><div class="house-header">'
-            + '<h3 class="house-title">' + BUILD_NAME + ' .<span>' + TEMP_FLOOR['floorName'] + '</span>楼</h3>'
+            + '<h3 class="house-title">' + BUILD_NAME + ' .<span data-value="' + TEMP_FLOOR['floorCharId']
+            + '">' + TEMP_FLOOR['floorName'] + '</span>楼</h3>'
             + TEMP_EDIT
             + '</div><div class="house-body"><div class="row house-row">';
 

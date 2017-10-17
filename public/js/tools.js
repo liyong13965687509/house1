@@ -1092,26 +1092,37 @@ WebApp.prototype.textLength = function (str) {
  */
 
 WebApp.prototype.loading = function (element) {
+    console.log(10);
     var _this = this;
     if (element['selector'] == _this.RIGHT_CONTENT||element['selector']==_this.BLOCK_BODY) {
         element.find(".spinner").removeClass('hide').siblings().addClass('hide');
     } else {
         $(".spinner").addClass('hide').siblings().removeClass('hide');
     }
-    // ajax加载前
-    $(document).ajaxSend(function () {
-        $(".spinner").addClass('hide').siblings().removeClass('hide');
-        if (element.find(".spinner").length == 0){
-            element.append(_this.TEMP_LOAD);
-        }
-        element.find(".spinner").removeClass('hide').siblings().addClass('hide');
-    });
-    //ajax加载完成后
-    $(document).ajaxComplete(function () {
-        _this.TIMER = setTimeout(function () {
-            element.find(".spinner").addClass('hide').siblings().removeClass('hide');
-        }, 1000);
-    });
+    ajax();
+    function ajax() {
+        // ajax加载前
+        $(document).ajaxSend(function () {
+            $(".spinner").addClass('hide').siblings().removeClass('hide');
+            if (element.find(".spinner").length == 0){
+                element.append(_this.TEMP_LOAD);
+            }
+            console.log(1111);
+            console.log(typeof element);
+            console.log(element.length);
+            console.log(element[0]);
+            element.find(".spinner").removeClass('hide').siblings().addClass('hide');
+
+
+        });
+        //ajax加载完成后
+        $(document).ajaxComplete(function () {
+            _this.TIMER = setTimeout(function () {
+                element.find(".spinner").addClass('hide').siblings().removeClass('hide');
+            }, 1000);
+        });
+    }
+
 }
 
 /**
@@ -1157,7 +1168,7 @@ WebApp.prototype.checkLoading = function () {
     })
 
     $(document).on('click', _this.LG_CODE, function () {
-        _this.loading($(_this.BLOCK_BODY));
+        // _this.loading($(_this.BLOCK_BODY));
     })
 
     $(document).on('click', _this.LG_PREV, function () {
@@ -1176,22 +1187,27 @@ WebApp.prototype.checkLoading = function () {
     })
     // 第三层
     $(document).on('click', _this.LG_BUTTON, function () {
+        console.log(1);
         _this.loading($(_this.PANEL_BODY));
     })
 
     $(document).on('click', _this.LG_PANEL, function () {
+        console.log(2);
         _this.loading($(_this.PANEL_BODY));
     })
 
     $(document).on('click', _this.LG_BILLADD, function () {
+        console.log(3);
         _this.loading($(_this.PANEL_BODY));
     })
 
     $(document).on('click',_this.LG_A, function () {
+        console.log(4);
         _this.loading($(_this.PANEL_BODY));
     })
 
     $(document).on('click', _this.LG_PASSWORD, function () {
+        console.log(5);
         _this.loading($(_this.SM_BUTTON).find('a'));
     })
 
@@ -1200,6 +1216,10 @@ WebApp.prototype.checkLoading = function () {
         _this.loading($(_this.SM_BUTTON).find('a'));
     })
 
+    // $(document).on('click', '.tree-menu li', function () {
+    //     console.log(11);
+    //
+    // })
 
 }
 /**

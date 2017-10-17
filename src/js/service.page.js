@@ -33,7 +33,7 @@ function Service() {
         SUGGESTION_BASE: '/suggestion/base',
         SUGGESTION_LIST: '/suggestion/list',
         SUGGESTION_DETAIL: '/suggestion',
-        SUGGESTION_REPLY:'/suggestion/reply',
+        SUGGESTION_REPLY: '/suggestion/reply',
 
     }
 
@@ -122,11 +122,11 @@ Service.prototype.getParams = function (name) {
             };
             break;
         case this.API_CONFIG['SUGGESTION_REPLY']:
-            params={
+            params = {
                 requestKey: localStorage.getItem("requestKey"),
                 suggestionCharId: this.DATA_REPLY,
-                replyEmployeeCharId:localStorage.getItem("employeeCharId"),
-                reply:$('#Reply_detail').val().trim()
+                replyEmployeeCharId: localStorage.getItem("employeeCharId"),
+                reply: $('#Reply_detail').val().trim()
             };
             break;
 
@@ -390,6 +390,7 @@ Service.prototype.ajaxRequestSuggestionList = function (params) {
                         _this.ajaxRequestSuggestionLists(params);
                     }
                 });
+
                 TEMP_HTML = JSON_DATA.length != 0 ? _this.suggestionTemplate(JSON_DATA) : webApp['NO_RESULT'];
                 $(".main .table-body").html(TEMP_HTML);
 
@@ -481,12 +482,12 @@ Service.prototype.ajaxRequestApplyDetail = function (params) {
         success: function (data) {
             if (data['succ']) {
                 var JSON_DATA = data['data'], TEMP_HTML = '';
+
                 for (KEY in JSON_DATA) {
                     $('#' + KEY).html(JSON_DATA[KEY]);
                     $('#' + KEY).val(JSON_DATA[KEY]);
                 }
-                JSON_DATA['Imgs'].push('images/max-device.png');
-                if (JSON_DATA['ReplyEmployeeName']) {
+                if (JSON_DATA['Reply']) {
                     $('.row-reply').removeClass('hide')
                 } else {
                     $('.row-reply').addClass('hide')
@@ -501,7 +502,7 @@ Service.prototype.ajaxRequestApplyDetail = function (params) {
                 $('#img-list').html(TEMP_HTML);
                 $('#max-img').html(TEMP_HTML);
 
-
+                $('#RoomName').html(JSON_DATA['RoomName'] + '室');
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
@@ -637,7 +638,7 @@ Service.prototype.suggestionReply = function () {
  * @returns {Service}
  */
 
-Service.prototype.ajaxRequestSuggestionReply= function (params) {
+Service.prototype.ajaxRequestSuggestionReply = function (params) {
     var _this = this;
     $.ajax({
         url: host + _this.API_CONFIG['SUGGESTION_REPLY'],
@@ -695,16 +696,25 @@ Service.prototype.feedback = function () {
 Service.prototype.informWarm = function () {
     // var params = this.getParams(this.API_CONFIG.BIND_DEVICES);
     // this.ajaxRequestBindInformWarm(params);
-    var _this = this;
-    var JSON_DATA = [{
-        Type: '系统通知', Content: '漏返回的叫饭夫户籍附近的回复水',
-        Object: '赵奕欢', Time: '2017-09-28 10:30-11:30', Name: '李勇'
-    },
-        {
-            Type: '系统通知', Content: '冰箱漏水，不能继续使用，请尽快来修',
-            Object: '赵奕欢', Time: '2017-09-28 10:30-11:30', Name: '李勇'
-        }];
-    var TEMP_HTML = JSON_DATA.length != 0 ? _this.informWarmTemplate(JSON_DATA) : webApp['NO_RESULT'];
+    var _this = this,TEMP_HTML='';
+    // var JSON_DATA = [{
+    //     Type: '系统通知', Content: '漏返回的叫饭夫户籍附近的回复水',
+    //     Object: '赵奕欢', Time: '2017-09-28 10:30-11:30', Name: '李勇'
+    // },
+    //     {
+    //         Type: '系统通知', Content: '冰箱漏水，不能继续使用，请尽快来修',
+    //         Object: '赵奕欢', Time: '2017-09-28 10:30-11:30', Name: '李勇'
+    //     }];
+    var JSON_DATA='';
+    if(JSON_DATA.length != 0 ){
+        TEMP_HTML=_this.informWarmTemplate(JSON_DATA)
+    }else{
+        TEMP_HTML=webApp['NO_RESULT'];
+        $('#Main').html('');
+    }
+    // var TEMP_HTML = JSON_DATA.length != 0 ? _this.informWarmTemplate(JSON_DATA) : webApp['NO_RESULT'];
+
+
     $(".main .table-body").html(TEMP_HTML);
     return this;
 }
@@ -823,7 +833,7 @@ Service.prototype.ajaxRequestBindInformWarm = function (params) {
                         _this.ajaxRequestChangePageDevices(params);
                     }
                 });
-                var TEMP_HTML = JSON_DATA.length != 0 ? _this.informWarmTemplate(JSON_DATA) : webApp['NO_RESULT'];
+                var TEMP_HTML = JSON_DATA.length == 0 ? _this.informWarmTemplate(JSON_DATA) : webApp['NO_RESULT'];
                 // var TEMP_HTML = _this.informWarmTemplate(JSON_DATA);
                 $(".main .table-body").html(TEMP_HTML);
             } else {
@@ -859,19 +869,19 @@ Service.prototype.devicesApplyTemplate = function (params) {
         TEMP_HTML += '<div class="table-item col-xs-12 col-sm-6 col-md-12"><div class="row-content row">'
             + '<div class="row-header col-xs-6 col-md-12"><div class="row-title' + TEMP_CLASS + ' row">'
             + '<div class="column col-xs-12 col-md-1">处理状态</div><div class="column col-xs-12 col-md-1">维修设备</div>'
-            + '<div class="column col-xs-12 col-md-2">故障原因</div><div class="column col-xs-12 col-md-1">物业房号</div>'
+            + '<div class="col-xs-12 col-md-10"><div class="row"><div class="column col-xs-12 col-md-2">故障原因</div><div class="column col-xs-12 col-md-2">物业房号</div>'
             + '<div class="column col-xs-12 col-md-1">姓名</div><div class="column col-xs-12 col-md-2">手机号</div>'
-            + '<div class="column col-xs-12 col-md-3">维修日期</div><div class="column col-xs-12 col-md-1">操作</div>'
+            + '<div class="column col-xs-12 col-md-4">维修日期</div><div class="column col-xs-12 col-md-1">操作</div></div></div>'
             + '</div></div><div class="row-body col-xs-6 col-md-12"><div class="row-item row">'
             + '<div class="column col-xs-12 col-md-1">' + JSON_DATA['State'] + '</div>'
             + '<div class="column col-xs-12 col-md-1">' + JSON_DATA['ServiceItem'] + '</div>'
-            + '<div class="column col-xs-12 col-md-2 column-fault">' + TEMP_FAULT + '</div>'
-            + '<div class="column col-xs-12 col-md-1">' + JSON_DATA['RoomName'] + '</div>'
+            + '<div class="col-xs-12 col-md-10"><div class="row"><div class="column col-xs-12 col-md-2 column-fault">' + TEMP_FAULT + '</div>'
+            + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['RoomName'] + '</div>'
             + '<div class="column col-xs-12 col-md-1">' + JSON_DATA['CustomerName'] + '</div>'
             + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['Phone'] + '</div>'
-            + '<div class="column col-xs-12 col-md-3">' + JSON_DATA['Time'] + '</div><div class="column col-xs-12 col-md-1">'
+            + '<div class="column col-xs-12 col-md-4">' + JSON_DATA['Time'] + '</div><div class="column col-xs-12 col-md-1">'
             + '<a  data-value="' + JSON_DATA['CharId'] + '" href="javascript:void(0)" class="btn-detail">查看</a>'
-            + '</div></div></div></div></div>';
+            + '</div></div></div></div></div></div></div>';
     }
 
 
@@ -880,21 +890,23 @@ Service.prototype.devicesApplyTemplate = function (params) {
 
 /**
  * Author:LIYONG
- * Date:2017-9-27
+ * Date:2017-10-13
  *意见反馈 模板
  * @param params
  * @returns {string}
  */
 Service.prototype.suggestionTemplate = function (params) {
     var JSON_DATA = null;
-    var TEMP_HTML = '', TEMP_CLASS = '';
+    var TEMP_HTML = '', TEMP_CLASS = '', TEMP_STATUS = '', TEMP_FAULT = '', TEMP_CAUSE = '';
     for (var i = 0; i < params.length; i++) {
         JSON_DATA = params[i];
-        var TEMP_CAUSE = '<p class="column-content">' + JSON_DATA['Content'] + '</p><div class="column-float">' + JSON_DATA['Content'] + '</div>';
+        TEMP_STATUS = JSON_DATA['IsReply'] == '待处理' ? '<div class="column col-xs-12 col-md-1 isReply">'
+            : '<div class="column col-xs-12 col-md-1">';
+        TEMP_CAUSE = '<p class="column-content">' + JSON_DATA['Content'] + '</p><div class="column-float">' + JSON_DATA['Content'] + '</div>';
         if (JSON_DATA['Content']) {
-            var TEMP_FAULT = JSON_DATA['Content'].length >= 10 ? TEMP_CAUSE : JSON_DATA['Content'];
+            TEMP_FAULT = JSON_DATA['Content'].length >= 10 ? TEMP_CAUSE : JSON_DATA['Content'];
         } else {
-            var TEMP_FAULT = JSON_DATA['Content'];
+            TEMP_FAULT = JSON_DATA['Content'];
         }
         TEMP_CLASS = i >= 1 ? " visible-xs visible-sm" : "";
         TEMP_HTML += '<div class="table-item col-xs-12 col-sm-6 col-md-12"><div class="row-content row">'
@@ -904,7 +916,7 @@ Service.prototype.suggestionTemplate = function (params) {
             + '<div class="column col-xs-12 col-md-1">姓名</div><div class="column col-xs-12 col-md-3">手机号</div>'
             + '<div class="column col-xs-12 col-md-3">反馈时间</div><div class="column col-xs-12 col-md-1">操作</div>'
             + '</div></div><div class="row-body col-xs-6 col-md-12"><div class="row-item row">'
-            + '<div class="column col-xs-12 col-md-1">' + JSON_DATA['IsReply'] + '</div>'
+            + TEMP_STATUS + JSON_DATA['IsReply'] + '</div>'
             + '<div class="column col-xs-12 col-md-1">' + JSON_DATA['Type'] + '</div>'
             + '<div class="column col-xs-12 col-md-2 column-fault">' + TEMP_FAULT + '</div>'
             + '<div class="column col-xs-12 col-md-1">' + JSON_DATA['CustomerName'] + '</div>'

@@ -480,7 +480,6 @@ Service.prototype.ajaxRequestApplyDetail = function (params) {
         dataType: "JSON",
         data: params,
         success: function (data) {
-            console.log(data);
             if (data['succ']) {
                 var JSON_DATA = data['data'], TEMP_HTML = '';
 
