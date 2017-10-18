@@ -1,6 +1,5 @@
 {
   "app.page.css": "app.page.css?v=b4a31a2055",
-  "backstage.page.css": "backstage.page.css?v=22c34b6bcf",
   "bill.page.css": "bill.page.css?v=460da17bc9",
   "bootstrap-datetimepicker.css": "bootstrap-datetimepicker.css?v=0b80566b4d",
   "bootstrap.css": "bootstrap.css?v=1e9bc98d71",
@@ -16,7 +15,7 @@
   "device.page.css": "device.page.css?v=fd9c870029",
   "employee.page.css": "employee.page.css?v=c1e0d42e52",
   "font-awesome.min.css": "font-awesome.min.css?v=bed7cb23bb",
-  "font.css": "font.css?v=2e7df30ac7",
+  "font.css": "font.css?v=2ee5397e72",
   "fq_nav2_css.css": "fq_nav2_css.css?v=12eff15bf4",
   "grant.page.css": "grant.page.css?v=b69c20718f",
   "iconfont.css": "iconfont.css?v=72359e0b20",
@@ -30,8 +29,7 @@
   "property.page.css": "property.page.css?v=c704d21120",
   "report.page.css": "report.page.css?v=329b5c10a3",
   "resetpwd.page.css": "resetpwd.page.css?v=ed7bf7eb8c",
-  "self.page.css": "self.page.css?v=8c8e96b3bd",
-  "service.page.css": "service.page.css?v=9b9c9e4183",
+  "service.page.css": "service.page.css?v=1bd8ef8041",
   "system.page.css": "system.page.css?v=a4735bd24f",
   "variable.css": "variable.css?v=d41d8cd98f"
 }

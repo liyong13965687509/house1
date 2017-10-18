@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'icomoon';
-  src: url('../fonts/icomoon.eot?ms4y7s');
-  src: url('../fonts/icomoon.eot?ms4y7s#iefix') format('embedded-opentype'), url('../fonts/icomoon.ttf?ms4y7s') format('truetype'), url('../fonts/icomoon.woff?ms4y7s') format('woff'), url('../fonts/icomoon.svg?ms4y7s#icomoon') format('svg');
+  src: url('../fonts/icomoon.eot?6b9v8t');
+  src: url('../fonts/icomoon.eot?6b9v8t#iefix') format('embedded-opentype'), url('../fonts/icomoon.ttf?6b9v8t') format('truetype'), url('../fonts/icomoon.woff?6b9v8t') format('woff'), url('../fonts/icomoon.svg?6b9v8t#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -169,19 +169,15 @@
 .icon-right-triangle:before {
   content: "\e766";
 }
+.icon-device:before {
+  content: "\e900";
+}
 .icon-Report:before {
   content: "\e901";
 }
 .icon-exit:before {
   content: "\f0071";
 }
-.icon-device:before {
-  content: "\e900";
-}
 .icon-Service:before {
-  display: inline-block;
-  content: '';
-  width: 18px;
-  height: 16px;
-  background: url(../images/service.png);
+  content: "\e91a";
 }

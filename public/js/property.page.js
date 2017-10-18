@@ -1688,10 +1688,9 @@ PropertyPage.prototype.ajaxRequestUpdateFloor = function (params) {
         success: function (data) {
             if (data['succ']) {
                 mp.hideSmPanel();
-                var floorNum = $('#FloorName').val().trim();
-                var SELECTOR = '*[data-value="' + _this.DATA_VALUE + '"]';
-                $(SELECTOR).attr('data-floor', floorNum);
-                $(SELECTOR).not('.house-edit,.house-add').text(floorNum);
+                _this.DATA_VALUE=$('#Buildings .active a').attr('data-value').trim();
+                _this.exeBindFloors();
+                _this.exeBindRooms();
                 messageBox.show("提示", '楼层更新成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);

@@ -604,6 +604,7 @@ Service.prototype.ajaxRequestApplyReply = function (params) {
         success: function (data) {
             if (data['succ']) {
                 mp.hideSmPanel();
+                _this.applyList();
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -648,6 +649,7 @@ Service.prototype.ajaxRequestSuggestionReply = function (params) {
         success: function (data) {
             if (data['succ']) {
                 mp.hideSmPanel();
+                _this.suggestionList();
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);

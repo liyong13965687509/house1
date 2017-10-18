@@ -506,7 +506,7 @@ function WebApp() {
     this.LEFT_FULL = arguments['LEFT_FULL'] ? arguments['LEFT_FULL'] : ".main .pull-left .full";
     this.TAB_CHECK = arguments['TAB_CHECK'] ? arguments['TAB_CHECK'] : ".main .right-table a";
     this.TABS_LI = arguments['TABS_LI'] ? arguments['TABS_LI'] : ".tab-header>.tabs>li";
-    this.LG_BUTTON = arguments['LG_BUTTON'] ? arguments['LG_BUTTON'] : ".panel-lg .block-footer button";
+    this.LG_BUTTON = arguments['LG_BUTTON'] ? arguments['LG_BUTTON'] : ".panel-lg  button";
     this.LG_PANEL = arguments['LG_PANEL'] ? arguments['LG_PANEL'] : ".panel-lg .panel-footer button";
     this.LG_BILLADD = arguments['LG_BILLADD'] ? arguments['LG_BILLADD'] : ".panel-lg .bill-add";
     this.LG_A = arguments['LG_A'] ? arguments['LG_A'] : ".panel-lg a";
@@ -1092,26 +1092,24 @@ WebApp.prototype.textLength = function (str) {
  */
 
 WebApp.prototype.loading = function (element) {
-    console.log(10);
     var _this = this;
     if (element['selector'] == _this.RIGHT_CONTENT||element['selector']==_this.BLOCK_BODY) {
         element.find(".spinner").removeClass('hide').siblings().addClass('hide');
     } else {
         $(".spinner").addClass('hide').siblings().removeClass('hide');
     }
-    ajax();
-    function ajax() {
+
         // ajax加载前
         $(document).ajaxSend(function () {
             $(".spinner").addClass('hide').siblings().removeClass('hide');
             if (element.find(".spinner").length == 0){
                 element.append(_this.TEMP_LOAD);
             }
-            console.log(1111);
-            console.log(typeof element);
-            console.log(element.length);
-            console.log(element[0]);
-            element.find(".spinner").removeClass('hide').siblings().addClass('hide');
+            if(_this.PANEL_BODY!=element['selector']){
+                element.find(".spinner").removeClass('hide').siblings().addClass('hide');
+            }else{
+                element.find(".spinner").addClass('hide').siblings().removeClass('hide');
+            }
 
 
         });
@@ -1121,9 +1119,11 @@ WebApp.prototype.loading = function (element) {
                 element.find(".spinner").addClass('hide').siblings().removeClass('hide');
             }, 1000);
         });
-    }
+
 
 }
+
+
 
 /**
  * Author:LIYONG
@@ -1187,39 +1187,32 @@ WebApp.prototype.checkLoading = function () {
     })
     // 第三层
     $(document).on('click', _this.LG_BUTTON, function () {
-        console.log(1);
         _this.loading($(_this.PANEL_BODY));
     })
 
+
     $(document).on('click', _this.LG_PANEL, function () {
-        console.log(2);
         _this.loading($(_this.PANEL_BODY));
     })
 
     $(document).on('click', _this.LG_BILLADD, function () {
-        console.log(3);
         _this.loading($(_this.PANEL_BODY));
     })
 
     $(document).on('click',_this.LG_A, function () {
-        console.log(4);
         _this.loading($(_this.PANEL_BODY));
     })
 
     $(document).on('click', _this.LG_PASSWORD, function () {
-        console.log(5);
         _this.loading($(_this.SM_BUTTON).find('a'));
     })
 
-    //第四层
+    // 第四层
     $(document).on('click', _this.SM_BUTTON, function () {
         _this.loading($(_this.SM_BUTTON).find('a'));
     })
 
-    // $(document).on('click', '.tree-menu li', function () {
-    //     console.log(11);
-    //
-    // })
+
 
 }
 /**
