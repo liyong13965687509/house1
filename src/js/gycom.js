@@ -67,7 +67,7 @@ Grant.prototype.grantCheck = function () {
 if (objData) {
     new Grant({
         result: false,
-        config: "desktop.html,property.html," +
+        config: "desktop.html,property1.html," +
         "customer.html,contract.html,bill.html," +
         "count.html,power.html,employee.html," +
         "setup.html,dailyrecord.html"
@@ -1112,7 +1112,6 @@ function fyfoo2(pagerow, total, foo, fywrap) {
         var fybtn=$(this).parent('ul').find('li').not('.previous,.next,.page-total');
         $(this).addClass('active').siblings('li').removeClass('active');
         activenum = fybtn.index($(this));
-        // console.log(activenum);
         pagenum = parseInt($(this).find('a').html());
         foo(pagenum);
     });

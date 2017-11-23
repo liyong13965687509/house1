@@ -22,7 +22,7 @@
     <div class="pull-left">
         <ul class="left clearfix">
             <li class="left-title">
-                <h1 class="hidden-xs">天琚人才公寓</h1>
+                <h1 class="hidden-xs"></h1>
                 <button class="visible-xs navbar-toggle lg-nav">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -52,7 +52,6 @@
             <li class="right-message">
                 <a href="message.html">
                     <img src="images/yg_icon_07.png?v=9957859eb8"/>
-                    <span class="message-nums">8</span>
                 </a>
             </li>
         </ul>
@@ -71,13 +70,13 @@
                         </div>
                         <div class="from-group">
                             <div class="drop-container hide" tabIndex="1">
-                                <div class="drop-content" id="CustomerType_Get">
+                                <div class="drop-content">
                                     <div class="drop-header">
                                         <span class="drop-result">类型不限</span>
                                         <i class="drop-icon icon-drop-down"></i>
                                     </div>
                                     <div class="drop-body">
-                                        <ul>
+                                        <ul id="CustomerType_Get">
                                             <li class="drop-option" data-value="">类型不限</li>
                                         </ul>
                                     </div>
@@ -87,13 +86,13 @@
                         </div>
                         <div class="from-group">
                             <div class="drop-container hide" tabIndex="1">
-                                <div class="drop-content" id="CustomerLevel_Get">
+                                <div class="drop-content">
                                     <div class="drop-header">
                                         <span class="drop-result">等级不限</span>
                                         <i class="drop-icon icon-drop-down"></i>
                                     </div>
                                     <div class="drop-body">
-                                        <ul>
+                                        <ul id="CustomerLevel_Get">
                                             <li class="drop-option" data-value="0">等级不限</li>
                                         </ul>
                                     </div>
@@ -103,13 +102,13 @@
                         </div>
                         <div class="from-group">
                             <div class="drop-container hide" tabIndex="1">
-                                <div class="drop-content" id="CustomerSource_Get">
+                                <div class="drop-content">
                                     <div class="drop-header">
                                         <span class="drop-result">来源不限</span>
                                         <i class="drop-icon icon-drop-down"></i>
                                     </div>
                                     <div class="drop-body">
-                                        <ul>
+                                        <ul id="CustomerSource_Get">
                                             <li class="drop-option" data-value="">来源不限</li>
                                         </ul>
                                     </div>
@@ -119,13 +118,13 @@
                         </div>
                         <div class="from-group">
                             <div class="drop-container hide" tabIndex="1">
-                                <div class="drop-content" id="CustomerDateType_Get">
+                                <div class="drop-content">
                                     <div class="drop-header">
                                         <span class="drop-result">日期不限</span>
                                         <i class="drop-icon icon-drop-down"></i>
                                     </div>
                                     <div class="drop-body">
-                                        <ul>
+                                        <ul id="CustomerDateType_Get">
                                             <li class="drop-option" data-value="0">日期不限</li>
                                         </ul>
                                     </div>
@@ -146,7 +145,7 @@
                             </div>
                         </div>
                         <div class="from-group">
-                            <button class="fq-btn query" onclick="cp.customer()">查询</button>
+                            <button class="btn confirm full" onclick="cp.customer()">查询</button>
                         </div>
                     </div>
                     <div class="query-footer">
@@ -330,11 +329,13 @@
                             <div class="block-footer">
                                 <div class="block-button">
                                     <div class="pull-left">
-                                        <button class="btn delete customer_delete btn-hide" onclick="cp.customerDelete()">删除</button>
+                                        <button class="btn delete customer_delete btn-hide"
+                                                onclick="cp.customerDelete()">删除
+                                        </button>
+                                        <button class="btn edit customer_update btn-hide">编辑</button>
                                     </div>
                                     <div class="pull-right">
                                         <button class="btn cancel">取消</button>
-                                        <button class="btn  btn-edit btn-hide">编辑</button>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -515,7 +516,7 @@
                                         <div class="drop-container hide" tabIndex="1">
                                             <div class="drop-content">
                                                 <div class="drop-header">
-                                                    <span class="drop-result">带看</span>
+                                                    <span class="drop-result"></span>
                                                     <i class="drop-icon icon-drop-up"></i>
                                                 </div>
                                                 <div class="drop-body">
@@ -533,14 +534,14 @@
                                         <input type="text" class="form-input follow-remark" placeholder="请输入备注信息"/>
                                     </div>
                                     <div class="form-group">
-                                        <button class="btn submit-follow" onclick="cp.followAdd()">提交跟进</button>
+                                        <button class="btn confirm submit-follow" onclick="cp.followAdd()">提交跟进</button>
                                     </div>
 
 
                                 </div>
                                 <div class="pull-right">
                                     <button class="btn  cancel">取消</button>
-                                    <button class="btn  repeal btn-hide" onclick="cp.giveUpCustomer()">放弃</button>
+                                    <button class="btn  confirm repeal btn-hide" onclick="cp.giveUpCustomer()">放弃</button>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -549,8 +550,7 @@
                     <div class="tab-footer"></div>
                 </div>
             </div>
-            <div class="panel-footer">
-            </div>
+            <div class="panel-footer"></div>
         </div>
     </div>
 </div>
@@ -660,7 +660,8 @@
                                                     placeholder="请选择预约看房日期"><i
                             class="icon iconfont icon-gongzuotai"></i>
                     </div>
-                    <div class="date-wraper"><input class="group-date1 form-input group-top"  readonly type="text" id="InTime_Add"
+                    <div class="date-wraper"><input class="group-date1 form-input group-top" readonly type="text"
+                                                    id="InTime_Add"
                                                     placeholder="请选择入住日期"><i
                             class="icon iconfont icon-gongzuotai"></i>
                     </div>
@@ -695,7 +696,7 @@
                                         </div>
                                         <div class="drop-body">
                                             <ul id="Emps_Add">
-                                                <li  class="drop-option">不选</li>
+                                                <li class="drop-option">不选</li>
                                             </ul>
                                         </div>
                                         <div class="drop-footer"></div>
@@ -712,8 +713,12 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn confirm" onclick="cp.customerAddSave()">保存</button>
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="cp.customerAddSave()">保存</button>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
         <div class="panel-modal panel-edit">
@@ -816,7 +821,8 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="SeeTime_Edit">预约日期</label>
-                    <div class="date-wraper"><input class="group-date1 form-input" readonly type="text" id="SeeTime_Edit"
+                    <div class="date-wraper"><input class="group-date1 form-input" readonly type="text"
+                                                    id="SeeTime_Edit"
                                                     placeholder="请选择预约看房日期"><i
                             class="icon iconfont icon-gongzuotai"></i>
                     </div>
@@ -856,7 +862,7 @@
                                         </div>
                                         <div class="drop-body">
                                             <ul id="Emps_Edit">
-                                                <li  class="drop-option">不选</li>
+                                                <li class="drop-option">不选</li>
                                             </ul>
                                         </div>
                                         <div class="drop-footer"></div>
@@ -874,8 +880,12 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn cancel">取消</button>
-                <button class="btn confirm" onclick="cp.customerEditSave()">保存</button>
+                <div class="pull-left"></div>
+                <div class="pull-right">
+                    <button class="btn cancel">取消</button>
+                    <button class="btn confirm" onclick="cp.customerEditSave()">保存</button>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
     </div>

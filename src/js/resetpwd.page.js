@@ -7,15 +7,15 @@
 function ResetPassword() {
     var arguments = arguments.length != 0 ? arguments[0] : arguments;
     this.GET_CODE = arguments['GET_CODE'] ? arguments['GET_CODE'] : "GET_CODE";
-    this.BTN_CODE = arguments['BTN_CODE'] ? arguments['BTN_CODE'] : ".form-btn.code";
+    this.BTN_CODE = arguments['BTN_CODE'] ? arguments['BTN_CODE'] : ".btn-code";
     this.UPDATE_PWD = arguments['UPDATE_PWD'] ? arguments['UPDATE_PWD'] : "UPDATE_PWD";
-    this.BTN_SUBMIT = arguments['BTN_SUBMIT'] ? arguments['BTN_SUBMIT'] : ".form-btn.submit";
+    this.BTN_SUBMIT = arguments['BTN_SUBMIT'] ? arguments['BTN_SUBMIT'] : ".btn-submit";
 
     this.API_CONFIG = arguments['API_CONFIG'] ? arguments['API_CONFIG'] : {
         GET_CHECKCODE: "/identity/pwdresetcode",
         UPDATE_PASSWORD: "/identity/pwdreset",
     }
-    sessionStorage.setItem('status',true);
+    sessionStorage.setItem('status', true);
     this.init();
 }
 /**
@@ -192,18 +192,16 @@ ResetPassword.prototype.ajaxRequestCodeCheck = function (params) {
  */
 ResetPassword.prototype.exeGetCheckCode = function () {
     var _this = this;
-    $(document).on("click", ".form-btn.code", function () {
-
+    $(document).on("click", this.BTN_CODE, function () {
         var params = _this.getParams(_this.GET_CODE);
         if (_this.phoneNumberCheck(params['phone'])) {
             new TimerComponent({
-                element: ".form-btn.code",
+                element: _this.BTN_CODE,
                 initTime: 60,
                 complete: function () {
-                    console.log(this);
                 }
             });
-                _this.ajaxRequestCodeCheck(params);
+            _this.ajaxRequestCodeCheck(params);
         }
     });
     return this;
@@ -216,7 +214,7 @@ ResetPassword.prototype.exeGetCheckCode = function () {
  */
 ResetPassword.prototype.exeUpdatePassword = function () {
     var _this = this;
-    $(document).on("click", ".form-btn.submit", function () {
+    $(document).on("click", this.BTN_SUBMIT, function () {
         var params = _this.getParams(_this.UPDATE_PWD);
         if (_this.phoneNumberCheck(params['phone'])) {
             if (_this.phoneCodeCheck(params['code'])) {

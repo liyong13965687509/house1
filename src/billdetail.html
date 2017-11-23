@@ -66,6 +66,9 @@
             padding-right: 20px;
             width: 50px !important;
         }
+        .top-modal-bottom{
+            border-top:none;
+        }
 
 
     </style>
@@ -135,8 +138,8 @@
             </div>
         </div>
         <div class="top-modal-bottom">
-            <button class="btn-cancel" onclick="CloseDiv()">取消</button>
-            <button class="btn-keep" onclick="BillReceive()">收款</button>
+            <button class="btn btn-cancel" onclick="CloseDiv()">取消</button>
+            <button class="btn btn-keep" onclick="BillReceive()">收款</button>
         </div>
     </div>
 </div>
@@ -153,20 +156,22 @@
 
     //绑定账单基础信息
     function BillBind() {
-        var billCharId = getUrlParam('billCharId');
-        ;
+        var billCharId = getUrlParam('billCharId');;
         var data = {
             requestKey: localStorage.getItem("requestKey"),
             billCharId: billCharId
         };
+        console.log(data);
         $.ajax({
             type: "GET",
             url: host + "/bill/receive",
             data: data,
             dataType: "json",
             success: function (jdata) {
+                console.log(jdata);
                 if (jdata.succ) {
                     var data = jdata.data;
+                    console.log(jdata);
 //                    账单标识
                     $("#BillCharId").text(data[0].BillCharId);
 //                    账单房源
@@ -181,6 +186,7 @@
                     $("#TotalPrice").text(data[0].TotalPrice + "元");
 //                    描述
                     $("#Description").val(data[0].Description);
+
 
                     var html = "";
                     for (var i = 0; i < data.length; i++) {
@@ -248,10 +254,10 @@
             url: host + "/bill/receive",
             data: data,
             dataType: "JSON",
-            success: function (jdata) {
-                if (jdata.succ) {
+            success: function (data) {
+                if (data['succ']) {
                     var r ;
-                    messageBox.show("提醒", jdata.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
+                    messageBox.show("提醒", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
                     $(".btn-confirm").click(function () {
                         r = true;
                         billReceive();
@@ -265,7 +271,7 @@
                     }
                 }
                 else {
-                    messageBox.show("错误", jdata.msg, MessageBoxButtons.OK, MessageBoxIcons.error);
+                    messageBox.show("错误", data.msg, MessageBoxButtons.OK, MessageBoxIcons.error);
                 }
             },
             error: function (XMLHttpRequest, txtStatus, errorThrown) {

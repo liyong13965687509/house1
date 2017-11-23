@@ -138,20 +138,20 @@
 
     //选择客户
     function SelectCustomer(charId) {
-        if (window.opener.document.getElementById("CustomerCharId")) {
+        var STATUS_CODE = localStorage.getItem('StatusCode');
+        console.log(STATUS_CODE);
+        if ('1' == STATUS_CODE) {
             window.opener.document.getElementById("CustomerCharId").value = charId;
-            window.opener.document.getElementById("CustomerName_Add").innerText = $("#name_" + charId).text();
-            window.opener.document.getElementById("ContractPhone_Add").value = $("#phone_" + charId).text();
-            window.opener.document.getElementById("CardID_Add").value = $("#cardID_" + charId).text();
-            window.close();
-
-        } else {
+            window.opener.document.getElementById("AddContract_Name").value = $("#name_" + charId).text();
+            window.opener.document.getElementById("AddContract_Phone").value = $("#phone_" + charId).text();
+            window.opener.document.getElementById("AddContract_Id").value = $("#cardID_" + charId).text();
+        } else if ('2' == STATUS_CODE) {
             window.opener.document.getElementById("historyCustomerCharId").value = charId;
-            window.opener.document.getElementById("historyCustomerName_Add").innerText = $("#name_" + charId).text();
+            window.opener.document.getElementById("historyCustomerName_Add").value = $("#name_" + charId).text();
             window.opener.document.getElementById("historyContractPhone_Add").value = $("#phone_" + charId).text();
             window.opener.document.getElementById("historyCardID_Add").value = $("#cardID_" + charId).text();
-            window.close();
         }
+        window.close();
     }
 </script>
 </body>

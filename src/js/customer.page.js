@@ -16,7 +16,7 @@ function CustomerPage() {
     this.DATA_CHARID = arguments['DATA_CHARID'] ? arguments['DATA_CHARID'] : "DATA_CHARID";
     this.HOUSE_TYPE = arguments['HOUSE_TYPE'] ? arguments['HOUSE_TYPE'] : [];
     this.HOUSE_TYPE_EDIT = arguments['HOUSE_TYPE_EDIT'] ? arguments['HOUSE_TYPE_EDIT'] : [];
-    this.CUSTOMER_EDIT = arguments['CUSTOMER_EDIT'] ? arguments['CUSTOMER_EDIT'] : '.btn-edit';
+    this.CUSTOMER_EDIT = arguments['CUSTOMER_EDIT'] ? arguments['CUSTOMER_EDIT'] : '.customer_update';
     this.FOLLOW_CHARID = arguments['FOLLOW_CHARID'] ? arguments['FOLLOW_CHARID'] : 'FOLLOW_CHARID';
     this.FOLLOW_DEL = arguments['FOLLOW_DEL'] ? arguments['FOLLOW_DEL'] : '.column-del';
     this.FOLLOW_REMARK = arguments['FOLLOW_REMARK'] ? arguments['FOLLOW_REMARK'] : '.follow-remark';
@@ -257,14 +257,16 @@ CustomerPage.prototype.ajaxRequestConditionBind = function (params) {
             if (data['succ']) {
                 var TEMP_HTML = null;
                 var JSON_DATA = data['data'];
-                for (var i = 0; i < JSON_DATA.length; i++) {
+                for (var KEY in JSON_DATA) {
                     TEMP_HTML = "";
-                    for (var j = 0; j < JSON_DATA[i]['Value'].length; j++) {
-                        TEMP_HTML += "<li data-value=\"" + JSON_DATA[i]['Value'][j]['Key'] + "\" class='drop-option'>" + JSON_DATA[i]['Value'][j]['Value'] + "</li>";
+                    for (var i = 0; i < JSON_DATA[KEY].length; i++) {
+                        var KEY_DATA = JSON_DATA[KEY][i];
+                        TEMP_HTML += "<li class='drop-option' data-value=\"" + KEY_DATA['Key'] + "\">" + KEY_DATA['Value'] + "</li>";
                     }
-                    $("#" + JSON_DATA[i]['Key'] + "_Get ul li:first").nextAll().remove();
-                    $("#" + JSON_DATA[i]['Key'] + "_Get ul li:first").after(TEMP_HTML);
+                    TEMP_HTML += "<div class=\"clear\"></div>";
+                    $("#" + KEY + "_Get").html(TEMP_HTML);
                 }
+
             }
             else {
                 messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -329,12 +331,7 @@ CustomerPage.prototype.ajaxRequestCustomerBind = function (params) {
                     }
                 });
                 TEMP_HTML = JSON_DATA.length != 0 ? _this.getTemplate(JSON_DATA) : TEMP_HTML;
-                if (webApp.grantControl($(".pagination"), "billrecord_select")) {
-                    $(".table-body").html(TEMP_HTML);
-                } else {
-                    // 无权限查看
-                    webApp.noneGrant();
-                }
+                $(".table-body").html(TEMP_HTML);
 
             }
             else {
@@ -392,17 +389,17 @@ CustomerPage.prototype.getTemplate = function (params) {
             + '<div class="col-xs-12 col-md-5"><div class="row"><div class="column col-xs-12 col-md-2"><span>类型</span></div><div class="column col-xs-12 col-md-2"><span>等级</span></div>'
             + '<div class="column col-xs-12 col-md-2"><span>姓名</span></div><div class="column col-xs-12 col-md-4"><span>手机号码</span></div>'
             + '<div class="column col-xs-12 col-md-2"><span>来源</span></div></div></div><div class="col-xs-12 col-md-2"><div class="row"><div class="column col-xs-12 col-md-7"><span>租金(元/月)</span></div>'
-            + '<div class="column col-xs-12 col-md-5"><span>租期(月)</span></div></div></div><div class="col-xs-12 col-md-5"><div class="row"><div class="column col-xs-12 col-md-3"><span>创建</span></div>'
-            + '<div class="column col-xs-12 col-md-3"><span>预约</span></div><div class="column col-xs-12 col-md-2"><span>计划</span></div><div class="column col-xs-12 col-md-2"><span>归属人</span></div>'
-            + '<div class="column col-xs-12 col-md-2"><span>操作</span></div></div></div></div></div>'
+            + '<div class="column col-xs-12 col-md-5"><span>租期(月)</span></div></div></div><div class="col-xs-12 col-md-5"><div class="row">'
+            + '<div class="column col-xs-12 col-md-3"><span>预约</span></div><div class="column col-xs-12 col-md-3"><span>计划</span></div><div class="column col-xs-12 col-md-3"><span>归属人</span></div>'
+            + '<div class="column col-xs-12 col-md-3"><span>操作</span></div></div></div></div></div>'
             + '<div class="row-body col-xs-7 col-md-12"><div class="row-item row">'
             + '<div class="col-xs-12 col-md-5"><div class="row"><div class="column col-xs-12 col-md-2"><span>' + JSON_DATA['Type'] + '</span></div><div class="column col-xs-12 col-md-2"><span>' + JSON_DATA['LevelInValue'] + '</span></div>'
             + '<div class="column col-xs-12 col-md-2"><span>' + JSON_DATA['Name'] + '</span></div><div class="column col-xs-12 col-md-4"><span>' + JSON_DATA['Phone'] + '</span></div>'
             + '<div class="column col-xs-12 col-md-2"><span>' + JSON_DATA['SourceValue'] + '</span></div></div></div><div class="col-xs-12 col-md-2"><div class="row">'
             + '<div class="column col-xs-12 col-md-7"><span>' + JSON_DATA['RentalMin'] + '~' + JSON_DATA['RentalMax'] + '</span></div>'
-            + '<div class="column col-xs-12 col-md-5"><span>' + JSON_DATA['Month'] + '</span></div></div></div><div class="col-xs-12 col-md-5"><div class="row"><div class="column col-xs-12 col-md-3"><span>' + JSON_DATA['CreateTime'] + '</span></div>'
-            + '<div class="column col-xs-12 col-md-3"><span>' + JSON_DATA['SeeTime'] + '</span></div><div class="column col-xs-12 col-md-2"><span>' + JSON_DATA['InTime'] + '</span></div><div class="column col-xs-12 col-md-2"><span>' + JSON_DATA['EmployeeName'] + '</span></div>'
-            + '<div class="column col-xs-12 col-md-2"><span>'
+            + '<div class="column col-xs-12 col-md-5"><span>' + JSON_DATA['Month'] + '</span></div></div></div><div class="col-xs-12 col-md-5"><div class="row">'
+            + '<div class="column col-xs-12 col-md-3"><span>' + JSON_DATA['SeeTime'] + '</span></div><div class="column col-xs-12 col-md-3"><span>' + JSON_DATA['InTime'] + '</span></div><div class="column col-xs-12 col-md-3"><span>' + JSON_DATA['EmployeeName'] + '</span></div>'
+            + '<div class="column col-xs-12 col-md-3"><span>'
             + '<a data-value="' + JSON_DATA['CharId'] + '" href="javascript:void(0)" class="btn-detail">查看</a></span></div></div></div></div></div></div></div>'
     }
     return TEMP_HTML;
@@ -493,6 +490,7 @@ CustomerPage.prototype.tabChange = function () {
             $_BLOCK_CONTENT.eq(TAB_INDEX).removeClass('hide');
             switch (TAB_INDEX) {
                 case 0:
+                    _this.CustomerDetailBind();
                     break;
                 case 1:
                     _this.contractBind();
@@ -615,34 +613,24 @@ CustomerPage.prototype.ajaxRequestCustomerAddBind = function (params) {
         dataType: "JSON",
         success: function (data) {
             if (data['succ']) {
-                var JSON_DATA = data['data'];
-                var TEMP_JSON = {
-                    CustomerSource: "CustomerSource",
-                    CustomerLevel: "CustomerLevel",
-                    genders: "Genders",
-                    HouseType: "HouseType"
-                };
-                for (var i = 0; i < JSON_DATA.length; i++) {
-                    for (var KEY in TEMP_JSON) {
-                        if (JSON_DATA[i]['Key'] == TEMP_JSON[KEY]) {
-                            var TEMP_HTML = "", TEMP_NAME = "";
-                            var TEMP_VALUE = JSON_DATA[i]['Value'];
-                            for (var j = 0; j < TEMP_VALUE.length; j++) {
-                                TEMP_NAME = j == 0 ? ' active' : '';
-                                var TEMP_KEY = TEMP_VALUE[j]['Key'] ? TEMP_VALUE[j]['Key'] : TEMP_VALUE[j]["CharId"];
-                                var DATA_VALUE = TEMP_VALUE[j]['Value'] ? TEMP_VALUE[j]['Value'] : TEMP_VALUE[j]["Name"];
-                                TEMP_HTML += '<li class="drop-option ' + TEMP_NAME + '" data-value="' + TEMP_KEY + '">' + DATA_VALUE + '</li>'
-                            }
-                            $("#" + TEMP_JSON[KEY] + "_Add").html(TEMP_HTML);
-                            $("#" + TEMP_JSON[KEY] + "_Edit").html(TEMP_HTML);
-                        }
+                var JSON_DATA = data['data'],
+                    TEMP_DATA1 = JSON_DATA['data1'],
+                    TEMP_DATA2 = JSON_DATA['data2'],
+                    TEMP_HTML="";
+                for (var KEY in TEMP_DATA1) {
+                    var TEMP_HTML = "", TEMP_NAME = "";
+                    var TEMP_VALUE = TEMP_DATA1[KEY];
+                    for (var i = 0; i < TEMP_VALUE.length; i++) {
+                        TEMP_NAME = i == 0 ? ' active' : '';
+                        var TEMP_KEY = TEMP_VALUE[i]['Key'] ? TEMP_VALUE[i]['Key'] : TEMP_VALUE[i]["CharId"];
+                        var DATA_VALUE = TEMP_VALUE[i]['Value'] ? TEMP_VALUE[i]['Value'] : TEMP_VALUE[i]["Name"];
+                        TEMP_HTML += '<li class="drop-option ' + TEMP_NAME + '" data-value="' + TEMP_KEY + '">' + DATA_VALUE + '</li>'
                     }
-                    if (JSON_DATA[i]['Key'] == "Dpts") {//绑定部门
-                        var TEMP_HTML = tm.customerGetTemplate(JSON_DATA[i]['Value']);
-                        $(".tree-menu").html(TEMP_HTML);
-                    }
+                    $("#" + KEY + "_Add").html(TEMP_HTML);
+                    $("#" + KEY + "_Edit").html(TEMP_HTML);
                 }
-
+                TEMP_HTML = tm.customerGetTemplate(TEMP_DATA2);
+                $(".tree-menu").html(TEMP_HTML);
             }
             else {
                 messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -674,7 +662,7 @@ CustomerPage.prototype.customerAddSave = function () {
         customerMessage = "租期输入有误！";
     } else if (regular.check(regular.MONEY_REG_EXP, parseFloat($("#RentalMin_Add").val().trim())) || regular.check(regular.MONEY_REG_EXP, parseFloat($("#RentalMax_Add").val().trim()))) {
         customerMessage = "租金输入不正确！";
-    }  else if (parseFloat($("#RentalMin_Add").val().trim())>parseFloat($("#RentalMax_Add").val().trim())) {
+    } else if (parseFloat($("#RentalMin_Add").val().trim()) > parseFloat($("#RentalMax_Add").val().trim())) {
         customerMessage = "最高租金不能小于最低租金！";
     } else if (regular.customerRegExpCheck($("#People_Add").val().trim())) {
         customerMessage = "租客人数不正确！";
@@ -757,9 +745,9 @@ CustomerPage.prototype.customerEditSave = function () {
         customerMessage = "租期输入有误！";
     } else if (regular.check(regular.MONEY_REG_EXP, parseFloat($("#RentalMin_Edit").val().trim())) || regular.check(regular.MONEY_REG_EXP, parseFloat($("#RentalMax_Edit").val().trim()))) {
         customerMessage = "租金输入不正确！";
-    } else if (parseFloat($("#RentalMin_Edit").val().trim())>parseFloat($("#RentalMax_Edit").val().trim())) {
+    } else if (parseFloat($("#RentalMin_Edit").val().trim()) > parseFloat($("#RentalMax_Edit").val().trim())) {
         customerMessage = "最高租金不能小于最低租金！";
-    }else if (regular.customerRegExpCheck($("#People_Edit").val().trim())) {
+    } else if (regular.customerRegExpCheck($("#People_Edit").val().trim())) {
         customerMessage = "租客人数不正确！";
     } else if ($("#SeeTime_Edit").val() == "") {
         customerMessage = "请选择预约看房日期！";
@@ -885,6 +873,7 @@ CustomerPage.prototype.ajaxRequestCustomerEditBind = function (params) {
                         $_DROP_RESULT.text($_TEMP_SELECTOR.text());
                     }
                 }
+
                 // 性别
                 $(".genders").text(JSON_DATA['Title']);
                 $("#Genders_Edit li").each(function () {
@@ -1121,6 +1110,8 @@ CustomerPage.prototype.ajaxRequestFollowBind = function (params) {
                     TEMP_HTML += '<li class="drop-option ' + STYLE + '" data-value="' + TEMP_DATA[j]['Key'] + '" >' + TEMP_DATA[j]['Value'] + '</li>'
                 }
                 $("#titleList").html(TEMP_HTML);
+                $("#titleList").parents(".drop-body").prev().find(".drop-result").text($("#titleList .active").text());
+
             }
             else {
                 messageBox.show("提示", data.msg, MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -1320,8 +1311,8 @@ CustomerPage.prototype.ajaxRequestFollowAdd = function (params) {
  * 树形菜单
  * @returns {CustomerPage}
  */
-CustomerPage.prototype.treeItem=function () {
-    var _this=this;
+CustomerPage.prototype.treeItem = function () {
+    var _this = this;
     tm.customerClickTreeItem(function () {
         if ($("#Dpts_Add ul li.active").length != 0) {
             _this.employeeBindAdd();

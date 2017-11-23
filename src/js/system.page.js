@@ -139,10 +139,8 @@ SystemPage.prototype.ajaxRequestBindBill = function (params) {
             if (data['succ']) {
                 var JSON_DATA_FIRST = data['data']['data1'];
                 var JSON_DATA_SECOND = data['data']['data2'];
-
-                $("#" + JSON_DATA_FIRST[0]['name']).val(JSON_DATA_FIRST[0]['value']);
-                var TEMP_HTML = _this.getTemplate(JSON_DATA_SECOND);
-                $("#BillParam .item-header").after(TEMP_HTML);
+                $("#" + JSON_DATA_FIRST[0]['Key']).val(JSON_DATA_FIRST[0]['Value']);
+               _this.getTemplate(JSON_DATA_SECOND);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
@@ -282,8 +280,7 @@ SystemPage.prototype.ajaxRequestBindProperty = function (params) {
         success: function (data) {
             if (data['succ']) {
                 var JSON_DATA = data['data'];
-                var TEMP_HTML = _this.getTemplate(JSON_DATA);
-                $("#BuildingParam").append(TEMP_HTML);
+                _this.getTemplate(JSON_DATA);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
@@ -315,8 +312,7 @@ SystemPage.prototype.ajaxRequestBindCustomer = function (params) {
         success: function (data) {
             if (data['succ']) {
                 var JSON_DATA = data['data'];
-                var TEMP_HTML = _this.getTemplate(JSON_DATA);
-                $("#CustomerParam").append(TEMP_HTML);
+                _this.getTemplate(JSON_DATA);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
@@ -348,8 +344,7 @@ SystemPage.prototype.ajaxRequestBindEmployee = function (params) {
         success: function (data) {
             if (data['succ']) {
                 var JSON_DATA = data['data'];
-                var TEMP_HTML = _this.getTemplate(JSON_DATA);
-                $("#EmployeeParam").append(TEMP_HTML);
+                 _this.getTemplate(JSON_DATA);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
@@ -382,11 +377,10 @@ SystemPage.prototype.ajaxRequestBindContract = function (params) {
             if (data['succ']) {
                 var JSON_DATA_FIRST = data['data']['data1'];
                 for (var i = 0; i < JSON_DATA_FIRST.length; i++) {
-                    $("#" + JSON_DATA_FIRST[i]['name']).val(JSON_DATA_FIRST[i]['value']);
+                    $("#" + JSON_DATA_FIRST[i]['Key']).val(JSON_DATA_FIRST[i]['Value']);
                 }
                 var JSON_DATA_SECOND = data['data']['data2'];
-                var TEMP_HTML = _this.getTemplate(JSON_DATA_SECOND);
-                $("#ContractParam .item-content:eq(0)").after(TEMP_HTML);
+                 _this.getTemplate(JSON_DATA_SECOND);
             }
             else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -545,6 +539,10 @@ SystemPage.prototype.ajaxRequestAddLabel = function (params) {
         dataType: "JSON",
         data: params,
         success: function (data) {
+           if(data['data']==null){
+               messageBox.show("提示", "标签名已存在！", MessageBoxButtons.OK, MessageBoxIcons.infomation);
+               return false;
+           }
             _this.DATA_CHARID = data['data']['charId'];
             var TEMP_HTML = '<li class="list-option"><span class="list-span">' + params['value'] + '</span>'
                 + '<i id="' + _this.DATA_CHARID + '" class="list-icon icon-close"></i></li>';
@@ -579,7 +577,6 @@ SystemPage.prototype.ajaxRequestDeleteLabel = function (params) {
         dataType: "JSON",
         data: params,
         success: function (data) {
-            console.log(data);
             if (data['succ']) {
                 $("#" + _this.DATA_CHARID).parent().remove();
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -843,23 +840,20 @@ SystemPage.prototype.getParams = function (name) {
  */
 SystemPage.prototype.getTemplate = function (params) {
     var TEMP_HTML = '';
-    for (var i = 0; i < params.length; i++) {
-        TEMP_HTML += '<div class="item-content row"><label class="item-label">'
-            + params[i]['Name'] + '</label><ul class="item-list">';
-        var TEMP_JSON_DATA = params[i]['Value'];
-        for (var j = 0; j < TEMP_JSON_DATA.length; j++) {
-            var TEMP_DATA = TEMP_JSON_DATA[j];
+    for (var KEY in params) {
+        TEMP_HTML = '<ul class="item-list">'
+        for(var i=0;i<params[KEY].length;i++){
+            var TEMP_DATA = params[KEY][i];
             TEMP_HTML += webApp.grantControl($(".confirm"), "param_update") ?
-                '<li class="list-option"><span class="list-span">' + TEMP_DATA['Value'] + '</span>'
-                + '<i id="' + TEMP_DATA['CharId'] + '" class="list-icon icon-close"></i></li>' :
-                '<li class="list-option"><span class="list-span">' + TEMP_DATA['Value'] + '</span></li>';
+            '<li class="list-option"><span class="list-span">' + TEMP_DATA['Value'] + '</span>'
+            + '<i id="' + TEMP_DATA['Key'] + '" class="list-icon icon-close"></i></li>' :
+            '<li class="list-option"><span class="list-span">' + TEMP_DATA['Value'] + '</span></li>';
         }
         TEMP_HTML += webApp.grantControl($(".confirm"), "param_update") ?
-            '</ul><button class="btn plus icon-plus" id="' + params[i]['Key'] + '"></button></div>' : '</ul></div>';
+            '</ul><button class="btn plus icon-plus" id="' + KEY + '"></button>' : '</ul>';
+        $("." + KEY ).append(TEMP_HTML ? TEMP_HTML : "");
     }
-
-
-    return TEMP_HTML;
+    return this;
 }
 
 /**
