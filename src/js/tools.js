@@ -1117,7 +1117,7 @@ WebApp.prototype.loading = function (element) {
     $(document).ajaxComplete(function () {
         _this.TIMER = setTimeout(function () {
             element.find(".spinner").addClass('hide').siblings().removeClass('hide');
-        }, 1000);
+        }, 500);
     });
 
 

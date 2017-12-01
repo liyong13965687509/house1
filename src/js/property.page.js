@@ -2956,13 +2956,13 @@ PropertyPage.prototype.getParams = function (name) {
                 div1: parseInt($('#UpdateDiv1').val().trim()),
                 div2: parseInt($('#UpdateDiv2').val().trim()),
                 div3: parseInt($('#UpdateDiv3').val().trim()),
-                eleUnitPrice: parseInt($('#UpdateEleUnitPrice').val().trim()),
+                eleUnitPrice: $('#UpdateEleUnitPrice').val().trim(),
                 name: $('#UpdateRoomName').val().trim(),
                 price: parseInt($('#UpdatePrice').val().trim()),
                 requestKey: localStorage.getItem("requestKey"),
                 square: parseInt($('#UpdateSquare').val().trim()),
                 tag: _this.getResult('#UpdateRoomTag'),
-                waterUnitPrice: parseInt($('#UpdateWaterUnitPrice').val().trim())
+                waterUnitPrice: $('#UpdateWaterUnitPrice').val().trim()
             }
             break;
         case this.API_CONFIG.ADD_ROOM:

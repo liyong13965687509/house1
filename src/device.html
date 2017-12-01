@@ -307,6 +307,7 @@
                                             <label class="form-label" for="Lock_Open_Start">开始日期</label>
                                             <input class="form-input group-date1" readonly id="Lock_Open_Start"
                                                    placeholder="请输入开始日期"/>
+                                            <img src="images/false.png"  class="clean-date" alt="">
                                         </div>
                                     </div>
                                     <div class="table-item col-xs-12 col-md-5">
@@ -314,6 +315,7 @@
                                             <label class="form-label" for="Lock_Open_End">结束日期</label>
                                             <input class="form-input group-date1" readonly id="Lock_Open_End"
                                                    placeholder="请输入结束日期"/>
+                                            <img src="images/false.png"  class="clean-date" alt="">
                                         </div>
                                     </div>
                                     <div class="table-item col-xs-12 col-md-2">
@@ -347,6 +349,7 @@
                                             <label class="form-label" for="Lock_Oper_Start">开始日期</label>
                                             <input class="form-input group-date1" readonly id="Lock_Oper_Start"
                                                    placeholder="请输入开始日期"/>
+                                            <img src="images/false.png"  class="clean-date" alt="">
                                         </div>
                                     </div>
                                     <div class="table-item col-xs-12 col-md-5">
@@ -354,6 +357,7 @@
                                             <label class="form-label" for="Lock_Oper_End">结束日期</label>
                                             <input class="form-input group-date1" readonly id="Lock_Oper_End"
                                                    placeholder="请输入结束日期"/>
+                                            <img src="images/false.png"  class="clean-date" alt="">
                                         </div>
                                     </div>
                                     <div class="table-item col-xs-12 col-md-2">
@@ -474,14 +478,6 @@
                                         </div>
                                         <div class="group-row row">
                                             <div class="col-xs-5 col-sm-3">
-                                                <label class="group-label">剩余电量</label>
-                                            </div>
-                                            <div class="col-xs-7 col-sm-9">
-                                                <span class="group-value" id="Power_PowerTotal"></span>
-                                            </div>
-                                        </div>
-                                        <div class="group-row row">
-                                            <div class="col-xs-5 col-sm-3">
                                                 <label class="group-label">额定功率刷新时间</label>
                                             </div>
                                             <div class="col-xs-7 col-sm-9">
@@ -518,14 +514,6 @@
                                             </div>
                                             <div class="col-xs-7 col-sm-9">
                                                 <span class="group-value" id="Power_OverdraftUpdateTime"></span>
-                                            </div>
-                                        </div>
-                                        <div class="group-row row">
-                                            <div class="col-xs-5 col-sm-3">
-                                                <label class="group-label">剩余电量刷新时间</label>
-                                            </div>
-                                            <div class="col-xs-7 col-sm-9">
-                                                <span class="group-value" id="Power_PowerTotalUpdateTime"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -631,6 +619,7 @@
                                             <label class="form-label" for="Power_Buy_Start">开始日期</label>
                                             <input class="form-input group-date1" readonly id="Power_Buy_Start"
                                                    placeholder="请输入开始日期"/>
+                                            <img src="images/false.png"  class="clean-date" alt="">
                                         </div>
                                     </div>
                                     <div class="table-item col-xs-12 col-md-5">
@@ -638,6 +627,7 @@
                                             <label class="form-label" for="Power_Buy_End">结束日期</label>
                                             <input class="form-input group-date1" readonly id="Power_Buy_End"
                                                    placeholder="请输入结束日期"/>
+                                            <img src="images/false.png"  class="clean-date" alt="">
                                         </div>
                                     </div>
                                     <div class="table-item col-xs-12 col-md-2">
@@ -671,6 +661,7 @@
                                             <label class="form-label">开始日期</label>
                                             <input class="form-input group-date1" readonly id="Power_Use_Start" readonly
                                                    placeholder="请输入开始日期"/>
+                                            <img src="images/false.png"  class="clean-date" alt="">
                                         </div>
                                     </div>
                                     <div class="table-item col-xs-12 col-md-5">
@@ -678,6 +669,7 @@
                                             <label class="form-label">结束日期</label>
                                             <input class="form-input group-date1" readonly id="Power_Use_End" readonly
                                                    placeholder="请输入结束日期"/>
+                                            <img src="images/false.png"  class="clean-date" alt="">
                                         </div>
                                     </div>
                                     <div class="table-item col-xs-12 col-md-2">
@@ -712,6 +704,7 @@
                                             <label class="form-label" for="Power_Oper_Start">开始日期</label>
                                             <input class="form-input group-date1" readonly id="Power_Oper_Start"
                                                    placeholder="请输入开始日期"/>
+                                            <img src="images/false.png"  class="clean-date" alt="">
                                         </div>
                                     </div>
                                     <div class="table-item col-xs-12 col-md-5">
@@ -719,6 +712,7 @@
                                             <label class="form-label" for="Power_Oper_End">结束日期</label>
                                             <input class="form-input group-date1" readonly id="Power_Oper_End"
                                                    placeholder="请输入结束日期"/>
+                                            <img src="images/false.png"  class="clean-date" alt="">
                                         </div>
                                     </div>
                                     <div class="table-item col-xs-12 col-md-2">
@@ -838,7 +832,7 @@
                                         <button class="btn delete" onclick="mg.exeDeleteDevices();">删除</button>
                                         <button class="btn edit" data-panel="panel-sm" data-index="5">编辑</button>
                                     </div>
-                                    <div class="pull-right" id="Power_Bind_Btn"></div>
+                                    <div class="pull-right" id="Water_Bind_Btn"></div>
                                 </div>
                             </div>
                         </div>
@@ -849,27 +843,29 @@
                                     <div class="table-item col-xs-12 col-md-5">
                                         <div class="form-group limit">
                                             <label class="form-label">开始日期</label>
-                                            <input class="form-input group-date1" readonly id="Power_Use_Start" readonly
+                                            <input class="form-input group-date1" readonly id="Water_Use_Start" readonly
                                                    placeholder="请输入开始日期"/>
+                                            <img src="images/false.png"  class="clean-date" alt="">
                                         </div>
                                     </div>
                                     <div class="table-item col-xs-12 col-md-5">
                                         <div class="form-group limit">
                                             <label class="form-label">结束日期</label>
-                                            <input class="form-input group-date1" readonly id="Power_Use_End" readonly
+                                            <input class="form-input group-date1" readonly id="Water_Use_End" readonly
                                                    placeholder="请输入结束日期"/>
+                                            <img src="images/false.png"  class="clean-date" alt="">
                                         </div>
                                     </div>
                                     <div class="table-item col-xs-12 col-md-2">
                                         <div class="form-group">
-                                            <button class="btn confirm" onclick="mg.exePowerUseRecord();">查询
+                                            <button class="btn confirm" onclick="mg.exeWaterUseRead();">查询
                                             </button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="table-body row" id="PowerUseRecord"></div>
+                                <div class="table-body row" id="WaterUseRecord"></div>
                                 <div class="table-footer">
-                                    <div class="pagination" id="PagPowerUse"></div>
+                                    <div class="pagination" id="PagWaterUse"></div>
                                 </div>
                             </div>
                             <div class="block-footer">
@@ -877,7 +873,7 @@
                                     <div class="pull-left"></div>
                                     <div class="pull-right">
                                         <button class="btn cancel">取消</button>
-                                        <button class="btn confirm" onclick="mg.exeGetNewPower();">获取最新电量</button>
+                                        <button class="btn confirm" onclick="mg.exeGetNewWater();">获取最新水量</button>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>

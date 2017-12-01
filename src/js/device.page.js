@@ -29,9 +29,11 @@ function Management() {
 
     this.POWER_BUY_END = arguments['POWER_BUY_END'] ? arguments['POWER_BUY_END'] : 'POWER_BUY_END';
     this.POWER_USE_END = arguments['POWER_USE_END'] ? arguments['POWER_USE_END'] : 'POWER_USE_END';
+    this.WATER_USE_END = arguments['WATER_USE_END'] ? arguments['WATER_USE_END'] : 'WATER_USE_END';
     this.POWER_OPER_END = arguments['POWER_OPER_END'] ? arguments['POWER_OPER_END'] : 'POWER_OPER_END';
 
     this.POWER_USE_START = arguments['POWER_USE_START'] ? arguments['POWER_USE_START'] : 'POWER_USE_START';
+    this.WATER_USE_START = arguments['WATER_USE_START'] ? arguments['WATER_USE_START'] : 'WATER_USE_START';
     this.POWER_BUY_START = arguments['POWER_BUY_START'] ? arguments['POWER_BUY_START'] : 'POWER_BUY_START';
     this.POWER_OPER_START = arguments['POWER_OPER_START'] ? arguments['POWER_OPER_START'] : 'POWER_OPER_START';
 
@@ -86,6 +88,7 @@ function Management() {
         POWER_OPER_REC: '/search-device-op-log',
         POWER_BUY_REC: '/elemeter/elemeter-charge-record',
         POWER_USE_REC: '/elemeter/elemeter-fetch-power-history',
+        WATER_USE_REC: '/watermeter/watermeter-record',
         ADD_PASSWORD: '/lock/add-password',
         DELETE_PASSWORD: '/lock/delete-password',
         UPDATE_PASSWORD: '/lock/update-password',
@@ -100,6 +103,7 @@ function Management() {
         POWER_SWITCH_OFF: '/elemeter/elemeter-switch-off',
         POWER_RECHARGE: '/elemeter/elemeter-charge',
         GETNEW_POWER: '/elemeter/elemeter-read',
+        GETNEW_WATER: '/watermeter/watermeter-read',
         RESET_PASSWORD: '/lock/update-manager-password',
     }
 
@@ -127,6 +131,8 @@ Management.prototype.init = function () {
     this.exeUnfrozenPassword();
     this.linkage();
     this.addType();
+    this.clickEdit();
+    this.cleanDate();
 
     return this;
 }
@@ -136,10 +142,10 @@ Management.prototype.init = function () {
  * Date:2017-11-23
  * @returns {Management}
  */
-Management.prototype.addType=function(){
-    $("#Add_Type").on("click","li",function(){
-        var index=$(this).index();
-        switch (index){
+Management.prototype.addType = function () {
+    $("#Add_Type").on("click", "li", function () {
+        var index = $(this).index();
+        switch (index) {
             case 0:
                 $(".form-supplier").hide()
                     .siblings().show();
@@ -156,24 +162,43 @@ Management.prototype.addType=function(){
     })
     return this;
 }
+/**
+ * 清除日期
+ * Author：LIYONG
+ * Date:2017-12-1
+ * @returns {Management}
+ */
+Management.prototype.cleanDate=function(){
+    $(".clean-date").click(function(){
+        $(this).parent().find("input").val("");
+    })
+    return this;
+}
 
-$(".btn.edit").click(function(){
-    var index=$('#EquType li.active').index();
-    switch (index){
-        case 0:
-          $(".form-device-Supplier").hide()
-              .siblings().show();
-            break;
-        case 1:
-            $(".form-device-Supplier").hide()
-                .siblings().show();
-            break;
-        case 2:
-            $(".form-device-Number").hide()
-                .siblings().show();
-            break;
-    }
-})
+/**
+ * 点击编辑
+ * Author：LIYONG
+ * Date:2017-11-29
+ * @returns {Management}
+ */
+Management.prototype.clickEdit = function () {
+    $(".btn.edit").click(function () {
+        var index = 0;
+        $(".panel-modal.show").find("h3.panel-title").eq(0).text() != "水表明细" ? index = 0 : index = 1;
+        switch (index) {
+            case 0:
+                $(".form-device-Supplier").hide()
+                    .siblings().show();
+                break;
+            case 1:
+                $(".form-device-Number").hide()
+                    .siblings().show();
+                break;
+        }
+    })
+    return this;
+}
+
 
 /**
  *
@@ -244,6 +269,14 @@ Management.prototype.tabChange = function () {
                     }
                     break;
                 case 2:
+                    switch (TAB_INDEX) {
+                        case 0:
+                            _this.exeWaterDetail();
+                            break;
+                        case 1:
+                            _this.exeWaterUseRead();
+                            break;
+                    }
                     break;
             }
         }
@@ -274,12 +307,9 @@ Management.prototype.linkage = function () {
 Management.prototype.dropChange = function () {
     var _this = this;
     webApp.selectDropOption(function (obj) {
-        console.log(obj);
         var _obj = $(obj);
-        console.log(_obj);
         var selector = _obj.parent().attr('data-target');
         _this.DROP_SELECTOR = _obj.parent().attr('id');
-        console.log(_this.DROP_SELECTOR);
         if (selector) {
             switch (selector) {
                 case 'EquNumber':
@@ -306,10 +336,12 @@ Management.prototype.addDevicesNotEmpty = function () {
         message = '请选择设备类型！';
     } else if (!$('#Add_Name').val().trim()) {
         message = '请输入设备名称！';
-    } else if (!$('#Add_Number').val().trim()) {
+    } else if (!$('#Add_Number').val().trim()&&$(".form-group.form-number").css("display")!="none") {
         message = '请输入设备序列号！';
     } else if (!$('#Add_UUID').val().trim()) {
         message = '请输入设备UUID编号！';
+    } else if (!$('#Add_Supplier').val().trim()&&$(".form-group.form-supplier").css("display")!="none") {
+        message = '请输入供应厂商！';
     } else {
         result = true;
     }
@@ -371,10 +403,12 @@ Management.prototype.updateDevicesNotEmpty = function () {
     var result = false;
     if (!$('#Update_Device_Name').val().trim()) {
         message = '请输入设备名称！';
-    } else if (!$('#Update_Device_Number').val().trim()) {
+    } else if (!$('#Update_Device_Number').val().trim() && $(".form-device-Number").css("display") != "none") {
         message = '请输入设备序列号！';
     } else if (!$('#Update_Device_Uuid').val().trim()) {
         message = '请输入设备UUID！';
+    } else if (!$('#Update_Device_Supplier').val().trim() && $(".form-device-Supplier").css("display") != "none") {
+        message = '请输入设备供应厂商！';
     } else {
         result = true;
     }
@@ -476,7 +510,7 @@ Management.prototype.powerInputKeyUp = function () {
         if (TEMP_FLAG1 || TEMP_FLAG2 || TEMP_FLAG3) {
             var TEMP_PRICE = parseFloat($('#PowerPrice').val().trim());
             var TEMP_UNIT = parseFloat($('#Charge_EleUnitPrice').text().trim());
-            $('#PowerAmount').val(TEMP_PRICE / TEMP_UNIT);
+            $('#PowerAmount').val(parseInt(TEMP_PRICE / TEMP_UNIT*100)/100);
         } else {
             this.value = this.value.replace(/[^0-9]/g, '')
         }
@@ -597,14 +631,13 @@ Management.prototype.switchShowDetail = function (params) {
  * @returns {string}
  */
 Management.prototype.getTemplate = function (params) {
-    var _this=this;
+    var _this = this;
     var JSON_DATA = null;
     var TEMP_HTML = '', TEMP_CLASS = '';
     for (var i = 0; i < params.length; i++) {
         JSON_DATA = params[i];
         TEMP_CLASS = i >= 1 ? " visible-xs visible-sm" : "";
-        console.log(JSON_DATA);
-        _this.MANU=JSON_DATA['ManuFactory'];
+        _this.MANU = JSON_DATA['ManuFactory'];
         TEMP_HTML += '<div class="table-item col-xs-12 col-sm-6 col-md-12"><div class="row-content row">'
             + '<div class="row-header col-xs-6 col-md-12"><div class="row-title' + TEMP_CLASS + ' row">'
             + '<div class="column col-xs-12 col-md-3">设备名称</div><div class="column col-xs-12 col-md-3">设备类型</div>'
@@ -844,6 +877,19 @@ Management.prototype.ajaxRequestUpdateDevices = function (params) {
         data: params,
         success: function (data) {
             if (data['succ']) {
+                mp.hideSmPanel();
+                var TAB_INDEX = $('#EquType .active').index();
+                switch (TAB_INDEX) {
+                    case 0:
+                        _this.exeLockDetail();
+                        break;
+                    case 1:
+                        _this.exePowerDetail();
+                        break;
+                    case 2:
+                        _this.exeWaterDetail();
+                        break;
+                }
                 _this.exeBindDevices();
                 messageBox.show("提示", '设备修改成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
             } else {
@@ -1026,7 +1072,6 @@ Management.prototype.ajaxRequestPowerDetail = function (params) {
  */
 Management.prototype.ajaxRequestWaterDetail = function (params) {
     var _this = this;
-    console.log(1);
     $.ajax({
         url: host + _this.API_CONFIG['WATER_DETAIL'],
         type: "GET",
@@ -1039,7 +1084,7 @@ Management.prototype.ajaxRequestWaterDetail = function (params) {
                 var UNBIND_BUTTON = '<button class="btn confirm" onclick="mg.exeDeviceUnbind();">解绑</button>';
                 var JSON_DATA = data['data'];
                 TEMP_BUTTONS = 1 == JSON_DATA['IsBind'] ? TEMP_BUTTONS + UNBIND_BUTTON : TEMP_BUTTONS + BIND_BUTTON;
-                $('#Power_Bind_Btn').html(TEMP_BUTTONS);
+                $('#Water_Bind_Btn').html(TEMP_BUTTONS);
                 JSON_DATA['IsBind'] = 1 == JSON_DATA['IsBind'] ? '是' : '否';
                 JSON_DATA['CapacityUpdateTime'] = webApp.parseDate(JSON_DATA['CapacityUpdateTime']);
                 JSON_DATA['OverdraftUpdateTime'] = webApp.parseDate(JSON_DATA['OverdraftUpdateTime']);
@@ -1047,20 +1092,18 @@ Management.prototype.ajaxRequestWaterDetail = function (params) {
                 JSON_DATA['EnableStateUpdateTime'] = webApp.parseDate(JSON_DATA['EnableStateUpdateTime']);
                 JSON_DATA['ConsumeAmountUpdateTime'] = webApp.parseDate(JSON_DATA['ConsumeAmountUpdateTime']);
                 JSON_DATA['OnOffStateLastUpdateTime'] = webApp.parseDate(JSON_DATA['OnOffStateLastUpdateTime']);
-console.log(JSON_DATA);
                 for (var KEY in JSON_DATA) {
                     $('#Water_' + KEY).text(JSON_DATA[KEY]);
                 }
                 $('#Update_Device_Uuid').val(_this.DATA_UUID);
-                $('#Update_Device_Name').val($('#Power_Name').text().trim());
-                $('#Update_Device_Number').val($('#Power_SerialNumber').text().trim());
+                $('#Update_Device_Name').val($('#Water_Name').text().trim());
+                $('#Update_Device_Supplier').val($('#Water_ManuFactory').text().trim());
                 $(_this.POWER_STATUS).html(JSON_DATA['EnableState']);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
         },
         error: function (e) {
-            console.log(21);
             if (e.readyState > 0) {
                 messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
             } else {
@@ -1262,6 +1305,48 @@ Management.prototype.ajaxRequestPowerUseRecord = function (params) {
     return this;
 }
 /**
+ *Author:LIYONG
+ * Date:2017-11-24
+ * 水表读数ajax
+ * @param params
+ * @returns {Management}
+ */
+Management.prototype.ajaxRequestWaterUseRead = function (params) {
+    var _this = this;
+    $.ajax({
+        url: host + _this.API_CONFIG['WATER_USE_REC'],
+        type: "GET",
+        dataType: "JSON",
+        data: params,
+        success: function (data) {
+            if (data['succ']) {
+                var JSON_DATA = data['data'];
+                _this.appendWaterUseRecordTemplate(JSON_DATA);
+                new Pagination({
+                    PAGINATION: '#PagWaterUse',
+                    PAGE_SIZE: _this.PAGE_SIZE,
+                    DATA_NUMS: data['exted']['totalNum'],
+                    CHANGE_PAGE: function (pageCode) {
+                        params = _this.getParams(_this.API_CONFIG.WATER_USE_REC);
+                        params['offset'] = _this.PAGE_SIZE * (pageCode - 1);
+                        _this.ajaxRequestChangePageWaterUseRecord(params);
+                    }
+                });
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
  *
  * @param params
  * @returns {Management}
@@ -1277,6 +1362,39 @@ Management.prototype.ajaxRequestChangePagePowerUseRecord = function (params) {
             if (data['succ']) {
                 var JSON_DATA = data['data'];
                 _this.appendPowerUseRecordTemplate(JSON_DATA);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+
+/**
+ *水表读数记录翻页
+ * Author：LIYONG
+ * Date：2017-11-27
+ * @param params
+ * @returns {Management}
+ */
+Management.prototype.ajaxRequestChangePageWaterUseRecord = function (params) {
+    var _this = this;
+    $.ajax({
+        url: host + _this.API_CONFIG['WATER_USE_REC'],
+        type: "GET",
+        dataType: "JSON",
+        data: params,
+        success: function (data) {
+            if (data['succ']) {
+                var JSON_DATA = data['data'];
+                _this.appendWaterUseRecordTemplate(JSON_DATA);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
             }
@@ -1307,7 +1425,7 @@ Management.prototype.appendPowerUseRecordTemplate = function (params) {
         TEMP_HTML += '<div class="table-item col-xs-12 col-sm-6 col-md-12"><div class="row-content row">'
             + '<div class="row-header col-xs-6 col-md-12"><div class="row-title' + TEMP_NAME + ' row">'
             + '<div class="column col-xs-12 col-md-4">房间用电量</div>'
-            + '<div class="column col-xs-12 col-md-4">剩余总量</div>'
+            + '<div class="column col-xs-12 col-md-4">充电总量</div>'
             + '<div class="column col-xs-12 col-md-4">时间</div>'
             + '</div></div>'
             + '<div class="row-body col-xs-6 col-md-12"><div class="row-item row">'
@@ -1318,6 +1436,36 @@ Management.prototype.appendPowerUseRecordTemplate = function (params) {
     }
     JSON_DATA = null;
     $('#PowerUseRecord').html(TEMP_HTML);
+    return this;
+}
+
+/**
+ *水表读数
+ *Author:LIYONG
+ * Date:2017-11-27
+ * @param params
+ * @returns {Management}
+ */
+Management.prototype.appendWaterUseRecordTemplate = function (params) {
+    var JSON_DATA = null;
+    var TEMP_HTML = '', TEMP_NAME = '';
+    for (var i = 0; i < params.length; i++) {
+        JSON_DATA = params[i];
+        JSON_DATA['Time'] = webApp.parseDate(JSON_DATA['Time']);
+        TEMP_NAME = i > 0 ? ' visible-xs visible-sm' : '';
+        JSON_DATA['TotalAmount'] = JSON_DATA['TotalAmount'] == -1 ? '未知' : JSON_DATA['TotalAmount'];
+        TEMP_HTML += '<div class="table-item col-xs-12 col-sm-6 col-md-12"><div class="row-content row">'
+            + '<div class="row-header col-xs-6 col-md-12"><div class="row-title' + TEMP_NAME + ' row">'
+            + '<div class="column col-xs-12 col-md-6">水表读数</div>'
+            + '<div class="column col-xs-12 col-md-6">创建时间</div>'
+            + '</div></div>'
+            + '<div class="row-body col-xs-6 col-md-12"><div class="row-item row">'
+            + '<div class="column col-xs-12 col-md-6">' + JSON_DATA['device_amount'] + '</div>'
+            + '<div class="column col-xs-12 col-md-6">' + JSON_DATA['ctime'] + '</div>'
+            + '</div></div></div></div>';
+    }
+    JSON_DATA = null;
+    $('#WaterUseRecord').html(TEMP_HTML);
     return this;
 }
 /**
@@ -1906,7 +2054,19 @@ Management.prototype.ajaxRequestDeviceBind = function (params) {
         success: function (data) {
             if (data['succ']) {
                 mp.hideSmPanel();
-                _this.exeBindCallBack();
+                var TAB_INDEX = $('#EquType .active').index();
+                switch (TAB_INDEX) {
+                    case 0:
+                        _this.exeLockDetail();
+                        break;
+                    case 1:
+                        _this.exePowerDetail();
+                        break;
+                    case 2:
+                        _this.exeWaterDetail();
+                        break;
+                }
+                _this.exeBindDevices();
                 messageBox.show("提示", '绑定成功！', MessageBoxButtons.OK, MessageBoxIcons.infomation);
             } else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -2094,17 +2254,22 @@ Management.prototype.ajaxRequestDeviceUnbind = function (params) {
         data: params,
         success: function (data) {
             if (data['succ']) {
-                _this.exeBindCallBack();
-
+                _this.exeBindDevices();
                 var SELECTOR = _this.TAB_BTN + '.' + _this.ACTIVE;
                 var TEMP_INDEX = parseInt($(SELECTOR).index());
                 var TEMP_MESSAGE;
                 switch (TEMP_INDEX) {
                     case 0:
                         TEMP_MESSAGE = '门锁解绑成功！';
+                        _this.exeLockDetail();
                         break;
                     case 1:
                         TEMP_MESSAGE = '电表解绑成功！';
+                        _this.exePowerDetail();
+                        break;
+                    case 2:
+                        TEMP_MESSAGE = '水表解绑成功！';
+                        _this.exeWaterDetail();
                         break;
                 }
                 messageBox.show("提示", TEMP_MESSAGE, MessageBoxButtons.OK, MessageBoxIcons.infomation);
@@ -2185,12 +2350,55 @@ Management.prototype.ajaxRequestGetNewPower = function (params) {
     return this;
 }
 /**
+ *获取最新水表读数ajax
+ * Author：LIYONG
+ * Date:2017-11-27
+ * @param params
+ * @returns {Management}
+ */
+Management.prototype.ajaxRequestGetNewWater = function (params) {
+    var _this = this;
+    $.ajax({
+        url: host + _this.API_CONFIG.GETNEW_WATER,
+        type: "GET",
+        data: params,
+        dataType: "JSON",
+        success: function (data) {
+            if (data['succ']) {
+                var TEMP_INFO = '获取水量命令下达成功，等待设备返回...';
+                messageBox.show('提示', TEMP_INFO, MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            } else {
+                messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);
+            }
+        },
+        error: function (e) {
+            if (e.readyState > 0) {
+                messageBox.show("错误", e, MessageBoxButtons.OK, MessageBoxIcons.error);
+            } else {
+                messageBox.show("错误", "网络异常，请检查网络 ！", MessageBoxButtons.OK, MessageBoxIcons.error);
+            }
+        }
+    });
+    return this;
+}
+/**
  *
  * @returns {Management}
  */
 Management.prototype.exeGetNewPower = function () {
     var params = this.getParams(this.API_CONFIG.GETNEW_POWER);
     this.ajaxRequestGetNewPower(params);
+    return this;
+}
+/**
+ *获取最新水表读数
+ *Author:LIYONG
+ * Date:2017-11-27
+ * @returns {Management}
+ */
+Management.prototype.exeGetNewWater = function () {
+    var params = this.getParams(this.API_CONFIG.GETNEW_WATER);
+    this.ajaxRequestGetNewWater(params);
     return this;
 }
 /**
@@ -2310,7 +2518,6 @@ Management.prototype.exePowerDetail = function () {
  */
 Management.prototype.exeWaterDetail = function () {
     var params = this.getParams(this.API_CONFIG.WATER_DETAIL);
-    console.log(params);
     this.ajaxRequestWaterDetail(params);
     return this;
 }
@@ -2330,6 +2537,18 @@ Management.prototype.exePowerBuyRecord = function () {
 Management.prototype.exePowerUseRecord = function () {
     var params = this.getParams(this.API_CONFIG.POWER_USE_REC);
     this.ajaxRequestPowerUseRecord(params);
+    return this;
+}
+
+/**
+ *Author:LIYONG
+ * Date:2017-11-24
+ * 水表读数
+ * @returns {Management}
+ */
+Management.prototype.exeWaterUseRead = function () {
+    var params = this.getParams(this.API_CONFIG.WATER_USE_REC);
+    this.ajaxRequestWaterUseRead(params);
     return this;
 }
 /**
@@ -2540,6 +2759,9 @@ Management.prototype.exeBindCallBack = function () {
         case 1:
             this.exePowerDetail();
             break;
+        case 2:
+            this.exeWaterDetail();
+            break;
     }
     return this;
 }
@@ -2605,6 +2827,14 @@ Management.prototype.getResult = function (name) {
             break;
         case this.POWER_USE_END:
             TEMP_RESULT = $('#Power_Use_End').val().trim();
+            TEMP_RESULT = TEMP_RESULT ? webApp.parseTime(TEMP_RESULT) : 0;
+            break;
+        case this.WATER_USE_START:
+            TEMP_RESULT = $('#Water_Use_Start').val().trim();
+            TEMP_RESULT = TEMP_RESULT ? webApp.parseTime(TEMP_RESULT) : 0;
+            break;
+        case this.WATER_USE_END:
+            TEMP_RESULT = $('#Water_Use_End').val().trim();
             TEMP_RESULT = TEMP_RESULT ? webApp.parseTime(TEMP_RESULT) : 0;
             break;
         case this.BUILDING_CHARID:
@@ -2704,16 +2934,16 @@ Management.prototype.getParams = function (name) {
             }
             break;
         case this.API_CONFIG.POWER_DETAIL:
-        params = {
-            uuid: _this.DATA_UUID,
-            requestKey: localStorage.getItem("requestKey")
-        }
-        break;
+            params = {
+                uuid: _this.DATA_UUID,
+                requestKey: localStorage.getItem("requestKey")
+            }
+            break;
         case this.API_CONFIG.WATER_DETAIL:
             params = {
                 uuid: _this.DATA_UUID,
                 requestKey: localStorage.getItem("requestKey"),
-                manufactory:_this.MANU
+                manufactory: _this.MANU
             }
             break;
         case this.API_CONFIG.POWER_BUY_REC:
@@ -2734,6 +2964,17 @@ Management.prototype.getParams = function (name) {
                 end_time: _this.getResult(_this.POWER_USE_END),
                 offset: _this.PAGE_SIZE * (_this.PAGE_INDEX - 1),
                 requestKey: localStorage.getItem("requestKey")
+            }
+            break;
+        case this.API_CONFIG.WATER_USE_REC:
+            params = {
+                count: _this.PAGE_SIZE,
+                uuid: _this.DATA_UUID,
+                begin: _this.getResult(_this.WATER_USE_START) * 1000,
+                end: _this.getResult(_this.WATER_USE_END) * 1000,
+                offset: _this.PAGE_SIZE * (_this.PAGE_INDEX - 1),
+                requestKey: localStorage.getItem("requestKey"),
+                manufactory: _this.MANU
             }
             break;
         case this.POWER_OPER_REC:
@@ -2845,7 +3086,7 @@ Management.prototype.getParams = function (name) {
                 uuid: _this.DATA_UUID,
                 deviceCharId: _this.DATA_VALUE,
                 price: $('#PowerPrice').val().trim(),
-                amount: $('#PowerAmount').val().trim(),
+                amount: parseInt($('#PowerAmount').val().trim()*100)/100,
                 phone: $('#Charge_Phone').text().trim(),
                 serialNumber: $('#PowerNumber').val().trim(),
                 requestKey: localStorage.getItem("requestKey"),
@@ -2857,11 +3098,12 @@ Management.prototype.getParams = function (name) {
         case this.API_CONFIG.UPDATE_DEVICES:
             params = {
                 uuid: _this.DATA_UUID,
-                serialNumber: '',
+                serialNumber:$("#Update_Device_Number").val().trim(),
+                deviceName:$("#Update_Device_Name").val().trim(),
                 deviceCharId: _this.DATA_VALUE,
                 requestKey: localStorage.getItem("requestKey"),
-                manufactory:$(".form-device-Supplier").css("display")=="none"?""
-                    :$("#Update_Device_Supplier").val().trim()
+                manufactory: $(".form-device-Supplier").css("display") == "none" ? ""
+                    : $("#Update_Device_Supplier").val().trim()
             }
             break;
         case this.API_CONFIG.DELETE_DEVICES:
@@ -2874,6 +3116,13 @@ Management.prototype.getParams = function (name) {
             params = {
                 uuid: _this.DATA_UUID,
                 requestKey: localStorage.getItem("requestKey")
+            }
+            break;
+        case this.API_CONFIG.GETNEW_WATER:
+            params = {
+                uuid: _this.DATA_UUID,
+                requestKey: localStorage.getItem("requestKey"),
+                manufactory: _this.MANU
             }
             break;
         case this.API_CONFIG.RESET_PASSWORD:
