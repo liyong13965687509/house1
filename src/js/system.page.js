@@ -58,6 +58,7 @@ SystemPage.prototype.init = function () {
     this.plusBtnClick();
     this.exeDeleteLabel();
     this.lookGrant();
+    this.clickUpdate();
 
     var params = this.getParams(this.BIND_COMPANY);
     this.ajaxRequestBindCompany(params);
@@ -82,6 +83,8 @@ SystemPage.prototype.init = function () {
 
     params = this.getParams(this.BIND_CONTRACT);
     this.ajaxRequestBindContract(params);
+
+
 
     return this;
 }
@@ -778,7 +781,7 @@ SystemPage.prototype.getParams = function (name) {
             break;
         case this.UPDATE_BILL:
             params = {
-                billExpire: $("#BillExpire").val(),
+                billExpire: $("#billexpire").val(),
                 requestKey: localStorage.getItem("requestKey")
             }
             break;
@@ -812,7 +815,7 @@ SystemPage.prototype.getParams = function (name) {
                 unitPriceT: $("#UnitPriceT").val(),
                 unitPriceD: $("#UnitPriceD").val(),
                 unitPriceC: $("#UnitPriceC").val(),
-                contractExpire: $("#ContractExpire").val(),
+                contractExpire: $("#contractexpire").val(),
                 requestKey: localStorage.getItem("requestKey")
             };
             break;
@@ -853,6 +856,19 @@ SystemPage.prototype.getTemplate = function (params) {
             '</ul><button class="btn plus icon-plus" id="' + KEY + '"></button>' : '</ul>';
         $("." + KEY ).append(TEMP_HTML ? TEMP_HTML : "");
     }
+    return this;
+}
+
+/**
+ * 点击保存不刷新
+ * Author:LIYONG
+ * Date:2017-12-11
+ * @returns {SystemPage}
+ */
+SystemPage.prototype.clickUpdate = function () {
+    $(".pull-right.btn.confirm").click(function () {
+        $(".main  .right-content").find(".spinner").addClass('hide').siblings().removeClass('hide');
+    })
     return this;
 }
 

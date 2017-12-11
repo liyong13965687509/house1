@@ -159,6 +159,7 @@ LoginPage.prototype.submit = function () {
     $(this.SUBMIT_BUTTON).on("click", function () {
         params = _this.getParams(_this.NOT_EMPTY);
         if (_this.notEmptyCheck(params)) {
+            $(this).html("登录中...");
             params = _this.getParams(_this.AJAX_CHECK);
             _this.ajaxRequestCheck(params);
         }

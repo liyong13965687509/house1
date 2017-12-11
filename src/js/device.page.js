@@ -1226,7 +1226,7 @@ Management.prototype.appendPowerBuyRecordTemplate = function (params) {
             + '<div class="column col-xs-12 col-md-1">' + JSON_DATA['Amount'] + '</div>'
             + '<div class="column col-xs-12 col-md-1">' + JSON_DATA['UnitPrice'] + '</div>'
             + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['PayType'] + '</div>'
-            + '<div class="column col-xs-12 col-md-2">' + JSON_DATA['SerialNumber'] + '</div>'
+            + '<div class="column col-xs-12 col-md-2"><span class="vertical">' + JSON_DATA['SerialNumber'] + '</span></div>'
             + '<div class="column col-xs-12 col-md-3">' + JSON_DATA['PayTime'] + '</div>'
             + '</div></div></div></div>';
     }

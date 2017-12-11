@@ -87,7 +87,7 @@ ContractPage.prototype.getParams = function (name) {
                 pageSize: this.PAGE_SIZE,
                 buildingCharId: $("#building .active").length > 0 ? $("#building .active").attr("data-value") : "",
                 buildingRoomCharId: "",//物业模块合同列表用到该参数,此处不需要传
-                state: $("#contractState .active").length > 0 ? $("#contractState .active").attr("data-value") : 3,
+                state: $("#contractState .active").length > 0 ? $("#contractState .active").attr("data-value") :1 ,
                 dateType: $("#dateType .active").length > 0 ? $("#dateType .active").attr("data-value") : -1,
                 startDate: $("#StartDate").val(),
                 endDate: $("#EndDate").val(),
@@ -250,6 +250,7 @@ ContractPage.prototype.ajaxRequestCondition = function (params) {
                     }
                     $("#" + KEY).html(TEMP_HTML);
                 }
+                $("#contractState").find("li").eq(2).addClass("active");
             }
             else {
                 messageBox.show("提示", data['msg'], MessageBoxButtons.OK, MessageBoxIcons.infomation);

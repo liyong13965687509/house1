@@ -1099,6 +1099,7 @@ WebApp.prototype.loading = function (element) {
         $(".spinner").addClass('hide').siblings().removeClass('hide');
     }
 
+
     // ajax加载前
     $(document).ajaxSend(function () {
         $(".spinner").addClass('hide').siblings().removeClass('hide');
@@ -1116,6 +1117,7 @@ WebApp.prototype.loading = function (element) {
     //ajax加载完成后
     $(document).ajaxComplete(function () {
         _this.TIMER = setTimeout(function () {
+            $(".load_mask").remove();
             element.find(".spinner").addClass('hide').siblings().removeClass('hide');
         }, 500);
     });
@@ -1140,23 +1142,17 @@ WebApp.prototype.checkLoading = function () {
     })
 
     $(document).on('click', _this.PAGINATION_CODE, function () {
-        _this.loading($(_this.RIGHT_CONTENT));
+        $(".main  .right-content").find(".spinner").addClass("hide").siblings().removeClass('hide');
     })
 
     $(document).on('click', _this.PAGINATION_PREV, function () {
-        var TEMP_ACTIVE = $(this).next('.pagination-item').find('.active').html();
-        if (1 != TEMP_ACTIVE) {
-            _this.loading($(_this.RIGHT_CONTENT));
-        }
+        $(".main  .right-content").find(".spinner").addClass("hide").siblings().removeClass('hide');
     })
 
     $(document).on('click', _this.PAGINATION_NEXT, function () {
-        var LENGTH = Math.ceil($(this).next('.pagination-total').html().replace(/[^0-9]/ig, "") / 10);
-        var TEMP_ACTIVE = $(this).prev('.pagination-item').find('.active').html();
-        if (LENGTH != TEMP_ACTIVE) {
-            _this.loading($(_this.RIGHT_CONTENT));
-        }
+        $(".main  .right-content").find(".spinner").addClass("hide").siblings().removeClass('hide');
     })
+
     //第二层
     $(document).on('click', _this.TAB_CHECK, function () {
         _this.loading($(_this.BLOCK_BODY));
@@ -1167,23 +1163,18 @@ WebApp.prototype.checkLoading = function () {
     })
 
     $(document).on('click', _this.LG_CODE, function () {
-        // _this.loading($(_this.BLOCK_BODY));
+        $(".panel-modal.show .block-content").find(".spinner").addClass("hide").siblings().removeClass('hide');
     })
 
     $(document).on('click', _this.LG_PREV, function () {
-        var TEMP_ACTIVE = $(this).next('.pagination-item').find('.active').html();
-        if (1 != TEMP_ACTIVE) {
-            _this.loading($(_this.BLOCK_BODY));
-        }
+        $(".panel-modal.show .block-content").find(".spinner").addClass("hide").siblings().removeClass('hide');
+
     })
 
     $(document).on('click', _this.LG_NEXT, function () {
-        var LENGTH = Math.ceil($(this).next('.pagination-total').html().replace(/[^0-9]/ig, "") / 10);
-        var TEMP_ACTIVE = $(this).prev('.pagination-item').find('.active').html();
-        if (LENGTH != TEMP_ACTIVE) {
-            _this.loading($(_this.BLOCK_BODY));
-        }
-    })
+        $(".panel-modal.show .block-content").find(".spinner").addClass("hide").siblings().removeClass('hide');
+
+    });
     // 第三层
     $(document).on('click', _this.LG_BUTTON, function () {
         _this.loading($(_this.PANEL_BODY));
@@ -1387,6 +1378,7 @@ Pagination.prototype.prevButtonPress = function () {
         }
         _this.bindStatus(this);
         if ("function" == typeof _this.CHANGE_PAGE && _this.MIN_PAGE != 0) _this.CHANGE_PAGE(_this.PAGE_CODE);
+
     });
     return this;
 }
